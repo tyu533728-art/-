@@ -1,0 +1,12 @@
+{
+  "name": "bearing-showcase-v35",
+  "version": "3.5.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-pages.mjs",
+    "validate:data": "node scripts/validate-product-catalog.mjs",
+    "validate": "node scripts/validate-site.mjs",
+    "start": "node server.mjs"
+  }
+}
