@@ -166,6 +166,10 @@ for (const file of localizedFiles) {
   if ((html.match(/<h1\b/gi) || []).length !== 1) errors.push(`${route}: expected one H1`);
   if (!/<main id="main-content">/i.test(html)) errors.push(`${route}: missing main landmark`);
   if (!/<meta name="viewport"/i.test(html)) errors.push(`${route}: missing viewport meta`);
+  const robotsTags = Array.from(html.matchAll(/<meta\b[^>]*\bname="robots"[^>]*>/gi), match => match[0]);
+  if (robotsTags.length !== 1 || attribute(robotsTags[0], 'content')?.toLowerCase() !== 'noindex, follow') {
+    errors.push(`${route}: robots meta must be exactly noindex, follow`);
+  }
   if (!new RegExp(`<html lang="${locale}"`, 'i').test(html)) errors.push(`${route}: incorrect html language`);
   const linkTags = Array.from(html.matchAll(/<link\b[^>]*>/gi), match => match[0]);
   const canonicalTags = linkTags.filter(tag => /\brel="canonical"/i.test(tag));
@@ -349,7 +353,9 @@ for (const file of projectFiles) {
 const rootHtml = await readFile(join(root, 'index.html'), 'utf8');
 if (!/noindex, follow/i.test(rootHtml) || !/url=\/en\//i.test(rootHtml)) errors.push('root redirect is missing noindex English fallback');
 const robots = await readFile(join(root, 'robots.txt'), 'utf8');
-if (!robots.includes(`Sitemap: ${domain}/sitemap.xml`)) errors.push('robots.txt: invalid sitemap location');
+if (!/^User-agent:\s*\*$/im.test(robots) || !/^Allow:\s*\/$/im.test(robots)) errors.push('robots.txt: crawler access must remain allowed');
+if (/^Disallow:/im.test(robots)) errors.push('robots.txt: noindex pages must remain crawlable');
+if (/^Sitemap:/im.test(robots)) errors.push('robots.txt: placeholder sitemap must not be advertised before launch');
 const sitemap = await readFile(join(root, 'sitemap.xml'), 'utf8');
 for (const locale of locales) {
   if (!sitemap.includes(`${domain}/${locale}/`)) errors.push(`sitemap.xml: missing ${locale} root`);
