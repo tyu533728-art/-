@@ -1,7 +1,7 @@
 import { chromium } from 'playwright';
 
 const origin = 'http://127.0.0.1:8089';
-const seoOrigin = 'https://www.example.com';
+const seoOrigin = 'https://www.natermanufacture.com';
 const edge = 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe';
 const locales = ['en', 'es', 'de', 'fr', 'pt', 'ar', 'tr', 'ru', 'it', 'vi', 'id', 'ja', 'ko'];
 const checks = [

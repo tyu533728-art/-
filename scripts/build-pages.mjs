@@ -5,7 +5,7 @@ import { categories, productCatalog, validateProductCatalog } from '../data/prod
 import { LOCALE_CODES } from '../data/product-schema.mjs';
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
-const domain = 'https://www.example.com';
+const domain = 'https://www.natermanufacture.com';
 const localeCodes = [...LOCALE_CODES];
 validateProductCatalog(productCatalog);
 
