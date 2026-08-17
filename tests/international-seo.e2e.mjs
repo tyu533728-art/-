@@ -6,7 +6,7 @@ const edge = 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe';
 const locales = ['en', 'es', 'de', 'fr', 'pt', 'ar', 'tr', 'ru', 'it', 'vi', 'id', 'ja', 'ko'];
 const checks = [
   { path: '/ar/products/bearing-housing/', locale: 'ar', widths: [390, 1280] },
-  { path: '/ar/about-us/', locale: 'ar', widths: [390, 1280] },
+  { path: '/ar/contact-us/', locale: 'ar', widths: [390, 1280] },
   { path: '/ja/', locale: 'ja', widths: [390] },
   { path: '/ko/', locale: 'ko', widths: [390] }
 ];
@@ -35,7 +35,7 @@ try {
         const expected = Object.fromEntries(locales.map(code => [code, `${seoOrigin}/${code}${expectedPath}`]));
         expected['x-default'] = `${seoOrigin}/en${expectedPath}`;
         const contacts = [...document.querySelectorAll('dt')]
-          .filter(dt => ['Email', 'Phone', 'WhatsApp', 'Address'].includes(dt.textContent.trim()))
+          .filter(dt => ['E-mail', 'WhatsApp', 'Facebook', 'Manufacturing Partner', 'Manufacturing Facility'].includes(dt.textContent.trim()))
           .map(dt => ({ label: dt.textContent.trim(), value: dt.parentElement.querySelector('[dir="ltr"]') }));
         const switcher = document.querySelector('.language-switcher');
         const switcherRect = switcher?.getBoundingClientRect();

@@ -80,7 +80,7 @@ function requiredRoutes(locale) {
     `/${locale}/products/`,
     ...categoryRoutes.map(category => `/${locale}/products/${category}/`),
     ...productRoutes.map(({ category, product }) => `/${locale}/products/${category}/${product}/`),
-    `/${locale}/about-us/`
+    `/${locale}/contact-us/`
   ];
 }
 
@@ -101,6 +101,15 @@ for (const removedFile of ['contact.html', 'products.html']) {
     errors.push(`${removedFile}: obsolete V3.4 page remains`);
   } catch {
     // Expected: V3.5 has no standalone Contact page or root products page.
+  }
+}
+
+for (const locale of locales) {
+  try {
+    await access(join(root, locale, 'about-us'));
+    errors.push(`/${locale}/about-us/: obsolete About Us route remains`);
+  } catch {
+    // Expected: V3.6.4 exposes Contact Us instead.
   }
 }
 
@@ -195,15 +204,16 @@ for (const file of localizedFiles) {
   if ((html.match(/<nav class="site-nav"[\s\S]*?<\/nav>/gi) || []).length !== 1) errors.push(`${route}: missing primary navigation`);
   if ((html.match(/aria-label="Primary navigation"/gi) || []).length !== 1) errors.push(`${route}: missing primary navigation label`);
   if ((html.match(/<footer class="site-footer"/gi) || []).length !== 1) errors.push(`${route}: missing normal-flow footer`);
-  for (const label of ['Email', 'Phone', 'WhatsApp', 'Address', 'Website']) {
+  for (const label of ['E-mail', 'WhatsApp', 'Facebook', 'Manufacturing Partner', 'Manufacturing Facility']) {
     if (!new RegExp(`<dt>${label}<\\/dt>`, 'i').test(html)) errors.push(`${route}: footer missing ${label}`);
   }
-  if (/(?:contact\.html|>Contact<|api\/)/i.test(html) || forbiddenMarkupPattern.test(html)) errors.push(`${route}: contains a prohibited V3.5 feature`);
+  if (/(?:contact\.html|api\/)/i.test(html) || forbiddenMarkupPattern.test(html)) errors.push(`${route}: contains a prohibited V3.5 feature`);
+  if (/(?:about-us|About Us|Company Name|Company name pending confirmation|<dt>(?:Phone|Address|Website)<\/dt>|Our Factory)/i.test(html)) errors.push(`${route}: obsolete About Us or contact field remains`);
   if (/products\.html#/i.test(html)) errors.push(`${route}: product Hash URL remains`);
   if (html.includes('Custom Products')) errors.push(`${route}: obsolete Custom Products label remains`);
   if (locale === 'ar' && !/<html lang="ar" dir="rtl">/i.test(html)) errors.push(`${route}: Arabic page missing RTL`);
   if (locale === 'ar') {
-    for (const label of ['Email', 'Phone', 'WhatsApp', 'Address']) {
+    for (const label of ['E-mail', 'WhatsApp', 'Facebook', 'Manufacturing Partner', 'Manufacturing Facility']) {
       const contactPattern = new RegExp(`<dt>${label}<\\/dt>[\\s\\S]{0,500}?<[^>]*class="contact-value"[^>]*dir="ltr"`, 'i');
       if (!contactPattern.test(html)) errors.push(`${route}: Arabic ${label} value must be LTR`);
     }
@@ -348,6 +358,17 @@ for (const file of projectFiles) {
   if (!/^assets\/(?!source\/|source-products\/).+\.(?:webp|avif|svg)$/i.test(assetPath)) continue;
   const publicPath = `/${assetPath}`;
   if (!generatedAssetReferences.has(publicPath) && !retainedProductAssets.has(publicPath)) errors.push(`${assetPath}: unused public image asset`);
+}
+
+const deployAssets = join(root, 'dist', 'assets');
+try {
+  await access(deployAssets);
+  for (const file of await filesUnder(deployAssets)) {
+    const assetPath = relative(deployAssets, file).replaceAll('\\', '/');
+    if (/^(?:source|source-products)(?:\/|$)/i.test(assetPath)) errors.push(`dist/assets/${assetPath}: source file leaked into the deploy output`);
+  }
+} catch {
+  // dist/assets is not built yet; nothing to check.
 }
 
 const rootHtml = await readFile(join(root, 'index.html'), 'utf8');

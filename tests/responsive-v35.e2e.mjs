@@ -18,7 +18,7 @@ const captureRoutes = new Map([
   ['/en/products/', 'products'],
   ['/en/products/bearing-housing/', 'bearing-housing'],
   ['/ar/products/bearing-housing/', 'bearing-housing-ar'],
-  ['/ja/about-us/', 'about-ja'],
+  ['/ja/contact-us/', 'contact-ja'],
   ['/ko/products/custom/', 'custom-ko']
 ]);
 const captureViewports = new Set(['desktop', 'tablet-portrait', 'mobile-small']);

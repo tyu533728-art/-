@@ -2,6 +2,7 @@ import { MOUNTED_UNIT_ASSEMBLY_RULES, validateProductCatalog } from './product-s
 
 const workbook = '外球面轴承座.xlsx';
 const extractedWorkbook = 'assets/source-products/xl';
+const importedWorkbook = '2026.8.16.xlsx';
 
 function sourceReference(series, fields) {
   return {
@@ -9,6 +10,15 @@ function sourceReference(series, fields) {
     locator: `座子型号=${series}`,
     extractedWorkbook,
     fields
+  };
+}
+
+function importedImageReference(locator) {
+  return {
+    document: importedWorkbook,
+    locator,
+    extractedWorkbook: null,
+    fields: ['Unit Code', 'Photo']
   };
 }
 
@@ -37,9 +47,35 @@ const retainedSourceSeries = [
 export const productCatalog = {
   schemaVersion: '3.5.0',
   categories: [
-    { category: 'Bearings', slug: 'bearings', images: [], products: [], publish: true },
-    { category: 'Bearing Housing', slug: 'bearing-housing', images: [{ src: '/assets/bearing-housing.webp', alt: 'Bearing housing reference image', width: 1280, height: 956 }], products: [], publish: true },
-    { category: 'Custom', slug: 'custom', images: [], products: [], publish: true, statement: 'Custom non-standard size products.' }
+    {
+      category: 'Bearings',
+      slug: 'bearings',
+      images: [],
+      displayItems: [
+        { code: 'UC', professionalName: 'UC wide inner ring insert bearing, set-screw locking', imageStatus: 'confirmed', image: { src: '/assets/product-images/uc-product.webp', alt: 'UC wide inner ring insert bearing, set-screw locking', width: 223, height: 248 }, sourceReference: importedImageReference('2026.8.16!A6/C6') },
+        { code: 'UEL', professionalName: 'UEL wide inner ring insert bearing, eccentric locking collar', imageStatus: 'missing-confirmed-image', image: null, sourceReference: importedImageReference('2026.8.16!A7/C7') },
+        { code: 'UK', professionalName: 'UK insert bearing, tapered bore for adapter sleeve', imageStatus: 'pending-confirmation', image: { src: '/assets/product-images/uk-product.webp', alt: 'UK insert bearing, tapered bore for adapter sleeve', width: 204, height: 216 }, sourceReference: importedImageReference('2026.8.16!A8/C8') }
+      ],
+      products: [],
+      publish: true
+    },
+    {
+      category: 'Bearing Housing',
+      slug: 'bearing-housing',
+      images: [{ src: '/assets/bearing-housing.webp', alt: 'Bearing housing reference image', width: 1280, height: 956 }],
+      displayItems: [
+        { code: 'P', professionalName: 'P pillow block housing', imageStatus: 'confirmed', image: { src: '/assets/product-images/p-housing.webp', alt: 'P pillow block housing', width: 1000, height: 1000 }, sourceReference: sourceReference('UCP', ['参考实物']) },
+        { code: 'PA', professionalName: 'PA tapped-base pillow block housing', imageStatus: 'confirmed', image: { src: '/assets/product-images/pa-housing.webp', alt: 'PA tapped-base pillow block housing', width: 1000, height: 1000 }, sourceReference: sourceReference('UCPA', ['参考实物']) },
+        { code: 'F', professionalName: 'F four-bolt flanged housing', imageStatus: 'confirmed', image: { src: '/assets/product-images/f-housing.webp', alt: 'F four-bolt flanged housing', width: 1000, height: 1000 }, sourceReference: sourceReference('UCF', ['参考实物']) },
+        { code: 'FL', professionalName: 'FL two-bolt flanged housing', imageStatus: 'confirmed', image: { src: '/assets/product-images/fl-housing.webp', alt: 'FL two-bolt flanged housing', width: 1000, height: 1000 }, sourceReference: sourceReference('UCFL', ['参考实物']) },
+        { code: 'FC', professionalName: 'FC piloted round flanged housing', imageStatus: 'confirmed', image: { src: '/assets/product-images/fc-housing.webp', alt: 'FC piloted round flanged housing', width: 1000, height: 1000 }, sourceReference: sourceReference('UCFC', ['参考实物']) },
+        { code: 'FS', professionalName: 'FS square flange with spigot housing', imageStatus: 'confirmed', image: { src: '/assets/product-images/fs-housing.webp', alt: 'FS square flange with spigot housing', width: 1000, height: 1000 }, sourceReference: sourceReference('UCFS', ['参考实物']) },
+        { code: 'T', professionalName: 'T take-up housing', imageStatus: 'confirmed', image: { src: '/assets/product-images/t-housing.webp', alt: 'T take-up housing', width: 1000, height: 1000 }, sourceReference: sourceReference('UCT', ['参考实物']) }
+      ],
+      products: [],
+      publish: true
+    },
+    { category: 'Custom', slug: 'custom', images: [], displayItems: [], products: [], publish: true, statement: 'Custom non-standard size products.' }
   ],
   retainedSourceSeries,
   unmappedSourceSeries: [
@@ -78,6 +114,7 @@ export const categories = productCatalog.categories
     code: category.slug,
     title: category.category,
     images: category.images,
+    displayItems: category.displayItems ?? [],
     products: category.products.map(toBuildProduct),
     statement: category.statement ?? null
   }));
