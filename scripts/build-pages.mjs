@@ -14,8 +14,8 @@ const site = {
   email: '729865273lq@gmail.com',
   whatsapp: 'liuqiang6767',
   facebook: 'Sixty-seven Liu',
-  manufacturingPartner: '馆陶县耐特轴承有限公司',
-  manufacturingFacility: '馆陶县南徐村乡马兰村北'
+  manufacturingPartner: 'Guantao County Naite Bearing Co., Ltd.',
+  manufacturingFacility: 'No. 005, Malan Village, Nanxu Township, Guantao County, Handan City, Hebei Province, P.R.China'
 };
 
 const locales = {
