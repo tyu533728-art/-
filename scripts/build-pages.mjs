@@ -288,8 +288,8 @@ function heroImage() {
 function homeContent(locale) {
   const text = locales[locale];
   const home = homePresentation[locale];
-  const productCards = categories.map(category => `<a class="category-card" href="${categoryPath(locale, category)}">${categoryCardMedia(locale, category, 'category-card')}<span class="category-card__label">${escapeHtml(text.category)}</span><h2>${escapeHtml(categoryCardCopy(category).title)}</h2><span class="category-card__link">${escapeHtml(text.navProducts)}</span></a>`).join('');
-  return `<section class="home-hero"><div class="site-shell home-hero__grid"><div class="home-hero__copy"><p class="eyebrow">${escapeHtml(home.eyebrow)}</p><h1>${escapeHtml(home.title)}</h1><p>${escapeHtml(home.lead)}</p><a class="text-link" href="${publicPath(locale, 'products')}">${escapeHtml(text.navProducts)}</a></div><div class="home-hero__media">${heroImage()}<img class="hero-factory" src="/assets/cnc-milling.webp" alt="Industrial machining reference image" width="1280" height="853" loading="lazy"></div></div></section><section class="section"><div class="site-shell split-intro"><p class="eyebrow">${escapeHtml(text.navAbout)}</p><div><h2>${escapeHtml(home.productsHeading)}</h2><p>${escapeHtml(text.homeIntro)}</p></div></div></section><section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h2>${escapeHtml(text.homeCategoriesHeading)}</h2></div><div class="category-grid">${productCards}</div></div></section><section class="section"><div class="site-shell factory-layout"><div><h2>${escapeHtml(home.partnerHeading)}</h2><p>${escapeHtml(home.partnerLead)}</p></div><div class="factory-strip"><img src="/assets/factory-floor.webp" alt="Factory floor reference image" width="1280" height="508" loading="lazy"><img src="/assets/cnc-turning.webp" alt="Industrial machining reference image" width="1280" height="960" loading="lazy"></div></div></section>`;
+  const productCards = categories.map(category => `<a class="category-card${category.code === 'custom' ? ' category-card--custom' : ''}" href="${categoryPath(locale, category)}">${categoryCardMedia(locale, category, 'category-card')}<span class="category-card__label">${escapeHtml(text.category)}</span><h2>${escapeHtml(categoryCardCopy(category).title)}</h2><span class="category-card__link">${escapeHtml(text.navProducts)}</span></a>`).join('');
+  return `<section class="home-hero"><div class="site-shell home-hero__grid"><div class="home-hero__copy"><h1>${escapeHtml(home.title)}</h1><p>${escapeHtml(home.lead)}</p></div><div class="home-hero__media">${heroImage()}<img class="hero-factory" src="/assets/cnc-milling.webp" alt="Industrial machining reference image" width="1280" height="853" loading="lazy"></div></div></section><section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h2>${escapeHtml(text.homeCategoriesHeading)}</h2></div><div class="category-grid">${productCards}</div></div></section><section class="section"><div class="site-shell factory-layout"><div><h2>${escapeHtml(home.partnerHeading)}</h2><p>${escapeHtml(home.partnerLead)}</p></div><div class="factory-strip"><img src="/assets/factory-floor.webp" alt="Factory floor reference image" width="1280" height="508" loading="lazy"><img src="/assets/cnc-turning.webp" alt="Industrial machining reference image" width="1280" height="960" loading="lazy"></div></div></section>`;
 }
 
 function productIndex(locale) {
@@ -298,7 +298,7 @@ function productIndex(locale) {
 
 function categoryCard(locale, category) {
   const text = locales[locale];
-  return `<a class="catalogue-card" href="${categoryPath(locale, category)}">${categoryCardMedia(locale, category, 'catalogue-card')}<div><p class="eyebrow">${escapeHtml(text.category)}</p><h2>${escapeHtml(categoryCardCopy(category).title)}</h2></div></a>`;
+  return `<a class="catalogue-card${category.code === 'custom' ? ' catalogue-card--custom' : ''}" href="${categoryPath(locale, category)}">${categoryCardMedia(locale, category, 'catalogue-card')}<div><p class="eyebrow">${escapeHtml(text.category)}</p><h2>${escapeHtml(categoryCardCopy(category).title)}</h2></div></a>`;
 }
 
 function productsContent(locale) {
@@ -313,7 +313,7 @@ function categorySeoDescription(locale, category) {
 
 function categoryContent(locale, category) {
   const text = locales[locale];
-  const seriesCards = (category.series ?? []).filter(series => series.status === 'active').map(series => `<a class="catalogue-card" href="${seriesPath(locale, category, series)}" dir="ltr">${seriesImage(locale, series)}<div><p class="eyebrow">${escapeHtml(text.series)}</p><h2 dir="ltr">${escapeHtml(series.seriesCode)} ${escapeHtml(text.series)}</h2></div></a>`).join('');
+  const seriesCards = (category.series ?? []).filter(series => series.status === 'active').map(series => `<a class="product-display-card" href="${seriesPath(locale, category, series)}" dir="ltr"><div class="product-display-card__image">${seriesImage(locale, series)}</div><h2 dir="ltr">${escapeHtml(series.seriesCode)} ${escapeHtml(text.series)}</h2></a>`).join('');
   const content = seriesCards ? `<section class="section"><div class="site-shell"><div class="catalogue-grid">${seriesCards}</div></div></section>` : '';
   const statement = category.code === 'custom' ? '<p>Custom non-standard size products.</p>' : '';
   return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.category)}</p><h1>${escapeHtml(category.title)}</h1>${statement}</div></section>${productIndex(locale)}${content}`;
@@ -322,7 +322,7 @@ function categoryContent(locale, category) {
 function seriesContent(locale, category, series) {
   const text = locales[locale];
   const image = seriesImage(locale, series);
-  const content = image ? `<section class="section"><div class="site-shell"><div class="product-display-grid"><article class="product-display-card" dir="ltr"><div class="product-display-card__image">${image}</div></article></div></div></section>` : '';
+  const content = image ? `<section class="section"><div class="site-shell"><div class="product-display-grid"><article class="product-display-card" dir="ltr"><div class="product-display-card__image">${image}</div><h2 dir="ltr">${escapeHtml(series.seriesCode)} ${escapeHtml(text.series)}</h2></article></div></div></section>` : '';
   return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.series)}</p><h1 dir="ltr">${escapeHtml(series.seriesCode)} ${escapeHtml(text.series)}</h1></div></section>${productIndex(locale)}${content}`;
 }
 
@@ -421,7 +421,7 @@ if (productsOnly) {
   await rm(output, { recursive: true, force: true });
   await mkdir(join(output, 'assets'), { recursive: true });
   await mkdir(join(output, 'assets', 'product-images'), { recursive: true });
-  const publicAssets = ['bearing-housing.webp', 'cnc-milling.webp', 'cnc-turning.webp', 'factory-floor.webp', 'favicon.svg', 'styles.css'];
+  const publicAssets = ['bearing-housing.webp', 'cnc-milling.webp', 'cnc-turning.webp', 'factory-floor.webp', 'custom-solutions.webp', 'favicon.svg', 'styles.css'];
   const publicProductImages = productCatalog.categories.flatMap(category => category.series.filter(series => series.status === 'active' && series.image).map(series => series.image.src.slice(1)));
   await Promise.all([
     ...publicProductImages.map(file => copyFile(join(root, file), join(output, file))),
