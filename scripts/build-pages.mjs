@@ -19,7 +19,7 @@ const site = {
 };
 
 const locales = {
-  en: { name: 'English', navHome: 'Home', navProducts: 'Products', navAbout: 'About Us', homeTitle: 'Bearing & Bearing Housing Manufacturer', homeLead: 'Product information for bearings, bearing housings and custom products.', homeIntro: 'A focused industrial product catalogue built around verified product information.', factory: 'Factory and manufacturing information will be published after confirmation.', productsHeading: 'Bearings, bearing housing and custom products.', productsLead: 'Browse bearings, bearing housing and custom product categories.', categoryLead: 'Products in this category.', productLead: 'Product information.', aboutLead: 'Company, manufacturing and quality information.', aboutCompany: 'Company introduction will be published after confirmation.', aboutManufacturing: 'Manufacturing capability will be published after confirmation.', aboutQuality: 'Quality control information will be published after confirmation.', footer: 'Public company contact information.', pending: 'Pending confirmation', category: 'Product category', series: 'Series', models: 'Models', referenceImage: 'Reference product image', sourceNote: 'Images show product appearance only. They are not a source of technical parameters.', homeEyebrow: 'Industrial product catalogue', homeCategoriesHeading: 'Product categories.', homeManufacturingEyebrow: 'Manufacturing', homeManufacturingHeading: 'Industrial manufacturing environment.', aboutCompanyLabel: 'Company', aboutCompanyHeading: 'Company information.', aboutFactoryLabel: 'Factory', aboutFactoryHeading: 'Factory presentation.', aboutManufacturingLabel: 'Manufacturing', aboutManufacturingHeading: 'Manufacturing capability.', aboutQualityLabel: 'Quality', aboutQualityHeading: 'Quality control.', aboutPublicInfoLabel: 'Public information', aboutPublicInfoHeading: 'Company contact information.' },
+  en: { name: 'English', navHome: 'Home', navProducts: 'Products', navAbout: 'About Us', homeTitle: 'Industrial Bearings & Bearing Housings', homeLead: 'Product information for industrial bearings, bearing housings, and custom products.', homeIntro: 'A focused industrial product catalogue built around verified product information.', factory: 'Supported by a long-term manufacturing partner with industrial production capabilities.', productsHeading: 'Bearings, bearing housings and custom products.', productsLead: 'Browse bearings, bearing housings and custom product categories.', categoryLead: 'Products in this category.', productLead: 'Product information.', aboutLead: 'Company, manufacturing and quality information.', aboutCompany: 'Company introduction will be published after confirmation.', aboutManufacturing: 'Manufacturing capability will be published after confirmation.', aboutQuality: 'Quality control information will be published after confirmation.', footer: 'Public company contact information.', pending: 'Pending confirmation', category: 'Product category', series: 'Series', models: 'Models', referenceImage: 'Reference product image', sourceNote: 'Images show product appearance only. They are not a source of technical parameters.', homeEyebrow: 'Industrial Product Catalogue', homeCategoriesHeading: 'Product categories.', homeManufacturingEyebrow: 'Manufacturing Partner', homeManufacturingHeading: 'Manufacturing Partner', aboutCompanyLabel: 'Company', aboutCompanyHeading: 'Company information.', aboutFactoryLabel: 'Factory', aboutFactoryHeading: 'Factory presentation.', aboutManufacturingLabel: 'Manufacturing', aboutManufacturingHeading: 'Manufacturing capability.', aboutQualityLabel: 'Quality', aboutQualityHeading: 'Quality control.', aboutPublicInfoLabel: 'Public information', aboutPublicInfoHeading: 'Company contact information.' },
   es: { name: 'Español', navHome: 'Inicio', navProducts: 'Productos', navAbout: 'Nosotros', homeTitle: 'Fabricante de rodamientos y soportes de rodamientos', homeLead: 'Información de productos para rodamientos, soportes de rodamientos y productos personalizados.', homeIntro: 'Catálogo industrial centrado en información de producto verificada.', factory: 'La información de fábrica y fabricación se publicará tras la confirmación.', productsHeading: 'Rodamientos, soportes de rodamientos y productos personalizados.', productsLead: 'Explore las categorías de rodamientos, soportes de rodamientos y productos personalizados.', categoryLead: 'Productos de esta categoría.', productLead: 'Información del producto.', aboutLead: 'Información de empresa, fabricación y calidad.', aboutCompany: 'La presentación de la empresa se publicará tras la confirmación.', aboutManufacturing: 'La capacidad de fabricación se publicará tras la confirmación.', aboutQuality: 'La información de control de calidad se publicará tras la confirmación.', footer: 'Información pública de contacto de la empresa.', pending: 'Pendiente de confirmación', category: 'Categoría de producto', series: 'Serie', models: 'Modelos', referenceImage: 'Imagen de referencia del producto', sourceNote: 'Las imágenes solo muestran la apariencia del producto. No son una fuente de parámetros técnicos.', homeEyebrow: 'Catálogo industrial', homeCategoriesHeading: 'Categorías de productos.', homeManufacturingEyebrow: 'Fabricación', homeManufacturingHeading: 'Entorno de fabricación industrial.', aboutCompanyLabel: 'Empresa', aboutCompanyHeading: 'Información de la empresa.', aboutFactoryLabel: 'Fábrica', aboutFactoryHeading: 'Presentación de la fábrica.', aboutManufacturingLabel: 'Fabricación', aboutManufacturingHeading: 'Capacidad de fabricación.', aboutQualityLabel: 'Calidad', aboutQualityHeading: 'Control de calidad.', aboutPublicInfoLabel: 'Información pública', aboutPublicInfoHeading: 'Información de contacto de la empresa.' },
   de: { name: 'Deutsch', navHome: 'Startseite', navProducts: 'Produkte', navAbout: 'Über uns', homeTitle: 'Hersteller von Lagern und Lagergehäusen', homeLead: 'Produktinformationen zu Lagern, Lagergehäusen und kundenspezifischen Produkten.', homeIntro: 'Ein fokussierter Industriekatalog mit verifizierten Produktinformationen.', factory: 'Informationen zu Werk und Fertigung werden nach Bestätigung veröffentlicht.', productsHeading: 'Lager, Lagergehäuse und kundenspezifische Produkte.', productsLead: 'Entdecken Sie die Kategorien Lager, Lagergehäuse und kundenspezifische Produkte.', categoryLead: 'Produkte in dieser Kategorie.', productLead: 'Produktinformationen.', aboutLead: 'Informationen zu Unternehmen, Fertigung und Qualität.', aboutCompany: 'Die Unternehmensvorstellung wird nach Bestätigung veröffentlicht.', aboutManufacturing: 'Fertigungskapazitäten werden nach Bestätigung veröffentlicht.', aboutQuality: 'Informationen zur Qualitätskontrolle werden nach Bestätigung veröffentlicht.', footer: 'Öffentliche Kontaktinformationen des Unternehmens.', pending: 'Bestätigung ausstehend', category: 'Produktkategorie', series: 'Serie', models: 'Modelle', referenceImage: 'Produktreferenzbild', sourceNote: 'Bilder zeigen nur das Erscheinungsbild. Sie sind keine Quelle für technische Parameter.', homeEyebrow: 'Industrieller Produktkatalog', homeCategoriesHeading: 'Produktkategorien.', homeManufacturingEyebrow: 'Fertigung', homeManufacturingHeading: 'Industrielle Fertigungsumgebung.', aboutCompanyLabel: 'Unternehmen', aboutCompanyHeading: 'Unternehmensinformationen.', aboutFactoryLabel: 'Werk', aboutFactoryHeading: 'Werkspräsentation.', aboutManufacturingLabel: 'Fertigung', aboutManufacturingHeading: 'Fertigungskapazität.', aboutQualityLabel: 'Qualität', aboutQualityHeading: 'Qualitätskontrolle.', aboutPublicInfoLabel: 'Öffentliche Informationen', aboutPublicInfoHeading: 'Öffentliche Kontaktinformationen des Unternehmens.' },
   fr: { name: 'Français', navHome: 'Accueil', navProducts: 'Produits', navAbout: 'À propos', homeTitle: 'Fabricant de roulements et de paliers', homeLead: 'Informations produits sur les roulements, les paliers et les produits sur mesure.', homeIntro: 'Catalogue industriel centré sur des informations produit vérifiées.', factory: 'Les informations sur l\'usine et la fabrication seront publiées après confirmation.', productsHeading: 'Roulements, paliers et produits sur mesure.', productsLead: 'Découvrez les catégories de roulements, de paliers et de produits sur mesure.', categoryLead: 'Produits de cette catégorie.', productLead: 'Informations sur le produit.', aboutLead: 'Informations sur l\'entreprise, la fabrication et la qualité.', aboutCompany: 'La présentation de l\'entreprise sera publiée après confirmation.', aboutManufacturing: 'La capacité de fabrication sera publiée après confirmation.', aboutQuality: 'Les informations de contrôle qualité seront publiées après confirmation.', footer: 'Coordonnées publiques de l\'entreprise.', pending: 'En attente de confirmation', category: 'Catégorie de produit', series: 'Série', models: 'Modèles', referenceImage: 'Image de référence du produit', sourceNote: 'Les images montrent uniquement l\'apparence du produit. Elles ne sont pas une source de paramètres techniques.', homeEyebrow: 'Catalogue industriel', homeCategoriesHeading: 'Catégories de produits.', homeManufacturingEyebrow: 'Fabrication', homeManufacturingHeading: 'Environnement industriel de fabrication.', aboutCompanyLabel: 'Entreprise', aboutCompanyHeading: 'Informations sur l\'entreprise.', aboutFactoryLabel: 'Usine', aboutFactoryHeading: 'Présentation de l\'usine.', aboutManufacturingLabel: 'Fabrication', aboutManufacturingHeading: 'Capacité de fabrication.', aboutQualityLabel: 'Qualité', aboutQualityHeading: 'Contrôle qualité.', aboutPublicInfoLabel: 'Informations publiques', aboutPublicInfoHeading: 'Coordonnées de l\'entreprise.' },
@@ -66,20 +66,20 @@ const contactLeads = Object.freeze({
   ko: '비즈니스 연락 및 제조 조정을 위한 공개 연락처 정보.'
 });
 
-const contactFooterText = Object.freeze({
-  en: 'Public contact information.',
-  es: 'Información pública de contacto.',
-  de: 'Öffentliche Kontaktinformationen.',
-  fr: 'Coordonnées publiques.',
-  pt: 'Informações públicas de contacto.',
-  ar: 'معلومات الاتصال العامة.',
-  tr: 'Kamuya açık iletişim bilgileri.',
-  ru: 'Открытая контактная информация.',
-  it: 'Informazioni di contatto pubbliche.',
-  vi: 'Thông tin liên hệ công khai.',
-  id: 'Informasi kontak publik.',
-  ja: '公開連絡先情報。',
-  ko: '공개 연락처 정보.'
+const homePresentation = Object.freeze({
+  en: { eyebrow: 'Industrial Product Catalogue', title: 'Industrial Bearings & Bearing Housings', lead: 'Product information for industrial bearings, bearing housings, and custom products.', productsHeading: 'Bearings, bearing housings and custom products.', partnerHeading: 'Manufacturing Partner', partnerLead: 'Supported by a long-term manufacturing partner with industrial production capabilities.' },
+  es: { eyebrow: 'Catálogo de productos industriales', title: 'Rodamientos industriales y soportes de rodamientos', lead: 'Información de productos sobre rodamientos industriales, soportes de rodamientos y productos personalizados.', productsHeading: 'Rodamientos, soportes de rodamientos y productos personalizados.', partnerHeading: 'Socio de fabricación', partnerLead: 'Con el respaldo de un socio de fabricación a largo plazo con capacidades de producción industrial.' },
+  de: { eyebrow: 'Industrieller Produktkatalog', title: 'Industrielager und Lagergehäuse', lead: 'Produktinformationen zu Industrielagern, Lagergehäusen und kundenspezifischen Produkten.', productsHeading: 'Lager, Lagergehäuse und kundenspezifische Produkte.', partnerHeading: 'Fertigungspartner', partnerLead: 'Unterstützt durch einen langfristigen Fertigungspartner mit industriellen Produktionskapazitäten.' },
+  fr: { eyebrow: 'Catalogue de produits industriels', title: 'Roulements industriels et paliers', lead: 'Informations produits sur les roulements industriels, les paliers et les produits sur mesure.', productsHeading: 'Roulements, paliers et produits sur mesure.', partnerHeading: 'Partenaire de fabrication', partnerLead: 'Soutenu par un partenaire de fabrication de longue date disposant de capacités de production industrielle.' },
+  pt: { eyebrow: 'Catálogo de produtos industriais', title: 'Rolamentos industriais e mancais', lead: 'Informações sobre produtos de rolamentos industriais, mancais e produtos personalizados.', productsHeading: 'Rolamentos, mancais e produtos personalizados.', partnerHeading: 'Parceiro de fabricação', partnerLead: 'Com o apoio de um parceiro de fabricação de longo prazo com capacidades de produção industrial.' },
+  ar: { eyebrow: 'كتالوج المنتجات الصناعية', title: 'محامل صناعية وبيوت محامل', lead: 'معلومات المنتجات عن المحامل الصناعية وبيوت المحامل والمنتجات المخصصة.', productsHeading: 'المحامل وبيوت المحامل والمنتجات المخصصة.', partnerHeading: 'شريك التصنيع', partnerLead: 'مدعوم بشريك تصنيع طويل الأجل يتمتع بقدرات إنتاج صناعي.' },
+  tr: { eyebrow: 'Endüstriyel ürün kataloğu', title: 'Endüstriyel rulmanlar ve rulman yatakları', lead: 'Endüstriyel rulmanlar, rulman yatakları ve özel ürünler hakkında ürün bilgileri.', productsHeading: 'Rulmanlar, rulman yatakları ve özel ürünler.', partnerHeading: 'Üretim ortağı', partnerLead: 'Endüstriyel üretim kapasitesine sahip uzun vadeli bir üretim ortağı tarafından desteklenmektedir.' },
+  ru: { eyebrow: 'Каталог промышленной продукции', title: 'Промышленные подшипники и корпуса подшипников', lead: 'Информация о промышленных подшипниках, корпусах подшипников и изделиях на заказ.', productsHeading: 'Подшипники, корпуса подшипников и изделия на заказ.', partnerHeading: 'Производственный партнер', partnerLead: 'При поддержке долгосрочного производственного партнера с возможностями промышленного производства.' },
+  it: { eyebrow: 'Catalogo di prodotti industriali', title: 'Cuscinetti industriali e supporti per cuscinetti', lead: 'Informazioni sui prodotti per cuscinetti industriali, supporti per cuscinetti e prodotti personalizzati.', productsHeading: 'Cuscinetti, supporti per cuscinetti e prodotti personalizzati.', partnerHeading: 'Partner produttivo', partnerLead: 'Supportato da un partner produttivo di lunga data con capacità di produzione industriale.' },
+  vi: { eyebrow: 'Danh mục sản phẩm công nghiệp', title: 'Vòng bi công nghiệp và gối đỡ vòng bi', lead: 'Thông tin sản phẩm về vòng bi công nghiệp, gối đỡ vòng bi và sản phẩm tùy chỉnh.', productsHeading: 'Vòng bi, gối đỡ vòng bi và sản phẩm tùy chỉnh.', partnerHeading: 'Đối tác sản xuất', partnerLead: 'Được hỗ trợ bởi đối tác sản xuất lâu dài có năng lực sản xuất công nghiệp.' },
+  id: { eyebrow: 'Katalog produk industri', title: 'Bantalan industri dan rumah bantalan', lead: 'Informasi produk untuk bantalan industri, rumah bantalan, dan produk khusus.', productsHeading: 'Bantalan, rumah bantalan, dan produk khusus.', partnerHeading: 'Mitra manufaktur', partnerLead: 'Didukung oleh mitra manufaktur jangka panjang dengan kemampuan produksi industri.' },
+  ja: { eyebrow: '産業用製品カタログ', title: '産業用ベアリングとベアリングハウジング', lead: '産業用ベアリング、ベアリングハウジング、カスタム製品に関する製品情報。', productsHeading: 'ベアリング、ベアリングハウジング、カスタム製品。', partnerHeading: '製造パートナー', partnerLead: '産業生産能力を持つ長期的な製造パートナーの支援を受けています。' },
+  ko: { eyebrow: '산업 제품 카탈로그', title: '산업용 베어링 및 베어링 하우징', lead: '산업용 베어링, 베어링 하우징 및 맞춤형 제품에 대한 제품 정보.', productsHeading: '베어링, 베어링 하우징 및 맞춤형 제품.', partnerHeading: '제조 파트너', partnerLead: '산업 생산 역량을 갖춘 장기 제조 파트너의 지원을 받고 있습니다.' }
 });
 
 for (const locale of localeCodes) locales[locale].navAbout = contactLabels[locale];
@@ -148,6 +148,10 @@ function productPath(locale, category, product) {
   return publicPath(locale, `products/${category.code}/${product.slug}`);
 }
 
+function seriesPath(locale, category, series) {
+  return publicPath(locale, `products/${category.code}/${series.seriesCode.toLowerCase()}`);
+}
+
 function absoluteUrl(path) {
   return `${domain}${path}`;
 }
@@ -162,7 +166,7 @@ function organizationSchema(locale) {
     '@type': 'Organization',
     name: site.brand,
     url: absoluteUrl(publicPath(locale)),
-    description: locales[locale].homeLead
+    description: homePresentation[locale].lead
   };
 }
 
@@ -226,7 +230,7 @@ function contactValue(value, locale, kind = 'text') {
 }
 
 function footer(locale) {
-  return `<footer class="site-footer"><div class="site-shell footer-inner"><div><a class="brand brand--footer" href="${publicPath(locale)}"><span class="brand-mark" aria-hidden="true"></span><span>${site.brand}<small>BEARING &amp; BEARING HOUSING</small></span></a><p>${escapeHtml(contactFooterText[locale])}</p></div><dl class="footer-contact"><div><dt>E-mail</dt><dd>${contactValue(site.email, locale, 'email')}</dd></div><div><dt>WhatsApp</dt><dd>${contactValue(site.whatsapp, locale)}</dd></div><div><dt>Facebook</dt><dd>${contactValue(site.facebook, locale)}</dd></div><div><dt>Manufacturing Partner</dt><dd>${contactValue(site.manufacturingPartner, locale)}</dd></div><div><dt>Manufacturing Facility</dt><dd>${contactValue(site.manufacturingFacility, locale)}</dd></div></dl></div><div class="site-shell footer-bottom">© 2026 ${site.brand}. All rights reserved.</div></footer>`;
+  return `<footer class="site-footer"><div class="site-shell footer-inner"><div><a class="brand brand--footer" href="${publicPath(locale)}"><span class="brand-mark" aria-hidden="true"></span><span>${site.brand}<small>BEARING &amp; BEARING HOUSING</small></span></a></div><dl class="footer-contact"><div><dt>E-mail</dt><dd>${contactValue(site.email, locale, 'email')}</dd></div><div><dt>WhatsApp</dt><dd>${contactValue(site.whatsapp, locale)}</dd></div><div><dt>Facebook</dt><dd>${contactValue(site.facebook, locale)}</dd></div><div><dt>Manufacturing Partner</dt><dd>${contactValue(site.manufacturingPartner, locale)}</dd></div><div><dt>Manufacturing Facility</dt><dd>${contactValue(site.manufacturingFacility, locale)}</dd></div></dl></div><div class="site-shell footer-bottom">© 2026 ${site.brand}. All rights reserved.</div></footer>`;
 }
 
 function page({ locale, path = '', active, title, description, content, schema }) {
@@ -249,14 +253,43 @@ function displayItemImage(locale, item) {
   return lazyImage({ ...item.image, alt: displayItemAlts[locale][item.code] ?? item.professionalName ?? item.image.alt });
 }
 
+function seriesImage(locale, series) {
+  const image = series.image;
+  if (!image) return '';
+  return lazyImage({ ...image, alt: displayItemAlts[locale][series.seriesCode] ?? series.alt });
+}
+
+const categoryCardPresentation = Object.freeze({
+  'pillow-block-bearing-units': { title: 'Pillow Block Bearing Units', visual: 'PILLOW BLOCK' },
+  'bearing-housing-series': { title: 'Bearing Housing Series', visual: 'HOUSING SERIES' },
+  custom: { title: 'Custom', visual: 'CUSTOM' }
+});
+
+function categoryCardCopy(category) {
+  return categoryCardPresentation[category.code] ?? { title: category.title, visual: category.title.toUpperCase() };
+}
+
+function categoryCardImage(locale, category) {
+  const representative = category.series?.find(series => series.status === 'active' && series.image);
+  if (!representative) return null;
+  return { ...representative.image, alt: displayItemAlts[locale][representative.seriesCode] ?? representative.alt };
+}
+
+function categoryCardMedia(locale, category, className) {
+  const image = categoryCardImage(locale, category);
+  const copy = categoryCardCopy(category);
+  return `${image ? lazyImage(image) : ''}<span class="${className}__visual" aria-hidden="true">${escapeHtml(copy.visual)}</span>`;
+}
+
 function heroImage() {
   return `<img class="hero-product" src="/assets/bearing-housing.webp" alt="Bearing housing reference image" width="1280" height="956" loading="eager" fetchpriority="high">`;
 }
 
 function homeContent(locale) {
   const text = locales[locale];
-  const productCards = categories.map(category => `<a class="category-card" href="${categoryPath(locale, category)}">${category.images[0] ? lazyImage(category.images[0]) : '<span class="category-card__blank" aria-hidden="true">BEARINGS</span>'}<span class="category-card__label">${escapeHtml(text.category)}</span><h2>${escapeHtml(category.title)}</h2><span class="category-card__link">${escapeHtml(text.navProducts)}</span></a>`).join('');
-  return `<section class="home-hero"><div class="site-shell home-hero__grid"><div class="home-hero__copy"><p class="eyebrow">${escapeHtml(text.homeEyebrow)}</p><h1>${escapeHtml(text.homeTitle)}</h1><p>${escapeHtml(text.homeLead)}</p><a class="text-link" href="${publicPath(locale, 'products')}">${escapeHtml(text.navProducts)}</a></div><div class="home-hero__media">${heroImage()}<img class="hero-factory" src="/assets/cnc-milling.webp" alt="Industrial machining reference image" width="1280" height="853" loading="lazy"></div></div></section><section class="section"><div class="site-shell split-intro"><p class="eyebrow">${escapeHtml(text.navAbout)}</p><div><h2>${escapeHtml(text.productsHeading)}</h2><p>${escapeHtml(text.homeIntro)}</p></div></div></section><section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h2>${escapeHtml(text.homeCategoriesHeading)}</h2></div><div class="category-grid">${productCards}</div></div></section><section class="section"><div class="site-shell factory-layout"><div><p class="eyebrow">${escapeHtml(text.homeManufacturingEyebrow)}</p><h2>${escapeHtml(text.homeManufacturingHeading)}</h2><p>${escapeHtml(text.factory)}</p></div><div class="factory-strip"><img src="/assets/factory-floor.webp" alt="Factory floor reference image" width="1280" height="508" loading="lazy"><img src="/assets/cnc-turning.webp" alt="CNC turning reference image" width="1280" height="960" loading="lazy"></div></div></section>`;
+  const home = homePresentation[locale];
+  const productCards = categories.map(category => `<a class="category-card" href="${categoryPath(locale, category)}">${categoryCardMedia(locale, category, 'category-card')}<span class="category-card__label">${escapeHtml(text.category)}</span><h2>${escapeHtml(categoryCardCopy(category).title)}</h2><span class="category-card__link">${escapeHtml(text.navProducts)}</span></a>`).join('');
+  return `<section class="home-hero"><div class="site-shell home-hero__grid"><div class="home-hero__copy"><p class="eyebrow">${escapeHtml(home.eyebrow)}</p><h1>${escapeHtml(home.title)}</h1><p>${escapeHtml(home.lead)}</p><a class="text-link" href="${publicPath(locale, 'products')}">${escapeHtml(text.navProducts)}</a></div><div class="home-hero__media">${heroImage()}<img class="hero-factory" src="/assets/cnc-milling.webp" alt="Industrial machining reference image" width="1280" height="853" loading="lazy"></div></div></section><section class="section"><div class="site-shell split-intro"><p class="eyebrow">${escapeHtml(text.navAbout)}</p><div><h2>${escapeHtml(home.productsHeading)}</h2><p>${escapeHtml(text.homeIntro)}</p></div></div></section><section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h2>${escapeHtml(text.homeCategoriesHeading)}</h2></div><div class="category-grid">${productCards}</div></div></section><section class="section"><div class="site-shell factory-layout"><div><h2>${escapeHtml(home.partnerHeading)}</h2><p>${escapeHtml(home.partnerLead)}</p></div><div class="factory-strip"><img src="/assets/factory-floor.webp" alt="Factory floor reference image" width="1280" height="508" loading="lazy"><img src="/assets/cnc-turning.webp" alt="Industrial machining reference image" width="1280" height="960" loading="lazy"></div></div></section>`;
 }
 
 function productIndex(locale) {
@@ -265,12 +298,13 @@ function productIndex(locale) {
 
 function categoryCard(locale, category) {
   const text = locales[locale];
-  return `<a class="catalogue-card" href="${categoryPath(locale, category)}">${category.images[0] ? lazyImage(category.images[0]) : '<span class="catalogue-card__blank" aria-hidden="true">DATA</span>'}<div><p class="eyebrow">${escapeHtml(text.category)}</p><h2>${escapeHtml(category.title)}</h2></div></a>`;
+  return `<a class="catalogue-card" href="${categoryPath(locale, category)}">${categoryCardMedia(locale, category, 'catalogue-card')}<div><p class="eyebrow">${escapeHtml(text.category)}</p><h2>${escapeHtml(categoryCardCopy(category).title)}</h2></div></a>`;
 }
 
 function productsContent(locale) {
   const text = locales[locale];
-  return `<section class="page-intro"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h1>${escapeHtml(text.navProducts)}</h1></div></section>${productIndex(locale)}<section class="section"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.category)}</p><h2>${escapeHtml(text.productsHeading)}</h2></div><div class="catalogue-grid">${categories.map(category => categoryCard(locale, category)).join('')}</div></div></section>`;
+  const categoryTitle = categories.map(category => category.title).join(' / ');
+  return `<section class="page-intro"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h1>${escapeHtml(text.navProducts)}</h1></div></section>${productIndex(locale)}<section class="section"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.category)}</p><h2>${escapeHtml(categoryTitle)}</h2></div><div class="catalogue-grid">${categories.map(category => categoryCard(locale, category)).join('')}</div></div></section>`;
 }
 
 function categorySeoDescription(locale, category) {
@@ -279,15 +313,17 @@ function categorySeoDescription(locale, category) {
 
 function categoryContent(locale, category) {
   const text = locales[locale];
-  const productCards = category.products.map(product => `<a class="catalogue-card" href="${productPath(locale, category, product)}" dir="ltr">${product.images[0] ? lazyImage(product.images[0]) : ''}<h2>${escapeHtml(product.productName)}</h2></a>`).join('');
-  const displayCards = (category.displayItems ?? []).map(item => {
-    return `<article class="product-display-card" dir="ltr"><div class="product-display-card__image">${displayItemImage(locale, item)}</div><h2>${escapeHtml(item.code)}</h2></article>`;
-  }).join('');
-  const displayGrid = displayCards ? `<div class="product-display-grid">${displayCards}</div>` : '';
-  const productGrid = productCards ? `<div class="catalogue-grid">${productCards}</div>` : '';
-  const content = displayGrid || productGrid ? `<section class="section"><div class="site-shell">${displayGrid}${productGrid}</div></section>` : '';
+  const seriesCards = (category.series ?? []).filter(series => series.status === 'active').map(series => `<a class="catalogue-card" href="${seriesPath(locale, category, series)}" dir="ltr">${seriesImage(locale, series)}<div><p class="eyebrow">${escapeHtml(text.series)}</p><h2 dir="ltr">${escapeHtml(series.seriesCode)} ${escapeHtml(text.series)}</h2></div></a>`).join('');
+  const content = seriesCards ? `<section class="section"><div class="site-shell"><div class="catalogue-grid">${seriesCards}</div></div></section>` : '';
   const statement = category.code === 'custom' ? '<p>Custom non-standard size products.</p>' : '';
   return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.category)}</p><h1>${escapeHtml(category.title)}</h1>${statement}</div></section>${productIndex(locale)}${content}`;
+}
+
+function seriesContent(locale, category, series) {
+  const text = locales[locale];
+  const image = seriesImage(locale, series);
+  const content = image ? `<section class="section"><div class="site-shell"><div class="product-display-grid"><article class="product-display-card" dir="ltr"><div class="product-display-card__image">${image}</div></article></div></div></section>` : '';
+  return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.series)}</p><h1 dir="ltr">${escapeHtml(series.seriesCode)} ${escapeHtml(text.series)}</h1></div></section>${productIndex(locale)}${content}`;
 }
 
 function productBreadcrumb(locale, category, product) {
@@ -334,25 +370,24 @@ async function writePage(locale, path, html, routes) {
 }
 
 async function buildLocale(locale, routes) {
-  const text = locales[locale];
-  await writePage(locale, '', page({ locale, active: 'home', title: `${text.homeTitle} | ${site.brand}`, description: text.homeLead, content: homeContent(locale) }), routes);
+  const home = homePresentation[locale];
+  await writePage(locale, '', page({ locale, active: 'home', title: `${home.title} | ${site.brand}`, description: home.lead, content: homeContent(locale) }), routes);
   await buildProductsLocale(locale, routes);
   await writePage(locale, 'contact-us', page({ locale, path: 'contact-us', active: 'contact', title: `${contactLabels[locale]} | ${site.brand}`, description: contactLeads[locale], content: contactContent(locale) }), routes);
 }
 
 async function buildProductsLocale(locale, routes) {
   const text = locales[locale];
-  await writePage(locale, 'products', page({ locale, path: 'products', active: 'products', title: `${text.navProducts} | ${site.brand}`, description: text.productsLead, content: productsContent(locale), schema: { ...organizationSchema(locale), description: text.productsLead } }), routes);
+  await writePage(locale, 'products', page({ locale, path: 'products', active: 'products', title: `${text.navProducts} | ${site.brand}`, description: text.productLead, content: productsContent(locale), schema: { ...organizationSchema(locale), description: text.productLead } }), routes);
   for (const category of categories) {
     const categoryPath = `products/${category.code}`;
     const description = categorySeoDescription(locale, category);
     await writePage(locale, categoryPath, page({ locale, path: categoryPath, active: 'products', title: `${category.title} | ${site.brand}`, description, content: categoryContent(locale, category), schema: { ...organizationSchema(locale), description } }), routes);
-    for (const product of category.products) {
-      if (!product.sourceRef || !product.images?.length || !product.technical?.length) {
-        throw new Error(`${product.code}: product pages require sourceRef, images and technical data.`);
-      }
-      const productRoute = `${categoryPath}/${product.slug}`;
-      await writePage(locale, productRoute, page({ locale, path: productRoute, active: 'products', title: productSeoTitle(locale, category, product), description: productSeoDescription(locale, product), content: productContent(locale, category, product), schema: productSchema(locale, category, product) }), routes);
+    for (const series of (category.series ?? []).filter(item => item.status === 'active')) {
+      const seriesRoute = `${categoryPath}/${series.seriesCode.toLowerCase()}`;
+      const seriesTitle = `${series.seriesCode} ${text.series} | ${category.title} | ${site.brand}`;
+      const seriesDescription = `${series.seriesCode} ${text.series}.`;
+      await writePage(locale, seriesRoute, page({ locale, path: seriesRoute, active: 'products', title: seriesTitle, description: seriesDescription, content: seriesContent(locale, category, series), schema: { ...organizationSchema(locale), description: seriesDescription } }), routes);
     }
   }
 }
@@ -368,7 +403,7 @@ if (productsOnly) {
     await rm(join(root, locale, 'products'), { recursive: true, force: true });
     await buildProductsLocale(locale, routes);
   }
-  console.log(`Generated PRODUCTS-only V3.5 pages: ${routes.length} pages across ${localeCodes.length} languages.`);
+  console.log(`Generated PRODUCTS-only V4.0 pages: ${routes.length} pages across ${localeCodes.length} languages.`);
 } else {
   await rm(join(root, 'contact.html'), { force: true });
   for (const locale of localeCodes) {
@@ -385,13 +420,15 @@ if (productsOnly) {
   const output = join(root, 'dist');
   await rm(output, { recursive: true, force: true });
   await mkdir(join(output, 'assets'), { recursive: true });
+  await mkdir(join(output, 'assets', 'product-images'), { recursive: true });
   const publicAssets = ['bearing-housing.webp', 'cnc-milling.webp', 'cnc-turning.webp', 'factory-floor.webp', 'favicon.svg', 'styles.css'];
+  const publicProductImages = productCatalog.categories.flatMap(category => category.series.filter(series => series.status === 'active' && series.image).map(series => series.image.src.slice(1)));
   await Promise.all([
-    cp(join(root, 'assets', 'product-images'), join(output, 'assets', 'product-images'), { recursive: true }),
+    ...publicProductImages.map(file => copyFile(join(root, file), join(output, file))),
     ...publicAssets.map(file => copyFile(join(root, 'assets', file), join(output, 'assets', file))),
     ...localeCodes.map(locale => cp(join(root, locale), join(output, locale), { recursive: true })),
     ...['index.html', 'robots.txt', 'sitemap.xml'].map(file => copyFile(join(root, file), join(output, file)))
   ]);
 
-  console.log(`Generated V3.5 static site: ${routes.length} localized pages across ${localeCodes.length} languages.`);
+  console.log(`Generated V4.0 static site: ${routes.length} localized pages across ${localeCodes.length} languages.`);
 }

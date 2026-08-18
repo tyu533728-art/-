@@ -1,12 +1,19 @@
+import { ACTIVE_SERIES, PENDING_SERIES, PRODUCT_CATEGORIES, SERIES_BY_CATEGORY } from '../data/product-schema.mjs';
 import { productCatalog, validateProductCatalog } from '../data/product-catalog.mjs';
-import { PRODUCT_CATEGORIES, PRODUCT_MODEL_FIELDS, RETAINED_SOURCE_SERIES } from '../data/product-schema.mjs';
 
 validateProductCatalog(productCatalog);
 
-const modelCount = productCatalog.categories
-  .flatMap(category => category.products)
-  .length;
-const sourceSeriesCount = productCatalog.retainedSourceSeries
-  .filter(series => series.sourceReference).length;
+const activeCount = productCatalog.categories.flatMap(category => category.series).filter(series => series.status === 'active').length;
+const pendingCount = productCatalog.categories.flatMap(category => category.series).filter(series => series.status === 'pending').length;
+const modelCount = productCatalog.categories.reduce((total, category) => total + category.products.length, 0);
 
-console.log(`Validated V3.5 product data: ${PRODUCT_CATEGORIES.length} categories, ${RETAINED_SOURCE_SERIES.length} retained source series, ${modelCount} source-backed products, ${sourceSeriesCount} retained source records, ${productCatalog.unmappedSourceSeries.length} retained unmapped source series, ${PRODUCT_MODEL_FIELDS.length} required model fields.`);
+if (PRODUCT_CATEGORIES.length !== 3 || ACTIVE_SERIES.length !== 8 || PENDING_SERIES.length !== 2 || modelCount !== 0) {
+  throw new Error('V4.0 product catalog counts do not match the frozen structure.');
+}
+for (const category of productCatalog.categories) {
+  if (category.series.map(series => series.seriesCode).join(',') !== SERIES_BY_CATEGORY[category.category].join(',')) {
+    throw new Error(`${category.category}: Series order does not match V4.0.`);
+  }
+}
+
+console.log(`Validated V4.0 product data: ${PRODUCT_CATEGORIES.length} categories, ${activeCount} active Series, ${pendingCount} pending Series, ${modelCount} model pages.`);

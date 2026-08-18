@@ -2,17 +2,24 @@ import { chromium } from 'playwright';
 
 const origin = 'http://127.0.0.1:8089';
 const edge = 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe';
-const failures = [];
 const categories = [
-  { name: 'Bearings', href: '/en/products/bearings/' },
-  { name: 'Bearing Housing', href: '/en/products/bearing-housing/' },
-  { name: 'Custom', href: '/en/products/custom/' }
+  { name: 'Pillow Block Bearing Units', slug: 'pillow-block-bearing-units' },
+  { name: 'Bearing Housing Series', slug: 'bearing-housing-series' },
+  { name: 'Custom', slug: 'custom' }
 ];
-const viewports = [
-  { name: 'desktop', width: 1440, height: 900 },
-  { name: 'tablet', width: 768, height: 1024 },
-  { name: 'mobile', width: 390, height: 844 }
-];
+const series = [
+  { code: 'UC', image: true, category: 'pillow-block-bearing-units' },
+  { code: 'UEL', image: false, category: 'pillow-block-bearing-units' },
+  { code: 'UK', image: false, category: 'pillow-block-bearing-units' },
+  { code: 'P', image: true, category: 'bearing-housing-series' },
+  { code: 'PA', image: true, category: 'bearing-housing-series' },
+  { code: 'F', image: true, category: 'bearing-housing-series' },
+  { code: 'FL', image: true, category: 'bearing-housing-series' },
+  { code: 'FC', image: true, category: 'bearing-housing-series' },
+  { code: 'FS', image: true, category: 'bearing-housing-series' },
+  { code: 'T', image: true, category: 'bearing-housing-series' }
+].map(item => ({ ...item, name: `${item.code} Series`, href: `/en/products/${item.category}/${item.code.toLowerCase()}/` }));
+const failures = [];
 
 function assert(condition, message) {
   if (!condition) failures.push(message);
@@ -20,44 +27,54 @@ function assert(condition, message) {
 
 const browser = await chromium.launch({ headless: true, executablePath: edge });
 try {
-  for (const viewport of viewports) {
-    const page = await browser.newPage({ viewport });
-    const browserErrors = [];
-    page.on('console', message => {
-      if (message.type() === 'error') browserErrors.push(message.text());
-    });
-    page.on('pageerror', error => browserErrors.push(error.message));
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  let response = await page.goto(`${origin}/en/products/`, { waitUntil: 'networkidle' });
+  assert(response?.ok(), 'Products page did not return HTTP 200');
+  const categoryLinks = await page.locator('.product-index a').evaluateAll(links => links.map(link => ({ text: link.textContent.trim(), href: link.getAttribute('href') })));
+  assert(JSON.stringify(categoryLinks) === JSON.stringify(categories.map(category => ({ text: category.name, href: `/en/products/${category.slug}/` }))), 'Products categories do not match V4.0');
+  assert(await page.getByText('Bearings', { exact: true }).count() === 0, 'legacy Bearings entry remains');
+  assert(await page.getByText('Bearing Housing', { exact: true }).count() === 0, 'legacy Bearing Housing entry remains');
 
-    let response = await page.goto(`${origin}/en/products/`, { waitUntil: 'networkidle' });
-    assert(response?.ok(), `${viewport.name}: Products page did not return HTTP 200`);
-    const categoryLinks = await page.locator('.product-index a').evaluateAll(links => links.map(link => ({ text: link.textContent.trim(), href: link.getAttribute('href') })));
-    assert(JSON.stringify(categoryLinks) === JSON.stringify(categories.map(category => ({ text: category.name, href: category.href }))), `${viewport.name}: Products categories are not the fixed three-category structure`);
-    assert(await page.getByText('Bearing Units', { exact: true }).count() === 0, `${viewport.name}: Bearing Units remains visible`);
-    assert(await page.getByText(/^(?:UCP|UCF|UCFL|UCFC|UCT|UKP|UELP)(?: Series)?$/).count() === 0, `${viewport.name}: a Series entry remains visible`);
-    assert(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth), `${viewport.name}: Products page has horizontal overflow`);
-
-    for (const category of categories) {
-      response = await page.goto(`${origin}${category.href}`, { waitUntil: 'networkidle' });
-      assert(response?.ok(), `${viewport.name}: ${category.name} did not return HTTP 200`);
-      assert((await page.locator('h1').textContent())?.trim() === category.name, `${viewport.name}: ${category.name} H1 is incorrect`);
-      assert(await page.locator('.series-card, .model-list, .parameter-table').count() === 0, `${viewport.name}: ${category.name} exposes Series or technical entry content`);
-      assert(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth), `${viewport.name}: ${category.name} has horizontal overflow`);
+  for (const category of categories) {
+    const categoryHref = `/en/products/${category.slug}/`;
+    response = await page.goto(`${origin}${categoryHref}`, { waitUntil: 'networkidle' });
+    assert(response?.ok(), `${category.name} did not return HTTP 200`);
+    assert((await page.locator('h1').textContent())?.trim() === category.name, `${category.name} H1 is incorrect`);
+    if (category.slug === 'custom') {
+      assert(await page.locator('main img, main .catalogue-card').count() === 0, 'Custom contains an image or product card');
+      continue;
     }
-
-    response = await page.goto(`${origin}/en/products/custom/`, { waitUntil: 'networkidle' });
-    assert(response?.ok(), `${viewport.name}: Custom page did not return HTTP 200`);
-    assert(await page.getByText('Custom non-standard size products.', { exact: true }).count() >= 1, `${viewport.name}: Custom statement is missing`);
-    assert(await page.locator('main img, main .catalogue-card').count() === 0, `${viewport.name}: Custom page contains a product, image or product list`);
-    assert(browserErrors.length === 0, `${viewport.name}: browser errors: ${browserErrors.join(' | ')}`);
-    await page.close();
+    for (const item of series.filter(item => item.category === category.slug && item.image)) {
+      assert(await page.locator(`a[href="${item.href}"]`).count() === 1, `${item.name} entry is missing`);
+    }
+    for (const item of series.filter(item => item.category === category.slug && !item.image)) {
+      assert(await page.locator(`a[href="${item.href}"]`).count() === 0, `${item.name} pending entry is visible`);
+    }
   }
 
-  for (const path of ['/en/products/bearing-units/', '/en/products/bearing-units/ucp/', '/en/products/bearings/ucp/']) {
-    const page = await browser.newPage();
-    const response = await page.goto(`${origin}${path}`, { waitUntil: 'domcontentloaded' });
-    assert(response?.status() === 404, `${path}: obsolete Series or third-level route must return HTTP 404`);
-    await page.close();
+  for (const item of series) {
+    response = await page.goto(`${origin}${item.href}`, { waitUntil: 'networkidle' });
+    if (!item.image) {
+      assert(response?.status() === 404, `${item.name} pending route must return HTTP 404`);
+      continue;
+    }
+    assert(response?.ok(), `${item.name} did not return HTTP 200`);
+    assert((await page.locator('h1').textContent())?.trim() === item.name, `${item.name} H1 is incorrect`);
+    assert(await page.locator('main img').count() === 1, `${item.name} must contain exactly one image`);
+    assert(await page.locator('main .catalogue-card, main .model-list, main .parameter-table').count() === 0, `${item.name} exposes model/detail content`);
   }
+
+  for (const path of [
+    '/en/products/bearings/',
+    '/en/products/bearing-housing/',
+    '/en/products/mounted-spherical-roller-bearings/',
+    '/en/products/pillow-block-bearing-units/uc/uc205/',
+    '/en/products/bearing-housing-series/p/p205/'
+  ]) {
+    response = await page.goto(`${origin}${path}`, { waitUntil: 'domcontentloaded' });
+    assert(response?.status() === 404, `${path} must return HTTP 404`);
+  }
+  await page.close();
 } finally {
   await browser.close();
 }
@@ -66,4 +83,4 @@ if (failures.length) {
   console.error(failures.join('\n'));
   process.exit(1);
 }
-console.log('PRODUCTS browser checks passed: three categories, no Series layer, no third-level routes, responsive at desktop/tablet/mobile.');
+console.log('PRODUCTS browser checks passed: three categories, eight active Series pages, two pending Series 404s, and no third-level routes.');

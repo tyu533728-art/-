@@ -35,3 +35,9 @@
 - Completed the V3.5 responsive test matrix across all 169 localized routes at six desktop, tablet and mobile viewports (1,014 page/viewport combinations), including 13-language same-page switching, Arabic RTL/LTR isolation, Japanese/Korean rendering, parameter-table probes, Header/Footer bounds and unapproved-model 404 behavior.
 - Fixed two verified responsive defects without changing the page structure: long German/Russian headings now wrap safely, and the homepage factory inset preserves its source aspect ratio on desktop and tablet while retaining the existing mobile crop.
 - Added `tests/responsive-v35.e2e.mjs`; screenshots are opt-in via `RESPONSIVE_SCREENSHOTS=1` and the verified evidence set is archived outside the public project tree.
+
+## 2026-08-18
+
+- Applied the V4.0 local product structure: Pillow Block Bearing Units (UC active; UEL/UK pending), Bearing Housing Series (P, PA, F, FL, FC, FS, T active) and Custom.
+- Archived seven obsolete mounted-unit images outside the public product image directory; `dist/assets/product-images/` now deploys only the eight active Series images.
+- Rebuilt 182 localized pages and updated the static, data, SEO and responsive validators. No model routes, parameter tables or Product Schema are generated; all pages remain `noindex, follow`.

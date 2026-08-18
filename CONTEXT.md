@@ -5,11 +5,11 @@ This context defines the terms used by the V3.5 static product catalogue. It pre
 ## Catalogue Language
 
 **Product Category**:
-The top-level product grouping: Bearings, Bearing Units, Bearing Housing, or Custom Products.
+The top-level product grouping: Pillow Block Bearing Units, Bearing Housing Series, or Custom.
 _Avoid_: Product type, product group
 
 **Product Series**:
-A named family within one Product Category, such as UCP, UCFL or UELP. A Series is not a purchasable or technical Model.
+A named family within one Product Category: UC, UEL, UK, P, PA, F, FL, FC, FS or T. A Series page contains only its name and a confirmed reference image.
 _Avoid_: Model, part number
 
 **Product Model**:
@@ -24,10 +24,6 @@ _Avoid_: Image-derived parameter, estimated value
 The document and locator that prove a Series or Product Model fact. A reference image alone cannot prove technical values.
 _Avoid_: Assumption, inferred source
 
-**Mounted Bearing Unit Assembly**:
-A complete set composed of a bearing family and a P housing family. UCP is UC + P, UELP is UEL + P, and UKP is UK + P. These three series share the P housing interchange group.
+**Pending Series**:
+UEL and UK are retained in the source catalog for future publication, but have no image, route or Sitemap entry until a reliable image is confirmed.
 _Avoid_: Image-derived compatibility, inferred interchangeability
-
-**Unmapped Source Series**:
-A genuine Excel series record retained in the data layer but not published under the locked V3.5 hierarchy until its canonical category or series mapping is confirmed.
-_Avoid_: Published model, inferred series mapping

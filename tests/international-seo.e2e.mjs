@@ -5,7 +5,7 @@ const seoOrigin = 'https://www.natermanufacture.com';
 const edge = 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe';
 const locales = ['en', 'es', 'de', 'fr', 'pt', 'ar', 'tr', 'ru', 'it', 'vi', 'id', 'ja', 'ko'];
 const checks = [
-  { path: '/ar/products/bearing-housing/', locale: 'ar', widths: [390, 1280] },
+  { path: '/ar/products/pillow-block-bearing-units/uc/', locale: 'ar', widths: [390, 1280] },
   { path: '/ar/contact-us/', locale: 'ar', widths: [390, 1280] },
   { path: '/ja/', locale: 'ja', widths: [390] },
   { path: '/ko/', locale: 'ko', widths: [390] }

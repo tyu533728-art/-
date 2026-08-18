@@ -16,8 +16,8 @@ const viewports = [
 const captureRoutes = new Map([
   ['/en/', 'home'],
   ['/en/products/', 'products'],
-  ['/en/products/bearing-housing/', 'bearing-housing'],
-  ['/ar/products/bearing-housing/', 'bearing-housing-ar'],
+  ['/en/products/pillow-block-bearing-units/', 'pillow-block-units'],
+  ['/ar/products/bearing-housing-series/p/', 'bearing-housing-series-ar'],
   ['/ja/contact-us/', 'contact-ja'],
   ['/ko/products/custom/', 'custom-ko']
 ]);
@@ -41,8 +41,8 @@ const paths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)]
   .map(match => new URL(match[1]).pathname)
   .filter(pathname => locales.some(locale => pathname.startsWith(`/${locale}/`)));
 
-if (paths.length !== 78) {
-  fail(`Expected 78 indexable localized routes, found ${paths.length}.`);
+if (paths.length !== 182) {
+  fail(`Expected 182 indexable localized routes, found ${paths.length}.`);
 }
 
 if (captureScreenshots) await mkdir(artifactDirectory, { recursive: true });
@@ -220,7 +220,7 @@ try {
   for (const viewport of viewports) {
     const page = await browser.newPage({ viewport });
     // Negative regression: an obsolete third-level product URL must remain unavailable.
-    const response = await page.goto(`${origin}/en/products/bearing-units/ucfl/ucfl205/`, { waitUntil: 'domcontentloaded' });
+  const response = await page.goto(`${origin}/en/products/bearing-housing-series/p/p205/`, { waitUntil: 'domcontentloaded' });
     if (response?.status() !== 404) fail(`${viewport.name}: obsolete third-level product URL must return HTTP 404`);
     await page.close();
   }

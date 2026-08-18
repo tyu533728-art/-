@@ -2,7 +2,7 @@
 
 ## Goal
 
-Publish a fast, pure-display, multilingual manufacturer website for bearings, bearing units and bearing housing.
+Publish a fast, pure-display, multilingual catalogue for Pillow Block Bearing Units, Bearing Housing Series and Custom products.
 
 ## Architecture
 
@@ -10,7 +10,7 @@ Publish a fast, pure-display, multilingual manufacturer website for bearings, be
 
 ## Content Status
 
-- The public navigation is Home, Products and About Us.
-- Category and series routes exist for the V3.5 structure.
-- Product model detail pages are intentionally withheld until verified technical source data is supplied.
-- Company identity, public contact details, final domain and real factory imagery are pending user confirmation.
+- The public navigation is Home, Products and Contact Us.
+- Product categories are `pillow-block-bearing-units`, `bearing-housing-series` and `custom`.
+- UC, P, PA, F, FL, FC, FS and T are active Series pages; UEL and UK remain pending without routes or images.
+- Series pages contain only a Series name and confirmed reference image. Product model detail pages are prohibited.

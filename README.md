@@ -1,6 +1,6 @@
-# Bearing & Bearing Housing Website V3.5
+# Bearing & Bearing Housing Website V4.0
 
-Static multilingual showcase for bearings, bearing units and bearing housing.
+Static multilingual catalogue for Pillow Block Bearing Units, Bearing Housing Series and Custom products.
 
 ## Commands
 
@@ -15,7 +15,7 @@ The root URL redirects to `/en/`. The generated site uses 13 crawlable locale pr
 ## Current Content Boundary
 
 - No forms, inquiry functions, databases, ecommerce, downloads or marketing modules.
-- UCP, UCF, UCFL, UCFC and UCT currently use confirmed reference imagery from the supplied workbook.
-- UKP and UELP remain without confirmed images. No model-detail pages are published until source-backed technical data is provided.
-- Custom Products is hidden because no real custom product data is available.
-- `example.com` and all public company contact values are temporary placeholders and must be replaced before publication.
+- UC, P, PA, F, FL, FC, FS and T have confirmed Series reference images. UEL and UK remain pending with no image and no public route.
+- Series pages publish only the Series name and its confirmed reference image. No model-detail pages, parameter tables or Product Schema are generated.
+- Custom remains a first-level category with only `Custom non-standard size products.` and no image or model cards.
+- All generated pages retain `noindex, follow` until a separate indexing decision is approved.
