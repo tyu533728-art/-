@@ -271,8 +271,9 @@ function categoryCardCopy(category) {
 
 function categoryCardImage(locale, category) {
   const representative = category.series?.find(series => series.status === 'active' && series.image);
-  if (!representative) return null;
-  return { ...representative.image, alt: displayItemAlts[locale][representative.seriesCode] ?? representative.alt };
+  if (representative) return { ...representative.image, alt: displayItemAlts[locale][representative.seriesCode] ?? representative.alt };
+  if (category.code === 'custom') return { src: '/assets/custom-solutions.webp', alt: 'Custom bearing solutions', width: 413, height: 42 };
+  return null;
 }
 
 function categoryCardMedia(locale, category, className) {
