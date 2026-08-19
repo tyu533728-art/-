@@ -12,7 +12,7 @@ validateProductCatalog(productCatalog);
 const site = {
   brand: '耐特',
   email: '729865273lq@gmail.com',
-  whatsapp: 'liuqiang6767',
+  whatsapp: '+8617600510039',
   facebook: 'Sixty-seven Liu',
   manufacturingPartner: 'Guantao County Naite Bearing Co., Ltd.',
   manufacturingFacility: 'No. 005, Malan Village, Nanxu Township, Guantao County, Handan City, Hebei Province, P.R.China'
