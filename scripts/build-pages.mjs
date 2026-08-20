@@ -364,6 +364,7 @@ function categoryCardCopy(locale, category) {
 function categoryCardImage(locale, category) {
   const representative = category.series?.find(series => series.status === 'active' && series.image);
   if (representative) return { ...representative.image, alt: displayItemAlts[locale][representative.seriesCode] ?? representative.alt };
+  if (category.code === 'custom') return { src: '/assets/custom-solutions.webp', alt: imageAlts.customSolutions[locale], width: 413, height: 42 };
   return null;
 }
 
@@ -408,8 +409,7 @@ function categoryContent(locale, category) {
   const seriesCards = (category.series ?? []).filter(series => series.status === 'active').map(series => `<a class="product-display-card" href="${seriesPath(locale, category, series)}" dir="ltr"><div class="product-display-card__image">${seriesImage(locale, series)}</div><h2 dir="ltr">${escapeHtml(series.seriesCode)} ${escapeHtml(text.series)}</h2></a>`).join('');
   const content = seriesCards ? `<section class="section"><div class="site-shell"><div class="catalogue-grid">${seriesCards}</div></div></section>` : '';
   const statement = category.code === 'custom' ? `<p>${escapeHtml(customStatement[locale])}</p>` : '';
-  const banner = category.code === 'custom' ? `<section class="section"><div class="site-shell"><img class="custom-banner" src="/assets/custom-solutions.webp" alt="${escapeHtml(imageAlts.customSolutions[locale])}" width="413" height="42" loading="lazy"></div></section>` : '';
-  return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.category)}</p><h1>${escapeHtml(localizedCategoryTitle(locale, category))}</h1>${statement}</div></section>${productIndex(locale)}${banner}${content}`;
+  return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.category)}</p><h1>${escapeHtml(localizedCategoryTitle(locale, category))}</h1>${statement}</div></section>${productIndex(locale)}${content}`;
 }
 
 function seriesContent(locale, category, series) {
