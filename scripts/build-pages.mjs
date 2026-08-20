@@ -130,6 +130,54 @@ const customStatement = Object.freeze({
   ko: '비표준 크기의 맞춤형 제품.'
 });
 
+const customSolutionsText = Object.freeze({
+  heading: {
+    en: 'Custom Solutions',
+    es: 'Soluciones a medida',
+    de: 'Kundenspezifische Lösungen',
+    fr: 'Solutions sur mesure',
+    pt: 'Soluções personalizadas',
+    ar: 'حلول مخصصة',
+    tr: 'Özel çözümler',
+    ru: 'Индивидуальные решения',
+    it: 'Soluzioni personalizzate',
+    vi: 'Giải pháp tùy chỉnh',
+    id: 'Solusi khusus',
+    ja: 'カスタムソリューション',
+    ko: '맞춤형 솔루션'
+  },
+  lead: {
+    en: 'We provide customized bearing housings to meet your specific requirements.',
+    es: 'Proporcionamos soportes de rodamientos personalizados para satisfacer sus requisitos específicos.',
+    de: 'Wir liefern kundenspezifische Lagergehäuse für Ihre spezifischen Anforderungen.',
+    fr: 'Nous fournissons des paliers personnalisés pour répondre à vos exigences spécifiques.',
+    pt: 'Fornecemos mancais personalizados para atender aos seus requisitos específicos.',
+    ar: 'نوفر بيوت محامل مخصصة لتلبية متطلباتكم الخاصة.',
+    tr: 'Özel gereksinimlerinizi karşılamak için özelleştirilmiş rulman yatakları sağlıyoruz.',
+    ru: 'Мы поставляем корпуса подшипников на заказ в соответствии с вашими требованиями.',
+    it: 'Forniamo supporti per cuscinetti personalizzati per soddisfare le vostre esigenze specifiche.',
+    vi: 'Chúng tôi cung cấp gối đỡ vòng bi tùy chỉnh đáp ứng yêu cầu cụ thể của bạn.',
+    id: 'Kami menyediakan rumah bantalan khusus untuk memenuhi kebutuhan spesifik Anda.',
+    ja: 'お客様のご要望に合わせたカスタムベアリングハウジングを提供します。',
+    ko: '고객의 특정 요구 사항을 충족하는 맞춤형 베어링 하우징을 제공합니다.'
+  },
+  features: {
+    en: ['Custom Design', 'Various Materials', 'Reliable Quality'],
+    es: ['Diseño personalizado', 'Varios materiales', 'Calidad fiable'],
+    de: ['Individuelles Design', 'Verschiedene Materialien', 'Zuverlässige Qualität'],
+    fr: ['Conception personnalisée', 'Divers matériaux', 'Qualité fiable'],
+    pt: ['Design personalizado', 'Vários materiais', 'Qualidade confiável'],
+    ar: ['تصميم مخصص', 'مواد متنوعة', 'جودة موثوقة'],
+    tr: ['Özel tasarım', 'Çeşitli malzemeler', 'Güvenilir kalite'],
+    ru: ['Индивидуальная конструкция', 'Различные материалы', 'Надежное качество'],
+    it: ['Design personalizzato', 'Vari materiali', 'Qualità affidabile'],
+    vi: ['Thiết kế tùy chỉnh', 'Nhiều vật liệu', 'Chất lượng đáng tin cậy'],
+    id: ['Desain khusus', 'Berbagai material', 'Kualitas andal'],
+    ja: ['カスタム設計', '多様な材質', '信頼の品質'],
+    ko: ['맞춤 설계', '다양한 재질', '신뢰할 수 있는 품질']
+  }
+});
+
 const skipLinkText = Object.freeze({
   en: 'Skip to content',
   es: 'Saltar al contenido',
@@ -408,7 +456,7 @@ function categoryContent(locale, category) {
   const text = locales[locale];
   const seriesCards = (category.series ?? []).filter(series => series.status === 'active').map(series => `<a class="product-display-card" href="${seriesPath(locale, category, series)}" dir="ltr"><div class="product-display-card__image">${seriesImage(locale, series)}</div><h2 dir="ltr">${escapeHtml(series.seriesCode)} ${escapeHtml(text.series)}</h2></a>`).join('');
   const content = seriesCards ? `<section class="section"><div class="site-shell"><div class="catalogue-grid">${seriesCards}</div></div></section>` : '';
-  const solutions = category.code === 'custom' ? `<section class="section section--soft"><div class="site-shell custom-solutions"><img class="custom-solutions__img" src="/assets/custom-solutions.webp" alt="${escapeHtml(imageAlts.customSolutions[locale])}" width="413" height="42" loading="lazy"><p class="custom-solutions__text">${escapeHtml(customStatement[locale])}</p></div></section>` : '';
+  const solutions = category.code === 'custom' ? `<section class="section section--soft"><div class="site-shell custom-solutions"><div class="section-heading section-heading--center"><p class="eyebrow">${escapeHtml(text.category)}</p><h2>${escapeHtml(customSolutionsText.heading[locale])}</h2></div><img class="custom-solutions__img" src="/assets/custom-solutions.webp" alt="${escapeHtml(imageAlts.customSolutions[locale])}" width="413" height="42" loading="lazy"><p class="custom-solutions__lead">${escapeHtml(customSolutionsText.lead[locale])}</p><div class="custom-solutions__grid">${customSolutionsText.features[locale].map(feature => `<div class="custom-solutions__item"><h3>${escapeHtml(feature)}</h3></div>`).join('')}</div><p class="custom-solutions__note">${escapeHtml(customStatement[locale])}</p></div></section>` : '';
   return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.category)}</p><h1>${escapeHtml(localizedCategoryTitle(locale, category))}</h1></div></section>${productIndex(locale)}${solutions}${content}`;
 }
 
