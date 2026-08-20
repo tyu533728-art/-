@@ -412,7 +412,7 @@ function categoryCardCopy(locale, category) {
 function categoryCardImage(locale, category) {
   const representative = category.series?.find(series => series.status === 'active' && series.image);
   if (representative) return { ...representative.image, alt: displayItemAlts[locale][representative.seriesCode] ?? representative.alt };
-  if (category.code === 'custom') return { src: '/assets/custom-solutions.webp', alt: imageAlts.customSolutions[locale], width: 413, height: 42 };
+  if (category.code === 'custom') return { src: '/assets/custom-solutions.webp', alt: imageAlts.customSolutions[locale], width: 1536, height: 1024 };
   return null;
 }
 
