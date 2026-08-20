@@ -4,7 +4,7 @@ const image = (src, width, height) => ({ src, width, height });
 
 const confirmedImages = Object.freeze({
   UC: image('/assets/product-images/uc-product.webp', 223, 248),
-  P: image('/assets/product-images/p-housing.webp', 1000, 1000),
+  P: image('/assets/product-images/p-housing.webp', 980, 520),
   PA: image('/assets/product-images/pa-housing.webp', 1000, 1000),
   F: image('/assets/product-images/f-housing.webp', 1000, 1000),
   FL: image('/assets/product-images/fl-housing.webp', 1000, 1000),
