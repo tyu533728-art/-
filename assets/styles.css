@@ -181,6 +181,28 @@ h2 { margin-bottom: 18px; font-size: clamp(28px, 3.6vw, 44px); }
 [dir="rtl"] .contact-value { display: inline-block; width: 100%; text-align: left; }
 [dir="rtl"] .parameter-table { direction: ltr; text-align: left; }
 
+/* ---- V4.1 design refinements: engineering blueprint accents ---- */
+body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+.eyebrow { letter-spacing: .07em; }
+.home-hero__copy { position: relative; }
+.home-hero__copy::before { position: absolute; top: 0; right: -40px; bottom: 0; left: -60px; z-index: 0; background-image: linear-gradient(rgb(18 63 83 / 5%) 1px, transparent 1px), linear-gradient(90deg, rgb(18 63 83 / 5%) 1px, transparent 1px); background-size: 36px 36px; content: ""; pointer-events: none; }
+.home-hero__copy > * { position: relative; z-index: 1; }
+.home-hero__copy h1 { position: relative; }
+.home-hero__copy h1::after { display: block; width: 64px; height: 4px; margin-top: 22px; background: var(--amber); content: ""; }
+.category-card, .catalogue-card, .series-card { border-radius: 2px; }
+.category-card::before, .catalogue-card::before, .series-card::before { position: absolute; top: 10px; left: 10px; z-index: 2; width: 12px; height: 12px; border-top: 2px solid var(--steel); border-left: 2px solid var(--steel); content: ""; opacity: .5; }
+.category-card::after, .catalogue-card::after, .series-card::after { position: absolute; right: 10px; bottom: 10px; z-index: 2; display: block; width: 12px; height: 12px; border-right: 2px solid var(--steel); border-bottom: 2px solid var(--steel); content: ""; opacity: .5; }
+.category-card img, .catalogue-card img, .series-card img { transition: transform 260ms ease; }
+.category-card:hover img, .catalogue-card:hover img, .series-card:hover img { transform: scale(1.04); }
+.category-card:hover, .catalogue-card:hover, .series-card:hover { box-shadow: 0 18px 34px rgb(23 33 38 / 14%); }
+.product-display-card__image img { transition: transform 260ms ease; }
+.product-display-card:hover .product-display-card__image img { transform: scale(1.04); }
+.text-link { transition: color 180ms ease, border-color 180ms ease; }
+.text-link:hover { color: var(--amber); border-color: var(--amber); }
+.site-nav a { transition: color 180ms ease; }
+.site-nav a:hover { color: var(--blue); }
+.section-heading h2 { letter-spacing: -.01em; }
+
 @media (max-width: 1040px) {
   .home-hero__grid { grid-template-columns: minmax(0, 1fr) minmax(340px, .9fr); gap: 30px; }
   .home-hero__media { min-height: 500px; }
