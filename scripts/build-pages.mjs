@@ -462,7 +462,7 @@ function heroImage(locale) {
 function homeContent(locale) {
   const text = locales[locale];
   const home = homePresentation[locale];
-  const productCards = categories.map(category => `<a class="category-card${category.code === 'custom' ? ' category-card--custom' : ''}" href="${categoryPath(locale, category)}">${categoryCardMedia(locale, category, 'category-card')}<span class="category-card__label">${escapeHtml(text.category)}</span><h2>${escapeHtml(categoryCardCopy(locale, category).title)}</h2><span class="category-card__link">${escapeHtml(text.navProducts)}</span></a>`).join('');
+  const productCards = categories.map(category => `<a class="category-card${category.code === 'custom' ? ' category-card--custom' : ''}" href="${categoryPath(locale, category)}">${categoryCardMedia(locale, category, 'category-card')}<h2>${escapeHtml(categoryCardCopy(locale, category).title)}</h2></a>`).join('');
   return `<section class="home-hero"><div class="site-shell home-hero__grid"><div class="home-hero__copy"><h1>${escapeHtml(home.title)}</h1><p>${escapeHtml(home.lead)}</p></div><div class="home-hero__media">${heroImage(locale)}<img class="hero-factory" src="/assets/cnc-milling.webp" alt="${escapeHtml(imageAlts.heroFactory[locale])}" width="1280" height="853" loading="lazy"></div></div></section><section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h2>${escapeHtml(text.homeCategoriesHeading)}</h2></div><div class="category-grid">${productCards}</div></div></section><section class="section"><div class="site-shell company-intro"><div class="section-heading"><p class="eyebrow">${escapeHtml(companyIntro.eyebrow[locale])}</p><h2>${escapeHtml(companyIntro.heading[locale])}</h2></div><p class="company-intro__body">${escapeHtml(companyIntro.body[locale])}</p></div></section><section class="section"><div class="site-shell factory-layout"><div><h2>${escapeHtml(home.partnerHeading)}</h2><p>${escapeHtml(home.partnerLead)}</p></div><div class="factory-strip"><img src="/assets/factory-floor.webp" alt="${escapeHtml(imageAlts.factoryFloor[locale])}" width="1280" height="508" loading="lazy"><img src="/assets/cnc-turning.webp" alt="${escapeHtml(imageAlts.cncTurning[locale])}" width="1280" height="960" loading="lazy"></div></div></section>`;
 }
 
@@ -471,8 +471,7 @@ function productIndex(locale) {
 }
 
 function categoryCard(locale, category) {
-  const text = locales[locale];
-  return `<a class="catalogue-card${category.code === 'custom' ? ' catalogue-card--custom' : ''}" href="${categoryPath(locale, category)}">${categoryCardMedia(locale, category, 'catalogue-card')}<div><p class="eyebrow">${escapeHtml(text.category)}</p><h2>${escapeHtml(categoryCardCopy(locale, category).title)}</h2></div></a>`;
+  return `<a class="catalogue-card${category.code === 'custom' ? ' catalogue-card--custom' : ''}" href="${categoryPath(locale, category)}">${categoryCardMedia(locale, category, 'catalogue-card')}<div><h2>${escapeHtml(categoryCardCopy(locale, category).title)}</h2></div></a>`;
 }
 
 function productsContent(locale) {
