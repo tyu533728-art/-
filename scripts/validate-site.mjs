@@ -169,7 +169,11 @@ for (const category of categories) {
 
 const customHtml = await readFile(join(root, 'en', 'products', 'custom', 'index.html'), 'utf8');
 if (!customHtml.includes('Custom non-standard size products.')) fail('Custom statement is missing');
-if (/<img\b|catalogue-card|model-list|parameter-table/i.test(customHtml.match(/<main id="main-content">([\s\S]*?)<\/main>/i)?.[1] ?? '')) fail('Custom page contains an image or product card');
+const customMain = customHtml.match(/<main id="main-content">([\s\S]*?)<\/main>/i)?.[1] ?? '';
+if (/catalogue-card|model-list|parameter-table/i.test(customMain)) fail('Custom page contains a product card or technical detail entry');
+const customImages = customMain.match(/<img\b[^>]*>/gi) ?? [];
+if (customImages.some(tag => !/src="\/assets\/custom-solutions\.webp"/.test(tag))) fail('Custom page contains an image other than the solutions banner');
+if (customImages.length > 1) fail('Custom page must contain at most the solutions banner image');
 
 const sitemap = await readFile(join(root, 'sitemap.xml'), 'utf8');
 const sitemapRoutes = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => new URL(match[1]).pathname);
