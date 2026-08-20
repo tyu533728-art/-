@@ -452,8 +452,7 @@ function categoryCardImage(locale, category) {
 
 function categoryCardMedia(locale, category, className) {
   const image = categoryCardImage(locale, category);
-  const copy = categoryCardCopy(locale, category);
-  return `${image ? lazyImage(image) : ''}<span class="${className}__visual" aria-hidden="true">${escapeHtml(copy.visual)}</span>`;
+  return image ? lazyImage(image) : '';
 }
 
 function heroImage(locale) {
