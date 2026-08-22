@@ -236,6 +236,120 @@ const companyIntro = Object.freeze({
   }
 });
 
+const factorySection = Object.freeze({
+  eyebrow: { en: 'Manufacturing', es: 'Fabricación', de: 'Fertigung', fr: 'Fabrication', pt: 'Fabricação', ar: 'التصنيع', tr: 'Üretim', ru: 'Производство', it: 'Produzione', vi: 'Sản xuất', id: 'Manufaktur', ja: '製造', ko: '제조' },
+  heading: {
+    en: 'Our Factory',
+    es: 'Nuestra fábrica',
+    de: 'Unser Werk',
+    fr: 'Notre usine',
+    pt: 'Nossa fábrica',
+    ar: 'مصنعنا',
+    tr: 'Fabrikamız',
+    ru: 'Наш завод',
+    it: 'La nostra fabbrica',
+    vi: 'Nhà máy của chúng tôi',
+    id: 'Pabrik kami',
+    ja: '当社の工場',
+    ko: '우리 공장'
+  },
+  lead: {
+    en: 'Our Own Manufacturing Facility. Quality bearings & bearing housings, flexible MOQ & custom solutions.',
+    es: 'Nuestras propias instalaciones de fabricación. Rodamientos y soportes de rodamientos de calidad, MOQ flexible y soluciones personalizadas.',
+    de: 'Unsere eigene Fertigungsstätte. Qualitätslager und -gehäuse, flexible Mindestbestellmengen und kundenspezifische Lösungen.',
+    fr: 'Notre propre installation de fabrication. Roulements et paliers de qualité, MOQ flexible et solutions sur mesure.',
+    pt: 'Nossas próprias instalações de fabricação. Rolamentos e mancais de qualidade, MOQ flexível e soluções personalizadas.',
+    ar: 'منشأة التصنيع الخاصة بنا. محامل وبيوت محامل عالية الجودة، حد أدنى مرن للطلب وحلول مخصصة.',
+    tr: 'Kendi üretim tesisimiz. Kaliteli rulmanlar ve rulman yatakları, esnek minimum sipariş ve özel çözümler.',
+    ru: 'Собственное производственное предприятие. Качественные подшипники и корпуса, гибкий минимальный заказ и индивидуальные решения.',
+    it: 'Il nostro stabilimento di produzione. Cuscinetti e supporti di qualità, MOQ flessibile e soluzioni personalizzate.',
+    vi: 'Cơ sở sản xuất của riêng chúng tôi. Vòng bi và gối đỡ chất lượng, MOQ linh hoạt và giải pháp tùy chỉnh.',
+    id: 'Fasilitas manufaktur kami sendiri. Bantalan dan rumah bantalan berkualitas, MOQ fleksibel, dan solusi khusus.',
+    ja: '自社工場。高品質なベアリングとベアリングハウジング、柔軟な最小注文数、カスタムソリューション。',
+    ko: '자체 제조 시설. 고품질 베어링 및 베어링 하우징, 유연한 최소 주문 수량, 맞춤형 솔루션.'
+  },
+  features: {
+    en: [
+      { title: 'In-house Production', text: 'All products made in-house, no outsourcing.' },
+      { title: 'Custom OEM & ODM', text: 'Custom parts from your drawings or samples.' },
+      { title: 'Flexible MOQ', text: 'Small-batch trial orders accepted.' },
+      { title: 'Strict Quality Control', text: 'Raw material & finished-product dual inspection.' }
+    ],
+    es: [
+      { title: 'Producción propia', text: 'Todos los productos se fabrican internamente, sin subcontratación.' },
+      { title: 'OEM y ODM personalizados', text: 'Piezas personalizadas según sus planos o muestras.' },
+      { title: 'MOQ flexible', text: 'Se aceptan pedidos de prueba en pequeños lotes.' },
+      { title: 'Control de calidad estricto', text: 'Inspección dual de materias primas y productos terminados.' }
+    ],
+    de: [
+      { title: 'Eigene Produktion', text: 'Alle Produkte werden intern gefertigt, keine Fremdvergabe.' },
+      { title: 'Kundenspezifisches OEM & ODM', text: 'Kundenteile nach Ihren Zeichnungen oder Mustern.' },
+      { title: 'Flexible Mindestbestellmenge', text: 'Kleinserien-Testbestellungen möglich.' },
+      { title: 'Strenge Qualitätskontrolle', text: 'Doppelte Prüfung von Rohstoffen und Fertigprodukten.' }
+    ],
+    fr: [
+      { title: 'Production interne', text: 'Tous les produits sont fabriqués en interne, sans sous-traitance.' },
+      { title: 'OEM & ODM sur mesure', text: 'Pièces personnalisées selon vos dessins ou échantillons.' },
+      { title: 'MOQ flexible', text: 'Commandes d\'essai en petites quantités acceptées.' },
+      { title: 'Contrôle qualité strict', text: 'Double inspection des matières premières et des produits finis.' }
+    ],
+    pt: [
+      { title: 'Produção própria', text: 'Todos os produtos são fabricados internamente, sem terceirização.' },
+      { title: 'OEM e ODM personalizados', text: 'Peças personalizadas a partir dos seus desenhos ou amostras.' },
+      { title: 'MOQ flexível', text: 'Pedidos de teste em pequenos lotes aceitos.' },
+      { title: 'Controle de qualidade rigoroso', text: 'Inspeção dupla de matérias-primas e produtos acabados.' }
+    ],
+    ar: [
+      { title: 'إنتاج داخلي', text: 'جميع المنتجات مصنوعة داخليًا دون الاستعانة بمصادر خارجية.' },
+      { title: 'تصنيع مخصص OEM وODM', text: 'أجزاء مخصصة حسب رسوماتكم أو عيناتكم.' },
+      { title: 'حد أدنى مرن للطلب', text: 'نقبل طلبات تجريبية بكميات صغيرة.' },
+      { title: 'مراقبة جودة صارمة', text: 'فحص مزدوج للمواد الخام والمنتجات النهائية.' }
+    ],
+    tr: [
+      { title: 'Kendi üretimimiz', text: 'Tüm ürünler dış kaynak kullanılmadan kendi tesisimizde üretilir.' },
+      { title: 'Özel OEM ve ODM', text: 'Çizimlerinize veya numunelerinize göre özel parçalar.' },
+      { title: 'Esnek minimum sipariş', text: 'Küçük partili deneme siparişleri kabul edilir.' },
+      { title: 'Sıkı kalite kontrol', text: 'Hammadde ve bitmiş ürün çift denetimi.' }
+    ],
+    ru: [
+      { title: 'Собственное производство', text: 'Вся продукция производится нами, без аутсорсинга.' },
+      { title: 'Индивидуальный OEM и ODM', text: 'Изделия по вашим чертежам или образцам.' },
+      { title: 'Гибкий минимальный заказ', text: 'Пробные заказы малыми партиями принимаются.' },
+      { title: 'Строгий контроль качества', text: 'Двойная проверка сырья и готовой продукции.' }
+    ],
+    it: [
+      { title: 'Produzione interna', text: 'Tutti i prodotti sono realizzati internamente, senza esternalizzazioni.' },
+      { title: 'OEM e ODM personalizzati', text: 'Componenti personalizzati dai vostri disegni o campioni.' },
+      { title: 'MOQ flessibile', text: 'Ordini di prova in piccoli lotti accettati.' },
+      { title: 'Controllo qualità rigoroso', text: 'Doppia ispezione di materie prime e prodotti finiti.' }
+    ],
+    vi: [
+      { title: 'Sản xuất nội bộ', text: 'Tất cả sản phẩm được sản xuất trong nhà, không gia công bên ngoài.' },
+      { title: 'OEM & ODM tùy chỉnh', text: 'Linh kiện tùy chỉnh theo bản vẽ hoặc mẫu của bạn.' },
+      { title: 'MOQ linh hoạt', text: 'Chấp nhận đơn hàng thử nghiệm số lượng nhỏ.' },
+      { title: 'Kiểm soát chất lượng nghiêm ngặt', text: 'Kiểm tra kép nguyên liệu thô và thành phẩm.' }
+    ],
+    id: [
+      { title: 'Produksi sendiri', text: 'Semua produk diproduksi sendiri, tanpa outsourcing.' },
+      { title: 'OEM & ODM khusus', text: 'Suku cadang khusus sesuai gambar atau sampel Anda.' },
+      { title: 'MOQ fleksibel', text: 'Pesanan uji coba dalam jumlah kecil diterima.' },
+      { title: 'Kontrol kualitas ketat', text: 'Inspeksi ganda bahan baku dan produk jadi.' }
+    ],
+    ja: [
+      { title: '自社生産', text: '全製品を自社工場で生産し、外部委託はありません。' },
+      { title: 'カスタムOEM＆ODM', text: '図面やサンプルに基づくカスタム部品。' },
+      { title: '柔軟な最小注文数', text: '少量の試験注文に対応。' },
+      { title: '厳格な品質管理', text: '原材料と完成品の二重検査。' }
+    ],
+    ko: [
+      { title: '자체 생산', text: '모든 제품을 외주 없이 자체 생산합니다.' },
+      { title: '맞춤형 OEM & ODM', text: '도면이나 샘플에 따른 맞춤 부품.' },
+      { title: '유연한 최소 주문량', text: '소량 시험 주문 가능.' },
+      { title: '엄격한 품질 관리', text: '원자재 및 완제품 이중 검사.' }
+    ]
+  }
+});
+
 const homePresentation = Object.freeze({
   en: { eyebrow: 'Industrial Product Catalogue', title: 'Industrial Bearings & Bearing Housings', lead: 'Product information for industrial bearings, bearing housings, and custom products.', productsHeading: 'Bearings, bearing housings and custom products.', partnerHeading: 'Manufacturing Partner', partnerLead: 'Supported by a long-term manufacturing partner with industrial production capabilities.' },
   es: { eyebrow: 'Catálogo de productos industriales', title: 'Rodamientos industriales y soportes de rodamientos', lead: 'Información de productos sobre rodamientos industriales, soportes de rodamientos y productos personalizados.', productsHeading: 'Rodamientos, soportes de rodamientos y productos personalizados.', partnerHeading: 'Socio de fabricación', partnerLead: 'Con el respaldo de un socio de fabricación a largo plazo con capacidades de producción industrial.' },
@@ -463,7 +577,7 @@ function homeContent(locale) {
   const text = locales[locale];
   const home = homePresentation[locale];
   const productCards = categories.map(category => `<a class="category-card${category.code === 'custom' ? ' category-card--custom' : ''}" href="${categoryPath(locale, category)}">${categoryCardMedia(locale, category, 'category-card')}<h2>${escapeHtml(categoryCardCopy(locale, category).title)}</h2></a>`).join('');
-  return `<section class="home-hero"><div class="site-shell home-hero__grid"><div class="home-hero__copy"><h1>${escapeHtml(home.title)}</h1><p>${escapeHtml(home.lead)}</p></div><div class="home-hero__media">${heroImage(locale)}<img class="hero-factory" src="/assets/cnc-milling.webp" alt="${escapeHtml(imageAlts.heroFactory[locale])}" width="1280" height="853" loading="lazy"></div></div></section><section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h2>${escapeHtml(text.homeCategoriesHeading)}</h2></div><div class="category-grid">${productCards}</div></div></section><section class="section"><div class="site-shell company-intro"><div class="section-heading"><p class="eyebrow">${escapeHtml(companyIntro.eyebrow[locale])}</p><h2>${escapeHtml(companyIntro.heading[locale])}</h2></div><p class="company-intro__body">${escapeHtml(companyIntro.body[locale])}</p></div></section><section class="section"><div class="site-shell factory-layout"><div><h2>${escapeHtml(home.partnerHeading)}</h2><p>${escapeHtml(home.partnerLead)}</p></div><div class="factory-strip"><img src="/assets/factory-floor.webp" alt="${escapeHtml(imageAlts.factoryFloor[locale])}" width="1280" height="508" loading="lazy"><img src="/assets/cnc-turning.webp" alt="${escapeHtml(imageAlts.cncTurning[locale])}" width="1280" height="960" loading="lazy"></div></div></section>`;
+  return `<section class="home-hero"><div class="site-shell home-hero__grid"><div class="home-hero__copy"><h1>${escapeHtml(home.title)}</h1><p>${escapeHtml(home.lead)}</p></div><div class="home-hero__media">${heroImage(locale)}<img class="hero-factory" src="/assets/cnc-milling.webp" alt="${escapeHtml(imageAlts.heroFactory[locale])}" width="1280" height="853" loading="lazy"></div></div></section><section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h2>${escapeHtml(text.homeCategoriesHeading)}</h2></div><div class="category-grid">${productCards}</div></div></section><section class="section"><div class="site-shell company-intro"><div class="section-heading"><p class="eyebrow">${escapeHtml(companyIntro.eyebrow[locale])}</p><h2>${escapeHtml(companyIntro.heading[locale])}</h2></div><p class="company-intro__body">${escapeHtml(companyIntro.body[locale])}</p></div></section><section class="section"><div class="site-shell factory-banner"><div class="factory-banner__copy"><p class="eyebrow">${escapeHtml(factorySection.eyebrow[locale])}</p><h2>${escapeHtml(factorySection.heading[locale])}</h2><p class="factory-banner__lead">${escapeHtml(factorySection.lead[locale])}</p></div><div class="factory-strip"><img src="/assets/factory-floor.webp" alt="${escapeHtml(imageAlts.factoryFloor[locale])}" width="1280" height="508" loading="lazy"><img src="/assets/cnc-turning.webp" alt="${escapeHtml(imageAlts.cncTurning[locale])}" width="1280" height="960" loading="lazy"></div></div><div class="site-shell factory-features">${factorySection.features[locale].map(feature => `<article class="factory-feature"><h3>${escapeHtml(feature.title)}</h3><p>${escapeHtml(feature.text)}</p></article>`).join('')}</div></section>`;
 }
 
 function productIndex(locale) {
