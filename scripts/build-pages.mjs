@@ -10,7 +10,7 @@ const localeCodes = [...LOCALE_CODES];
 validateProductCatalog(productCatalog);
 
 const site = {
-  brand: '耐特',
+  brand: 'Naite',
   email: '729865273lq@gmail.com',
   whatsapp: '+8617600510039',
   facebook: 'Sixty-seven Liu',
