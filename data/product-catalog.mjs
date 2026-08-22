@@ -89,8 +89,8 @@ export const productCatalog = {
         userConfirmedSeries(pillowBlockBearingUnits, 'UCPH', confirmedImages.UCPH),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCFA', confirmedImages.UCFA),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCFB', confirmedImages.UCFB),
-        userConfirmedSeries(pillowBlockBearingUnits, 'PBU', confirmedImages.PBU, 'Pillow Block Bearing Unit'),
-        userConfirmedSeries(pillowBlockBearingUnits, 'MBU', confirmedImages.MBU, 'Mounted Bearing Unit'),
+        userConfirmedSeries(pillowBlockBearingUnits, 'PBU', confirmedImages.PBU, 'Mounted Bearing Unit'),
+        userConfirmedSeries(pillowBlockBearingUnits, 'MBU', confirmedImages.MBU, 'Pillow Block Bearing Unit'),
         userConfirmedSeries(pillowBlockBearingUnits, 'UC', confirmedImages.UC)
       ],
       products: [],
