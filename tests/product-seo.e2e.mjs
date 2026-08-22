@@ -16,6 +16,9 @@ const series = [
   { code: 'UCFC', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UCFL', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UCP', image: true, category: 'pillow-block-bearing-units' },
+  { code: 'UCPH', image: true, category: 'pillow-block-bearing-units' },
+  { code: 'UCFA', image: true, category: 'pillow-block-bearing-units' },
+  { code: 'UCPB', image: true, category: 'pillow-block-bearing-units' },
   { code: 'P', image: true, category: 'bearing-housing-series' },
   { code: 'PA', image: true, category: 'bearing-housing-series' },
   { code: 'F', image: true, category: 'bearing-housing-series' },
@@ -88,4 +91,4 @@ if (failures.length) {
   console.error(failures.join('\n'));
   process.exit(1);
 }
-console.log('PRODUCTS browser checks passed: three categories, thirteen active Series pages, two pending Series 404s, and no third-level routes.');
+console.log('PRODUCTS browser checks passed: three categories, sixteen active Series pages, two pending Series 404s, and no third-level routes.');
