@@ -4,6 +4,11 @@ const image = (src, width, height) => ({ src, width, height });
 
 const confirmedImages = Object.freeze({
   UC: image('/assets/product-images/uc-product.webp', 223, 248),
+  UCPA: image('/assets/product-images/ucpa-unit.webp', 800, 800),
+  UCF: image('/assets/product-images/ucf-unit.webp', 800, 800),
+  UCFC: image('/assets/product-images/ucfc-unit.webp', 800, 800),
+  UCFL: image('/assets/product-images/ucfl-unit.webp', 800, 800),
+  UCP: image('/assets/product-images/ucp-unit.webp', 800, 800),
   P: image('/assets/product-images/p-housing.webp', 1000, 1000),
   PA: image('/assets/product-images/pa-housing.webp', 1000, 1000),
   F: image('/assets/product-images/f-housing.webp', 1000, 1000),
@@ -17,6 +22,11 @@ const englishAlts = Object.freeze({
   UC: 'UC wide inner ring insert bearing, set-screw locking',
   UEL: 'UEL wide inner ring insert bearing, eccentric locking collar',
   UK: 'UK insert bearing, tapered bore for adapter sleeve',
+  UCPA: 'UCPA tapped-base pillow block unit with insert bearing',
+  UCF: 'UCF four-bolt flanged unit with insert bearing',
+  UCFC: 'UCFC piloted round flanged unit with insert bearing',
+  UCFL: 'UCFL two-bolt flanged unit with insert bearing',
+  UCP: 'UCP pillow block unit with insert bearing',
   P: 'P pillow block housing',
   PA: 'PA tapped-base pillow block housing',
   F: 'F four-bolt flanged housing',
@@ -57,7 +67,12 @@ export const productCatalog = {
       series: [
         userConfirmedSeries(pillowBlockBearingUnits, 'UC', confirmedImages.UC),
         userConfirmedSeries(pillowBlockBearingUnits, 'UEL'),
-        userConfirmedSeries(pillowBlockBearingUnits, 'UK')
+        userConfirmedSeries(pillowBlockBearingUnits, 'UK'),
+        userConfirmedSeries(pillowBlockBearingUnits, 'UCPA', confirmedImages.UCPA),
+        userConfirmedSeries(pillowBlockBearingUnits, 'UCF', confirmedImages.UCF),
+        userConfirmedSeries(pillowBlockBearingUnits, 'UCFC', confirmedImages.UCFC),
+        userConfirmedSeries(pillowBlockBearingUnits, 'UCFL', confirmedImages.UCFL),
+        userConfirmedSeries(pillowBlockBearingUnits, 'UCP', confirmedImages.UCP)
       ],
       products: [],
       publish: true

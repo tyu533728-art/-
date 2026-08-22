@@ -3,12 +3,12 @@ export const LOCALE_CODES = ['en', 'es', 'de', 'fr', 'pt', 'ar', 'tr', 'ru', 'it
 export const PRODUCT_CATEGORIES = ['Pillow Block Bearing Units', 'Bearing Housing Series', 'Custom'];
 
 export const SERIES_BY_CATEGORY = Object.freeze({
-  'Pillow Block Bearing Units': ['UC', 'UEL', 'UK'],
+  'Pillow Block Bearing Units': ['UC', 'UEL', 'UK', 'UCPA', 'UCF', 'UCFC', 'UCFL', 'UCP'],
   'Bearing Housing Series': ['P', 'PA', 'F', 'FL', 'FC', 'FS', 'T'],
   Custom: []
 });
 
-export const ACTIVE_SERIES = ['UC', 'P', 'PA', 'F', 'FL', 'FC', 'FS', 'T'];
+export const ACTIVE_SERIES = ['UC', 'UCPA', 'UCF', 'UCFC', 'UCFL', 'UCP', 'P', 'PA', 'F', 'FL', 'FC', 'FS', 'T'];
 export const PENDING_SERIES = ['UEL', 'UK'];
 export const MODEL_TECHNICAL_FIELD_NAMES = [];
 export const PRODUCT_MODEL_FIELDS = [];
