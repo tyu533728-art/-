@@ -12,6 +12,9 @@ const confirmedImages = Object.freeze({
   UCPH: image('/assets/product-images/ucph-unit.webp', 800, 800),
   UCFA: image('/assets/product-images/ucfa-unit.webp', 800, 800),
   UCFB: image('/assets/product-images/ucfb-unit.webp', 800, 800),
+  PBU: image('/assets/product-images/pbu-unit.webp', 800, 800),
+  MBU: image('/assets/product-images/mbu-unit.webp', 800, 800),
+  UC: image('/assets/product-images/uc-product.webp', 800, 800),
   P: image('/assets/product-images/p-housing.webp', 1000, 1000),
   PA: image('/assets/product-images/pa-housing.webp', 1000, 1000),
   F: image('/assets/product-images/f-housing.webp', 1000, 1000),
@@ -33,6 +36,9 @@ const englishAlts = Object.freeze({
   UCPH: 'UCPH pillow block unit with long shaft and insert bearing',
   UCFA: 'UCFA flanged unit with insert bearing',
   UCFB: 'UCFB flanged unit with insert bearing',
+  PBU: 'PBU pillow block bearing unit with insert bearing',
+  MBU: 'MBU mounted bearing unit with insert bearing',
+  UC: 'UC wide inner ring insert bearing, set-screw locking',
   P: 'P pillow block housing',
   PA: 'PA tapped-base pillow block housing',
   F: 'F four-bolt flanged housing',
@@ -42,12 +48,13 @@ const englishAlts = Object.freeze({
   T: 'T take-up housing'
 });
 
-export function userConfirmedSeries(category, seriesCode, seriesImage = null) {
+export function userConfirmedSeries(category, seriesCode, seriesImage = null, displayName = null) {
   const isActive = Boolean(seriesImage);
   return {
     category,
     seriesCode,
     seriesName: `${seriesCode} Series`,
+    displayName: displayName ?? seriesCode,
     image: seriesImage,
     alt: isActive ? englishAlts[seriesCode] : '',
     description: isActive ? 'Confirmed series reference image. No model-level data is published.' : 'Series retained for future publication after a confirmed image is supplied.',
@@ -81,7 +88,10 @@ export const productCatalog = {
         userConfirmedSeries(pillowBlockBearingUnits, 'UCP', confirmedImages.UCP),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCPH', confirmedImages.UCPH),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCFA', confirmedImages.UCFA),
-        userConfirmedSeries(pillowBlockBearingUnits, 'UCFB', confirmedImages.UCFB)
+        userConfirmedSeries(pillowBlockBearingUnits, 'UCFB', confirmedImages.UCFB),
+        userConfirmedSeries(pillowBlockBearingUnits, 'PBU', confirmedImages.PBU, 'Pillow Block Bearing Unit'),
+        userConfirmedSeries(pillowBlockBearingUnits, 'MBU', confirmedImages.MBU, 'Mounted Bearing Unit'),
+        userConfirmedSeries(pillowBlockBearingUnits, 'UC', confirmedImages.UC)
       ],
       products: [],
       publish: true
