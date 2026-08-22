@@ -18,7 +18,7 @@ const series = [
   { code: 'UCP', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UCPH', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UCFA', image: true, category: 'pillow-block-bearing-units' },
-  { code: 'UCPB', image: true, category: 'pillow-block-bearing-units' },
+  { code: 'UCFB', image: true, category: 'pillow-block-bearing-units' },
   { code: 'P', image: true, category: 'bearing-housing-series' },
   { code: 'PA', image: true, category: 'bearing-housing-series' },
   { code: 'F', image: true, category: 'bearing-housing-series' },

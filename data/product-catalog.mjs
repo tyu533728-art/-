@@ -11,7 +11,7 @@ const confirmedImages = Object.freeze({
   UCP: image('/assets/product-images/ucp-unit.webp', 800, 800),
   UCPH: image('/assets/product-images/ucph-unit.webp', 800, 800),
   UCFA: image('/assets/product-images/ucfa-unit.webp', 800, 800),
-  UCPB: image('/assets/product-images/ucpb-unit.webp', 800, 800),
+  UCFB: image('/assets/product-images/ucfb-unit.webp', 800, 800),
   P: image('/assets/product-images/p-housing.webp', 1000, 1000),
   PA: image('/assets/product-images/pa-housing.webp', 1000, 1000),
   F: image('/assets/product-images/f-housing.webp', 1000, 1000),
@@ -32,7 +32,7 @@ const englishAlts = Object.freeze({
   UCP: 'UCP pillow block unit with insert bearing',
   UCPH: 'UCPH pillow block unit with long shaft and insert bearing',
   UCFA: 'UCFA flanged unit with insert bearing',
-  UCPB: 'UCPB pillow block unit with insert bearing',
+  UCFB: 'UCFB flanged unit with insert bearing',
   P: 'P pillow block housing',
   PA: 'PA tapped-base pillow block housing',
   F: 'F four-bolt flanged housing',
@@ -81,7 +81,7 @@ export const productCatalog = {
         userConfirmedSeries(pillowBlockBearingUnits, 'UCP', confirmedImages.UCP),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCPH', confirmedImages.UCPH),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCFA', confirmedImages.UCFA),
-        userConfirmedSeries(pillowBlockBearingUnits, 'UCPB', confirmedImages.UCPB)
+        userConfirmedSeries(pillowBlockBearingUnits, 'UCFB', confirmedImages.UCFB)
       ],
       products: [],
       publish: true

@@ -188,7 +188,7 @@ const rootHtml = await readFile(join(root, 'index.html'), 'utf8');
 if (!/noindex, follow/i.test(rootHtml) || !/url=\/en\//i.test(rootHtml)) fail('root redirect must remain noindex with English fallback');
 
 const publicProductImages = (await filesUnder(join(root, 'assets', 'product-images'))).map(file => relative(join(root, 'assets', 'product-images'), file).replaceAll('\\', '/'));
-const expectedPublicImages = ['uc-product.webp', 'ucpa-unit.webp', 'ucf-unit.webp', 'ucfc-unit.webp', 'ucfl-unit.webp', 'ucp-unit.webp', 'ucph-unit.webp', 'ucfa-unit.webp', 'ucpb-unit.webp', 'p-housing.webp', 'pa-housing.webp', 'f-housing.webp', 'fl-housing.webp', 'fc-housing.webp', 'fs-housing.webp', 't-housing.webp'];
+const expectedPublicImages = ['uc-product.webp', 'ucpa-unit.webp', 'ucf-unit.webp', 'ucfc-unit.webp', 'ucfl-unit.webp', 'ucp-unit.webp', 'ucph-unit.webp', 'ucfa-unit.webp', 'ucfb-unit.webp', 'p-housing.webp', 'pa-housing.webp', 'f-housing.webp', 'fl-housing.webp', 'fc-housing.webp', 'fs-housing.webp', 't-housing.webp'];
 if (JSON.stringify(publicProductImages.sort()) !== JSON.stringify(expectedPublicImages.sort())) fail('assets/product-images must contain exactly the 16 active images');
 const legacyImages = (await filesUnder(join(root, 'assets', 'source-products', 'legacy-product-images'))).map(file => relative(join(root, 'assets', 'source-products', 'legacy-product-images'), file).replaceAll('\\', '/'));
 const expectedLegacy = ['ucp-pillow-block-bearing.webp', 'ucf-flange-bearing.webp', 'ucfl-bearing.webp', 'ucfl-reference-2-upright.webp', 'ucfc-round-flange-bearing.webp', 'uct-take-up-bearing.webp', 'uk-product.webp'];
