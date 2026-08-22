@@ -23,7 +23,7 @@ const series = [
   { code: 'FC', image: true, category: 'bearing-housing-series' },
   { code: 'FS', image: true, category: 'bearing-housing-series' },
   { code: 'T', image: true, category: 'bearing-housing-series' }
-].map(item => ({ ...item, name: `${item.code} Series`, href: `/en/products/${item.category}/${item.code.toLowerCase()}/` }));
+].map(item => ({ ...item, name: item.code, href: `/en/products/${item.category}/${item.code.toLowerCase()}/` }));
 const failures = [];
 
 function assert(condition, message) {

@@ -600,7 +600,7 @@ function categorySeoDescription(locale, category) {
 
 function categoryContent(locale, category) {
   const text = locales[locale];
-  const seriesCards = (category.series ?? []).filter(series => series.status === 'active').map(series => `<a class="product-display-card" href="${seriesPath(locale, category, series)}" dir="ltr"><div class="product-display-card__image">${seriesImage(locale, series)}</div><h2 dir="ltr">${escapeHtml(series.seriesCode)} ${escapeHtml(text.series)}</h2></a>`).join('');
+  const seriesCards = (category.series ?? []).filter(series => series.status === 'active').map(series => `<a class="product-display-card" href="${seriesPath(locale, category, series)}" dir="ltr"><div class="product-display-card__image">${seriesImage(locale, series)}</div><h2 dir="ltr">${escapeHtml(series.seriesCode)}</h2></a>`).join('');
   const content = seriesCards ? `<section class="section"><div class="site-shell"><div class="catalogue-grid">${seriesCards}</div></div></section>` : '';
   const solutions = category.code === 'custom' ? `<section class="section section--soft"><div class="site-shell custom-solutions"><div class="section-heading section-heading--center"><h2>${escapeHtml(customSolutionsText.heading[locale])}</h2></div><div class="custom-solutions__pattern" aria-hidden="true"></div><p class="custom-solutions__lead">${escapeHtml(customSolutionsText.lead[locale])}</p><div class="custom-solutions__grid">${customSolutionsText.features[locale].map(feature => `<div class="custom-solutions__item"><span class="custom-solutions__icon" aria-hidden="true"></span><h3>${escapeHtml(feature)}</h3></div>`).join('')}</div><p class="custom-solutions__note">${escapeHtml(customStatement[locale])}</p></div></section>` : '';
   return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.category)}</p><h1>${escapeHtml(localizedCategoryTitle(locale, category))}</h1></div></section>${productIndex(locale)}${solutions}${content}`;
@@ -609,8 +609,8 @@ function categoryContent(locale, category) {
 function seriesContent(locale, category, series) {
   const text = locales[locale];
   const image = seriesImage(locale, series);
-  const content = image ? `<section class="section"><div class="site-shell"><div class="product-display-grid"><article class="product-display-card" dir="ltr"><div class="product-display-card__image">${image}</div><h2 dir="ltr">${escapeHtml(series.seriesCode)} ${escapeHtml(text.series)}</h2></article></div></div></section>` : '';
-  return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.series)}</p><h1 dir="ltr">${escapeHtml(series.seriesCode)} ${escapeHtml(text.series)}</h1></div></section>${productIndex(locale)}${content}`;
+  const content = image ? `<section class="section"><div class="site-shell"><div class="product-display-grid"><article class="product-display-card" dir="ltr"><div class="product-display-card__image">${image}</div><h2 dir="ltr">${escapeHtml(series.seriesCode)}</h2></article></div></div></section>` : '';
+  return `<section class="page-intro page-intro--compact"><div class="site-shell"><h1 dir="ltr">${escapeHtml(series.seriesCode)}</h1></div></section>${productIndex(locale)}${content}`;
 }
 
 function productBreadcrumb(locale, category, product) {
@@ -672,8 +672,8 @@ async function buildProductsLocale(locale, routes) {
     await writePage(locale, categoryPath, page({ locale, path: categoryPath, active: 'products', title: `${localizedCategoryTitle(locale, category)} | ${site.brand}`, description, content: categoryContent(locale, category), schema: { ...organizationSchema(locale), description } }), routes);
     for (const series of (category.series ?? []).filter(item => item.status === 'active')) {
       const seriesRoute = `${categoryPath}/${series.seriesCode.toLowerCase()}`;
-      const seriesTitle = `${series.seriesCode} ${text.series} | ${localizedCategoryTitle(locale, category)} | ${site.brand}`;
-      const seriesDescription = `${series.seriesCode} ${text.series}.`;
+      const seriesTitle = `${series.seriesCode} | ${localizedCategoryTitle(locale, category)} | ${site.brand}`;
+      const seriesDescription = `${series.seriesCode}.`;
       await writePage(locale, seriesRoute, page({ locale, path: seriesRoute, active: 'products', title: seriesTitle, description: seriesDescription, content: seriesContent(locale, category, series), schema: { ...organizationSchema(locale), description: seriesDescription } }), routes);
     }
   }
