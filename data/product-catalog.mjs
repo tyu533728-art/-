@@ -3,7 +3,7 @@ import { ACTIVE_SERIES, PRODUCT_CATEGORIES, SERIES_BY_CATEGORY, validateProductC
 const image = (src, width, height) => ({ src, width, height });
 
 const confirmedImages = Object.freeze({
-  UCT: image('/assets/product-images/uc-product.webp', 800, 800),
+  UCT: image('/assets/product-images/uct-product.webp', 800, 800),
   UCPA: image('/assets/product-images/ucpa-unit.webp', 800, 800),
   UCF: image('/assets/product-images/ucf-unit.webp', 800, 800),
   UCFC: image('/assets/product-images/ucfc-unit.webp', 800, 800),
