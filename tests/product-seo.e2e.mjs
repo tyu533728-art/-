@@ -8,7 +8,7 @@ const categories = [
   { name: 'Custom', slug: 'custom' }
 ];
 const series = [
-  { code: 'UC', image: true, category: 'pillow-block-bearing-units' },
+  { code: 'UCT', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UEL', image: false, category: 'pillow-block-bearing-units' },
   { code: 'UK', image: false, category: 'pillow-block-bearing-units' },
   { code: 'UCPA', image: true, category: 'pillow-block-bearing-units' },

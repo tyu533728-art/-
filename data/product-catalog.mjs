@@ -3,7 +3,7 @@ import { ACTIVE_SERIES, PRODUCT_CATEGORIES, SERIES_BY_CATEGORY, validateProductC
 const image = (src, width, height) => ({ src, width, height });
 
 const confirmedImages = Object.freeze({
-  UC: image('/assets/product-images/uc-product.webp', 800, 800),
+  UCT: image('/assets/product-images/uc-product.webp', 800, 800),
   UCPA: image('/assets/product-images/ucpa-unit.webp', 800, 800),
   UCF: image('/assets/product-images/ucf-unit.webp', 800, 800),
   UCFC: image('/assets/product-images/ucfc-unit.webp', 800, 800),
@@ -19,7 +19,7 @@ const confirmedImages = Object.freeze({
 });
 
 const englishAlts = Object.freeze({
-  UC: 'UC wide inner ring insert bearing, set-screw locking',
+  UCT: 'UCT wide inner ring insert bearing, set-screw locking',
   UEL: 'UEL wide inner ring insert bearing, eccentric locking collar',
   UK: 'UK insert bearing, tapered bore for adapter sleeve',
   UCPA: 'UCPA tapped-base pillow block unit with insert bearing',
@@ -65,7 +65,7 @@ export const productCatalog = {
       slug: 'pillow-block-bearing-units',
       images: [],
       series: [
-        userConfirmedSeries(pillowBlockBearingUnits, 'UC', confirmedImages.UC),
+        userConfirmedSeries(pillowBlockBearingUnits, 'UCT', confirmedImages.UCT),
         userConfirmedSeries(pillowBlockBearingUnits, 'UEL'),
         userConfirmedSeries(pillowBlockBearingUnits, 'UK'),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCPA', confirmedImages.UCPA),
