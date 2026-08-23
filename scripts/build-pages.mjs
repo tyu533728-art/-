@@ -631,11 +631,7 @@ const housingGalleryAlt = Object.freeze({
 function housingImageCards(locale, badgeCodes = false) {
   const category = categories.find(category => category.code === 'bearing-housing-series');
   const confirmedCodes = new Set(['FB', 'FL', 'P', 'T', 'F', 'PBH', 'FC', 'FU', 'PH', 'PA', 'PAS']);
-  const seriesByImage = new Map();
-  for (const series of (category.series ?? []).filter(series => series.status === 'active' && series.image)) seriesByImage.set(series.image.src, series);
-  return housingGalleryImages.map(src => {
-    const series = seriesByImage.get(src);
-    if (!series) return `<div class="product-display-card product-display-card--plain" dir="ltr"><div class="product-display-card__image"><img src="${src}" alt="${escapeHtml(housingGalleryAlt[locale])}" width="900" height="1000" loading="lazy"></div></div>`;
+  return (category.series ?? []).filter(series => series.status === 'active' && series.image).map(series => {
     const code = badgeCodes && confirmedCodes.has(series.seriesCode) ? `<h2 dir="ltr">${escapeHtml(series.displayName ?? series.seriesCode)}</h2>` : '';
     return `<a class="product-display-card" href="${seriesPath(locale, category, series)}" dir="ltr"><div class="product-display-card__image">${seriesImage(locale, series)}</div>${code}</a>`;
   }).join('');
