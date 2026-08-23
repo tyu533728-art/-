@@ -626,12 +626,108 @@ const housingGalleryAlt = Object.freeze({
   ja: '鋳鉄製ベアリングハウジング',
   ko: '주철 베어링 하우징'
 });
+const housingSliderText = Object.freeze({
+  en: { eyebrow: 'Housing Gallery', heading: 'Product Gallery' },
+  es: { eyebrow: 'Galería de soportes', heading: 'Galería de productos' },
+  de: { eyebrow: 'Gehäusegalerie', heading: 'Produktgalerie' },
+  fr: { eyebrow: 'Galerie de paliers', heading: 'Galerie de produits' },
+  pt: { eyebrow: 'Galeria de suportes', heading: 'Galeria de produtos' },
+  ar: { eyebrow: 'بيوت المحامل', heading: 'معرض المنتجات' },
+  tr: { eyebrow: 'Yatak Galerisi', heading: 'Ürün Galerisi' },
+  ru: { eyebrow: 'Галерея корпусов', heading: 'Галерея продукции' },
+  it: { eyebrow: 'Galleria supporti', heading: 'Galleria prodotti' },
+  vi: { eyebrow: 'Thư viện gối đỡ', heading: 'Thư viện sản phẩm' },
+  id: { eyebrow: 'Galeri rumah', heading: 'Galeri Produk' },
+  ja: { eyebrow: 'ハウジングギャラリー', heading: '製品ギャラリー' },
+  ko: { eyebrow: '하우징 갤러리', heading: '제품 갤러리' }
+});
+const housingSliderAria = Object.freeze({
+  en: { prev: 'Previous image', next: 'Next image', thumb: 'Show image', all: 'All images' },
+  es: { prev: 'Imagen anterior', next: 'Imagen siguiente', thumb: 'Mostrar imagen', all: 'Todas las imágenes' },
+  de: { prev: 'Vorheriges Bild', next: 'Nächstes Bild', thumb: 'Bild anzeigen', all: 'Alle Bilder' },
+  fr: { prev: 'Image précédente', next: 'Image suivante', thumb: 'Afficher l’image', all: 'Toutes les images' },
+  pt: { prev: 'Imagem anterior', next: 'Próxima imagem', thumb: 'Mostrar imagem', all: 'Todas as imagens' },
+  ar: { prev: 'الصورة السابقة', next: 'الصورة التالية', thumb: 'عرض الصورة', all: 'جميع الصور' },
+  tr: { prev: 'Önceki görsel', next: 'Sonraki görsel', thumb: 'Görseli göster', all: 'Tüm görseller' },
+  ru: { prev: 'Предыдущее изображение', next: 'Следующее изображение', thumb: 'Показать изображение', all: 'Все изображения' },
+  it: { prev: 'Immagine precedente', next: 'Immagine successiva', thumb: 'Mostra immagine', all: 'Tutte le immagini' },
+  vi: { prev: 'Ảnh trước', next: 'Ảnh sau', thumb: 'Xem ảnh', all: 'Tất cả ảnh' },
+  id: { prev: 'Gambar sebelumnya', next: 'Gambar berikutnya', thumb: 'Tampilkan gambar', all: 'Semua gambar' },
+  ja: { prev: '前の画像', next: '次の画像', thumb: '画像を表示', all: 'すべての画像' },
+  ko: { prev: '이전 이미지', next: '다음 이미지', thumb: '이미지 보기', all: '모든 이미지' }
+});
+
+function sliderScript() {
+  return `(function () {
+  'use strict';
+  var root = document.querySelector('[data-slider]');
+  if (!root) return;
+  var slides = root.querySelectorAll('[data-slider-slide]');
+  var thumbs = root.querySelectorAll('[data-slider-thumb]');
+  var prev = root.querySelector('[data-slider-prev]');
+  var next = root.querySelector('[data-slider-next]');
+  var current = root.querySelector('[data-slider-current]');
+  var total = slides.length;
+  var index = 0;
+  var timer = null;
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var rtl = document.documentElement.getAttribute('dir') === 'rtl';
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function render() {
+    for (var j = 0; j < total; j++) {
+      slides[j].classList.toggle('is-active', j === index);
+      thumbs[j].classList.toggle('is-active', j === index);
+      if (j === index) thumbs[j].setAttribute('aria-current', 'true');
+      else thumbs[j].removeAttribute('aria-current');
+    }
+    if (current) current.textContent = pad(index + 1);
+  }
+  function stop() { if (timer) { window.clearInterval(timer); timer = null; } }
+  function start() { if (!reduceMotion && !timer) timer = window.setInterval(function () { index = (index + 1) % total; render(); }, 6000); }
+  function restart() { stop(); start(); }
+  function go(i) { index = (i + total) % total; render(); restart(); }
+  prev.addEventListener('click', function () { go(index - 1); });
+  next.addEventListener('click', function () { go(index + 1); });
+  for (var k = 0; k < total; k++) {
+    (function (j) { thumbs[j].addEventListener('click', function () { go(j); }); })(k);
+  }
+  root.addEventListener('mouseenter', stop);
+  root.addEventListener('mouseleave', start);
+  root.addEventListener('focusin', stop);
+  root.addEventListener('focusout', start);
+  document.addEventListener('keydown', function (e) {
+    if ((e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') || !root.contains(e.target)) return;
+    e.preventDefault();
+    if (e.key === 'ArrowLeft') go(rtl ? index + 1 : index - 1);
+    else go(rtl ? index - 1 : index + 1);
+  });
+  var startX = null;
+  root.addEventListener('touchstart', function (e) { startX = e.touches[0].clientX; }, { passive: true });
+  root.addEventListener('touchend', function (e) {
+    if (startX === null) return;
+    var dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 40) go(dx < 0 ? index + 1 : index - 1);
+    startX = null;
+  }, { passive: true });
+  render();
+})();`;
+}
+
+function housingSlider(locale) {
+  const text = housingSliderText[locale];
+  const aria = housingSliderAria[locale];
+  const total = housingGalleryImages.length;
+  const pad = n => (n < 10 ? '0' : '') + n;
+  const slides = housingGalleryImages.map((src, i) => `<figure class="housing-slider__slide${i === 0 ? ' is-active' : ''}" data-slider-slide><img src="${src}" alt="${escapeHtml(housingGalleryAlt[locale])}" width="900" height="1000" loading="lazy"></figure>`).join('');
+  const thumbs = housingGalleryImages.map((src, i) => `<button type="button" class="housing-slider__thumb${i === 0 ? ' is-active' : ''}" data-slider-thumb aria-label="${escapeHtml(aria.thumb)} ${i + 1} / ${total}"${i === 0 ? ' aria-current="true"' : ''}><img src="${src}" alt="" width="900" height="1000" loading="lazy"></button>`).join('');
+  return `<section class="section section--soft"><div class="site-shell"><div class="section-heading section-heading--center"><p class="eyebrow">${escapeHtml(text.eyebrow)}</p><h2>${escapeHtml(text.heading)}</h2></div><div class="housing-slider" data-slider><div class="housing-slider__stage"><div class="housing-slider__viewport">${slides}</div><button type="button" class="housing-slider__arrow housing-slider__arrow--prev" data-slider-prev aria-label="${escapeHtml(aria.prev)}">&#8249;</button><button type="button" class="housing-slider__arrow housing-slider__arrow--next" data-slider-next aria-label="${escapeHtml(aria.next)}">&#8250;</button><span class="housing-slider__counter" aria-live="polite"><span data-slider-current>01</span> / <span>${pad(total)}</span></span></div><div class="housing-slider__thumbs" aria-label="${escapeHtml(aria.all)}">${thumbs}</div></div></div></section><script>${sliderScript()}</script>`;
+}
 
 function categoryContent(locale, category) {
   const text = locales[locale];
   const seriesCards = (category.series ?? []).filter(series => series.status === 'active').map(series => `<a class="product-display-card" href="${seriesPath(locale, category, series)}" dir="ltr"><div class="product-display-card__image">${seriesImage(locale, series)}</div><h2 dir="ltr">${escapeHtml(series.displayName ?? series.seriesCode)}</h2></a>`).join('');
   const content = seriesCards ? `<section class="section"><div class="site-shell"><div class="catalogue-grid">${seriesCards}</div></div></section>` : '';
-  const gallery = category.code === 'bearing-housing-series' ? `<section class="section"><div class="site-shell"><div class="housing-gallery">${housingGalleryImages.map(src => `<figure class="housing-gallery__item"><img src="${src}" alt="${escapeHtml(housingGalleryAlt[locale])}" width="900" height="1000" loading="lazy"></figure>`).join('')}</div></div></section>` : '';
+  const gallery = category.code === 'bearing-housing-series' ? housingSlider(locale) : '';
   const solutions = category.code === 'custom' ? `<section class="section section--soft"><div class="site-shell custom-solutions"><div class="section-heading section-heading--center"><h2>${escapeHtml(customSolutionsText.heading[locale])}</h2></div><div class="custom-solutions__pattern" aria-hidden="true"></div><p class="custom-solutions__lead">${escapeHtml(customSolutionsText.lead[locale])}</p><div class="custom-solutions__grid">${customSolutionsText.features[locale].map(feature => `<div class="custom-solutions__item"><span class="custom-solutions__icon" aria-hidden="true"></span><h3>${escapeHtml(feature)}</h3></div>`).join('')}</div><p class="custom-solutions__note">${escapeHtml(customStatement[locale])}</p></div></section>` : '';
   return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.category)}</p><h1>${escapeHtml(localizedCategoryTitle(locale, category))}</h1></div></section>${productIndex(locale)}${solutions}${content}${gallery}`;
 }

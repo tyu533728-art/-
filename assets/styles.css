@@ -123,9 +123,22 @@ h2 { margin-bottom: 18px; font-size: clamp(28px, 3.6vw, 44px); }
 .factory-feature:nth-child(3) .factory-feature__mark { transform: none; border-style: dashed; border-color: var(--blue-dark); }
 .factory-feature h3 { margin: 0 0 10px; color: var(--ink); font-family: var(--utility); font-size: 14px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
 .factory-feature p { margin: 0; color: var(--ink-soft); font-size: 14px; line-height: 1.6; }
-.housing-gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
-.housing-gallery__item { margin: 0; border: 1px solid var(--line); background: var(--paper); }
-.housing-gallery__item img { width: 100%; height: auto; object-fit: contain; }
+.housing-slider { --arrow-inset: 14px; max-width: 880px; margin-inline: auto; }
+.housing-slider__stage { position: relative; border: 1px solid var(--line); background: var(--paper); box-shadow: 0 14px 34px rgb(23 33 38 / 10%); }
+.housing-slider__viewport { position: relative; aspect-ratio: 9 / 10; overflow: hidden; background: var(--paper); }
+.housing-slider__slide { position: absolute; inset: 0; display: grid; margin: 0; place-items: center; opacity: 0; visibility: hidden; transition: opacity 300ms ease; }
+.housing-slider__slide.is-active { opacity: 1; visibility: visible; }
+.housing-slider__slide img { width: 100%; height: 100%; object-fit: contain; }
+.housing-slider__arrow { position: absolute; top: 50%; z-index: 3; display: grid; width: 46px; height: 46px; margin-top: -23px; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--ink); background: rgb(255 255 255 / 94%); cursor: pointer; font-family: var(--utility); font-size: 24px; line-height: 1; transition: color 180ms ease, background 180ms ease, border-color 180ms ease; }
+.housing-slider__arrow:hover { border-color: var(--blue); color: var(--paper); background: var(--blue); }
+.housing-slider__arrow--prev { left: var(--arrow-inset); }
+.housing-slider__arrow--next { right: var(--arrow-inset); }
+.housing-slider__counter { position: absolute; right: 16px; bottom: 14px; z-index: 3; padding: 5px 9px; color: var(--paper); background: rgb(23 33 38 / 82%); font-family: var(--utility); font-size: 11px; font-weight: 700; letter-spacing: .08em; }
+.housing-slider__thumbs { display: flex; gap: 8px; margin-top: 14px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; }
+.housing-slider__thumb { flex: 0 0 64px; width: 64px; aspect-ratio: 9 / 10; padding: 0; overflow: hidden; border: 2px solid var(--line); border-radius: 2px; background: var(--paper); cursor: pointer; opacity: .6; transition: opacity 180ms ease, border-color 180ms ease, transform 180ms ease; }
+.housing-slider__thumb img { width: 100%; height: 100%; object-fit: contain; }
+.housing-slider__thumb:hover { border-color: var(--blue); opacity: 1; }
+.housing-slider__thumb.is-active { border-color: var(--amber); opacity: 1; transform: translateY(-2px); }
 .factory-strip { display: grid; grid-template-columns: 1.15fr .85fr; gap: 14px; align-items: end; }
 .factory-strip img { width: 100%; height: 320px; object-fit: cover; filter: grayscale(100%); }
 .factory-strip img:first-child { height: 460px; }
@@ -196,6 +209,10 @@ h2 { margin-bottom: 18px; font-size: clamp(28px, 3.6vw, 44px); }
 [dir="rtl"] .source-note { border-right: 3px solid var(--amber); border-left: 0; padding-right: 16px; padding-left: 0; }
 [dir="rtl"] .contact-value { display: inline-block; width: 100%; text-align: left; }
 [dir="rtl"] .parameter-table { direction: ltr; text-align: left; }
+[dir="rtl"] .housing-slider__arrow--prev { right: var(--arrow-inset); left: auto; }
+[dir="rtl"] .housing-slider__arrow--next { left: var(--arrow-inset); right: auto; }
+[dir="rtl"] .housing-slider__arrow { transform: scaleX(-1); }
+[dir="rtl"] .housing-slider__counter { right: auto; left: 16px; }
 
 /* ---- V4.1 design refinements: engineering blueprint accents ---- */
 body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
@@ -264,6 +281,9 @@ body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; 
   .product-index > div { gap: 22px; }
   .series-gallery { grid-template-columns: 1fr; }
   .series-gallery img { min-height: 260px; }
+  .housing-slider { --arrow-inset: 8px; }
+  .housing-slider__arrow { width: 40px; height: 40px; margin-top: -20px; font-size: 20px; }
+  .housing-slider__thumb { flex-basis: 56px; width: 56px; }
   .about-grid article:nth-child(odd) { padding-right: 0; }
   .footer-contact { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
