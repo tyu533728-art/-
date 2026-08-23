@@ -126,6 +126,13 @@ h2 { margin-bottom: 18px; font-size: clamp(28px, 3.6vw, 44px); }
 .product-display-card--plain { cursor: default; }
 .product-display-card--plain:hover { border-color: var(--line-soft); transform: none; }
 .product-display-card--plain:hover .product-display-card__image img { transform: none; }
+.product-image-zoom { display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
+.lightbox { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; background: rgb(23 33 38 / 94%); cursor: zoom-out; animation: lightbox-in 180ms ease; }
+.lightbox img { display: block; max-width: min(92vw, 1100px); max-height: 86vh; box-shadow: 0 24px 60px rgb(0 0 0 / 45%); }
+.lightbox__close { position: absolute; top: 18px; right: 22px; z-index: 1; display: grid; width: 44px; height: 44px; place-items: center; border: 1px solid rgb(255 255 255 / 35%); border-radius: 50%; color: var(--paper); background: transparent; cursor: pointer; font-size: 18px; line-height: 1; transition: color 180ms ease, background 180ms ease, border-color 180ms ease; }
+.lightbox__close:hover { border-color: var(--amber); color: var(--ink); background: var(--amber); }
+@keyframes lightbox-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .lightbox { animation: none; } }
 .factory-strip { display: grid; grid-template-columns: 1.15fr .85fr; gap: 14px; align-items: end; }
 .factory-strip img { width: 100%; height: 320px; object-fit: cover; filter: grayscale(100%); }
 .factory-strip img:first-child { height: 460px; }
@@ -196,6 +203,7 @@ h2 { margin-bottom: 18px; font-size: clamp(28px, 3.6vw, 44px); }
 [dir="rtl"] .source-note { border-right: 3px solid var(--amber); border-left: 0; padding-right: 16px; padding-left: 0; }
 [dir="rtl"] .contact-value { display: inline-block; width: 100%; text-align: left; }
 [dir="rtl"] .parameter-table { direction: ltr; text-align: left; }
+[dir="rtl"] .lightbox__close { right: auto; left: 22px; }
 
 /* ---- V4.1 design refinements: engineering blueprint accents ---- */
 body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }

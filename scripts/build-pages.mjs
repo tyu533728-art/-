@@ -477,6 +477,7 @@ function head({ locale, path, title, description, schema = organizationSchema(lo
   <meta property="og:url" content="${canonical}">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/styles.css">
+  <script src="/assets/site.js" defer></script>
   <script type="application/ld+json">${JSON.stringify(schema)}</script>
 </head>`;
 }
@@ -648,10 +649,27 @@ function categoryContent(locale, category) {
   return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.category)}</p><h1>${escapeHtml(localizedCategoryTitle(locale, category))}</h1></div></section>${productIndex(locale)}${solutions}${content}`;
 }
 
+const seriesZoomLabels = Object.freeze({
+  en: { zoom: 'Enlarge image', close: 'Close' },
+  es: { zoom: 'Ampliar imagen', close: 'Cerrar' },
+  de: { zoom: 'Bild vergrößern', close: 'Schließen' },
+  fr: { zoom: 'Agrandir l’image', close: 'Fermer' },
+  pt: { zoom: 'Ampliar imagem', close: 'Fechar' },
+  ar: { zoom: 'تكبير الصورة', close: 'إغلاق' },
+  tr: { zoom: 'Görseli büyüt', close: 'Kapat' },
+  ru: { zoom: 'Увеличить изображение', close: 'Закрыть' },
+  it: { zoom: 'Ingrandisci immagine', close: 'Chiudi' },
+  vi: { zoom: 'Phóng to ảnh', close: 'Đóng' },
+  id: { zoom: 'Perbesar gambar', close: 'Tutup' },
+  ja: { zoom: '画像を拡大', close: '閉じる' },
+  ko: { zoom: '이미지 확대', close: '닫기' }
+});
+
 function seriesContent(locale, category, series) {
   const text = locales[locale];
   const image = seriesImage(locale, series);
-  const content = image ? `<section class="section"><div class="site-shell"><div class="product-display-grid"><article class="product-display-card" dir="ltr"><div class="product-display-card__image">${image}</div><h2 dir="ltr">${escapeHtml(series.displayName ?? series.seriesCode)}</h2></article></div></div></section>` : '';
+  const labels = seriesZoomLabels[locale];
+  const content = image ? `<section class="section"><div class="site-shell"><div class="product-display-grid"><article class="product-display-card" dir="ltr"><div class="product-display-card__image"><button type="button" class="product-image-zoom" data-lightbox="${escapeHtml(series.image.src)}" data-close="${escapeHtml(labels.close)}" aria-label="${escapeHtml(labels.zoom)}">${image}</button></div><h2 dir="ltr">${escapeHtml(series.displayName ?? series.seriesCode)}</h2></article></div></div></section>` : '';
   return `<section class="page-intro page-intro--compact"><div class="site-shell"><h1 dir="ltr">${escapeHtml(series.displayName ?? series.seriesCode)}</h1></div></section>${productIndex(locale)}${content}`;
 }
 
@@ -750,7 +768,7 @@ if (productsOnly) {
   await rm(output, { recursive: true, force: true });
   await mkdir(join(output, 'assets'), { recursive: true });
   await mkdir(join(output, 'assets', 'product-images'), { recursive: true });
-  const publicAssets = ['bearing-housing.webp', 'cnc-milling.webp', 'cnc-turning.webp', 'factory-floor.webp', 'custom-solutions.webp', 'favicon.svg', 'styles.css'];
+  const publicAssets = ['bearing-housing.webp', 'cnc-milling.webp', 'cnc-turning.webp', 'factory-floor.webp', 'custom-solutions.webp', 'favicon.svg', 'styles.css', 'site.js'];
   const publicProductImages = [...productCatalog.categories.flatMap(category => category.series.filter(series => series.status === 'active' && series.image).map(series => series.image.src.slice(1))), ...housingGalleryImages.slice(5).map(src => src.slice(1))];
   await Promise.all([
     ...publicProductImages.map(file => copyFile(join(root, file), join(output, file))),
