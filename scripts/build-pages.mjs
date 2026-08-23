@@ -858,7 +858,7 @@ if (productsOnly) {
 
   await writeFile(join(root, 'index.html'), rootRedirect(), 'utf8');
   await rm(join(root, 'products.html'), { force: true });
-  await writeFile(join(root, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${absoluteUrl('sitemap.xml')}\n`, 'utf8');
+  await writeFile(join(root, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${absoluteUrl('/sitemap.xml')}\n`, 'utf8');
   const sitemapUrls = routes.map(route => `  <url><loc>${absoluteUrl(route)}</loc></url>`).join('\n');
   await writeFile(join(root, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapUrls}\n</urlset>\n`, 'utf8');
 
