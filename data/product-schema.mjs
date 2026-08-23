@@ -8,8 +8,8 @@ export const SERIES_BY_CATEGORY = Object.freeze({
   Custom: []
 });
 
-export const ACTIVE_SERIES = ['UCT', 'UCPA', 'UCF', 'UCFC', 'UCFL', 'UCP', 'UCPH', 'UCFA', 'UCFB', 'PBU', 'MBU', 'UC', 'P', 'PA', 'F', 'FL', 'FC', 'FS', 'T'];
-export const PENDING_SERIES = ['UEL', 'UK'];
+export const ACTIVE_SERIES = ['UCT', 'UCPA', 'UCF', 'UCFC', 'UCFL', 'UCP', 'UCPH', 'UCFA', 'UCFB', 'PBU', 'MBU', 'UC', 'P', 'PA', 'F', 'FL', 'FC'];
+export const PENDING_SERIES = ['UEL', 'UK', 'FS', 'T'];
 export const MODEL_TECHNICAL_FIELD_NAMES = [];
 export const PRODUCT_MODEL_FIELDS = [];
 export const STANDARD_MATERIAL_NAMES = ['GCr15', 'Cast Iron', 'Ductile Iron', 'Stainless Steel'];
@@ -21,7 +21,7 @@ function assert(condition, message) {
 function assertImage(image, seriesCode) {
   if (image === null) return;
   assert(image && typeof image === 'object' && !Array.isArray(image), `${seriesCode}: image must be an object or null`);
-  assert(typeof image.src === 'string' && /^\/assets\/product-images\/(?:[a-z-]+)\.(?:webp|avif)$/i.test(image.src), `${seriesCode}: image source must be a public WebP/AVIF product image`);
+  assert(typeof image.src === 'string' && /^\/assets\/product-images\/(?:[a-z0-9-]+)\.(?:webp|avif)$/i.test(image.src), `${seriesCode}: image source must be a public WebP/AVIF product image`);
   assert(Number.isInteger(image.width) && image.width > 0, `${seriesCode}: image width must be positive`);
   assert(Number.isInteger(image.height) && image.height > 0, `${seriesCode}: image height must be positive`);
 }

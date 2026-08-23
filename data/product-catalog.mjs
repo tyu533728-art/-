@@ -15,13 +15,11 @@ const confirmedImages = Object.freeze({
   PBU: image('/assets/product-images/pbu-unit.webp', 800, 800),
   MBU: image('/assets/product-images/mbu-unit.webp', 800, 800),
   UC: image('/assets/product-images/uc-product.webp', 800, 800),
-  P: image('/assets/product-images/p-housing.webp', 1000, 1000),
-  PA: image('/assets/product-images/pa-housing.webp', 1000, 1000),
-  F: image('/assets/product-images/f-housing.webp', 1000, 1000),
-  FL: image('/assets/product-images/fl-housing.webp', 1000, 1000),
-  FC: image('/assets/product-images/fc-housing.webp', 1000, 1000),
-  FS: image('/assets/product-images/fs-housing.webp', 1000, 1000),
-  T: image('/assets/product-images/t-housing.webp', 1000, 1000)
+  P: image('/assets/product-images/housing-1.webp', 900, 1000),
+  PA: image('/assets/product-images/housing-2.webp', 900, 1000),
+  F: image('/assets/product-images/housing-3.webp', 900, 1000),
+  FL: image('/assets/product-images/housing-4.webp', 900, 1000),
+  FC: image('/assets/product-images/housing-5.webp', 900, 1000)
 });
 
 const englishAlts = Object.freeze({
