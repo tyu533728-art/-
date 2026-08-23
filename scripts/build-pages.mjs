@@ -199,6 +199,8 @@ const imageAlts = Object.freeze({
   heroFactory: { en: 'Industrial machining reference image', es: 'Imagen de referencia de mecanizado industrial', de: 'Referenzbild der industriellen Bearbeitung', fr: 'Image de référence d\'usinage industriel', pt: 'Imagem de referência de usinagem industrial', ar: 'صورة مرجعية للتصنيع الآلي الصناعي', tr: 'Endüstriyel işleme referans görseli', ru: 'Справочное изображение промышленной обработки', it: 'Immagine di riferimento di lavorazione industriale', vi: 'Hình ảnh tham khảo gia công công nghiệp', id: 'Gambar referensi pemesinan industri', ja: '産業機械加工参考画像', ko: '산업 가공 참고 이미지' },
   factoryFloor: { en: 'Factory floor reference image', es: 'Imagen de referencia de la planta de producción', de: 'Referenzbild der Werkshalle', fr: 'Image de référence de l\'usine', pt: 'Imagem de referência do chão de fábrica', ar: 'صورة مرجعية لأرضية المصنع', tr: 'Fabrika katı referans görseli', ru: 'Справочное изображение производственного цеха', it: 'Immagine di riferimento dello stabilimento', vi: 'Hình ảnh tham khảo nhà máy', id: 'Gambar referensi lantai pabrik', ja: '工場フロア参考画像', ko: '공장 바닥 참고 이미지' },
   cncTurning: { en: 'Industrial machining reference image', es: 'Imagen de referencia de mecanizado industrial', de: 'Referenzbild der industriellen Bearbeitung', fr: 'Image de référence d\'usinage industriel', pt: 'Imagem de referência de usinagem industrial', ar: 'صورة مرجعية للتصنيع الآلي الصناعي', tr: 'Endüstriyel işleme referans görseli', ru: 'Справочное изображение промышленной обработки', it: 'Immagine di riferimento di lavorazione industriale', vi: 'Hình ảnh tham khảo gia công công nghiệp', id: 'Gambar referensi pemesinan industri', ja: '産業機械加工参考画像', ko: '산업 가공 참고 이미지' },
+  factorySpot1: { en: 'Factory production workshop', es: 'Taller de producción de la fábrica', de: 'Fertigungswerkstatt', fr: 'Atelier de production', pt: 'Oficina de produção da fábrica', ar: 'ورشة إنتاج المصنع', tr: 'Fabrika üretim atölyesi', ru: 'Производственный цех', it: 'Officina di produzione', vi: 'Xưởng sản xuất của nhà máy', id: 'Bengkel produksi pabrik', ja: '工場の生産現場', ko: '공장 생산 현장' },
+  factorySpot2: { en: 'Factory facility view', es: 'Vista de las instalaciones de la fábrica', de: 'Blick auf die Werksanlage', fr: 'Vue de l’usine', pt: 'Vista das instalações da fábrica', ar: 'منظر منشأة المصنع', tr: 'Fabrika tesisi görünümü', ru: 'Вид на предприятие', it: 'Vista dell’impianto', vi: 'Quang cảnh cơ sở nhà máy', id: 'Pemandangan fasilitas pabrik', ja: '工場施設の眺め', ko: '공장 시설 전경' },
   customSolutions: { en: 'Custom bearing solutions', es: 'Soluciones personalizadas de rodamientos', de: 'Kundenspezifische Lagerlösungen', fr: 'Solutions de roulements sur mesure', pt: 'Soluções personalizadas de rolamentos', ar: 'حلول محامل مخصصة', tr: 'Özel rulman çözümleri', ru: 'Индивидуальные подшипниковые решения', it: 'Soluzioni personalizzate per cuscinetti', vi: 'Giải pháp vòng bi tùy chỉnh', id: 'Solusi bantalan khusus', ja: 'カスタムベアリングソリューション', ko: '맞춤형 베어링 솔루션' }
 });
 
@@ -267,6 +269,74 @@ const factorySection = Object.freeze({
     id: 'Fasilitas manufaktur kami sendiri. Bantalan dan rumah bantalan berkualitas, MOQ fleksibel, dan solusi khusus.',
     ja: '自社工場。高品質なベアリングとベアリングハウジング、柔軟な最小注文数、カスタムソリューション。',
     ko: '자체 제조 시설. 고품질 베어링 및 베어링 하우징, 유연한 최소 주문 수량, 맞춤형 솔루션.'
+  },
+  spotlights: {
+    s1: {
+      eyebrow: { en: 'Workshop', es: 'Taller', de: 'Werkstatt', fr: 'Atelier', pt: 'Oficina', ar: 'ورشة', tr: 'Atölye', ru: 'Цех', it: 'Officina', vi: 'Xưởng', id: 'Bengkel', ja: '工場', ko: '공장' },
+      title: {
+        en: 'Production Workshop',
+        es: 'Taller de producción',
+        de: 'Produktionswerkstatt',
+        fr: 'Atelier de production',
+        pt: 'Oficina de produção',
+        ar: 'ورشة الإنتاج',
+        tr: 'Üretim Atölyesi',
+        ru: 'Производственный цех',
+        it: 'Officina di produzione',
+        vi: 'Xưởng sản xuất',
+        id: 'Bengkel produksi',
+        ja: '生産工場',
+        ko: '생산 공장'
+      },
+      text: {
+        en: 'Machining, assembly and finishing of bearing housings are carried out on site, with quality checks at every production stage.',
+        es: 'El mecanizado, montaje y acabado de los soportes de rodamientos se realizan en nuestras instalaciones, con controles de calidad en cada etapa.',
+        de: 'Bearbeitung, Montage und Endbearbeitung von Lagergehäusen erfolgen vor Ort, mit Qualitätskontrollen in jeder Produktionsstufe.',
+        fr: 'L’usinage, le montage et la finition des paliers sont réalisés sur place, avec des contrôles qualité à chaque étape.',
+        pt: 'A usinagem, montagem e acabamento dos suportes de rolamento são realizados no local, com controle de qualidade em cada etapa.',
+        ar: 'يتم تنفيذ التصنيع والتجميع والتشطيب لبيوت المحامل في موقعنا، مع فحوصات الجودة في كل مرحلة.',
+        tr: 'Rulman yataklarının işlenmesi, montajı ve son işlemi tesisimizde, her aşamada kalite kontrolleriyle gerçekleştirilir.',
+        ru: 'Механическая обработка, сборка и отделка корпусов подшипников выполняются на нашем производстве с контролем качества на каждом этапе.',
+        it: 'Lavorazione, assemblaggio e finitura dei supporti per cuscinetti sono eseguiti in sede, con controlli di qualità in ogni fase.',
+        vi: 'Gia công, lắp ráp và hoàn thiện gối đỡ vòng bi được thực hiện tại nhà máy, với kiểm soát chất lượng ở từng công đoạn.',
+        id: 'Pemesinan, perakitan, dan penyelesaian rumah bantalan dilakukan di lokasi, dengan pemeriksaan kualitas di setiap tahap.',
+        ja: '軸受ハウジングの機械加工・組立・仕上げは自社工場で行われ、各工程で品質管理を実施しています。',
+        ko: '베어링 하우징의 가공, 조립, 마감은 자체 공장에서 이루어지며 모든 단계에서 품질 검사를 실시합니다.'
+      }
+    },
+    s2: {
+      eyebrow: { en: 'Facility', es: 'Instalaciones', de: 'Anlage', fr: 'Installation', pt: 'Instalação', ar: 'المنشأة', tr: 'Tesis', ru: 'Предприятие', it: 'Impianto', vi: 'Cơ sở', id: 'Fasilitas', ja: '施設', ko: '시설' },
+      title: {
+        en: 'Factory Facility',
+        es: 'Instalaciones de la fábrica',
+        de: 'Werksanlage',
+        fr: 'Installation de l’usine',
+        pt: 'Instalação da fábrica',
+        ar: 'منشأة المصنع',
+        tr: 'Fabrika Tesisi',
+        ru: 'Производственное предприятие',
+        it: 'Impianto produttivo',
+        vi: 'Cơ sở nhà máy',
+        id: 'Fasilitas pabrik',
+        ja: '工場施設',
+        ko: '공장 시설'
+      },
+      text: {
+        en: 'Our facility is equipped with production and inspection equipment to support a stable supply of bearing housings and related products.',
+        es: 'Nuestras instalaciones cuentan con equipos de producción e inspección para garantizar un suministro estable de soportes y productos relacionados.',
+        de: 'Unsere Anlage ist mit Produktions- und Prüfgeräten ausgestattet, um eine stabile Lieferung von Lagergehäusen und zugehörigen Produkten zu gewährleisten.',
+        fr: 'Notre installation dispose d’équipements de production et d’inspection pour assurer un approvisionnement stable en paliers et produits associés.',
+        pt: 'Nossa instalação possui equipamentos de produção e inspeção para garantir o fornecimento estável de suportes e produtos relacionados.',
+        ar: 'منشأتنا مجهزة بمعدات الإنتاج والفحص لضمان توريد مستقر لبيوت المحامل والمنتجات ذات الصلة.',
+        tr: 'Tesisimiz, rulman yatakları ve ilgili ürünlerin istikrarlı tedarikini sağlamak için üretim ve muayene ekipmanlarıyla donatılmıştır.',
+        ru: 'Наше предприятие оснащено производственным и контрольным оборудованием для стабильных поставок корпусов подшипников и смежных изделий.',
+        it: 'Il nostro impianto è dotato di attrezzature di produzione e ispezione per garantire una fornitura stabile di supporti e prodotti correlati.',
+        vi: 'Cơ sở của chúng tôi được trang bị thiết bị sản xuất và kiểm tra để đảm bảo cung cấp ổn định gối đỡ và sản phẩm liên quan.',
+        id: 'Fasilitas kami dilengkapi peralatan produksi dan inspeksi untuk memastikan pasokan rumah bantalan dan produk terkait yang stabil.',
+        ja: '自社工場には生産・検査設備を備え、軸受ハウジングおよび関連製品を安定的に供給します。',
+        ko: '당사 시설은 생산 및 검사 장비를 갖추어 베어링 하우징 및 관련 제품을 안정적으로 공급합니다.'
+      }
+    }
   },
   features: {
     en: [
@@ -582,7 +652,7 @@ function homeContent(locale) {
   const text = locales[locale];
   const home = homePresentation[locale];
   const productCards = categories.map(category => `<a class="category-card${category.code === 'custom' ? ' category-card--custom' : ''}" href="${categoryPath(locale, category)}">${categoryCardMedia(locale, category, 'category-card')}<h2>${escapeHtml(categoryCardCopy(locale, category).title)}</h2></a>`).join('');
-  return `<section class="home-hero"><div class="site-shell home-hero__grid"><div class="home-hero__copy"><h1>${escapeHtml(home.title)}</h1><p>${escapeHtml(home.lead)}</p></div><div class="home-hero__media">${heroImage(locale)}<img class="hero-factory" src="/assets/cnc-milling.webp" alt="${escapeHtml(imageAlts.heroFactory[locale])}" width="1280" height="853" loading="lazy"></div></div></section><section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h2>${escapeHtml(text.homeCategoriesHeading)}</h2></div><div class="category-grid">${productCards}</div></div></section><section class="section"><div class="site-shell company-intro"><div class="section-heading"><p class="eyebrow">${escapeHtml(companyIntro.eyebrow[locale])}</p><h2>${escapeHtml(companyIntro.heading[locale])}</h2></div><p class="company-intro__body">${escapeHtml(companyIntro.body[locale])}</p></div></section><section class="section"><div class="site-shell factory-banner"><div class="factory-banner__copy"><p class="eyebrow">${escapeHtml(factorySection.eyebrow[locale])}</p><h2>${escapeHtml(factorySection.heading[locale])}</h2><p class="factory-banner__lead">${escapeHtml(factorySection.lead[locale])}</p></div><div class="factory-strip"><img src="/assets/factory-floor.webp" alt="${escapeHtml(imageAlts.factoryFloor[locale])}" width="1280" height="508" loading="lazy"><img src="/assets/cnc-turning.webp" alt="${escapeHtml(imageAlts.cncTurning[locale])}" width="1280" height="960" loading="lazy"></div></div><div class="site-shell factory-features">${factorySection.features[locale].map(feature => `<article class="factory-feature"><span class="factory-feature__mark" aria-hidden="true"></span><h3>${escapeHtml(feature.title)}</h3><p>${escapeHtml(feature.text)}</p></article>`).join('')}</div></section>`;
+  return `<section class="home-hero"><div class="site-shell home-hero__grid"><div class="home-hero__copy"><h1>${escapeHtml(home.title)}</h1><p>${escapeHtml(home.lead)}</p></div><div class="home-hero__media">${heroImage(locale)}<img class="hero-factory" src="/assets/cnc-milling.webp" alt="${escapeHtml(imageAlts.heroFactory[locale])}" width="1280" height="853" loading="lazy"></div></div></section><section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h2>${escapeHtml(text.homeCategoriesHeading)}</h2></div><div class="category-grid">${productCards}</div></div></section><section class="section"><div class="site-shell company-intro"><div class="section-heading"><p class="eyebrow">${escapeHtml(companyIntro.eyebrow[locale])}</p><h2>${escapeHtml(companyIntro.heading[locale])}</h2></div><p class="company-intro__body">${escapeHtml(companyIntro.body[locale])}</p></div></section><section class="section"><div class="site-shell factory-banner"><div class="factory-banner__copy"><p class="eyebrow">${escapeHtml(factorySection.eyebrow[locale])}</p><h2>${escapeHtml(factorySection.heading[locale])}</h2></div><p class="factory-banner__lead">${escapeHtml(factorySection.lead[locale])}</p></div><div class="site-shell factory-spotlights"><article class="factory-spotlight"><figure class="factory-spotlight__media"><img src="/assets/factory-15.webp" alt="${escapeHtml(imageAlts.factorySpot1[locale])}" width="1280" height="960" loading="lazy"></figure><div class="factory-spotlight__body"><p class="eyebrow">${escapeHtml(factorySection.spotlights.s1.eyebrow[locale])}</p><h3>${escapeHtml(factorySection.spotlights.s1.title[locale])}</h3><p>${escapeHtml(factorySection.spotlights.s1.text[locale])}</p></div></article><article class="factory-spotlight factory-spotlight--reverse"><div class="factory-spotlight__body"><p class="eyebrow">${escapeHtml(factorySection.spotlights.s2.eyebrow[locale])}</p><h3>${escapeHtml(factorySection.spotlights.s2.title[locale])}</h3><p>${escapeHtml(factorySection.spotlights.s2.text[locale])}</p></div><figure class="factory-spotlight__media"><img src="/assets/factory-25.webp" alt="${escapeHtml(imageAlts.factorySpot2[locale])}" width="1280" height="960" loading="lazy"></figure></article></div><div class="site-shell factory-features">${factorySection.features[locale].map(feature => `<article class="factory-feature"><span class="factory-feature__mark" aria-hidden="true"></span><h3>${escapeHtml(feature.title)}</h3><p>${escapeHtml(feature.text)}</p></article>`).join('')}</div></section>`;
 }
 
 function productIndex(locale) {
@@ -796,7 +866,7 @@ if (productsOnly) {
   await rm(output, { recursive: true, force: true });
   await mkdir(join(output, 'assets'), { recursive: true });
   await mkdir(join(output, 'assets', 'product-images'), { recursive: true });
-  const publicAssets = ['bearing-housing.webp', 'cnc-milling.webp', 'cnc-turning.webp', 'factory-floor.webp', 'custom-solutions.webp', 'favicon.svg', 'styles.css', 'site.js'];
+  const publicAssets = ['bearing-housing.webp', 'cnc-milling.webp', 'cnc-turning.webp', 'factory-floor.webp', 'factory-15.webp', 'factory-25.webp', 'custom-solutions.webp', 'favicon.svg', 'styles.css', 'site.js'];
   const publicProductImages = [...productCatalog.categories.flatMap(category => category.series.filter(series => series.status === 'active' && series.image).map(series => series.image.src.slice(1))), ...housingGalleryImages.slice(5).map(src => src.slice(1))];
   await Promise.all([
     ...publicProductImages.map(file => copyFile(join(root, file), join(output, file))),
