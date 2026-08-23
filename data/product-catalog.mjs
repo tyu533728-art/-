@@ -18,7 +18,7 @@ const confirmedImages = Object.freeze({
   FB: image('/assets/product-images/housing-1.webp', 900, 1000),
   FL: image('/assets/product-images/housing-2.webp', 900, 1000),
   P: image('/assets/product-images/housing-3.webp', 900, 1000),
-  T: image('/assets/product-images/housing-4.webp', 900, 900),
+  T: image('/assets/product-images/housing-4.webp', 900, 1000),
   F: image('/assets/product-images/housing-5.webp', 900, 1000),
   PBH: image('/assets/product-images/housing-6.webp', 900, 1000),
   FC: image('/assets/product-images/housing-7.webp', 900, 1000),
