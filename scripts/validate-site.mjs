@@ -101,7 +101,7 @@ for (const [route, html] of localizedHtml) {
   if ((html.match(/<h1\b/gi) || []).length !== 1) fail(`${route}: expected exactly one H1`);
   if (!/<main id="main-content">/i.test(html)) fail(`${route}: missing main landmark`);
   const robots = [...html.matchAll(/<meta\b[^>]*\bname="robots"[^>]*>/gi)];
-  if (robots.length !== 1 || attribute(robots[0][0], 'content')?.toLowerCase() !== 'noindex, follow') fail(`${route}: robots meta must be exactly noindex, follow`);
+  if (robots.length !== 1 || attribute(robots[0][0], 'content')?.toLowerCase() !== 'index, follow') fail(`${route}: robots meta must be exactly index, follow`);
   if (!new RegExp(`<html lang="${locale}"`, 'i').test(html)) fail(`${route}: incorrect html language`);
   const links = [...html.matchAll(/<link\b[^>]*>/gi)].map(match => match[0]);
   const canonicalTags = links.filter(tag => /\brel="canonical"/i.test(tag));
@@ -183,7 +183,7 @@ for (const route of expectedSitemap) if (!sitemapRoutes.includes(route)) fail(`s
 if (sitemapRoutes.some(route => /(?:\/uel|\/uk)\/$/i.test(route) || (route.includes('/products/') && route.split('/').filter(Boolean).length >= 5))) fail('sitemap contains pending or third-level product URL');
 
 const robots = await readFile(join(root, 'robots.txt'), 'utf8');
-if (!/^User-agent:\s*\*$/im.test(robots) || !/^Allow:\s*\/$/im.test(robots) || /^Disallow:/im.test(robots) || /^Sitemap:/im.test(robots)) fail('robots.txt must allow crawling without advertising a placeholder sitemap');
+if (!/^User-agent:\s*\*$/im.test(robots) || !/^Allow:\s*\/$/im.test(robots) || /^Disallow:/im.test(robots) || !/^Sitemap:\s*https:\/\/www\.natermanufacture\.com\/sitemap\.xml$/im.test(robots)) fail('robots.txt must allow crawling and advertise the sitemap');
 const rootHtml = await readFile(join(root, 'index.html'), 'utf8');
 if (!/noindex, follow/i.test(rootHtml) || !/url=\/en\//i.test(rootHtml)) fail('root redirect must remain noindex with English fallback');
 
