@@ -19,8 +19,7 @@ const confirmedImages = Object.freeze({
   PA: image('/assets/product-images/housing-2.webp', 900, 1000),
   F: image('/assets/product-images/housing-3.webp', 900, 1000),
   FL: image('/assets/product-images/housing-4.webp', 900, 1000),
-  FC: image('/assets/product-images/housing-5.webp', 900, 1000),
-  FS: image('/assets/product-images/housing-6.webp', 900, 1000)
+  FC: image('/assets/product-images/housing-5.webp', 900, 1000)
 });
 
 const englishAlts = Object.freeze({

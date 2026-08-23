@@ -8,8 +8,8 @@ export const SERIES_BY_CATEGORY = Object.freeze({
   Custom: []
 });
 
-export const ACTIVE_SERIES = ['UCT', 'UCPA', 'UCF', 'UCFC', 'UCFL', 'UCP', 'UCPH', 'UCFA', 'UCFB', 'PBU', 'MBU', 'UC', 'P', 'PA', 'F', 'FL', 'FC', 'FS'];
-export const PENDING_SERIES = ['UEL', 'UK', 'T'];
+export const ACTIVE_SERIES = ['UCT', 'UCPA', 'UCF', 'UCFC', 'UCFL', 'UCP', 'UCPH', 'UCFA', 'UCFB', 'PBU', 'MBU', 'UC', 'P', 'PA', 'F', 'FL', 'FC'];
+export const PENDING_SERIES = ['UEL', 'UK', 'FS', 'T'];
 export const MODEL_TECHNICAL_FIELD_NAMES = [];
 export const PRODUCT_MODEL_FIELDS = [];
 export const STANDARD_MATERIAL_NAMES = ['GCr15', 'Cast Iron', 'Ductile Iron', 'Stainless Steel'];

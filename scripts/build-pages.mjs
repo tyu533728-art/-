@@ -598,12 +598,42 @@ function categorySeoDescription(locale, category) {
   return `${localizedCategoryTitle(locale, category)}. ${locales[locale].categoryLead}`;
 }
 
+const housingGalleryImages = [
+  '/assets/product-images/housing-1.webp',
+  '/assets/product-images/housing-2.webp',
+  '/assets/product-images/housing-3.webp',
+  '/assets/product-images/housing-4.webp',
+  '/assets/product-images/housing-5.webp',
+  '/assets/product-images/housing-6.webp',
+  '/assets/product-images/housing-7.webp',
+  '/assets/product-images/housing-8.webp',
+  '/assets/product-images/housing-9.webp',
+  '/assets/product-images/housing-10.webp',
+  '/assets/product-images/housing-11.webp'
+];
+const housingGalleryAlt = Object.freeze({
+  en: 'Cast iron bearing housing',
+  es: 'Soporte de rodamiento de hierro fundido',
+  de: 'Lagergehäuse aus Gusseisen',
+  fr: 'Palier en fonte',
+  pt: 'Mancal de ferro fundido',
+  ar: 'بيت محمل من الحديد الزهر',
+  tr: 'Dökme demir rulman yatağı',
+  ru: 'Корпус подшипника из чугуна',
+  it: 'Supporto per cuscinetti in ghisa',
+  vi: 'Gối đỡ vòng bi bằng gang',
+  id: 'Rumah bantalan besi cor',
+  ja: '鋳鉄製ベアリングハウジング',
+  ko: '주철 베어링 하우징'
+});
+
 function categoryContent(locale, category) {
   const text = locales[locale];
   const seriesCards = (category.series ?? []).filter(series => series.status === 'active').map(series => `<a class="product-display-card" href="${seriesPath(locale, category, series)}" dir="ltr"><div class="product-display-card__image">${seriesImage(locale, series)}</div><h2 dir="ltr">${escapeHtml(series.displayName ?? series.seriesCode)}</h2></a>`).join('');
   const content = seriesCards ? `<section class="section"><div class="site-shell"><div class="catalogue-grid">${seriesCards}</div></div></section>` : '';
+  const gallery = category.code === 'bearing-housing-series' ? `<section class="section"><div class="site-shell"><div class="housing-gallery">${housingGalleryImages.map(src => `<figure class="housing-gallery__item"><img src="${src}" alt="${escapeHtml(housingGalleryAlt[locale])}" width="900" height="1000" loading="lazy"></figure>`).join('')}</div></div></section>` : '';
   const solutions = category.code === 'custom' ? `<section class="section section--soft"><div class="site-shell custom-solutions"><div class="section-heading section-heading--center"><h2>${escapeHtml(customSolutionsText.heading[locale])}</h2></div><div class="custom-solutions__pattern" aria-hidden="true"></div><p class="custom-solutions__lead">${escapeHtml(customSolutionsText.lead[locale])}</p><div class="custom-solutions__grid">${customSolutionsText.features[locale].map(feature => `<div class="custom-solutions__item"><span class="custom-solutions__icon" aria-hidden="true"></span><h3>${escapeHtml(feature)}</h3></div>`).join('')}</div><p class="custom-solutions__note">${escapeHtml(customStatement[locale])}</p></div></section>` : '';
-  return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.category)}</p><h1>${escapeHtml(localizedCategoryTitle(locale, category))}</h1></div></section>${productIndex(locale)}${solutions}${content}`;
+  return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.category)}</p><h1>${escapeHtml(localizedCategoryTitle(locale, category))}</h1></div></section>${productIndex(locale)}${solutions}${content}${gallery}`;
 }
 
 function seriesContent(locale, category, series) {
@@ -709,7 +739,7 @@ if (productsOnly) {
   await mkdir(join(output, 'assets'), { recursive: true });
   await mkdir(join(output, 'assets', 'product-images'), { recursive: true });
   const publicAssets = ['bearing-housing.webp', 'cnc-milling.webp', 'cnc-turning.webp', 'factory-floor.webp', 'custom-solutions.webp', 'favicon.svg', 'styles.css'];
-  const publicProductImages = productCatalog.categories.flatMap(category => category.series.filter(series => series.status === 'active' && series.image).map(series => series.image.src.slice(1)));
+  const publicProductImages = [...productCatalog.categories.flatMap(category => category.series.filter(series => series.status === 'active' && series.image).map(series => series.image.src.slice(1))), ...housingGalleryImages.slice(5).map(src => src.slice(1))];
   await Promise.all([
     ...publicProductImages.map(file => copyFile(join(root, file), join(output, file))),
     ...publicAssets.map(file => copyFile(join(root, 'assets', file), join(output, 'assets', file))),

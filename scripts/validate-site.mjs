@@ -188,15 +188,15 @@ const rootHtml = await readFile(join(root, 'index.html'), 'utf8');
 if (!/noindex, follow/i.test(rootHtml) || !/url=\/en\//i.test(rootHtml)) fail('root redirect must remain noindex with English fallback');
 
 const publicProductImages = (await filesUnder(join(root, 'assets', 'product-images'))).map(file => relative(join(root, 'assets', 'product-images'), file).replaceAll('\\', '/'));
-const expectedPublicImages = ['uct-product.webp', 'uc-product.webp', 'ucpa-unit.webp', 'ucf-unit.webp', 'ucfc-unit.webp', 'ucfl-unit.webp', 'ucp-unit.webp', 'ucph-unit.webp', 'ucfa-unit.webp', 'ucfb-unit.webp', 'pbu-unit.webp', 'mbu-unit.webp', 'housing-1.webp', 'housing-2.webp', 'housing-3.webp', 'housing-4.webp', 'housing-5.webp', 'housing-6.webp'];
-if (JSON.stringify(publicProductImages.sort()) !== JSON.stringify(expectedPublicImages.sort())) fail('assets/product-images must contain exactly the 18 active images');
+const expectedPublicImages = ['uct-product.webp', 'uc-product.webp', 'ucpa-unit.webp', 'ucf-unit.webp', 'ucfc-unit.webp', 'ucfl-unit.webp', 'ucp-unit.webp', 'ucph-unit.webp', 'ucfa-unit.webp', 'ucfb-unit.webp', 'pbu-unit.webp', 'mbu-unit.webp', 'housing-1.webp', 'housing-2.webp', 'housing-3.webp', 'housing-4.webp', 'housing-5.webp', 'housing-6.webp', 'housing-7.webp', 'housing-8.webp', 'housing-9.webp', 'housing-10.webp', 'housing-11.webp'];
+if (JSON.stringify(publicProductImages.sort()) !== JSON.stringify(expectedPublicImages.sort())) fail('assets/product-images must contain exactly the 23 active images');
 const legacyImages = (await filesUnder(join(root, 'assets', 'source-products', 'legacy-product-images'))).map(file => relative(join(root, 'assets', 'source-products', 'legacy-product-images'), file).replaceAll('\\', '/'));
 const expectedLegacy = ['ucp-pillow-block-bearing.webp', 'ucf-flange-bearing.webp', 'ucfl-bearing.webp', 'ucfl-reference-2-upright.webp', 'ucfc-round-flange-bearing.webp', 'uct-take-up-bearing.webp', 'uk-product.webp'];
 if (JSON.stringify(legacyImages.sort()) !== JSON.stringify(expectedLegacy.sort())) fail('legacy product image archive is incomplete');
 
 try {
   const distImages = (await filesUnder(join(root, 'dist', 'assets', 'product-images'))).map(file => relative(join(root, 'dist', 'assets', 'product-images'), file).replaceAll('\\', '/'));
-  if (JSON.stringify(distImages.sort()) !== JSON.stringify(expectedPublicImages.sort())) fail('dist must deploy exactly the 18 active product images');
+  if (JSON.stringify(distImages.sort()) !== JSON.stringify(expectedPublicImages.sort())) fail('dist must deploy exactly the 23 active product images');
   const leaked = (await filesUnder(join(root, 'dist', 'assets'))).filter(file => /source-products|source[\\/]/i.test(relative(join(root, 'dist', 'assets'), file)));
   if (leaked.length) fail('dist contains source-product files');
 } catch {
