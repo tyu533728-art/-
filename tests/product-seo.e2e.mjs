@@ -26,6 +26,10 @@ const series = [
   { code: 'P', image: true, category: 'bearing-housing-series' },
   { code: 'T', image: true, category: 'bearing-housing-series' },
   { code: 'F', image: true, category: 'bearing-housing-series' },
+  { code: 'FC', image: true, category: 'bearing-housing-series' },
+  { code: 'FU', image: true, category: 'bearing-housing-series' },
+  { code: 'PH', image: true, category: 'bearing-housing-series' },
+  { code: 'PA', image: true, category: 'bearing-housing-series' },
   { code: 'FS', image: false, category: 'bearing-housing-series' }
 ].map(item => ({ ...item, name: item.code, href: `/en/products/${item.category}/${item.code.toLowerCase()}/` }));
 const failures = [];

@@ -19,7 +19,11 @@ const confirmedImages = Object.freeze({
   FL: image('/assets/product-images/housing-2.webp', 900, 1000),
   P: image('/assets/product-images/housing-3.webp', 900, 1000),
   T: image('/assets/product-images/housing-4.webp', 900, 1000),
-  F: image('/assets/product-images/housing-5.webp', 900, 1000)
+  F: image('/assets/product-images/housing-5.webp', 900, 1000),
+  FC: image('/assets/product-images/housing-7.webp', 900, 1000),
+  FU: image('/assets/product-images/housing-8.webp', 900, 1000),
+  PH: image('/assets/product-images/housing-9.webp', 900, 1000),
+  PA: image('/assets/product-images/housing-10.webp', 900, 1000)
 });
 
 const englishAlts = Object.freeze({
@@ -42,6 +46,10 @@ const englishAlts = Object.freeze({
   P: 'P pillow block housing',
   T: 'T take-up housing',
   F: 'F four-bolt flanged housing',
+  FC: 'FC bearing housing',
+  FU: 'FU bearing housing',
+  PH: 'PH bearing housing',
+  PA: 'PA bearing housing',
   FS: 'FS square flange with spigot housing'
 });
 
