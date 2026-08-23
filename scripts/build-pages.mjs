@@ -591,7 +591,8 @@ function categoryCard(locale, category) {
 function productsContent(locale) {
   const text = locales[locale];
   const categoryTitle = categories.map(category => localizedCategoryTitle(locale, category)).join(' / ');
-  return `<section class="page-intro"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h1>${escapeHtml(text.navProducts)}</h1></div></section>${productIndex(locale)}<section class="section"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.category)}</p><h2>${escapeHtml(categoryTitle)}</h2></div><div class="catalogue-grid">${categories.map(category => categoryCard(locale, category)).join('')}</div></div></section>`;
+  const housingHeading = localizedCategoryTitle(locale, categories.find(category => category.code === 'bearing-housing-series'));
+  return `<section class="page-intro"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h1>${escapeHtml(text.navProducts)}</h1></div></section>${productIndex(locale)}<section class="section"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.category)}</p><h2>${escapeHtml(categoryTitle)}</h2></div><div class="catalogue-grid">${categories.map(category => categoryCard(locale, category)).join('')}</div></div></section><section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.category)}</p><h2>${escapeHtml(housingHeading)}</h2></div><div class="catalogue-grid">${housingImageCards(locale)}</div></div></section>`;
 }
 
 function categorySeoDescription(locale, category) {
@@ -626,14 +627,21 @@ const housingGalleryAlt = Object.freeze({
   ja: '鋳鉄製ベアリングハウジング',
   ko: '주철 베어링 하우징'
 });
+
+function housingImageCards(locale) {
+  const category = categories.find(category => category.code === 'bearing-housing-series');
+  const seriesCards = (category.series ?? []).filter(series => series.status === 'active').map(series => `<a class="product-display-card" href="${seriesPath(locale, category, series)}" dir="ltr"><div class="product-display-card__image">${seriesImage(locale, series)}</div></a>`).join('');
+  const extraCards = housingGalleryImages.slice(5).map(src => `<div class="product-display-card product-display-card--plain" dir="ltr"><div class="product-display-card__image"><img src="${src}" alt="${escapeHtml(housingGalleryAlt[locale])}" width="900" height="1000" loading="lazy"></div></div>`).join('');
+  return seriesCards + extraCards;
+}
+
 function categoryContent(locale, category) {
   const text = locales[locale];
   const isHousing = category.code === 'bearing-housing-series';
-  const seriesCards = (category.series ?? []).filter(series => series.status === 'active').map(series => isHousing
-    ? `<a class="product-display-card" href="${seriesPath(locale, category, series)}" dir="ltr"><div class="product-display-card__image">${seriesImage(locale, series)}</div></a>`
-    : `<a class="product-display-card" href="${seriesPath(locale, category, series)}" dir="ltr"><div class="product-display-card__image">${seriesImage(locale, series)}</div><h2 dir="ltr">${escapeHtml(series.displayName ?? series.seriesCode)}</h2></a>`).join('');
-  const extraCards = isHousing ? housingGalleryImages.slice(5).map(src => `<div class="product-display-card product-display-card--plain" dir="ltr"><div class="product-display-card__image"><img src="${src}" alt="${escapeHtml(housingGalleryAlt[locale])}" width="900" height="1000" loading="lazy"></div></div>`).join('') : '';
-  const content = (seriesCards || extraCards) ? `<section class="section"><div class="site-shell"><div class="catalogue-grid">${seriesCards}${extraCards}</div></div></section>` : '';
+  const seriesCards = isHousing
+    ? housingImageCards(locale)
+    : (category.series ?? []).filter(series => series.status === 'active').map(series => `<a class="product-display-card" href="${seriesPath(locale, category, series)}" dir="ltr"><div class="product-display-card__image">${seriesImage(locale, series)}</div><h2 dir="ltr">${escapeHtml(series.displayName ?? series.seriesCode)}</h2></a>`).join('');
+  const content = seriesCards ? `<section class="section"><div class="site-shell"><div class="catalogue-grid">${seriesCards}</div></div></section>` : '';
   const solutions = category.code === 'custom' ? `<section class="section section--soft"><div class="site-shell custom-solutions"><div class="section-heading section-heading--center"><h2>${escapeHtml(customSolutionsText.heading[locale])}</h2></div><div class="custom-solutions__pattern" aria-hidden="true"></div><p class="custom-solutions__lead">${escapeHtml(customSolutionsText.lead[locale])}</p><div class="custom-solutions__grid">${customSolutionsText.features[locale].map(feature => `<div class="custom-solutions__item"><span class="custom-solutions__icon" aria-hidden="true"></span><h3>${escapeHtml(feature)}</h3></div>`).join('')}</div><p class="custom-solutions__note">${escapeHtml(customStatement[locale])}</p></div></section>` : '';
   return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.category)}</p><h1>${escapeHtml(localizedCategoryTitle(locale, category))}</h1></div></section>${productIndex(locale)}${solutions}${content}`;
 }
