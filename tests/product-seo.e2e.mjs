@@ -22,12 +22,11 @@ const series = [
   { code: 'PBU', image: true, category: 'pillow-block-bearing-units' },
   { code: 'MBU', image: true, category: 'pillow-block-bearing-units' },
   { code: 'FB', image: true, category: 'bearing-housing-series' },
-  { code: 'PA', image: true, category: 'bearing-housing-series' },
-  { code: 'F', image: true, category: 'bearing-housing-series' },
   { code: 'FL', image: true, category: 'bearing-housing-series' },
-  { code: 'FC', image: true, category: 'bearing-housing-series' },
-  { code: 'FS', image: true, category: 'bearing-housing-series' },
-  { code: 'T', image: true, category: 'bearing-housing-series' }
+  { code: 'P', image: true, category: 'bearing-housing-series' },
+  { code: 'T', image: true, category: 'bearing-housing-series' },
+  { code: 'F', image: true, category: 'bearing-housing-series' },
+  { code: 'FS', image: false, category: 'bearing-housing-series' }
 ].map(item => ({ ...item, name: item.code, href: `/en/products/${item.category}/${item.code.toLowerCase()}/` }));
 const failures = [];
 

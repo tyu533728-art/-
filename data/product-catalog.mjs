@@ -16,10 +16,10 @@ const confirmedImages = Object.freeze({
   MBU: image('/assets/product-images/mbu-unit.webp', 800, 800),
   UC: image('/assets/product-images/uc-product.webp', 800, 800),
   FB: image('/assets/product-images/housing-1.webp', 900, 1000),
-  PA: image('/assets/product-images/housing-2.webp', 900, 1000),
-  F: image('/assets/product-images/housing-3.webp', 900, 1000),
-  FL: image('/assets/product-images/housing-4.webp', 900, 1000),
-  FC: image('/assets/product-images/housing-5.webp', 900, 1000)
+  FL: image('/assets/product-images/housing-2.webp', 900, 1000),
+  P: image('/assets/product-images/housing-3.webp', 900, 1000),
+  T: image('/assets/product-images/housing-4.webp', 900, 1000),
+  F: image('/assets/product-images/housing-5.webp', 900, 1000)
 });
 
 const englishAlts = Object.freeze({
@@ -38,12 +38,11 @@ const englishAlts = Object.freeze({
   MBU: 'MBU mounted bearing unit with insert bearing',
   UC: 'UC wide inner ring insert bearing, set-screw locking',
   FB: 'FB pillow block housing',
-  PA: 'PA tapped-base pillow block housing',
-  F: 'F four-bolt flanged housing',
   FL: 'FL two-bolt flanged housing',
-  FC: 'FC piloted round flanged housing',
-  FS: 'FS square flange with spigot housing',
-  T: 'T take-up housing'
+  P: 'P pillow block housing',
+  T: 'T take-up housing',
+  F: 'F four-bolt flanged housing',
+  FS: 'FS square flange with spigot housing'
 });
 
 export function userConfirmedSeries(category, seriesCode, seriesImage = null, displayName = null) {
