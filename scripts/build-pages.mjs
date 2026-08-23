@@ -592,7 +592,7 @@ function productsContent(locale) {
   const text = locales[locale];
   const categoryTitle = categories.map(category => localizedCategoryTitle(locale, category)).join(' / ');
   const housingHeading = localizedCategoryTitle(locale, categories.find(category => category.code === 'bearing-housing-series'));
-  return `<section class="page-intro"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h1>${escapeHtml(text.navProducts)}</h1></div></section>${productIndex(locale)}<section class="section"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.category)}</p><h2>${escapeHtml(categoryTitle)}</h2></div><div class="catalogue-grid">${categories.map(category => categoryCard(locale, category)).join('')}</div></div></section><section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.category)}</p><h2>${escapeHtml(housingHeading)}</h2></div><div class="catalogue-grid">${housingImageCards(locale)}</div></div></section>`;
+  return `<section class="page-intro"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h1>${escapeHtml(text.navProducts)}</h1></div></section>${productIndex(locale)}<section class="section"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.category)}</p><h2>${escapeHtml(categoryTitle)}</h2></div><div class="catalogue-grid">${categories.map(category => categoryCard(locale, category)).join('')}</div></div></section><section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.category)}</p><h2>${escapeHtml(housingHeading)}</h2></div><div class="catalogue-grid">${housingImageCards(locale, true)}</div></div></section>`;
 }
 
 function categorySeoDescription(locale, category) {
@@ -628,9 +628,10 @@ const housingGalleryAlt = Object.freeze({
   ko: '주철 베어링 하우징'
 });
 
-function housingImageCards(locale) {
+function housingImageCards(locale, badgeCodes = false) {
   const category = categories.find(category => category.code === 'bearing-housing-series');
-  const seriesCards = (category.series ?? []).filter(series => series.status === 'active').map(series => `<a class="product-display-card" href="${seriesPath(locale, category, series)}" dir="ltr"><div class="product-display-card__image">${seriesImage(locale, series)}</div></a>`).join('');
+  const confirmedCodes = new Set(['FB']);
+  const seriesCards = (category.series ?? []).filter(series => series.status === 'active').map(series => `<a class="product-display-card" href="${seriesPath(locale, category, series)}" dir="ltr"><div class="product-display-card__image">${seriesImage(locale, series)}${badgeCodes && confirmedCodes.has(series.seriesCode) ? `<span class="product-display-card__codes"><span>${escapeHtml(series.seriesCode)}</span></span>` : ''}</div></a>`).join('');
   const extraCards = housingGalleryImages.slice(5).map(src => `<div class="product-display-card product-display-card--plain" dir="ltr"><div class="product-display-card__image"><img src="${src}" alt="${escapeHtml(housingGalleryAlt[locale])}" width="900" height="1000" loading="lazy"></div></div>`).join('');
   return seriesCards + extraCards;
 }
