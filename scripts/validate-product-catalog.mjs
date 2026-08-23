@@ -7,7 +7,7 @@ const activeCount = productCatalog.categories.flatMap(category => category.serie
 const pendingCount = productCatalog.categories.flatMap(category => category.series).filter(series => series.status === 'pending').length;
 const modelCount = productCatalog.categories.reduce((total, category) => total + category.products.length, 0);
 
-if (PRODUCT_CATEGORIES.length !== 3 || ACTIVE_SERIES.length !== 21 || PENDING_SERIES.length !== 3 || modelCount !== 0) {
+if (PRODUCT_CATEGORIES.length !== 3 || ACTIVE_SERIES.length !== 22 || PENDING_SERIES.length !== 3 || modelCount !== 0) {
   throw new Error('V4.0 product catalog counts do not match the frozen structure.');
 }
 for (const category of productCatalog.categories) {

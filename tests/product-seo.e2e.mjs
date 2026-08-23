@@ -26,6 +26,7 @@ const series = [
   { code: 'P', image: true, category: 'bearing-housing-series' },
   { code: 'T', image: true, category: 'bearing-housing-series' },
   { code: 'F', image: true, category: 'bearing-housing-series' },
+  { code: 'PBH', image: true, category: 'bearing-housing-series' },
   { code: 'FC', image: true, category: 'bearing-housing-series' },
   { code: 'FU', image: true, category: 'bearing-housing-series' },
   { code: 'PH', image: true, category: 'bearing-housing-series' },
