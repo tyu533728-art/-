@@ -24,7 +24,8 @@ const confirmedImages = Object.freeze({
   FC: image('/assets/product-images/housing-7.webp', 900, 1000),
   FU: image('/assets/product-images/housing-8.webp', 900, 1000),
   PH: image('/assets/product-images/housing-9.webp', 900, 1000),
-  PA: image('/assets/product-images/housing-10.webp', 900, 1000)
+  PA: image('/assets/product-images/housing-10.webp', 900, 1000),
+  PAS: image('/assets/product-images/housing-11.webp', 900, 1000)
 });
 
 const englishAlts = Object.freeze({
@@ -52,6 +53,7 @@ const englishAlts = Object.freeze({
   FU: 'FU bearing housing',
   PH: 'PH bearing housing',
   PA: 'PA bearing housing',
+  PAS: 'PAS bearing housing',
   FS: 'FS square flange with spigot housing'
 });
 
@@ -107,7 +109,7 @@ export const productCatalog = {
       category: bearingHousingSeries,
       slug: 'bearing-housing-series',
       images: [],
-      series: SERIES_BY_CATEGORY[bearingHousingSeries].map(seriesCode => userConfirmedSeries(bearingHousingSeries, seriesCode, confirmedImages[seriesCode], seriesCode === 'PBH' ? 'Pillow Block Housing' : null)),
+      series: SERIES_BY_CATEGORY[bearingHousingSeries].map(seriesCode => userConfirmedSeries(bearingHousingSeries, seriesCode, confirmedImages[seriesCode], seriesCode === 'PBH' ? 'Pillow Block Housing' : seriesCode === 'PAS' ? 'Pillow Block Bearing Housing PA Series' : null)),
       products: [],
       publish: true
     },
