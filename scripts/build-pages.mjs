@@ -10,7 +10,7 @@ const localeCodes = [...LOCALE_CODES];
 validateProductCatalog(productCatalog);
 
 const site = {
-  brand: 'Naite',
+  brand: 'NATER',
   email: '729865273lq@gmail.com',
   whatsapp: '+8617600510039',
   facebook: 'https://www.facebook.com/share/r/1EqRbnfMUN/',
@@ -475,6 +475,10 @@ function head({ locale, path, title, description, schema = organizationSchema(lo
   <meta property="og:title" content="${escapeHtml(title)}">
   <meta property="og:description" content="${escapeHtml(description)}">
   <meta property="og:url" content="${canonical}">
+  <meta property="og:image" content="${absoluteUrl('/assets/bearing-housing.webp')}">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="956">
+  <meta property="og:image:alt" content="${escapeHtml(title)}">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/styles.css">
   <script src="/assets/site.js" defer></script>
@@ -665,12 +669,36 @@ const seriesZoomLabels = Object.freeze({
   ko: { zoom: '이미지 확대', close: '닫기' }
 });
 
+const enquiryCtaText = Object.freeze({
+  en: { heading: 'Product Enquiry', text: 'Contact us for pricing, availability and technical details.' },
+  es: { heading: 'Consulta de producto', text: 'Contáctenos para precios, disponibilidad y detalles técnicos.' },
+  de: { heading: 'Produktanfrage', text: 'Kontaktieren Sie uns für Preise, Verfügbarkeit und technische Details.' },
+  fr: { heading: 'Demande de renseignements', text: 'Contactez-nous pour les prix, la disponibilité et les détails techniques.' },
+  pt: { heading: 'Consulta de produto', text: 'Contacte-nos para preços, disponibilidade e detalhes técnicos.' },
+  ar: { heading: 'استفسار عن المنتج', text: 'اتصل بنا للاستفسار عن الأسعار والتوفر والتفاصيل الفنية.' },
+  tr: { heading: 'Ürün Talebi', text: 'Fiyat, stok durumu ve teknik detaylar için bize ulaşın.' },
+  ru: { heading: 'Запрос по товару', text: 'Свяжитесь с нами по вопросам цены, наличия и технических деталей.' },
+  it: { heading: 'Richiesta prodotto', text: 'Contattaci per prezzi, disponibilità e dettagli tecnici.' },
+  vi: { heading: 'Yêu cầu sản phẩm', text: 'Liên hệ với chúng tôi để biết giá, tình trạng hàng và chi tiết kỹ thuật.' },
+  id: { heading: 'Permintaan produk', text: 'Hubungi kami untuk harga, ketersediaan, dan detail teknis.' },
+  ja: { heading: '製品のお問い合わせ', text: '価格・在庫・技術詳細についてはお問い合わせください。' },
+  ko: { heading: '제품 문의', text: '가격, 재고 및 기술 세부 사항에 대해 문의하십시오.' }
+});
+
+function enquiryCtaSection(locale, series) {
+  const copy = enquiryCtaText[locale];
+  const code = series.displayName ?? series.seriesCode;
+  const subject = `Enquiry about ${code} - ${site.brand}`;
+  const phone = site.whatsapp.replace(/\D/g, '');
+  return `<section class="section section--soft"><div class="site-shell"><div class="enquiry-cta"><h2>${escapeHtml(copy.heading)}</h2><p>${escapeHtml(copy.text)}</p><div class="enquiry-cta__actions"><a class="enquiry-cta__button" href="https://wa.me/${phone}?text=${encodeURIComponent(subject)}" target="_blank" rel="noopener noreferrer">WhatsApp</a><a class="enquiry-cta__button enquiry-cta__button--ghost" href="mailto:${site.email}?subject=${encodeURIComponent(subject)}">E-mail</a></div></div></div></section>`;
+}
+
 function seriesContent(locale, category, series) {
   const text = locales[locale];
   const image = seriesImage(locale, series);
   const labels = seriesZoomLabels[locale];
   const content = image ? `<section class="section"><div class="site-shell"><div class="product-display-grid"><article class="product-display-card" dir="ltr"><div class="product-display-card__image"><button type="button" class="product-image-zoom" data-lightbox="${escapeHtml(series.image.src)}" data-close="${escapeHtml(labels.close)}" aria-label="${escapeHtml(labels.zoom)}">${image}</button></div><h2 dir="ltr">${escapeHtml(series.displayName ?? series.seriesCode)}</h2></article></div></div></section>` : '';
-  return `<section class="page-intro page-intro--compact"><div class="site-shell"><h1 dir="ltr">${escapeHtml(series.displayName ?? series.seriesCode)}</h1></div></section>${productIndex(locale)}${content}`;
+  return `<section class="page-intro page-intro--compact"><div class="site-shell"><h1 dir="ltr">${escapeHtml(series.displayName ?? series.seriesCode)}</h1></div></section>${productIndex(locale)}${content}${enquiryCtaSection(locale, series)}`;
 }
 
 function productBreadcrumb(locale, category, product) {
