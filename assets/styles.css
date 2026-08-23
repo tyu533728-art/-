@@ -60,8 +60,8 @@ h2 { margin-bottom: 18px; font-size: clamp(28px, 3.6vw, 44px); }
 .home-hero__copy h1 { max-width: 570px; font-size: 58px; }
 .home-hero__copy p { max-width: 470px; margin-bottom: 34px; color: var(--ink-soft); font-size: 18px; }
 .home-hero__media { position: relative; min-height: 550px; }
-.hero-product { position: absolute; inset: 0 0 0 auto; width: min(100%, 760px); height: 100%; object-fit: cover; filter: grayscale(100%); }
-.hero-factory { position: absolute; bottom: 0; left: -54px; width: 41%; min-width: 220px; height: auto; border: 9px solid var(--mist); filter: grayscale(100%); }
+.hero-product { position: absolute; inset: 0 0 0 auto; width: min(100%, 760px); height: 100%; object-fit: cover; }
+.hero-factory { position: absolute; bottom: 0; left: -54px; width: 41%; min-width: 220px; height: auto; border: 9px solid var(--mist); }
 .text-link { display: inline-block; border-bottom: 2px solid var(--amber); padding-bottom: 5px; color: var(--blue-dark); font-family: var(--utility); font-size: 12px; font-weight: 700; text-transform: uppercase; }
 
 .section { padding: 104px 0; }
@@ -166,7 +166,7 @@ h2 { margin-bottom: 18px; font-size: clamp(28px, 3.6vw, 44px); }
 .series-layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr); gap: 64px; align-items: start; }
 .series-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
 .series-gallery figure { position: relative; margin: 0; border: 1px solid var(--line); background: var(--mist); }
-.series-gallery img { width: 100%; min-height: 350px; object-fit: contain; padding: 16px; filter: grayscale(100%); }
+.series-gallery img { width: 100%; min-height: 350px; object-fit: contain; padding: 16px; }
 .series-gallery figcaption { position: absolute; right: 9px; bottom: 9px; padding: 5px 7px; color: var(--paper); background: rgb(23 33 38 / 86%); font-family: var(--utility); font-size: 10px; }
 .image-state { display: grid; min-height: 360px; place-items: center; border: 1px solid var(--line); color: var(--steel); background: var(--mist); }
 .image-state span { font-family: var(--display); font-size: 70px; }
