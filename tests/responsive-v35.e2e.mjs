@@ -17,7 +17,7 @@ const captureRoutes = new Map([
   ['/en/', 'home'],
   ['/en/products/', 'products'],
   ['/en/products/pillow-block-bearing-units/', 'pillow-block-units'],
-  ['/ar/products/bearing-housing-series/p/', 'bearing-housing-series-ar'],
+  ['/ar/products/bearing-housing-series/fb/', 'bearing-housing-series-ar'],
   ['/ja/contact-us/', 'contact-ja'],
   ['/ko/products/custom/', 'custom-ko']
 ]);
@@ -220,7 +220,7 @@ try {
   for (const viewport of viewports) {
     const page = await browser.newPage({ viewport });
     // Negative regression: an obsolete third-level product URL must remain unavailable.
-  const response = await page.goto(`${origin}/en/products/bearing-housing-series/p/p205/`, { waitUntil: 'domcontentloaded' });
+  const response = await page.goto(`${origin}/en/products/bearing-housing-series/fb/p205/`, { waitUntil: 'domcontentloaded' });
     if (response?.status() !== 404) fail(`${viewport.name}: obsolete third-level product URL must return HTTP 404`);
     await page.close();
   }

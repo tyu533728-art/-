@@ -21,7 +21,7 @@ const series = [
   { code: 'UCFB', image: true, category: 'pillow-block-bearing-units' },
   { code: 'PBU', image: true, category: 'pillow-block-bearing-units' },
   { code: 'MBU', image: true, category: 'pillow-block-bearing-units' },
-  { code: 'P', image: true, category: 'bearing-housing-series' },
+  { code: 'FB', image: true, category: 'bearing-housing-series' },
   { code: 'PA', image: true, category: 'bearing-housing-series' },
   { code: 'F', image: true, category: 'bearing-housing-series' },
   { code: 'FL', image: true, category: 'bearing-housing-series' },
@@ -79,7 +79,7 @@ try {
     '/en/products/bearing-housing/',
     '/en/products/mounted-spherical-roller-bearings/',
     '/en/products/pillow-block-bearing-units/uc/uc205/',
-    '/en/products/bearing-housing-series/p/p205/'
+    '/en/products/bearing-housing-series/fb/p205/'
   ]) {
     response = await page.goto(`${origin}${path}`, { waitUntil: 'domcontentloaded' });
     assert(response?.status() === 404, `${path} must return HTTP 404`);

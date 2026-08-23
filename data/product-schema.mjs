@@ -4,11 +4,11 @@ export const PRODUCT_CATEGORIES = ['Pillow Block Bearing Units', 'Bearing Housin
 
 export const SERIES_BY_CATEGORY = Object.freeze({
   'Pillow Block Bearing Units': ['UCT', 'UEL', 'UK', 'UCPA', 'UCF', 'UCFC', 'UCFL', 'UCP', 'UCPH', 'UCFA', 'UCFB', 'PBU', 'MBU', 'UC'],
-  'Bearing Housing Series': ['P', 'PA', 'F', 'FL', 'FC', 'FS', 'T'],
+  'Bearing Housing Series': ['FB', 'PA', 'F', 'FL', 'FC', 'FS', 'T'],
   Custom: []
 });
 
-export const ACTIVE_SERIES = ['UCT', 'UCPA', 'UCF', 'UCFC', 'UCFL', 'UCP', 'UCPH', 'UCFA', 'UCFB', 'PBU', 'MBU', 'UC', 'P', 'PA', 'F', 'FL', 'FC'];
+export const ACTIVE_SERIES = ['UCT', 'UCPA', 'UCF', 'UCFC', 'UCFL', 'UCP', 'UCPH', 'UCFA', 'UCFB', 'PBU', 'MBU', 'UC', 'FB', 'PA', 'F', 'FL', 'FC'];
 export const PENDING_SERIES = ['UEL', 'UK', 'FS', 'T'];
 export const MODEL_TECHNICAL_FIELD_NAMES = [];
 export const PRODUCT_MODEL_FIELDS = [];
