@@ -11,6 +11,11 @@ const seriesWord = {
   en: 'Series', es: 'Serie', de: 'Serie', fr: 'Série', pt: 'Série', ar: 'السلسلة',
   tr: 'Seri', ru: 'Серия', it: 'Serie', vi: 'Dòng sản phẩm', id: 'Seri', ja: 'シリーズ', ko: '시리즈'
 };
+const companyNameLabels = {
+  en: 'Company Name', es: 'Nombre de la empresa', de: 'Unternehmensname', fr: 'Nom de l\'entreprise',
+  pt: 'Nome da empresa', ar: 'اسم الشركة', tr: 'Şirket Adı', ru: 'Название компании',
+  it: 'Nome dell\'azienda', vi: 'Tên công ty', id: 'Nama perusahaan', ja: '会社名', ko: '회사명'
+};
 const activeSeries = categories.flatMap(category => category.series.filter(series => series.status === 'active').map(series => ({
   category: category.code,
   code: series.seriesCode,
@@ -117,9 +122,11 @@ for (const [route, html] of localizedHtml) {
   if (!/<script type="application\/ld\+json">/i.test(html)) fail(`${route}: missing structured data`);
   if ((html.match(/<nav class="site-nav"[\s\S]*?<\/nav>/gi) || []).length !== 1) fail(`${route}: missing primary navigation`);
   if ((html.match(/<a\b/gi) || []).length < 3) fail(`${route}: primary links are incomplete`);
-  if ((html.match(/<footer class="site-footer"/gi) || []).length !== 1) fail(`${route}: missing footer`);
-  for (const label of ['E-mail', 'WhatsApp', 'Facebook', 'Manufacturing Partner', 'Manufacturing Facility']) {
-    if (!new RegExp(`<dt>${label}<\\/dt>`, 'i').test(html)) fail(`${route}: footer missing ${label}`);
+  const footerHtml = html.match(/<footer class="site-footer"[\s\S]*?<\/footer>/i)?.[0] ?? '';
+  if (!footerHtml) fail(`${route}: missing footer`);
+  const footerLabels = [...footerHtml.matchAll(/<dt>([\s\S]*?)<\/dt>/gi)].map(match => htmlText(match[1]));
+  for (const label of ['E-mail', 'WhatsApp', 'Facebook', companyNameLabels[locale], 'Manufacturing Facility']) {
+    if (!footerLabels.includes(label)) fail(`${route}: footer missing ${label}`);
   }
   if (locale === 'ar' && !/<html lang="ar" dir="rtl">/i.test(html)) fail(`${route}: Arabic page missing RTL`);
   if ((locale === 'ja' || locale === 'ko') && html.includes('\uFFFD')) fail(`${route}: contains Unicode replacement characters`);

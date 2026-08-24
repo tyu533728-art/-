@@ -4,6 +4,7 @@ const origin = 'http://127.0.0.1:8089';
 const seoOrigin = 'https://www.natermanufacture.com';
 const edge = 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe';
 const locales = ['en', 'es', 'de', 'fr', 'pt', 'ar', 'tr', 'ru', 'it', 'vi', 'id', 'ja', 'ko'];
+const companyNameLabels = ['Company Name', 'Nombre de la empresa', 'Unternehmensname', 'Nom de l\'entreprise', 'Nome da empresa', 'اسم الشركة', 'Şirket Adı', 'Название компании', 'Nome dell\'azienda', 'Tên công ty', 'Nama perusahaan', '会社名', '회사명'];
 const checks = [
   { path: '/ar/products/pillow-block-bearing-units/uc/', locale: 'ar', widths: [390, 1280] },
   { path: '/ar/contact-us/', locale: 'ar', widths: [390, 1280] },
@@ -28,14 +29,14 @@ try {
       page.on('pageerror', error => consoleErrors.push(error.message));
       const response = await page.goto(`${origin}${check.path}`, { waitUntil: 'domcontentloaded' });
       assert(response?.ok(), `${check.path} at ${width}px returned ${response?.status()}`);
-      const result = await page.evaluate(({ locales, seoOrigin, path, locale }) => {
+      const result = await page.evaluate(({ locales, companyNameLabels, seoOrigin, path, locale }) => {
         const links = [...document.querySelectorAll('link[rel="alternate"][hreflang]')]
           .map(link => ({ lang: link.hreflang, href: link.href }));
         const expectedPath = path.replace(new RegExp(`^/${locale}`), '');
         const expected = Object.fromEntries(locales.map(code => [code, `${seoOrigin}/${code}${expectedPath}`]));
         expected['x-default'] = `${seoOrigin}/en${expectedPath}`;
         const contacts = [...document.querySelectorAll('dt')]
-          .filter(dt => ['E-mail', 'WhatsApp', 'Facebook', 'Manufacturing Partner', 'Manufacturing Facility'].includes(dt.textContent.trim()))
+          .filter(dt => ['E-mail', 'WhatsApp', 'Facebook', ...companyNameLabels, 'Manufacturing Facility'].includes(dt.textContent.trim()))
           .map(dt => ({ label: dt.textContent.trim(), value: dt.parentElement.querySelector('[dir="ltr"]') }));
         const switcher = document.querySelector('.language-switcher');
         const switcherRect = switcher?.getBoundingClientRect();
@@ -59,7 +60,7 @@ try {
           switcher: switcherRect ? { left: switcherRect.left, right: innerWidth - switcherRect.right, top: switcherRect.top } : null,
           tables
         };
-      }, { locales, seoOrigin, path: check.path, locale: check.locale });
+      }, { locales, companyNameLabels, seoOrigin, path: check.path, locale: check.locale });
 
       assert(result.lang === check.locale, `${check.path}: html lang mismatch`);
       if (check.locale === 'ar') {

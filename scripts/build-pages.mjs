@@ -14,7 +14,7 @@ const site = {
   email: '729865273lq@gmail.com',
   whatsapp: '+8617600510039',
   facebook: 'https://www.facebook.com/share/r/1EqRbnfMUN/',
-  manufacturingPartner: 'Guantao County Naite Bearing Co., Ltd.',
+  companyName: 'Guantao County Naite Bearing Co., Ltd.',
   manufacturingFacility: 'No. 005, Malan Village, Nanxu Township, Guantao County, Handan City, Hebei Province, P.R.China'
 };
 
@@ -48,6 +48,22 @@ const contactLabels = Object.freeze({
   id: 'Hubungi Kami',
   ja: 'お問い合わせ',
   ko: '문의하기'
+});
+
+const companyNameLabels = Object.freeze({
+  en: 'Company Name',
+  es: 'Nombre de la empresa',
+  de: 'Unternehmensname',
+  fr: 'Nom de l\'entreprise',
+  pt: 'Nome da empresa',
+  ar: 'اسم الشركة',
+  tr: 'Şirket Adı',
+  ru: 'Название компании',
+  it: 'Nome dell\'azienda',
+  vi: 'Tên công ty',
+  id: 'Nama perusahaan',
+  ja: '会社名',
+  ko: '회사명'
 });
 
 const contactLeads = Object.freeze({
@@ -593,7 +609,7 @@ function contactValue(value, locale, kind = 'text') {
 }
 
 function footer(locale) {
-  return `<footer class="site-footer"><div class="site-shell footer-inner"><div><a class="brand brand--footer" href="${publicPath(locale)}"><span class="brand-mark" aria-hidden="true"></span><span>${site.brand}<small>BEARING &amp; BEARING HOUSING</small></span></a></div><dl class="footer-contact"><div><dt>E-mail</dt><dd>${contactValue(site.email, locale, 'email')}</dd></div><div><dt>WhatsApp</dt><dd>${contactValue(site.whatsapp, locale, 'whatsapp')}</dd></div><div><dt>Facebook</dt><dd>${contactValue(site.facebook, locale, 'website')}</dd></div><div><dt>Manufacturing Partner</dt><dd>${contactValue(site.manufacturingPartner, locale)}</dd></div><div><dt>Manufacturing Facility</dt><dd>${contactValue(site.manufacturingFacility, locale)}</dd></div></dl></div><div class="site-shell footer-bottom">© 2026 ${site.brand}. All rights reserved.</div></footer>`;
+  return `<footer class="site-footer"><div class="site-shell footer-inner"><div><a class="brand brand--footer" href="${publicPath(locale)}"><span class="brand-mark" aria-hidden="true"></span><span>${site.brand}<small>BEARING &amp; BEARING HOUSING</small></span></a></div><dl class="footer-contact"><div><dt>E-mail</dt><dd>${contactValue(site.email, locale, 'email')}</dd></div><div><dt>WhatsApp</dt><dd>${contactValue(site.whatsapp, locale, 'whatsapp')}</dd></div><div><dt>Facebook</dt><dd>${contactValue(site.facebook, locale, 'website')}</dd></div><div><dt>${escapeHtml(companyNameLabels[locale])}</dt><dd>${contactValue(site.companyName, locale)}</dd></div><div><dt>Manufacturing Facility</dt><dd>${contactValue(site.manufacturingFacility, locale)}</dd></div></dl></div><div class="site-shell footer-bottom">© 2026 ${site.brand}. All rights reserved.</div></footer>`;
 }
 
 function page({ locale, path = '', active, title, description, content, schema }) {
@@ -803,7 +819,7 @@ function productContent(locale, category, product) {
 
 function contactContent(locale) {
   const label = contactLabels[locale];
-  return `<section class="page-intro"><div class="site-shell"><p class="eyebrow">${escapeHtml(label)}</p><h1>${escapeHtml(label)}</h1><p>${escapeHtml(contactLeads[locale])}</p></div></section><section class="section section--soft"><div class="site-shell public-info"><p class="eyebrow">${escapeHtml(label)}</p><h2>${escapeHtml(label)}</h2><dl><div><dt>E-mail</dt><dd>${contactValue(site.email, locale, 'email')}</dd></div><div><dt>WhatsApp</dt><dd>${contactValue(site.whatsapp, locale, 'whatsapp')}</dd></div><div><dt>Facebook</dt><dd>${contactValue(site.facebook, locale, 'website')}</dd></div><div><dt>Manufacturing Partner</dt><dd>${contactValue(site.manufacturingPartner, locale)}</dd></div><div><dt>Manufacturing Facility</dt><dd>${contactValue(site.manufacturingFacility, locale)}</dd></div></dl></div></section>`;
+  return `<section class="page-intro"><div class="site-shell"><p class="eyebrow">${escapeHtml(label)}</p><h1>${escapeHtml(label)}</h1><p>${escapeHtml(contactLeads[locale])}</p></div></section><section class="section section--soft"><div class="site-shell public-info"><p class="eyebrow">${escapeHtml(label)}</p><h2>${escapeHtml(label)}</h2><dl><div><dt>E-mail</dt><dd>${contactValue(site.email, locale, 'email')}</dd></div><div><dt>WhatsApp</dt><dd>${contactValue(site.whatsapp, locale, 'whatsapp')}</dd></div><div><dt>Facebook</dt><dd>${contactValue(site.facebook, locale, 'website')}</dd></div><div><dt>${escapeHtml(companyNameLabels[locale])}</dt><dd>${contactValue(site.companyName, locale)}</dd></div><div><dt>Manufacturing Facility</dt><dd>${contactValue(site.manufacturingFacility, locale)}</dd></div></dl></div></section>`;
 }
 
 async function writePage(locale, path, html, routes) {
