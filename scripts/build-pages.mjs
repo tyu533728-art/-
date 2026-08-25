@@ -118,7 +118,7 @@ const categoryNames = Object.freeze({
     es: 'Personalizado',
     de: 'Sonderanfertigungen',
     fr: 'Sur mesure',
-    pt: 'Personalizado',
+    pt: 'Sob Medida',
     ar: 'مخصص',
     tr: 'Özel',
     ru: 'Индивидуальные',
@@ -778,12 +778,40 @@ function enquiryCtaSection(locale, series) {
   return `<section class="section section--soft"><div class="site-shell"><div class="enquiry-cta"><h2>${escapeHtml(copy.heading)}</h2><p>${escapeHtml(copy.text)}</p><div class="enquiry-cta__actions"><a class="enquiry-cta__button" href="https://wa.me/${phone}?text=${encodeURIComponent(subject)}" target="_blank" rel="noopener noreferrer">WhatsApp</a><a class="enquiry-cta__button enquiry-cta__button--ghost" href="mailto:${site.email}?subject=${encodeURIComponent(subject)}">E-mail</a></div></div></div></section>`;
 }
 
+// Series page description: English uses the user-confirmed ALT structure sentence;
+// other locales use a verified template (series code + localized category + brand + CTA).
+const seriesCta = Object.freeze({
+  en: 'Reference image confirmed. Enquire for specifications, dimensions and availability.',
+  es: 'Imagen de referencia confirmada. Consulte especificaciones, dimensiones y disponibilidad.',
+  de: 'Referenzbild bestätigt. Anfrage für Spezifikationen, Abmessungen und Verfügbarkeit.',
+  fr: 'Image de référence confirmée. Renseignez-vous sur les spécifications, dimensions et disponibilité.',
+  pt: 'Imagem de referência confirmada. Consulte especificações, dimensões e disponibilidade.',
+  ar: 'تم تأكيد الصورة المرجعية. استفسر عن المواصفات والأبعاد والتوفر.',
+  tr: 'Referans görsel onaylandı. Özellikler, boyutlar ve stok durumu için bilgi alın.',
+  ru: 'Эталонное изображение подтверждено. Запросите спецификации, размеры и наличие.',
+  it: 'Immagine di riferimento confermata. Richiedi specifiche, dimensioni e disponibilità.',
+  vi: 'Hình ảnh tham chiếu đã xác nhận. Liên hệ để biết thông số, kích thước và tình trạng hàng.',
+  id: 'Gambar referensi terkonfirmasi. Tanyakan spesifikasi, dimensi, dan ketersediaan.',
+  ja: '参考画像確認済み。仕様・寸法・在庫状況はお問い合わせください。',
+  ko: '참조 이미지 확인 완료. 사양, 치수 및 재고 여부를 문의하세요.'
+});
+
+function seriesPageDescription(locale, category, series) {
+  if (locale === 'en') {
+    const sentence = series.alt ? `${series.alt.charAt(0).toUpperCase()}${series.alt.slice(1)} — NATER.` : `${series.displayName ?? series.seriesCode} — NATER.`;
+    return `${sentence} Enquire for specifications, dimensions and availability.`;
+  }
+  const name = series.displayName ?? series.seriesCode;
+  return `${name} — ${localizedCategoryTitle(locale, category)} — NATER. ${seriesCta[locale]}`;
+}
+
 function seriesContent(locale, category, series) {
   const text = locales[locale];
   const image = seriesImage(locale, series);
   const labels = seriesZoomLabels[locale];
+  const description = seriesPageDescription(locale, category, series);
   const content = image ? `<section class="section"><div class="site-shell"><div class="product-display-grid product-display-grid--single"><article class="product-display-card" dir="ltr"><div class="product-display-card__image"><button type="button" class="product-image-zoom" data-lightbox="${escapeHtml(series.image.src)}" data-close="${escapeHtml(labels.close)}" aria-label="${escapeHtml(labels.zoom)}">${image}</button></div><h2 dir="ltr">${escapeHtml(series.displayName ?? series.seriesCode)}</h2></article></div></div></section>` : '';
-  return `<section class="page-intro page-intro--compact"><div class="site-shell"><h1 dir="ltr">${escapeHtml(series.displayName ?? series.seriesCode)}</h1></div></section>${productIndex(locale)}${content}${enquiryCtaSection(locale, series)}`;
+  return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">${escapeHtml(localizedCategoryTitle(locale, category))}</p><h1 dir="ltr">${escapeHtml(series.displayName ?? series.seriesCode)}</h1><p>${escapeHtml(description)}</p></div></section>${productIndex(locale)}${content}${enquiryCtaSection(locale, series)}`;
 }
 
 function productBreadcrumb(locale, category, product) {
@@ -838,7 +866,7 @@ async function buildLocale(locale, routes) {
 
 async function buildProductsLocale(locale, routes) {
   const text = locales[locale];
-  await writePage(locale, 'products', page({ locale, path: 'products', active: 'products', title: `${text.navProducts} | ${site.brand}`, description: text.productLead, content: productsContent(locale), schema: { ...organizationSchema(locale), description: text.productLead } }), routes);
+  await writePage(locale, 'products', page({ locale, path: 'products', active: 'products', title: `${text.navProducts} | ${site.brand}`, description: text.productsLead, content: productsContent(locale), schema: { ...organizationSchema(locale), description: text.productsLead } }), routes);
   for (const category of categories) {
     const categoryPath = `products/${category.code}`;
     const description = categorySeoDescription(locale, category);
@@ -846,7 +874,7 @@ async function buildProductsLocale(locale, routes) {
     for (const series of (category.series ?? []).filter(item => item.status === 'active')) {
       const seriesRoute = `${categoryPath}/${series.seriesCode.toLowerCase()}`;
       const seriesTitle = `${series.displayName ?? series.seriesCode} | ${localizedCategoryTitle(locale, category)} | ${site.brand}`;
-      const seriesDescription = `${series.displayName ?? series.seriesCode}.`;
+      const seriesDescription = seriesPageDescription(locale, category, series);
       await writePage(locale, seriesRoute, page({ locale, path: seriesRoute, active: 'products', title: seriesTitle, description: seriesDescription, content: seriesContent(locale, category, series), schema: { ...organizationSchema(locale), description: seriesDescription } }), routes);
     }
   }

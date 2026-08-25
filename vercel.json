@@ -2,5 +2,18 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
   "buildCommand": "npm run build",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "natermanufacture.com" }],
+      "destination": "https://www.natermanufacture.com/$1",
+      "statusCode": 308
+    },
+    {
+      "source": "/",
+      "destination": "/en/",
+      "statusCode": 308
+    }
+  ]
 }

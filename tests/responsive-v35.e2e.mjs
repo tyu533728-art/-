@@ -41,8 +41,9 @@ const paths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)]
   .map(match => new URL(match[1]).pathname)
   .filter(pathname => locales.some(locale => pathname.startsWith(`/${locale}/`)));
 
-if (paths.length !== 182) {
-  fail(`Expected 182 indexable localized routes, found ${paths.length}.`);
+// V4.0: 29 pages per locale x 13 locales = 377 indexable localized routes.
+if (paths.length !== locales.length * 29) {
+  fail(`Expected ${locales.length * 29} indexable localized routes, found ${paths.length}.`);
 }
 
 if (captureScreenshots) await mkdir(artifactDirectory, { recursive: true });

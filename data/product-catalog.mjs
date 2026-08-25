@@ -40,8 +40,8 @@ const englishAlts = Object.freeze({
   UCPH: 'UCPH pillow block unit with long shaft and insert bearing',
   UCFA: 'UCFA flanged unit with insert bearing',
   UCFB: 'UCFB flanged unit with insert bearing',
-  PBU: 'PBU pillow block bearing unit with insert bearing',
-  MBU: 'MBU mounted bearing unit with insert bearing',
+  PBU: 'PBU mounted bearing unit with insert bearing',
+  MBU: 'MBU pillow block bearing unit with insert bearing',
   UC: 'UC wide inner ring insert bearing, set-screw locking',
   FB: 'FB pillow block housing',
   FL: 'FL two-bolt flanged housing',
@@ -53,7 +53,7 @@ const englishAlts = Object.freeze({
   FU: 'FU bearing housing',
   PH: 'PH bearing housing',
   PA: 'PA bearing housing',
-  PAS: 'PAS bearing housing',
+  PAS: 'PAS pillow block housing PA',
   FS: 'FS square flange with spigot housing'
 });
 
@@ -109,7 +109,7 @@ export const productCatalog = {
       category: bearingHousingSeries,
       slug: 'bearing-housing-series',
       images: [],
-      series: SERIES_BY_CATEGORY[bearingHousingSeries].map(seriesCode => userConfirmedSeries(bearingHousingSeries, seriesCode, confirmedImages[seriesCode], seriesCode === 'PBH' ? 'Pillow Block Housing' : seriesCode === 'PAS' ? 'Pillow Block Bearing Housing PA Series' : null)),
+      series: SERIES_BY_CATEGORY[bearingHousingSeries].map(seriesCode => userConfirmedSeries(bearingHousingSeries, seriesCode, confirmedImages[seriesCode], seriesCode === 'PBH' ? 'Pillow Block Housing' : seriesCode === 'PAS' ? 'Pillow Block Housing PA' : null)),
       products: [],
       publish: true
     },
