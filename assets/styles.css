@@ -60,8 +60,8 @@ h2 { margin-bottom: 18px; font-size: clamp(28px, 3.6vw, 44px); }
 .home-hero__copy h1 { max-width: 570px; font-size: 58px; }
 .home-hero__copy p { max-width: 470px; margin-bottom: 34px; color: var(--ink-soft); font-size: 18px; }
 .home-hero__media { position: relative; min-height: 550px; }
-.hero-product { position: absolute; inset: 0 0 0 auto; width: min(100%, 760px); height: 100%; object-fit: cover; }
-.hero-factory { position: absolute; bottom: 0; left: -54px; width: 41%; min-width: 220px; height: auto; border: 9px solid var(--mist); }
+.hero-product { position: absolute; inset: 0 0 0 auto; width: min(100%, 760px); height: 100%; object-fit: cover; filter: grayscale(100%); }
+.hero-factory { position: absolute; bottom: 0; left: -54px; width: 41%; min-width: 220px; height: auto; border: 9px solid var(--mist); filter: grayscale(100%); }
 .text-link { display: inline-block; border-bottom: 2px solid var(--amber); padding-bottom: 5px; color: var(--blue-dark); font-family: var(--utility); font-size: 12px; font-weight: 700; text-transform: uppercase; }
 
 .section { padding: 104px 0; }
