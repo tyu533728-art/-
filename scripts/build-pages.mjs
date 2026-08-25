@@ -13,7 +13,7 @@ const site = {
   brand: 'NATER',
   email: '729865273lq@gmail.com',
   whatsapp: '+8617600510039',
-  facebook: 'https://www.facebook.com/share/19CRuRedWG/',
+  facebook: 'https://www.facebook.com/profile.php?id=61591625294939',
   companyName: 'Guantao County Naite Bearing Co., Ltd.',
   manufacturingFacility: 'No. 005, Malan Village, Nanxu Township, Guantao County, Handan City, Hebei Province, P.R.China'
 };
