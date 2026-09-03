@@ -3,6 +3,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { categories, productCatalog, validateProductCatalog } from '../data/product-catalog.mjs';
 import { LOCALE_CODES } from '../data/product-schema.mjs';
+import { guides } from '../data/guides.mjs';
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const domain = 'https://www.natermanufacture.com';
@@ -664,11 +665,17 @@ function heroImage(locale) {
   return `<img class="hero-product" src="/assets/bearing-housing.webp" alt="${escapeHtml(imageAlts.heroProduct[locale])}" width="1280" height="956" loading="eager" fetchpriority="high">`;
 }
 
+/** Guides 首页区块（仅英文站展示；技术文档以英文为准） */
+function homeGuidesSection() {
+  const cards = guides.map(g => `<a class="guide-card" href="/en/guides/${g.slug}/"><p class="eyebrow">Guide</p><h3>${escapeHtml(g.title)}</h3><p>${escapeHtml(g.description)}</p><span class="guide-card__more">Read guide →</span></a>`).join('');
+  return `<section class="section"><div class="site-shell"><div class="section-heading"><p class="eyebrow">Guides</p><h2>Bearing housing guides.</h2></div><div class="guide-grid">${cards}</div></div></section>`;
+}
+
 function homeContent(locale) {
   const text = locales[locale];
   const home = homePresentation[locale];
   const productCards = categories.map(category => `<a class="category-card${category.code === 'custom' ? ' category-card--custom' : ''}" href="${categoryPath(locale, category)}">${categoryCardMedia(locale, category, 'category-card')}<h2>${escapeHtml(categoryCardCopy(locale, category).title)}</h2></a>`).join('');
-  return `<section class="home-hero"><div class="site-shell home-hero__grid"><div class="home-hero__copy"><h1>${escapeHtml(home.title)}</h1><p>${escapeHtml(home.lead)}</p></div><div class="home-hero__media">${heroImage(locale)}<img class="hero-factory" src="/assets/cnc-milling.webp" alt="${escapeHtml(imageAlts.heroFactory[locale])}" width="1280" height="853" loading="lazy"></div></div></section><section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h2>${escapeHtml(text.homeCategoriesHeading)}</h2></div><div class="category-grid">${productCards}</div></div></section><section class="section"><div class="site-shell company-intro"><div class="section-heading"><p class="eyebrow">${escapeHtml(companyIntro.eyebrow[locale])}</p><h2>${escapeHtml(companyIntro.heading[locale])}</h2></div><p class="company-intro__body">${escapeHtml(companyIntro.body[locale])}</p></div></section><section class="section"><div class="site-shell factory-banner"><div class="factory-banner__copy"><p class="eyebrow">${escapeHtml(factorySection.eyebrow[locale])}</p><h2>${escapeHtml(factorySection.heading[locale])}</h2></div><p class="factory-banner__lead">${escapeHtml(factorySection.lead[locale])}</p></div><div class="site-shell factory-spotlights"><article class="factory-spotlight"><figure class="factory-spotlight__media"><img src="/assets/factory-15.webp" alt="${escapeHtml(imageAlts.factorySpot1[locale])}" width="1280" height="960" loading="lazy"></figure><div class="factory-spotlight__body"><p class="eyebrow">${escapeHtml(factorySection.spotlights.s1.eyebrow[locale])}</p><h3>${escapeHtml(factorySection.spotlights.s1.title[locale])}</h3><p>${escapeHtml(factorySection.spotlights.s1.text[locale])}</p></div></article><article class="factory-spotlight factory-spotlight--reverse"><div class="factory-spotlight__body"><p class="eyebrow">${escapeHtml(factorySection.spotlights.s2.eyebrow[locale])}</p><h3>${escapeHtml(factorySection.spotlights.s2.title[locale])}</h3><p>${escapeHtml(factorySection.spotlights.s2.text[locale])}</p></div><figure class="factory-spotlight__media"><img src="/assets/factory-25.webp" alt="${escapeHtml(imageAlts.factorySpot2[locale])}" width="1280" height="960" loading="lazy"></figure></article></div><div class="site-shell factory-features">${factorySection.features[locale].map(feature => `<article class="factory-feature"><span class="factory-feature__mark" aria-hidden="true"></span><h3>${escapeHtml(feature.title)}</h3><p>${escapeHtml(feature.text)}</p></article>`).join('')}</div></section>`;
+  return `<section class="home-hero"><div class="site-shell home-hero__grid"><div class="home-hero__copy"><h1>${escapeHtml(home.title)}</h1><p>${escapeHtml(home.lead)}</p></div><div class="home-hero__media">${heroImage(locale)}<img class="hero-factory" src="/assets/cnc-milling.webp" alt="${escapeHtml(imageAlts.heroFactory[locale])}" width="1280" height="853" loading="lazy"></div></div></section><section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h2>${escapeHtml(text.homeCategoriesHeading)}</h2></div><div class="category-grid">${productCards}</div></div></section>${locale === 'en' ? homeGuidesSection() : ''}<section class="section"><div class="site-shell company-intro"><div class="section-heading"><p class="eyebrow">${escapeHtml(companyIntro.eyebrow[locale])}</p><h2>${escapeHtml(companyIntro.heading[locale])}</h2></div><p class="company-intro__body">${escapeHtml(companyIntro.body[locale])}</p></div></section><section class="section"><div class="site-shell factory-banner"><div class="factory-banner__copy"><p class="eyebrow">${escapeHtml(factorySection.eyebrow[locale])}</p><h2>${escapeHtml(factorySection.heading[locale])}</h2></div><p class="factory-banner__lead">${escapeHtml(factorySection.lead[locale])}</p></div><div class="site-shell factory-spotlights"><article class="factory-spotlight"><figure class="factory-spotlight__media"><img src="/assets/factory-15.webp" alt="${escapeHtml(imageAlts.factorySpot1[locale])}" width="1280" height="960" loading="lazy"></figure><div class="factory-spotlight__body"><p class="eyebrow">${escapeHtml(factorySection.spotlights.s1.eyebrow[locale])}</p><h3>${escapeHtml(factorySection.spotlights.s1.title[locale])}</h3><p>${escapeHtml(factorySection.spotlights.s1.text[locale])}</p></div></article><article class="factory-spotlight factory-spotlight--reverse"><div class="factory-spotlight__body"><p class="eyebrow">${escapeHtml(factorySection.spotlights.s2.eyebrow[locale])}</p><h3>${escapeHtml(factorySection.spotlights.s2.title[locale])}</h3><p>${escapeHtml(factorySection.spotlights.s2.text[locale])}</p></div><figure class="factory-spotlight__media"><img src="/assets/factory-25.webp" alt="${escapeHtml(imageAlts.factorySpot2[locale])}" width="1280" height="960" loading="lazy"></figure></article></div><div class="site-shell factory-features">${factorySection.features[locale].map(feature => `<article class="factory-feature"><span class="factory-feature__mark" aria-hidden="true"></span><h3>${escapeHtml(feature.title)}</h3><p>${escapeHtml(feature.text)}</p></article>`).join('')}</div></section>`;
 }
 
 function productIndex(locale) {
@@ -857,6 +864,28 @@ async function writePage(locale, path, html, routes) {
   routes.push(route);
 }
 
+// ---------- Guides（仅英文技术文档） ----------
+const GUIDES_LOCALE = 'en';
+
+function guidesIndexContent() {
+  const cards = guides.map(g => `<article class="guide-card guide-card--plain"><p class="eyebrow">Guide</p><h2><a href="/en/guides/${g.slug}/">${escapeHtml(g.title)}</a></h2><p>${escapeHtml(g.description)}</p></article>`).join('');
+  return `<section class="page-intro"><div class="site-shell"><p class="eyebrow">Guides</p><h1>Bearing Housing Guides</h1><p>Plain-language engineering guides for buyers and engineers.</p></div></section><section class="section"><div class="site-shell guide-grid">${cards}</div></section>`;
+}
+
+function guideArticleContent(g) {
+  const body = g.sections.map(s => `<section class="guide-section"><h2>${escapeHtml(s.h)}</h2>${(s.p || []).map(p => `<p>${escapeHtml(p)}</p>`).join('')}${s.list ? `<ul>${s.list.map(li => `<li>${escapeHtml(li)}</li>`).join('')}</ul>` : ''}</section>`).join('');
+  return `<section class="page-intro page-intro--compact"><div class="site-shell"><nav class="product-breadcrumb" aria-label="Breadcrumb"><a href="/en/">Home</a><span aria-hidden="true">/</span><a href="/en/guides/">Guides</a><span aria-hidden="true">/</span><span aria-current="page">Guide</span></nav><p class="eyebrow">Guide</p><h1>${escapeHtml(g.title)}</h1><p>${escapeHtml(g.intro)}</p></div></section><section class="section"><div class="site-shell guide-article">${body}<div class="guide-cta"><p>${escapeHtml(g.cta)}</p><a class="btn btn--primary" href="/en/contact-us/">Contact us</a></div></div></section>`;
+}
+
+async function buildGuidesLocale(routes) {
+  const loc = GUIDES_LOCALE;
+  await writePage(loc, 'guides', page({ locale: loc, path: 'guides', active: 'guides', title: `Bearing Housing Guides | ${site.brand}`, description: 'Plain-language engineering guides for bearing housing selection, tolerance and model numbers.', content: guidesIndexContent() }), routes);
+  for (const g of guides) {
+    const p = `guides/${g.slug}`;
+    await writePage(loc, p, page({ locale: loc, path: p, active: 'guides', title: `${g.title} | ${site.brand}`, description: g.description, content: guideArticleContent(g) }), routes);
+  }
+}
+
 async function buildLocale(locale, routes) {
   const home = homePresentation[locale];
   await writePage(locale, '', page({ locale, active: 'home', title: `${home.title} | ${site.brand}`, description: home.lead, content: homeContent(locale) }), routes);
@@ -898,6 +927,7 @@ if (productsOnly) {
     await rm(join(root, locale), { recursive: true, force: true });
     await buildLocale(locale, routes);
   }
+  await buildGuidesLocale(routes);
 
   await writeFile(join(root, 'index.html'), rootRedirect(), 'utf8');
   await rm(join(root, 'products.html'), { force: true });

@@ -68,8 +68,17 @@ function requiredRoutes(locale) {
   ];
 }
 
+/** Guides 栏目（仅英文） */
+const guideRoutes = ['guides', ...['ucp-vs-ucf-vs-ucfl-which-housing', 'why-housing-bore-tolerance-matters', 'how-to-read-a-bearing-housing-model-number'].map(slug => `guides/${slug}`)]
+  .map(slug => publicRoute('en', slug));
+
+function allRequiredRoutes(locale) {
+  const base = requiredRoutes(locale);
+  return locale === 'en' ? [...base, ...guideRoutes] : base;
+}
+
 for (const locale of locales) {
-  for (const route of requiredRoutes(locale)) {
+  for (const route of allRequiredRoutes(locale)) {
     try {
       await access(join(root, route.slice(1), 'index.html'));
     } catch {
@@ -87,10 +96,10 @@ for (const locale of locales) {
 }
 
 const localizedFiles = (await Promise.all(locales.map(locale => filesUnder(join(root, locale), '.html')))).flat();
-const expectedPageCount = locales.length * requiredRoutes('en').length;
+const expectedPageCount = locales.reduce((sum, locale) => sum + allRequiredRoutes(locale).length, 0);
 if (localizedFiles.length !== expectedPageCount) fail(`expected ${expectedPageCount} localized pages, found ${localizedFiles.length}`);
 
-const requiredPageSet = new Set(locales.flatMap(locale => requiredRoutes(locale)));
+const requiredPageSet = new Set(locales.flatMap(locale => allRequiredRoutes(locale)));
 const localizedHtml = new Map();
 for (const file of localizedFiles) localizedHtml.set(routeFor(file), await readFile(file, 'utf8'));
 
@@ -184,7 +193,7 @@ if (customImages.length > 1) fail('Custom page must contain at most the solution
 
 const sitemap = await readFile(join(root, 'sitemap.xml'), 'utf8');
 const sitemapRoutes = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => new URL(match[1]).pathname);
-const expectedSitemap = locales.flatMap(locale => requiredRoutes(locale));
+const expectedSitemap = locales.flatMap(locale => allRequiredRoutes(locale));
 if (sitemapRoutes.length !== expectedSitemap.length) fail(`sitemap must contain ${expectedSitemap.length} URLs, found ${sitemapRoutes.length}`);
 for (const route of expectedSitemap) if (!sitemapRoutes.includes(route)) fail(`sitemap missing ${route}`);
 if (sitemapRoutes.some(route => /(?:\/uel|\/uk)\/$/i.test(route) || (route.includes('/products/') && route.split('/').filter(Boolean).length >= 5))) fail('sitemap contains pending or third-level product URL');

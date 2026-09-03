@@ -300,3 +300,23 @@ body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; 
   .site-nav a { padding: 14px 3px; }
   .language-switcher { display: block; }
 }
+
+/* ===== Guides（技术文档栏目） ===== */
+.guide-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.guide-card { display: flex; flex-direction: column; gap: 10px; padding: 20px; border: 1px solid var(--border, #e3e3e3); border-radius: 10px; background: var(--card-bg, #fff); text-decoration: none; color: inherit; transition: transform .15s ease, box-shadow .15s ease; }
+.guide-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+.guide-card h3 { font-size: 1.05rem; line-height: 1.4; margin: 0; }
+.guide-card h2 { font-size: 1.1rem; line-height: 1.4; margin: 0; }
+.guide-card h2 a { text-decoration: none; color: inherit; }
+.guide-card p { margin: 0; font-size: .92rem; color: var(--muted, #666); line-height: 1.55; }
+.guide-card__more { margin-top: auto; font-size: .9rem; font-weight: 600; color: var(--accent, #2563eb); }
+.guide-card--plain { cursor: default; }
+.guide-article { max-width: 780px; }
+.guide-section { margin-bottom: 28px; }
+.guide-section h2 { font-size: 1.25rem; margin: 0 0 10px; }
+.guide-section p { line-height: 1.75; margin: 0 0 10px; }
+.guide-section ul { margin: 0 0 10px; padding-left: 20px; line-height: 1.75; }
+.guide-section li { margin-bottom: 6px; }
+.guide-cta { margin-top: 32px; padding: 20px; border: 1px solid var(--border, #e3e3e3); border-radius: 10px; background: var(--soft-bg, #f6f7f9); }
+.guide-cta p { margin: 0 0 12px; line-height: 1.6; }
+@media (max-width: 760px) { .guide-grid { grid-template-columns: 1fr; } }
