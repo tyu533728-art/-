@@ -1,2 +1,5 @@
 .vercel
 dist/
+
+# Local video work files - never commit
+video-output/
