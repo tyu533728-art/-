@@ -320,3 +320,11 @@ body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; 
 .guide-cta { margin-top: 32px; padding: 20px; border: 1px solid var(--border, #e3e3e3); border-radius: 10px; background: var(--soft-bg, #f6f7f9); }
 .guide-cta p { margin: 0 0 12px; line-height: 1.6; }
 @media (max-width: 760px) { .guide-grid { grid-template-columns: 1fr; } }
+
+/* ===== 滚动入场动画（配合 site.js，渐进增强） ===== */
+html.has-reveal .reveal { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
+html.has-reveal .reveal--zoom { transform: translateY(14px) scale(.97); }
+html.has-reveal .reveal.is-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  html.has-reveal .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
