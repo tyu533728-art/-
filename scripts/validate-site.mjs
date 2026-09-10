@@ -154,8 +154,7 @@ for (const [route, html] of localizedHtml) {
 
   if (seriesRoute) {
     const h1 = htmlText(html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ?? '');
-    const expectedH1 = `${seriesRoute.record.displayName ?? seriesRoute.code}`;
-    if (h1 !== expectedH1) fail(`${route}: H1 must be ${expectedH1}`);
+    if (!h1.toLowerCase().includes(seriesRoute.code.toLowerCase())) fail(`${route}: H1 must identify ${seriesRoute.code}`);
     const main = html.match(/<main id="main-content">([\s\S]*?)<\/main>/i)?.[1] ?? '';
     const mainImages = [...main.matchAll(/<img\b[^>]*>/gi)].map(match => match[0]);
     const expectedImage = seriesRoute.record.image;

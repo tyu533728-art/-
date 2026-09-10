@@ -438,19 +438,19 @@ const factorySection = Object.freeze({
 });
 
 const homePresentation = Object.freeze({
-  en: { eyebrow: 'Industrial Product Catalogue', title: 'Industrial Bearings & Bearing Housings', lead: 'Product information for industrial bearings, bearing housings, and custom products.', productsHeading: 'Bearings, bearing housings and custom products.', partnerHeading: 'Manufacturing Partner', partnerLead: 'Supported by a long-term manufacturing partner with industrial production capabilities.' },
-  es: { eyebrow: 'Catálogo de productos industriales', title: 'Rodamientos industriales y soportes de rodamientos', lead: 'Información de productos sobre rodamientos industriales, soportes de rodamientos y productos personalizados.', productsHeading: 'Rodamientos, soportes de rodamientos y productos personalizados.', partnerHeading: 'Socio de fabricación', partnerLead: 'Con el respaldo de un socio de fabricación a largo plazo con capacidades de producción industrial.' },
-  de: { eyebrow: 'Industrieller Produktkatalog', title: 'Industrielager und Lagergehäuse', lead: 'Produktinformationen zu Industrielagern, Lagergehäusen und kundenspezifischen Produkten.', productsHeading: 'Lager, Lagergehäuse und kundenspezifische Produkte.', partnerHeading: 'Fertigungspartner', partnerLead: 'Unterstützt durch einen langfristigen Fertigungspartner mit industriellen Produktionskapazitäten.' },
-  fr: { eyebrow: 'Catalogue de produits industriels', title: 'Roulements industriels et paliers', lead: 'Informations produits sur les roulements industriels, les paliers et les produits sur mesure.', productsHeading: 'Roulements, paliers et produits sur mesure.', partnerHeading: 'Partenaire de fabrication', partnerLead: 'Soutenu par un partenaire de fabrication de longue date disposant de capacités de production industrielle.' },
-  pt: { eyebrow: 'Catálogo de produtos industriais', title: 'Rolamentos industriais e mancais', lead: 'Informações sobre produtos de rolamentos industriais, mancais e produtos personalizados.', productsHeading: 'Rolamentos, mancais e produtos personalizados.', partnerHeading: 'Parceiro de fabricação', partnerLead: 'Com o apoio de um parceiro de fabricação de longo prazo com capacidades de produção industrial.' },
-  ar: { eyebrow: 'كتالوج المنتجات الصناعية', title: 'محامل صناعية وبيوت محامل', lead: 'معلومات المنتجات عن المحامل الصناعية وبيوت المحامل والمنتجات المخصصة.', productsHeading: 'المحامل وبيوت المحامل والمنتجات المخصصة.', partnerHeading: 'شريك التصنيع', partnerLead: 'مدعوم بشريك تصنيع طويل الأجل يتمتع بقدرات إنتاج صناعي.' },
-  tr: { eyebrow: 'Endüstriyel ürün kataloğu', title: 'Endüstriyel rulmanlar ve rulman yatakları', lead: 'Endüstriyel rulmanlar, rulman yatakları ve özel ürünler hakkında ürün bilgileri.', productsHeading: 'Rulmanlar, rulman yatakları ve özel ürünler.', partnerHeading: 'Üretim ortağı', partnerLead: 'Endüstriyel üretim kapasitesine sahip uzun vadeli bir üretim ortağı tarafından desteklenmektedir.' },
-  ru: { eyebrow: 'Каталог промышленной продукции', title: 'Промышленные подшипники и корпуса подшипников', lead: 'Информация о промышленных подшипниках, корпусах подшипников и изделиях на заказ.', productsHeading: 'Подшипники, корпуса подшипников и изделия на заказ.', partnerHeading: 'Производственный партнер', partnerLead: 'При поддержке долгосрочного производственного партнера с возможностями промышленного производства.' },
-  it: { eyebrow: 'Catalogo di prodotti industriali', title: 'Cuscinetti industriali e supporti per cuscinetti', lead: 'Informazioni sui prodotti per cuscinetti industriali, supporti per cuscinetti e prodotti personalizzati.', productsHeading: 'Cuscinetti, supporti per cuscinetti e prodotti personalizzati.', partnerHeading: 'Partner produttivo', partnerLead: 'Supportato da un partner produttivo di lunga data con capacità di produzione industriale.' },
-  vi: { eyebrow: 'Danh mục sản phẩm công nghiệp', title: 'Vòng bi công nghiệp và gối đỡ vòng bi', lead: 'Thông tin sản phẩm về vòng bi công nghiệp, gối đỡ vòng bi và sản phẩm tùy chỉnh.', productsHeading: 'Vòng bi, gối đỡ vòng bi và sản phẩm tùy chỉnh.', partnerHeading: 'Đối tác sản xuất', partnerLead: 'Được hỗ trợ bởi đối tác sản xuất lâu dài có năng lực sản xuất công nghiệp.' },
-  id: { eyebrow: 'Katalog produk industri', title: 'Bantalan industri dan rumah bantalan', lead: 'Informasi produk untuk bantalan industri, rumah bantalan, dan produk khusus.', productsHeading: 'Bantalan, rumah bantalan, dan produk khusus.', partnerHeading: 'Mitra manufaktur', partnerLead: 'Didukung oleh mitra manufaktur jangka panjang dengan kemampuan produksi industri.' },
-  ja: { eyebrow: '産業用製品カタログ', title: '産業用ベアリングとベアリングハウジング', lead: '産業用ベアリング、ベアリングハウジング、カスタム製品に関する製品情報。', productsHeading: 'ベアリング、ベアリングハウジング、カスタム製品。', partnerHeading: '製造パートナー', partnerLead: '産業生産能力を持つ長期的な製造パートナーの支援を受けています。' },
-  ko: { eyebrow: '산업 제품 카탈로그', title: '산업용 베어링 및 베어링 하우징', lead: '산업용 베어링, 베어링 하우징 및 맞춤형 제품에 대한 제품 정보.', productsHeading: '베어링, 베어링 하우징 및 맞춤형 제품.', partnerHeading: '제조 파트너', partnerLead: '산업 생산 역량을 갖춘 장기 제조 파트너의 지원을 받고 있습니다.' }
+  en: { eyebrow: 'Industrial Product Catalogue', title: 'Industrial Bearings & Bearing Housings', lead: 'Bearing housing manufacturer with 20+ years of experience. NATER supplies pillow block bearing units, bearing housing series and custom solutions — machined in-house, supplied directly to buyers worldwide.', productsHeading: 'Bearings, bearing housings and custom products.', partnerHeading: 'Manufacturing Partner', partnerLead: 'Supported by a long-term manufacturing partner with industrial production capabilities.' },
+  es: { eyebrow: 'Catálogo de productos industriales', title: 'Rodamientos industriales y soportes de rodamientos', lead: 'Fabricante de soportes de rodamientos con más de 20 años de experiencia. NATER suministra unidades de rodamientos de pie, series de soportes de rodamientos y soluciones a medida, mecanizados internamente y enviados directamente a compradores de todo el mundo.', productsHeading: 'Rodamientos, soportes de rodamientos y productos personalizados.', partnerHeading: 'Socio de fabricación', partnerLead: 'Con el respaldo de un socio de fabricación a largo plazo con capacidades de producción industrial.' },
+  de: { eyebrow: 'Industrieller Produktkatalog', title: 'Industrielager und Lagergehäuse', lead: 'Hersteller von Lagergehäusen mit über 20 Jahren Erfahrung. NATER liefert Stehlagereinheiten, Lagergehäuse-Serien und Sonderlösungen — hauseigen bearbeitet, direkt an Käufer weltweit.', productsHeading: 'Lager, Lagergehäuse und kundenspezifische Produkte.', partnerHeading: 'Fertigungspartner', partnerLead: 'Unterstützt durch einen langfristigen Fertigungspartner mit industriellen Produktionskapazitäten.' },
+  fr: { eyebrow: 'Catalogue de produits industriels', title: 'Roulements industriels et paliers', lead: 'Fabricant de paliers avec plus de 20 ans d\'expérience. NATER fournit des unités de paliers à semelle, des séries de paliers et des solutions sur mesure, usinés en interne et livrés directement aux acheteurs du monde entier.', productsHeading: 'Roulements, paliers et produits sur mesure.', partnerHeading: 'Partenaire de fabrication', partnerLead: 'Soutenu par un partenaire de fabrication de longue date disposant de capacités de production industrielle.' },
+  pt: { eyebrow: 'Catálogo de produtos industriais', title: 'Rolamentos industriais e mancais', lead: 'Fabricante de mancais com mais de 20 anos de experiência. A NATER fornece unidades de mancais de pé, séries de mancais e soluções personalizadas — maquinados internamente e entregues diretamente a compradores em todo o mundo.', productsHeading: 'Rolamentos, mancais e produtos personalizados.', partnerHeading: 'Parceiro de fabricação', partnerLead: 'Com o apoio de um parceiro de fabricação de longo prazo com capacidades de produção industrial.' },
+  ar: { eyebrow: 'كتالوج المنتجات الصناعية', title: 'محامل صناعية وبيوت محامل', lead: 'مصنع بيوت محامل بخبرة تزيد عن 20 عامًا. توفر NATER وحدات المحامل ذات القاعدة وسلسلات بيوت المحامل والحلول المخصصة — تصنيع داخلي وتوريد مباشر للمشترين حول العالم.', productsHeading: 'المحامل وبيوت المحامل والمنتجات المخصصة.', partnerHeading: 'شريك التصنيع', partnerLead: 'مدعوم بشريك تصنيع طويل الأجل يتمتع بقدرات إنتاج صناعي.' },
+  tr: { eyebrow: 'Endüstriyel ürün kataloğu', title: 'Endüstriyel rulmanlar ve rulman yatakları', lead: '20 yılı aşkın deneyime sahip rulman yatağı üreticisi. NATER, ayaklı rulman yatakları, rulman yatağı serileri ve özel çözümler sunar — kendi tesislerinde işlenir ve dünya genelindeki alıcılara doğrudan tedarik edilir.', productsHeading: 'Rulmanlar, rulman yatakları ve özel ürünler.', partnerHeading: 'Üretim ortağı', partnerLead: 'Endüstriyel üretim kapasitesine sahip uzun vadeli bir üretim ortağı tarafından desteklenmektedir.' },
+  ru: { eyebrow: 'Каталог промышленной продукции', title: 'Промышленные подшипники и корпуса подшипников', lead: 'Производитель корпусов подшипников с более чем 20-летним опытом. NATER поставляет опорные подшипниковые узлы, серии корпусов подшипников и индивидуальные решения — собственная механическая обработка и прямые поставки покупателям по всему миру.', productsHeading: 'Подшипники, корпуса подшипников и изделия на заказ.', partnerHeading: 'Производственный партнер', partnerLead: 'При поддержке долгосрочного производственного партнера с возможностями промышленного производства.' },
+  it: { eyebrow: 'Catalogo di prodotti industriali', title: 'Cuscinetti industriali e supporti per cuscinetti', lead: 'Produttore di supporti per cuscinetti con oltre 20 anni di esperienza. NATER fornisce unità di supporti a piedistallo, serie di supporti e soluzioni personalizzate — lavorati internamente e forniti direttamente ad acquirenti di tutto il mondo.', productsHeading: 'Cuscinetti, supporti per cuscinetti e prodotti personalizzati.', partnerHeading: 'Partner produttivo', partnerLead: 'Supportato da un partner produttivo di lunga data con capacità di produzione industriale.' },
+  vi: { eyebrow: 'Danh mục sản phẩm công nghiệp', title: 'Vòng bi công nghiệp và gối đỡ vòng bi', lead: 'Nhà sản xuất gối đỡ vòng bi với hơn 20 năm kinh nghiệm. NATER cung cấp bộ gối đỡ vòng bi, dòng gối đỡ vòng bi và giải pháp tùy chỉnh — gia công tại xưởng và cung cấp trực tiếp cho người mua toàn cầu.', productsHeading: 'Vòng bi, gối đỡ vòng bi và sản phẩm tùy chỉnh.', partnerHeading: 'Đối tác sản xuất', partnerLead: 'Được hỗ trợ bởi đối tác sản xuất lâu dài có năng lực sản xuất công nghiệp.' },
+  id: { eyebrow: 'Katalog produk industri', title: 'Bantalan industri dan rumah bantalan', lead: 'Produsen rumah bantalan dengan pengalaman lebih dari 20 tahun. NATER memasok unit bantalan duduk, seri rumah bantalan, dan solusi khusus — diproses internal dan dipasok langsung ke pembeli di seluruh dunia.', productsHeading: 'Bantalan, rumah bantalan, dan produk khusus.', partnerHeading: 'Mitra manufaktur', partnerLead: 'Didukung oleh mitra manufaktur jangka panjang dengan kemampuan produksi industri.' },
+  ja: { eyebrow: '産業用製品カタログ', title: '産業用ベアリングとベアリングハウジング', lead: '20年以上の実績を持つベアリングハウジングメーカー。NATERはピローブロックベアリングユニット、ベアリングハウジングシリーズ、カスタムソリューションを自社工場で機械加工し、世界中のバイヤーへ直接供給しています。', productsHeading: 'ベアリング、ベアリングハウジング、カスタム製品。', partnerHeading: '製造パートナー', partnerLead: '産業生産能力を持つ長期的な製造パートナーの支援を受けています。' },
+  ko: { eyebrow: '산업 제품 카탈로그', title: '산업용 베어링 및 베어링 하우징', lead: '20년 이상의 경력을 가진 베어링 하우징 제조업체입니다. NATER는 필로우 블록 베어링 유닛, 베어링 하우징 시리즈, 맞춤형 솔루션을 자체 가공하여 전 세계 바이어에게 직접 공급합니다.', productsHeading: '베어링, 베어링 하우징 및 맞춤형 제품.', partnerHeading: '제조 파트너', partnerLead: '산업 생산 역량을 갖춘 장기 제조 파트너의 지원을 받고 있습니다.' }
 });
 
 for (const locale of localeCodes) locales[locale].navAbout = contactLabels[locale];
@@ -475,6 +475,22 @@ const localeKeys = Object.keys(locales);
 if (localeKeys.length !== localeCodes.length || localeCodes.some(code => !localeKeys.includes(code))) {
   throw new Error('Language catalogue must define exactly the fixed 13 locale codes.');
 }
+
+const heroSubline = Object.freeze({
+  en: 'Bearings & Bearing Housings',
+  es: 'Rodamientos y soportes de rodamientos',
+  de: 'Lager & Lagergehäuse',
+  fr: 'Roulements & paliers',
+  pt: 'Rolamentos e mancais',
+  ar: 'المحامل وبيوت المحامل',
+  tr: 'Rulmanlar ve rulman yatakları',
+  ru: 'Подшипники и корпуса подшипников',
+  it: 'Cuscinetti e supporti per cuscinetti',
+  vi: 'Vòng bi và gối đỡ vòng bi',
+  id: 'Bantalan dan rumah bantalan',
+  ja: 'ベアリング & ベアリングハウジング',
+  ko: '베어링 & 베어링 하우징'
+});
 
 function escapeHtml(value) {
   return String(value).replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]);
@@ -545,6 +561,43 @@ function organizationSchema(locale) {
   };
 }
 
+function seriesDescriptiveName(locale, series) {
+  if (locale === 'en') {
+    return series.alt ? `${series.alt.charAt(0).toUpperCase()}${series.alt.slice(1)}` : (series.displayName ?? series.seriesCode);
+  }
+  const local = displayItemAlts[locale]?.[series.seriesCode];
+  if (local) return local;
+  const fallback = series.displayName ?? series.seriesCode;
+  return fallback.toLowerCase().includes(series.seriesCode.toLowerCase()) ? fallback : `${series.seriesCode} ${fallback}`;
+}
+
+function seriesSchema(locale, category, series, path) {
+  const name = seriesDescriptiveName(locale, series);
+  const url = absoluteUrl(publicPath(locale, path));
+  const product = {
+    '@type': 'Product',
+    name,
+    category: localizedCategoryTitle(locale, category),
+    brand: { '@type': 'Brand', name: site.brand },
+    url,
+    description: seriesPageDescription(locale, category, series)
+  };
+  if (series.image) product.image = [absoluteUrl(series.image.src)];
+  return [
+    organizationSchema(locale),
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: locales[locale].navHome, item: absoluteUrl(publicPath(locale)) },
+        { '@type': 'ListItem', position: 2, name: locales[locale].navProducts, item: absoluteUrl(publicPath(locale, 'products')) },
+        { '@type': 'ListItem', position: 3, name: localizedCategoryTitle(locale, category), item: absoluteUrl(categoryPath(locale, category)) },
+        { '@type': 'ListItem', position: 4, name, item: url }
+      ]
+    },
+    product
+  ];
+}
+
 function head({ locale, path, title, description, schema = organizationSchema(locale), noindex = false }) {
   const canonical = absoluteUrl(publicPath(locale, path));
   const direction = locale === 'ar' ? ' dir="rtl"' : '';
@@ -569,7 +622,7 @@ function head({ locale, path, title, description, schema = organizationSchema(lo
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/styles.css">
   <script src="/assets/site.js" defer></script>
-  <script type="application/ld+json">${JSON.stringify(schema)}</script>
+  <script type="application/ld+json">${Array.isArray(schema) ? JSON.stringify({ '@context': 'https://schema.org', '@graph': schema }) : JSON.stringify(schema)}</script>
 </head>`;
 }
 
@@ -675,7 +728,7 @@ function homeContent(locale) {
   const text = locales[locale];
   const home = homePresentation[locale];
   const productCards = categories.map(category => `<a class="category-card${category.code === 'custom' ? ' category-card--custom' : ''}" href="${categoryPath(locale, category)}">${categoryCardMedia(locale, category, 'category-card')}<h2>${escapeHtml(categoryCardCopy(locale, category).title)}</h2></a>`).join('');
-  return `<section class="home-hero"><div class="site-shell home-hero__grid"><div class="home-hero__copy"><h1>${escapeHtml(home.title)}</h1><p>${escapeHtml(home.lead)}</p></div><div class="home-hero__media">${heroImage(locale)}<img class="hero-factory" src="/assets/cnc-milling.webp" alt="${escapeHtml(imageAlts.heroFactory[locale])}" width="1280" height="853" loading="lazy"></div></div></section><section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h2>${escapeHtml(text.homeCategoriesHeading)}</h2></div><div class="category-grid">${productCards}</div></div></section>${locale === 'en' ? homeGuidesSection() : ''}<section class="section"><div class="site-shell company-intro"><div class="section-heading"><p class="eyebrow">${escapeHtml(companyIntro.eyebrow[locale])}</p><h2>${escapeHtml(companyIntro.heading[locale])}</h2></div><p class="company-intro__body">${escapeHtml(companyIntro.body[locale])}</p></div></section><section class="section"><div class="site-shell factory-banner"><div class="factory-banner__copy"><p class="eyebrow">${escapeHtml(factorySection.eyebrow[locale])}</p><h2>${escapeHtml(factorySection.heading[locale])}</h2></div><p class="factory-banner__lead">${escapeHtml(factorySection.lead[locale])}</p></div><div class="site-shell factory-spotlights"><article class="factory-spotlight"><figure class="factory-spotlight__media"><img src="/assets/factory-15.webp" alt="${escapeHtml(imageAlts.factorySpot1[locale])}" width="1280" height="960" loading="lazy"></figure><div class="factory-spotlight__body"><p class="eyebrow">${escapeHtml(factorySection.spotlights.s1.eyebrow[locale])}</p><h3>${escapeHtml(factorySection.spotlights.s1.title[locale])}</h3><p>${escapeHtml(factorySection.spotlights.s1.text[locale])}</p></div></article><article class="factory-spotlight factory-spotlight--reverse"><div class="factory-spotlight__body"><p class="eyebrow">${escapeHtml(factorySection.spotlights.s2.eyebrow[locale])}</p><h3>${escapeHtml(factorySection.spotlights.s2.title[locale])}</h3><p>${escapeHtml(factorySection.spotlights.s2.text[locale])}</p></div><figure class="factory-spotlight__media"><img src="/assets/factory-25.webp" alt="${escapeHtml(imageAlts.factorySpot2[locale])}" width="1280" height="960" loading="lazy"></figure></article></div><div class="site-shell factory-features">${factorySection.features[locale].map(feature => `<article class="factory-feature"><span class="factory-feature__mark" aria-hidden="true"></span><h3>${escapeHtml(feature.title)}</h3><p>${escapeHtml(feature.text)}</p></article>`).join('')}</div></section>`;
+  return `<section class="home-hero"><div class="site-shell home-hero__grid"><div class="home-hero__copy"><h1 class="hero-brand" dir="ltr" data-hero-brand>NATERMANUFACTURE</h1><p class="hero-subline">${escapeHtml(heroSubline[locale])}</p></div><div class="home-hero__media">${heroImage(locale)}<img class="hero-factory" src="/assets/cnc-milling.webp" alt="${escapeHtml(imageAlts.heroFactory[locale])}" width="1280" height="853" loading="lazy"></div></div></section><section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h2>${escapeHtml(text.homeCategoriesHeading)}</h2></div><div class="category-grid">${productCards}</div></div></section>${locale === 'en' ? homeGuidesSection() : ''}<section class="section"><div class="site-shell company-intro"><div class="section-heading"><p class="eyebrow">${escapeHtml(companyIntro.eyebrow[locale])}</p><h2>${escapeHtml(companyIntro.heading[locale])}</h2></div><p class="company-intro__body">${escapeHtml(companyIntro.body[locale])}</p></div></section><section class="section"><div class="site-shell factory-banner"><div class="factory-banner__copy"><p class="eyebrow">${escapeHtml(factorySection.eyebrow[locale])}</p><h2>${escapeHtml(factorySection.heading[locale])}</h2></div><p class="factory-banner__lead">${escapeHtml(factorySection.lead[locale])}</p></div><div class="site-shell factory-spotlights"><article class="factory-spotlight"><figure class="factory-spotlight__media"><img src="/assets/factory-15.webp" alt="${escapeHtml(imageAlts.factorySpot1[locale])}" width="1280" height="960" loading="lazy"></figure><div class="factory-spotlight__body"><p class="eyebrow">${escapeHtml(factorySection.spotlights.s1.eyebrow[locale])}</p><h3>${escapeHtml(factorySection.spotlights.s1.title[locale])}</h3><p>${escapeHtml(factorySection.spotlights.s1.text[locale])}</p></div></article><article class="factory-spotlight factory-spotlight--reverse"><div class="factory-spotlight__body"><p class="eyebrow">${escapeHtml(factorySection.spotlights.s2.eyebrow[locale])}</p><h3>${escapeHtml(factorySection.spotlights.s2.title[locale])}</h3><p>${escapeHtml(factorySection.spotlights.s2.text[locale])}</p></div><figure class="factory-spotlight__media"><img src="/assets/factory-25.webp" alt="${escapeHtml(imageAlts.factorySpot2[locale])}" width="1280" height="960" loading="lazy"></figure></article></div><div class="site-shell factory-features">${factorySection.features[locale].map(feature => `<article class="factory-feature"><span class="factory-feature__mark" aria-hidden="true"></span><h3>${escapeHtml(feature.title)}</h3><p>${escapeHtml(feature.text)}</p></article>`).join('')}</div></section>`;
 }
 
 function productIndex(locale) {
@@ -805,8 +858,8 @@ const seriesCta = Object.freeze({
 
 function seriesPageDescription(locale, category, series) {
   if (locale === 'en') {
-    const sentence = series.alt ? `${series.alt.charAt(0).toUpperCase()}${series.alt.slice(1)} — NATER.` : `${series.displayName ?? series.seriesCode} — NATER.`;
-    return `${sentence} Enquire for specifications, dimensions and availability.`;
+    const sentence = series.alt ? `${series.alt.charAt(0).toUpperCase()}${series.alt.slice(1)}` : `${series.displayName ?? series.seriesCode}`;
+    return `${sentence} — NATER. In-house machined and assembled by a bearing housing manufacturer with 20+ years of experience. Enquire for specifications, dimensions and availability.`;
   }
   const name = series.displayName ?? series.seriesCode;
   return `${name} — ${localizedCategoryTitle(locale, category)} — NATER. ${seriesCta[locale]}`;
@@ -818,7 +871,7 @@ function seriesContent(locale, category, series) {
   const labels = seriesZoomLabels[locale];
   const description = seriesPageDescription(locale, category, series);
   const content = image ? `<section class="section"><div class="site-shell"><div class="product-display-grid product-display-grid--single"><article class="product-display-card" dir="ltr"><div class="product-display-card__image"><button type="button" class="product-image-zoom" data-lightbox="${escapeHtml(series.image.src)}" data-close="${escapeHtml(labels.close)}" aria-label="${escapeHtml(labels.zoom)}">${image}</button></div><h2 dir="ltr">${escapeHtml(series.displayName ?? series.seriesCode)}</h2></article></div></div></section>` : '';
-  return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">${escapeHtml(localizedCategoryTitle(locale, category))}</p><h1 dir="ltr">${escapeHtml(series.displayName ?? series.seriesCode)}</h1><p>${escapeHtml(description)}</p></div></section>${productIndex(locale)}${content}${enquiryCtaSection(locale, series)}`;
+  return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">${escapeHtml(localizedCategoryTitle(locale, category))}</p><h1 dir="ltr">${escapeHtml(seriesDescriptiveName(locale, series))}</h1><p>${escapeHtml(description)}</p></div></section>${productIndex(locale)}${content}${enquiryCtaSection(locale, series)}`;
 }
 
 function productBreadcrumb(locale, category, product) {
@@ -902,9 +955,9 @@ async function buildProductsLocale(locale, routes) {
     await writePage(locale, categoryPath, page({ locale, path: categoryPath, active: 'products', title: `${localizedCategoryTitle(locale, category)} | ${site.brand}`, description, content: categoryContent(locale, category), schema: { ...organizationSchema(locale), description } }), routes);
     for (const series of (category.series ?? []).filter(item => item.status === 'active')) {
       const seriesRoute = `${categoryPath}/${series.seriesCode.toLowerCase()}`;
-      const seriesTitle = `${series.displayName ?? series.seriesCode} | ${localizedCategoryTitle(locale, category)} | ${site.brand}`;
+      const seriesTitle = `${seriesDescriptiveName(locale, series)} | ${localizedCategoryTitle(locale, category)} | ${site.brand}`;
       const seriesDescription = seriesPageDescription(locale, category, series);
-      await writePage(locale, seriesRoute, page({ locale, path: seriesRoute, active: 'products', title: seriesTitle, description: seriesDescription, content: seriesContent(locale, category, series), schema: { ...organizationSchema(locale), description: seriesDescription } }), routes);
+      await writePage(locale, seriesRoute, page({ locale, path: seriesRoute, active: 'products', title: seriesTitle, description: seriesDescription, content: seriesContent(locale, category, series), schema: seriesSchema(locale, category, series, seriesRoute) }), routes);
     }
   }
 }

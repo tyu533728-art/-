@@ -328,3 +328,26 @@ html.has-reveal .reveal.is-visible { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   html.has-reveal .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
+
+
+/* ---- 开幕大字动画 (lead-word-zoom-assemble) ---- */
+.home-hero__copy h1.hero-brand {
+  max-width: none;
+  width: max-content;
+  white-space: nowrap;
+  font-size: clamp(44px, 7vw, 96px);
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  will-change: transform, opacity;
+}
+.home-hero__copy h1.hero-brand::after { display: none; }
+.home-hero__copy .hero-subline {
+  margin-top: 14px;
+  font-size: clamp(18px, 2vw, 26px);
+  color: var(--ink-soft);
+  opacity: 0;
+}
+html.js-hero-pending .home-hero__copy h1.hero-brand,
+html.js-hero-pending .home-hero__copy .hero-subline { opacity: 0 !important; }
+html.no-hero-anim .home-hero__copy h1.hero-brand,
+html.no-hero-anim .home-hero__copy .hero-subline { opacity: 1; }
