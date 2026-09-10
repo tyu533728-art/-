@@ -330,24 +330,50 @@ html.has-reveal .reveal.is-visible { opacity: 1; transform: none; }
 }
 
 
-/* ---- 开幕大字动画 (lead-word-zoom-assemble) ---- */
-.home-hero__copy h1.hero-brand {
-  max-width: none;
-  width: max-content;
+/* ---- 独立全屏开幕动画 (lead-word-zoom-assemble,与镜头卡同色) ---- */
+:root {
+  --mesh-bg: radial-gradient(52% 44% at 18% 22%, rgba(122,90,248,0.20) 0%, rgba(122,90,248,0) 70%),
+    radial-gradient(46% 42% at 84% 18%, rgba(255,138,178,0.20) 0%, rgba(255,138,178,0) 70%),
+    radial-gradient(58% 50% at 78% 84%, rgba(96,190,255,0.20) 0%, rgba(96,190,255,0) 70%),
+    radial-gradient(50% 46% at 24% 88%, rgba(255,196,112,0.20) 0%, rgba(255,196,112,0) 70%),
+    linear-gradient(180deg, #f7f6f9 0%, #f2f1f5 100%);
+}
+body { background: var(--mesh-bg); background-attachment: fixed; }
+.home-hero { background: transparent; }
+html.splash-active { overflow: hidden; }
+.brand-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--mesh-bg);
+}
+.brand-splash__stage { text-align: center; padding: 0 20px; will-change: transform, opacity, filter; }
+.brand-splash__word {
+  margin: 0;
   white-space: nowrap;
-  font-size: clamp(44px, 7vw, 96px);
+  font-size: clamp(40px, 7vw, 96px);
+  font-weight: 600;
   letter-spacing: -0.03em;
-  line-height: 1.06;
+  line-height: 1.1;
+  font-family: -apple-system, "PingFang SC", BlinkMacSystemFont, sans-serif;
+  color: #1d1d1f;
   will-change: transform, opacity;
 }
-.home-hero__copy h1.hero-brand::after { display: none; }
-.home-hero__copy .hero-subline {
-  margin-top: 14px;
+.brand-splash__accent { color: #7A5AF8; }
+.brand-splash__sub {
+  margin: 20px 0 0;
   font-size: clamp(18px, 2vw, 26px);
-  color: var(--ink-soft);
+  font-family: -apple-system, "PingFang SC", BlinkMacSystemFont, sans-serif;
+  color: #7a7a7a;
   opacity: 0;
 }
-html.js-hero-pending .home-hero__copy h1.hero-brand,
-html.js-hero-pending .home-hero__copy .hero-subline { opacity: 0 !important; }
-html.no-hero-anim .home-hero__copy h1.hero-brand,
-html.no-hero-anim .home-hero__copy .hero-subline { opacity: 1; }
+.brand-splash.is-leaving .brand-splash__stage {
+  transition: transform .4s ease-in, opacity .4s ease-in, filter .4s ease-in;
+  transform: scale(1.2);
+  opacity: 0;
+  filter: blur(9px);
+}
+html.splash-done .brand-splash { display: none; }

@@ -52,49 +52,59 @@
  * 滚动入场动画（零依赖、渐进增强）：
  * 卡片/板块滚入视口时淡入上移；每 4 个元素给一个轻微缩放变化。
  * 不支持 IntersectionObserver 或用户开启"减少动态"时完全不生效（内容照常显示）。
+ * 有独立开幕动画时,等开幕结束再初始化,避免动画在遮罩后面提前放完。
  */
 (function () {
   'use strict';
   if (!('IntersectionObserver' in window)) return;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduce) return;
-  var selector = '.home-hero__copy, .category-card, .guide-card, .company-intro, .section-heading, .factory-banner, .factory-spotlight';
-  var elements = Array.prototype.slice.call(document.querySelectorAll(selector));
-  if (!elements.length) return;
-  document.documentElement.classList.add('has-reveal');
-  elements.forEach(function (element, index) {
-    element.classList.add('reveal');
-    if (index % 4 === 3) element.classList.add('reveal--zoom');
-  });
-  var observer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
+  function init() {
+    var selector = '.home-hero__copy, .category-card, .guide-card, .company-intro, .section-heading, .factory-banner, .factory-spotlight';
+    var elements = Array.prototype.slice.call(document.querySelectorAll(selector));
+    if (!elements.length) return;
+    document.documentElement.classList.add('has-reveal');
+    elements.forEach(function (element, index) {
+      element.classList.add('reveal');
+      if (index % 4 === 3) element.classList.add('reveal--zoom');
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
-  elements.forEach(function (element) { observer.observe(element); });
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+    elements.forEach(function (element) { observer.observe(element); });
+  }
+  var splash = document.getElementById('brand-splash');
+  if (splash && !document.documentElement.classList.contains('splash-done')) {
+    window.addEventListener('nater:splash-done', init, { once: true });
+    return;
+  }
+  init();
 })();
 
 
-// ---- 开幕大字动画 lead-word-zoom-assemble(纯 JS,零依赖)----
+// ---- 独立全屏开幕动画 lead-word-zoom-assemble(与镜头卡同色同节奏)----
 (function () {
-  var hero = document.querySelector('.home-hero__copy');
-  if (!hero) return;
-  var lead = hero.querySelector('h1.hero-brand');
-  var sub = hero.querySelector('.hero-subline');
-  if (!lead || !sub) return;
-  document.documentElement.classList.add('js-hero-pending');
-  window.setTimeout(function () {
-    document.documentElement.classList.remove('js-hero-pending');
-  }, 2500); // 兜底:JS 出错也不至于让标题永久隐藏
+  'use strict';
+  var splash = document.getElementById('brand-splash');
+  if (!splash) return;
+  var word = splash.querySelector('.brand-splash__word');
+  var sub = splash.querySelector('.brand-splash__sub');
+  var stage = splash.querySelector('.brand-splash__stage');
+  if (!word || !sub || !stage) return;
+  var root = document.documentElement;
+  root.classList.add('splash-active');
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.documentElement.classList.add('no-hero-anim');
-    document.documentElement.classList.remove('js-hero-pending');
-    return;
+  function finish() {
+    root.classList.add('splash-done');
+    root.classList.remove('splash-active');
+    window.dispatchEvent(new CustomEvent('nater:splash-done'));
   }
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { finish(); return; }
 
   var cubicBezier = function (p1x, p1y, p2x, p2y) {
     var ax = 3 * p1x - 3 * p2x + 1, bx = 3 * p2x - 6 * p1x, cx = 3 * p1x;
@@ -117,65 +127,76 @@
   };
   var pushEase = cubicBezier(0.25, 1, 0.5, 1);
   var zoomEase = cubicBezier(0.5, 0, 0.05, 1);
-  var subEase = cubicBezier(0.22, 0.8, 0.36, 1);
+  var outCubic = function (k) { return 1 - Math.pow(1 - k, 3); };
+  var inQuad = function (k) { return k * k; };
 
   // 测量:单行单词;基线用零尺寸尺子读出(卡片命门)
-  var rect = lead.getBoundingClientRect();
+  var rect = word.getBoundingClientRect();
   var wordWidth = rect.width;
   var lineCenter = rect.left + rect.width / 2;
   var viewportCenter = window.innerWidth / 2;
   var slideDistance = viewportCenter - lineCenter;
   var ruler = document.createElement('span');
   ruler.style.cssText = 'display:inline-block;width:0;height:0;';
-  lead.appendChild(ruler);
+  word.appendChild(ruler);
   var baseline = ruler.offsetTop;
   ruler.remove();
-  lead.style.transformOrigin = '50% ' + baseline + 'px';
+  word.style.transformOrigin = '50% ' + baseline + 'px';
 
   // 长词自适应峰值:不溢出视口
   var peak = Math.min(2.3, (window.innerWidth * 0.92) / Math.max(wordWidth, 1));
   var peakPush = peak * 1.06;
 
-  var FPS = 30;                    // 镜头卡时间轴 30fps 基准
-  var t1 = 12, t2 = 24, t3 = 36;   // 帧:推近 0-12,缩回 12-24,左滑 12-36
-  var subStart = 14, subEnd = 26;
-  var total = t3 / FPS;
+  // 镜头卡原版时间轴(84f @30fps)
+  var FPS = 30;
+  var INTRO = 6, HOLD = 12, RECEDE = 12, ASSEMBLE = 24, LIFT_A = 34, LIFT_B = 50, CRASH = 72, TOTAL = 84;
 
   var start = null;
-  lead.style.opacity = '0';
+  word.style.opacity = '0';
   sub.style.opacity = '0';
-  sub.style.transform = 'translateY(16px)';
 
   function frame(now) {
     if (start === null) start = now;
     var s = (now - start) / 1000;
-    if (s > total) s = total;
+    if (s > TOTAL / FPS) s = TOTAL / FPS;
     var f = s * FPS;
-    var scale, tx;
-    if (f <= t1) {
-      var k = f / t1;
-      scale = peak * (1 + 0.06 * pushEase(k));
+    var scale, tx, liftY = 0;
+    if (f <= HOLD) {
+      scale = peak * (1 + 0.06 * pushEase(f / HOLD));
       tx = slideDistance;
-    } else if (f <= t2) {
-      var k2 = (f - t1) / (t2 - t1);
-      scale = peakPush * (1 - zoomEase(k2)) + zoomEase(k2);
+    } else if (f <= HOLD + RECEDE) {
+      var k1 = (f - HOLD) / RECEDE;
+      scale = peakPush * (1 - zoomEase(k1)) + zoomEase(k1);
       tx = slideDistance;
     } else {
-      var k3 = (f - t2) / (t3 - t2);
       scale = 1;
-      tx = slideDistance * (1 - zoomEase(k3));
+      tx = f >= HOLD + ASSEMBLE ? 0 : slideDistance * (1 - zoomEase((f - HOLD) / ASSEMBLE));
     }
-    lead.style.transform = 'translateX(' + tx + 'px) scale(' + scale + ')';
-    lead.style.opacity = '1';
-    document.documentElement.classList.remove('js-hero-pending');
-    if (f >= subStart) {
-      var k4 = (f - subStart) / (subEnd - subStart);
-      if (k4 >= 1) k4 = 1;
-      var a = subEase(k4);
+    if (f >= LIFT_A) {
+      var k2 = Math.min((f - LIFT_A) / (LIFT_B - LIFT_A), 1);
+      liftY = -48 * outCubic(k2);
+    }
+    word.style.transform = 'translateX(' + tx + 'px) translateY(' + liftY + 'px) scale(' + scale + ')';
+    word.style.opacity = String(Math.min(f / INTRO, 1));
+    if (f >= LIFT_A) {
+      var k3 = Math.min((f - LIFT_A) / (LIFT_B - LIFT_A), 1);
+      var a = outCubic(k3);
       sub.style.opacity = String(a);
       sub.style.transform = 'translateY(' + (1 - a) * 16 + 'px)';
     }
-    if (s < total) requestAnimationFrame(frame);
+    if (f >= CRASH) {
+      var k4 = Math.min((f - CRASH) / (TOTAL - CRASH), 1);
+      var c = inQuad(k4);
+      stage.style.transform = 'scale(' + (1 + c * 0.2) + ')';
+      stage.style.filter = 'blur(' + (c * 9) + 'px)';
+      stage.style.opacity = String(1 - c * 0.55);
+    }
+    if (f < TOTAL) {
+      requestAnimationFrame(frame);
+    } else {
+      splash.classList.add('is-leaving'); // CSS 过渡到完全淡出,交棒首页
+      window.setTimeout(finish, 460);
+    }
   }
   requestAnimationFrame(frame);
 })();
