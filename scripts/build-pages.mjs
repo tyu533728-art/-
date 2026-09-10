@@ -476,6 +476,70 @@ if (localeKeys.length !== localeCodes.length || localeCodes.some(code => !locale
   throw new Error('Language catalogue must define exactly the fixed 13 locale codes.');
 }
 
+const productsPageTitle = Object.freeze({
+  en: 'Bearing Products & Bearing Housings',
+  es: 'Rodamientos y soportes de rodamientos',
+  de: 'Lager und Lagergehäuse',
+  fr: 'Roulements et paliers',
+  pt: 'Rolamentos e mancais',
+  ar: 'المحامل وبيوت المحامل',
+  tr: 'Rulmanlar ve rulman yatakları',
+  ru: 'Подшипники и корпуса подшипников',
+  it: 'Cuscinetti e supporti per cuscinetti',
+  vi: 'Vòng bi và gối đỡ vòng bi',
+  id: 'Bantalan dan rumah bantalan',
+  ja: 'ベアリングとベアリングハウジング',
+  ko: '베어링 및 베어링 하우징'
+});
+
+const productsPageMeta = Object.freeze({
+  en: 'Browse NATER pillow block bearing units, bearing housing series and custom solutions — in-house machined by a bearing housing manufacturer with 20+ years of experience. Enquire for specifications and availability.',
+  es: 'Explore las unidades de rodamientos de pie, las series de soportes de rodamientos y las soluciones personalizadas de NATER — mecanizadas internamente por un fabricante de soportes de rodamientos con más de 20 años de experiencia. Consulte especificaciones y disponibilidad.',
+  de: 'Entdecken Sie Stehlagereinheiten, Lagergehäuse-Serien und Sonderlösungen von NATER — hauseigen gefertigt von einem Lagergehäuse-Hersteller mit über 20 Jahren Erfahrung. Fragen Sie Spezifikationen und Verfügbarkeit an.',
+  fr: 'Découvrez les unités de paliers à semelle, les séries de paliers et les solutions sur mesure NATER — usinées en interne par un fabricant de paliers fort de plus de 20 ans d\'expérience. Renseignez-vous sur les spécifications et la disponibilité.',
+  pt: 'Conheça as unidades de mancais de pé, as séries de mancais e as soluções personalizadas da NATER — maquinadas internamente por um fabricante de mancais com mais de 20 anos de experiência. Consulte especificações e disponibilidade.',
+  ar: 'تصفح وحدات المحامل ذات القاعدة وسلسلات بيوت المحامل والحلول المخصصة من NATER — تصنيع داخلي من مصنع بيوت محامل بخبرة تزيد عن 20 عامًا. استفسر عن المواصفات والتوفر.',
+  tr: 'NATER ayaklı rulman yataklarını, rulman yatağı serilerini ve özel çözümlerini keşfedin — 20 yılı aşkın deneyime sahip bir rulman yatağı üreticisi tarafından kendi tesislerinde işlenir. Özellikler ve stok durumu için bilgi alın.',
+  ru: 'Ознакомьтесь с опорными подшипниковыми узлами, сериями корпусов подшипников и индивидуальными решениями NATER — собственная механическая обработка производителем корпусов подшипников с более чем 20-летним опытом. Запросите спецификации и наличие.',
+  it: 'Scopri le unità di supporti a piedistallo, le serie di supporti e le soluzioni personalizzate NATER — lavorate internamente da un produttore di supporti con oltre 20 anni di esperienza. Richiedi specifiche e disponibilità.',
+  vi: 'Khám phá bộ gối đỡ vòng bi, dòng gối đỡ vòng bi và giải pháp tùy chỉnh của NATER — gia công tại xưởng bởi nhà sản xuất gối đỡ vòng bi với hơn 20 năm kinh nghiệm. Liên hệ để biết thông số và tình trạng hàng.',
+  id: 'Jelajahi unit bantalan duduk, seri rumah bantalan, dan solusi khusus NATER — diproses internal oleh produsen rumah bantalan berpengalaman lebih dari 20 tahun. Tanyakan spesifikasi dan ketersediaan.',
+  ja: 'NATERのピローブロックベアリングユニット、ベアリングハウジングシリーズ、カスタムソリューションをご覧ください。20年以上の実績を持つベアリングハウジングメーカーが自社工場で機械加工しています。仕様・在庫状況はお問い合わせください。',
+  ko: 'NATER의 필로우 블록 베어링 유닛, 베어링 하우징 시리즈, 맞춤형 솔루션을 확인하세요 — 20년 이상의 경력을 가진 베어링 하우징 제조업체가 자체 가공합니다. 사양 및 재고 여부를 문의하세요.'
+});
+
+const categoryPageTail = Object.freeze({
+  en: 'from NATER — in-house machined by a bearing housing manufacturer with 20+ years of experience. Enquire for specifications and availability.',
+  es: 'de NATER — mecanizadas internamente por un fabricante de soportes de rodamientos con más de 20 años de experiencia. Consulte especificaciones y disponibilidad.',
+  de: 'von NATER — hauseigen gefertigt von einem Lagergehäuse-Hersteller mit über 20 Jahren Erfahrung. Fragen Sie Spezifikationen und Verfügbarkeit an.',
+  fr: 'de NATER — usinés en interne par un fabricant de paliers fort de plus de 20 ans d\'expérience. Renseignez-vous sur les spécifications et la disponibilité.',
+  pt: 'da NATER — maquinados internamente por um fabricante de mancais com mais de 20 anos de experiência. Consulte especificações e disponibilidade.',
+  ar: 'من NATER — تصنيع داخلي من مصنع بيوت محامل بخبرة تزيد عن 20 عامًا. استفسر عن المواصفات والتوفر.',
+  tr: 'NATER — 20 yılı aşkın deneyime sahip rulman yatağı üreticisi tarafından kendi tesislerinde işlenir. Özellikler ve stok durumu için bilgi alın.',
+  ru: 'от NATER — собственная механическая обработка производителем корпусов подшипников с более чем 20-летним опытом. Запросите спецификации и наличие.',
+  it: 'di NATER — lavorati internamente da un produttore di supporti con oltre 20 anni di esperienza. Richiedi specifiche e disponibilità.',
+  vi: 'của NATER — gia công tại xưởng bởi nhà sản xuất gối đỡ vòng bi với hơn 20 năm kinh nghiệm. Liên hệ để biết thông số và tình trạng hàng.',
+  id: 'dari NATER — diproses internal oleh produsen rumah bantalan berpengalaman lebih dari 20 tahun. Tanyakan spesifikasi dan ketersediaan.',
+  ja: '— 20年以上の実績を持つベアリングハウジングメーカー NATER が自社工場で機械加工。仕様・在庫状況はお問い合わせください。',
+  ko: '— 20년 이상의 경력을 가진 베어링 하우징 제조업체 NATER가 자체 가공합니다. 사양 및 재고 여부를 문의하세요.'
+});
+
+const moreSeriesHeading = Object.freeze({
+  en: 'More series in this category',
+  es: 'Más series de esta categoría',
+  de: 'Weitere Serien dieser Kategorie',
+  fr: 'Plus de séries dans cette catégorie',
+  pt: 'Mais séries desta categoria',
+  ar: 'سلاسل أخرى في هذه الفئة',
+  tr: 'Bu kategorideki diğer seriler',
+  ru: 'Другие серии этой категории',
+  it: 'Altre serie di questa categoria',
+  vi: 'Các dòng khác trong danh mục này',
+  id: 'Seri lainnya dalam kategori ini',
+  ja: 'このカテゴリーの他のシリーズ',
+  ko: '이 카테고리의 다른 시리즈'
+});
+
 const heroSubline = Object.freeze({
   en: 'Bearings & Bearing Housings',
   es: 'Rodamientos y soportes de rodamientos',
@@ -742,11 +806,11 @@ function categoryCard(locale, category) {
 function productsContent(locale) {
   const text = locales[locale];
   const housingHeading = localizedCategoryTitle(locale, categories.find(category => category.code === 'bearing-housing-series'));
-  return `<section class="page-intro"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h1>${escapeHtml(text.navProducts)}</h1></div></section>${productIndex(locale)}<section class="section"><div class="site-shell"><div class="catalogue-grid">${categories.map(category => categoryCard(locale, category)).join('')}</div></div></section><section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.category)}</p><h2>${escapeHtml(housingHeading)}</h2></div><div class="catalogue-grid">${housingImageCards(locale, true)}</div></div></section>`;
+  return `<section class="page-intro"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h1>${escapeHtml(productsPageTitle[locale])}</h1><p>${escapeHtml(productsPageMeta[locale])}</p></div></section>${productIndex(locale)}<section class="section"><div class="site-shell"><div class="catalogue-grid">${categories.map(category => categoryCard(locale, category)).join('')}</div></div></section><section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.category)}</p><h2>${escapeHtml(housingHeading)}</h2></div><div class="catalogue-grid">${housingImageCards(locale, true)}</div></div></section>`;
 }
 
 function categorySeoDescription(locale, category) {
-  return `${localizedCategoryTitle(locale, category)}. ${locales[locale].categoryLead}`;
+  return `${localizedCategoryTitle(locale, category)} ${categoryPageTail[locale]}`;
 }
 
 const housingGalleryImages = [
@@ -795,7 +859,7 @@ function categoryContent(locale, category) {
     : (category.series ?? []).filter(series => series.status === 'active').map(series => `<a class="product-display-card" href="${seriesPath(locale, category, series)}" dir="ltr"><div class="product-display-card__image">${seriesImage(locale, series)}</div><h2 dir="ltr">${escapeHtml(series.displayName ?? series.seriesCode)}</h2></a>`).join('');
   const content = seriesCards ? `<section class="section"><div class="site-shell"><div class="catalogue-grid">${seriesCards}</div></div></section>` : '';
   const solutions = category.code === 'custom' ? `<section class="section section--soft"><div class="site-shell custom-solutions"><div class="section-heading section-heading--center"><h2>${escapeHtml(customSolutionsText.heading[locale])}</h2></div><div class="custom-solutions__pattern" aria-hidden="true"></div><p class="custom-solutions__lead">${escapeHtml(customSolutionsText.lead[locale])}</p><div class="custom-solutions__grid">${customSolutionsText.features[locale].map(feature => `<div class="custom-solutions__item"><span class="custom-solutions__icon" aria-hidden="true"></span><h3>${escapeHtml(feature)}</h3></div>`).join('')}</div><p class="custom-solutions__note">${escapeHtml(customStatement[locale])}</p></div></section>` : '';
-  return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.category)}</p><h1>${escapeHtml(localizedCategoryTitle(locale, category))}</h1></div></section>${productIndex(locale)}${solutions}${content}`;
+  return `<section class="page-intro page-intro--compact"><div class="site-shell">${categoryBreadcrumb(locale, category)}<p class="eyebrow">${escapeHtml(text.category)}</p><h1>${escapeHtml(localizedCategoryTitle(locale, category))}</h1></div></section>${productIndex(locale)}${solutions}${content}`;
 }
 
 const seriesZoomLabels = Object.freeze({
@@ -871,7 +935,24 @@ function seriesContent(locale, category, series) {
   const labels = seriesZoomLabels[locale];
   const description = seriesPageDescription(locale, category, series);
   const content = image ? `<section class="section"><div class="site-shell"><div class="product-display-grid product-display-grid--single"><article class="product-display-card" dir="ltr"><div class="product-display-card__image"><button type="button" class="product-image-zoom" data-lightbox="${escapeHtml(series.image.src)}" data-close="${escapeHtml(labels.close)}" aria-label="${escapeHtml(labels.zoom)}">${image}</button></div><h2 dir="ltr">${escapeHtml(series.displayName ?? series.seriesCode)}</h2></article></div></div></section>` : '';
-  return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">${escapeHtml(localizedCategoryTitle(locale, category))}</p><h1 dir="ltr">${escapeHtml(seriesDescriptiveName(locale, series))}</h1><p>${escapeHtml(description)}</p></div></section>${productIndex(locale)}${content}${enquiryCtaSection(locale, series)}`;
+  return `<section class="page-intro page-intro--compact"><div class="site-shell">${seriesBreadcrumb(locale, category, series)}<p class="eyebrow">${escapeHtml(localizedCategoryTitle(locale, category))}</p><h1 dir="ltr">${escapeHtml(seriesDescriptiveName(locale, series))}</h1><p>${escapeHtml(description)}</p></div></section>${productIndex(locale)}${content}${enquiryCtaSection(locale, series)}${seriesSiblings(locale, category, series)}`;
+}
+
+function categoryBreadcrumb(locale, category) {
+  const text = locales[locale];
+  return `<nav class="product-breadcrumb" aria-label="Product breadcrumb"><a href="${publicPath(locale)}">${escapeHtml(text.navHome)}</a><span aria-hidden="true">/</span><a href="${publicPath(locale, 'products')}">${escapeHtml(text.navProducts)}</a><span aria-hidden="true">/</span><span aria-current="page">${escapeHtml(localizedCategoryTitle(locale, category))}</span></nav>`;
+}
+
+function seriesBreadcrumb(locale, category, series) {
+  const text = locales[locale];
+  return `<nav class="product-breadcrumb" aria-label="Product breadcrumb"><a href="${publicPath(locale)}">${escapeHtml(text.navHome)}</a><span aria-hidden="true">/</span><a href="${publicPath(locale, 'products')}">${escapeHtml(text.navProducts)}</a><span aria-hidden="true">/</span><a href="${categoryPath(locale, category)}">${escapeHtml(localizedCategoryTitle(locale, category))}</a><span aria-hidden="true">/</span><span aria-current="page" dir="ltr">${escapeHtml(seriesDescriptiveName(locale, series))}</span></nav>`;
+}
+
+function seriesSiblings(locale, category, series) {
+  const siblings = (category.series ?? []).filter(item => item.status === 'active' && item.seriesCode !== series.seriesCode);
+  if (!siblings.length) return '';
+  const links = siblings.map(item => `<a href="${seriesPath(locale, category, item)}">${escapeHtml(seriesDescriptiveName(locale, item))}</a>`).join('');
+  return `<section class="section"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(localizedCategoryTitle(locale, category))}</p><h2>${escapeHtml(moreSeriesHeading[locale])}</h2></div><nav class="series-links" aria-label="${escapeHtml(moreSeriesHeading[locale])}">${links}</nav></div></section>`;
 }
 
 function productBreadcrumb(locale, category, product) {
@@ -948,7 +1029,7 @@ async function buildLocale(locale, routes) {
 
 async function buildProductsLocale(locale, routes) {
   const text = locales[locale];
-  await writePage(locale, 'products', page({ locale, path: 'products', active: 'products', title: `${text.navProducts} | ${site.brand}`, description: text.productsLead, content: productsContent(locale), schema: { ...organizationSchema(locale), description: text.productsLead } }), routes);
+  await writePage(locale, 'products', page({ locale, path: 'products', active: 'products', title: `${productsPageTitle[locale]} | ${site.brand}`, description: productsPageMeta[locale], content: productsContent(locale), schema: { ...organizationSchema(locale), description: productsPageMeta[locale] } }), routes);
   for (const category of categories) {
     const categoryPath = `products/${category.code}`;
     const description = categorySeoDescription(locale, category);
@@ -985,7 +1066,8 @@ if (productsOnly) {
   await writeFile(join(root, 'index.html'), rootRedirect(), 'utf8');
   await rm(join(root, 'products.html'), { force: true });
   await writeFile(join(root, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${absoluteUrl('/sitemap.xml')}\n`, 'utf8');
-  const sitemapUrls = routes.map(route => `  <url><loc>${absoluteUrl(route)}</loc></url>`).join('\n');
+  const buildDate = new Date().toISOString().slice(0, 10);
+  const sitemapUrls = routes.map(route => `  <url><loc>${absoluteUrl(route)}</loc><lastmod>${buildDate}</lastmod></url>`).join('\n');
   await writeFile(join(root, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapUrls}\n</urlset>\n`, 'utf8');
 
   const output = join(root, 'dist');

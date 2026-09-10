@@ -14,6 +14,26 @@
       "source": "/",
       "destination": "/en/",
       "statusCode": 308
+    },
+    {
+      "source": "/:locale/products/mounted-spherical-roller-bearings/:path*",
+      "destination": "/:locale/products/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/:locale/products/bearings/:path*",
+      "destination": "/:locale/products/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/:locale/products/bearing-housing/:path*",
+      "destination": "/:locale/products/bearing-housing-series/",
+      "statusCode": 301
+    },
+    {
+      "source": "/:locale/about-us/:path*",
+      "destination": "/:locale/",
+      "statusCode": 301
     }
   ]
 }
