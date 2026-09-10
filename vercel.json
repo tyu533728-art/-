@@ -16,22 +16,42 @@
       "statusCode": 308
     },
     {
-      "source": "/:locale/products/mounted-spherical-roller-bearings/:path*",
-      "destination": "/:locale/products/:path*",
+      "source": "/:locale/products/mounted-spherical-roller-bearings",
+      "destination": "/:locale/products/",
       "statusCode": 301
     },
     {
-      "source": "/:locale/products/bearings/:path*",
-      "destination": "/:locale/products/:path*",
+      "source": "/:locale/products/mounted-spherical-roller-bearings/(.*)",
+      "destination": "/:locale/products/",
       "statusCode": 301
     },
     {
-      "source": "/:locale/products/bearing-housing/:path*",
+      "source": "/:locale/products/bearings",
+      "destination": "/:locale/products/",
+      "statusCode": 301
+    },
+    {
+      "source": "/:locale/products/bearings/(.*)",
+      "destination": "/:locale/products/",
+      "statusCode": 301
+    },
+    {
+      "source": "/:locale/products/bearing-housing",
       "destination": "/:locale/products/bearing-housing-series/",
       "statusCode": 301
     },
     {
-      "source": "/:locale/about-us/:path*",
+      "source": "/:locale/products/bearing-housing/(.*)",
+      "destination": "/:locale/products/bearing-housing-series/",
+      "statusCode": 301
+    },
+    {
+      "source": "/:locale/about-us",
+      "destination": "/:locale/",
+      "statusCode": 301
+    },
+    {
+      "source": "/:locale/about-us/(.*)",
       "destination": "/:locale/",
       "statusCode": 301
     }
