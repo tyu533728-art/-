@@ -69,7 +69,7 @@ function requiredRoutes(locale) {
 }
 
 /** Guides 栏目（仅英文） */
-const guideRoutes = ['guides', ...['ucp-vs-ucf-vs-ucfl-which-housing', 'why-housing-bore-tolerance-matters', 'how-to-read-a-bearing-housing-model-number'].map(slug => `guides/${slug}`)]
+const guideRoutes = ['guides', ...['ucp-vs-ucf-vs-ucfl-which-housing', 'why-housing-bore-tolerance-matters', 'how-to-read-a-bearing-housing-model-number', 'how-to-choose-bearing-housing-material', 'bearing-lubrication-basics', 'bearing-housing-mounting-types'].map(slug => `guides/${slug}`)]
   .map(slug => publicRoute('en', slug));
 
 function allRequiredRoutes(locale) {
@@ -120,7 +120,12 @@ for (const [route, html] of localizedHtml) {
   const links = [...html.matchAll(/<link\b[^>]*>/gi)].map(match => match[0]);
   const canonicalTags = links.filter(tag => /\brel="canonical"/i.test(tag));
   if (canonicalTags.length !== 1 || attribute(canonicalTags[0] ?? '', 'href') !== canonical) fail(`${route}: invalid canonical`);
-  const expectedAlternates = new Map(locales.map(code => [code, `${domain}${publicRoute(code, localizedPath)}`]));
+  const expectedAlternates = new Map();
+  if (parts[1] === 'guides') {
+    expectedAlternates.set('en', `${domain}${publicRoute('en', localizedPath)}`);
+  } else {
+    for (const code of locales) expectedAlternates.set(code, `${domain}${publicRoute(code, localizedPath)}`);
+  }
   expectedAlternates.set('x-default', `${domain}${publicRoute('en', localizedPath)}`);
   const alternates = links.filter(tag => /\brel="alternate"/i.test(tag) && /\bhreflang=/i.test(tag));
   if (alternates.length !== expectedAlternates.size) fail(`${route}: expected ${expectedAlternates.size} hreflang links`);

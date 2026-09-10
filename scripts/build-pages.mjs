@@ -611,18 +611,28 @@ function absoluteUrl(path) {
   return `${domain}${path}`;
 }
 
-function languageLinks(path) {
-  return `${localeCodes.map(code => `<link rel="alternate" hreflang="${code}" href="${absoluteUrl(publicPath(code, path))}">`).join('')}<link rel="alternate" hreflang="x-default" href="${absoluteUrl(publicPath('en', path))}">`;
+function languageLinks(path, enOnly = false) {
+  const links = enOnly
+    ? `<link rel="alternate" hreflang="en" href="${absoluteUrl(publicPath('en', path))}">`
+    : localeCodes.map(code => `<link rel="alternate" hreflang="${code}" href="${absoluteUrl(publicPath(code, path))}">`).join('');
+  return `${links}<link rel="alternate" hreflang="x-default" href="${absoluteUrl(publicPath('en', path))}">`;
 }
 
 function organizationSchema(locale) {
-  return {
+  const schema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: site.brand,
     url: absoluteUrl(publicPath(locale)),
-    description: homePresentation[locale].lead
+    description: homePresentation[locale].lead,
+    logo: absoluteUrl('/assets/favicon.svg')
   };
+  if (confirmedContactValue(site.facebook)) schema.sameAs = [site.facebook];
+  const contactPoints = [];
+  if (confirmedContactValue(site.email)) contactPoints.push({ '@type': 'ContactPoint', contactType: 'sales', email: site.email });
+  if (confirmedContactValue(site.whatsapp)) contactPoints.push({ '@type': 'ContactPoint', contactType: 'sales', telephone: site.whatsapp });
+  if (contactPoints.length) schema.contactPoint = contactPoints;
+  return schema;
 }
 
 function seriesDescriptiveName(locale, series) {
@@ -633,6 +643,20 @@ function seriesDescriptiveName(locale, series) {
   if (local) return local;
   const fallback = series.displayName ?? series.seriesCode;
   return fallback.toLowerCase().includes(series.seriesCode.toLowerCase()) ? fallback : `${series.seriesCode} ${fallback}`;
+}
+
+function categorySchema(locale, category, path, description) {
+  return [
+    { ...organizationSchema(locale), description },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: locales[locale].navHome, item: absoluteUrl(publicPath(locale)) },
+        { '@type': 'ListItem', position: 2, name: locales[locale].navProducts, item: absoluteUrl(publicPath(locale, 'products')) },
+        { '@type': 'ListItem', position: 3, name: localizedCategoryTitle(locale, category), item: absoluteUrl(publicPath(locale, path)) }
+      ]
+    }
+  ];
 }
 
 function seriesSchema(locale, category, series, path) {
@@ -662,7 +686,7 @@ function seriesSchema(locale, category, series, path) {
   ];
 }
 
-function head({ locale, path, title, description, schema = organizationSchema(locale), noindex = false }) {
+function head({ locale, path, title, description, schema = organizationSchema(locale), noindex = false, enOnly = false }) {
   const canonical = absoluteUrl(publicPath(locale, path));
   const direction = locale === 'ar' ? ' dir="rtl"' : '';
   return `<!doctype html>
@@ -674,7 +698,11 @@ function head({ locale, path, title, description, schema = organizationSchema(lo
   <meta name="description" content="${escapeHtml(description)}">
   <meta name="robots" content="${noindex ? 'noindex, follow' : 'index, follow'}">
   <link rel="canonical" href="${canonical}">
-  ${languageLinks(path)}
+  ${languageLinks(path, enOnly)}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${escapeHtml(title)}">
+  <meta name="twitter:description" content="${escapeHtml(description)}">
+  <meta name="twitter:image" content="${absoluteUrl('/assets/bearing-housing.webp')}">
   <meta property="og:type" content="website">
   <meta property="og:title" content="${escapeHtml(title)}">
   <meta property="og:description" content="${escapeHtml(description)}">
@@ -730,8 +758,8 @@ function footer(locale) {
   return `<footer class="site-footer"><div class="site-shell footer-inner"><div><a class="brand brand--footer" href="${publicPath(locale)}"><span class="brand-mark" aria-hidden="true"></span><span>${site.brand}<small>BEARING &amp; BEARING HOUSING</small></span></a></div><dl class="footer-contact"><div><dt>E-mail</dt><dd>${contactValue(site.email, locale, 'email')}</dd></div><div><dt>WhatsApp</dt><dd>${contactValue(site.whatsapp, locale, 'whatsapp')}</dd></div><div><dt>Facebook</dt><dd>${contactValue(site.facebook, locale, 'website', 'Facebook')}</dd></div><div><dt>${escapeHtml(companyNameLabels[locale])}</dt><dd>${contactValue(site.companyName, locale)}</dd></div><div><dt>Manufacturing Facility</dt><dd>${contactValue(site.manufacturingFacility, locale)}</dd></div></dl></div><div class="site-shell footer-bottom">© 2026 ${site.brand}. All rights reserved.</div></footer>`;
 }
 
-function page({ locale, path = '', active, title, description, content, schema }) {
-  return `${head({ locale, path, title, description, schema })}
+function page({ locale, path = '', active, title, description, content, schema, enOnly = false }) {
+  return `${head({ locale, path, title, description, schema, enOnly })}
 <body data-page="${active}">
   <a class="skip-link" href="#main-content">${escapeHtml(skipLinkText[locale])}</a>
   ${nav(locale, path, active)}
@@ -1013,10 +1041,10 @@ function guideArticleContent(g) {
 
 async function buildGuidesLocale(routes) {
   const loc = GUIDES_LOCALE;
-  await writePage(loc, 'guides', page({ locale: loc, path: 'guides', active: 'guides', title: `Bearing Housing Guides | ${site.brand}`, description: 'Plain-language engineering guides for bearing housing selection, tolerance and model numbers.', content: guidesIndexContent() }), routes);
+  await writePage(loc, 'guides', page({ locale: loc, path: 'guides', active: 'guides', title: `Bearing Housing Guides | ${site.brand}`, description: 'Plain-language engineering guides for bearing housing selection, materials, lubrication, mounting and model numbers.', content: guidesIndexContent(), enOnly: true }), routes);
   for (const g of guides) {
     const p = `guides/${g.slug}`;
-    await writePage(loc, p, page({ locale: loc, path: p, active: 'guides', title: `${g.title} | ${site.brand}`, description: g.description, content: guideArticleContent(g) }), routes);
+    await writePage(loc, p, page({ locale: loc, path: p, active: 'guides', title: `${g.title} | ${site.brand}`, description: g.description, content: guideArticleContent(g), enOnly: true }), routes);
   }
 }
 
@@ -1033,7 +1061,7 @@ async function buildProductsLocale(locale, routes) {
   for (const category of categories) {
     const categoryPath = `products/${category.code}`;
     const description = categorySeoDescription(locale, category);
-    await writePage(locale, categoryPath, page({ locale, path: categoryPath, active: 'products', title: `${localizedCategoryTitle(locale, category)} | ${site.brand}`, description, content: categoryContent(locale, category), schema: { ...organizationSchema(locale), description } }), routes);
+    await writePage(locale, categoryPath, page({ locale, path: categoryPath, active: 'products', title: `${localizedCategoryTitle(locale, category)} | ${site.brand}`, description, content: categoryContent(locale, category), schema: categorySchema(locale, category, categoryPath, description) }), routes);
     for (const series of (category.series ?? []).filter(item => item.status === 'active')) {
       const seriesRoute = `${categoryPath}/${series.seriesCode.toLowerCase()}`;
       const seriesTitle = `${seriesDescriptiveName(locale, series)} | ${localizedCategoryTitle(locale, category)} | ${site.brand}`;
