@@ -755,7 +755,7 @@ function contactValue(value, locale, kind = 'text', displayLabel = null) {
 }
 
 function footer(locale) {
-  return `<footer class="site-footer"><div class="site-shell footer-inner"><div><a class="brand brand--footer" href="${publicPath(locale)}"><span class="brand-mark" aria-hidden="true"></span><span>${site.brand}<small>BEARING &amp; BEARING HOUSING</small></span></a></div><dl class="footer-contact"><div><dt>E-mail</dt><dd>${contactValue(site.email, locale, 'email')}</dd></div><div><dt>WhatsApp</dt><dd>${contactValue(site.whatsapp, locale, 'whatsapp')}</dd></div><div><dt>Facebook</dt><dd>${contactValue(site.facebook, locale, 'website', 'Facebook')}</dd></div><div><dt>${escapeHtml(companyNameLabels[locale])}</dt><dd>${contactValue(site.companyName, locale)}</dd></div><div><dt>Manufacturing Facility</dt><dd>${contactValue(site.manufacturingFacility, locale)}</dd></div></dl></div><div class="site-shell footer-bottom">© 2026 ${site.brand}. All rights reserved.</div></footer>`;
+  return `<footer class="site-footer"><div class="site-shell footer-inner"><div><a class="brand brand--footer" href="${publicPath(locale)}"><span class="brand-mark" aria-hidden="true"></span><span>${site.brand}<small>BEARING &amp; BEARING HOUSING</small></span></a></div><dl class="footer-contact"><div><dt>E-mail</dt><dd>${contactValue(site.email, locale, 'email')}</dd></div><div><dt>WhatsApp</dt><dd>${contactValue(site.whatsapp, locale, 'whatsapp')}</dd></div><div><dt>Facebook</dt><dd>${contactValue(site.facebook, locale, 'website', 'Facebook')}</dd></div><div><dt>${escapeHtml(companyNameLabels[locale])}</dt><dd>${contactValue(site.companyName, locale)}</dd></div><div><dt>Manufacturing Facility</dt><dd>${contactValue(site.manufacturingFacility, locale)}</dd></div></dl></div><div class="site-shell footer-bottom">© 2026 ${site.brand}. All rights reserved. <a href="/en/privacy/">Privacy Policy</a> · <a href="/en/terms/">Terms of Use</a></div></footer>`;
 }
 
 function page({ locale, path = '', active, title, description, content, schema, enOnly = false }) {
@@ -948,6 +948,44 @@ const seriesCta = Object.freeze({
   ko: '참조 이미지 확인 완료. 사양, 치수 및 재고 여부를 문의하세요.'
 });
 
+const seriesAboutFact = Object.freeze({
+  UCP: 'Pillow block units mount on a flat base with two bolt holes — the classic choice for conveyors, fans and line shafts.',
+  UCF: 'Square four-bolt flange units bolt to a vertical face, where the bearing must hang or mount against a wall.',
+  UCFL: 'Compact two-bolt oval flange units for narrow mounting surfaces and light-duty machinery.',
+  UCFC: 'Round flange units with a circular bolt pattern, used where a square flange does not fit the machine face.',
+  UCT: 'Take-up units slide in a guide frame so the shaft centre distance can be adjusted — keeps belts and chains tensioned.',
+  UC: 'Wide-inner-ring ball bearing units: the UC bearing inside pillow, flange and take-up housings. The standard insert for mounted bearing sets.',
+  PBU: 'Thermoplastic pillow block units: light, corrosion-resistant housings for clean and washdown environments.',
+  MBU: 'Mini thermoplastic pillow block units for light loads and compact machines.',
+  T: 'Take-up housings: the housing slides in a frame so the shaft can be tensioned and re-tensioned as belts wear.',
+  P: 'Plummer block housings: the classic two-bolt base housing, the workhorse of split-bearing arrangements.',
+  F: 'Square flange housings that bolt to a vertical plate or machine face.',
+  FC: 'Round flange housings with a circular bolt pattern.',
+  FL: 'Oval two-bolt flange housings for narrow faces and compact spaces.'
+});
+
+const seriesAboutHeading = Object.freeze({
+  en: 'About this series',
+  es: 'Sobre esta serie',
+  de: 'Über diese Serie',
+  fr: 'À propos de cette série',
+  pt: 'Sobre esta série',
+  ar: 'حول هذه السلسلة',
+  tr: 'Bu seri hakkında',
+  ru: 'Об этой серии',
+  it: 'Informazioni sulla serie',
+  vi: 'Về dòng sản phẩm này',
+  id: 'Tentang seri ini',
+  ja: 'このシリーズについて',
+  ko: '이 시리즈 정보'
+});
+
+function seriesAboutBlock(locale, category, series) {
+  const name = seriesDescriptiveName(locale, series);
+  const fact = locale === 'en' ? (seriesAboutFact[series.seriesCode] ?? '') : '';
+  return `<section class="section"><div class="site-shell series-about"><h2>${escapeHtml(seriesAboutHeading[locale])}</h2><p>${escapeHtml(name)} — ${escapeHtml(localizedCategoryTitle(locale, category))} · ${site.brand}.${fact ? ` ${escapeHtml(fact)}` : ''} ${escapeHtml(seriesCta[locale])}</p></div></section>`;
+}
+
 function seriesPageDescription(locale, category, series) {
   if (locale === 'en') {
     const sentence = series.alt ? `${series.alt.charAt(0).toUpperCase()}${series.alt.slice(1)}` : `${series.displayName ?? series.seriesCode}`;
@@ -963,7 +1001,7 @@ function seriesContent(locale, category, series) {
   const labels = seriesZoomLabels[locale];
   const description = seriesPageDescription(locale, category, series);
   const content = image ? `<section class="section"><div class="site-shell"><div class="product-display-grid product-display-grid--single"><article class="product-display-card" dir="ltr"><div class="product-display-card__image"><button type="button" class="product-image-zoom" data-lightbox="${escapeHtml(series.image.src)}" data-close="${escapeHtml(labels.close)}" aria-label="${escapeHtml(labels.zoom)}">${image}</button></div><h2 dir="ltr">${escapeHtml(series.displayName ?? series.seriesCode)}</h2></article></div></div></section>` : '';
-  return `<section class="page-intro page-intro--compact"><div class="site-shell">${seriesBreadcrumb(locale, category, series)}<p class="eyebrow">${escapeHtml(localizedCategoryTitle(locale, category))}</p><h1 dir="ltr">${escapeHtml(seriesDescriptiveName(locale, series))}</h1><p>${escapeHtml(description)}</p></div></section>${productIndex(locale)}${content}${enquiryCtaSection(locale, series)}${seriesSiblings(locale, category, series)}`;
+  return `<section class="page-intro page-intro--compact"><div class="site-shell">${seriesBreadcrumb(locale, category, series)}<p class="eyebrow">${escapeHtml(localizedCategoryTitle(locale, category))}</p><h1 dir="ltr">${escapeHtml(seriesDescriptiveName(locale, series))}</h1><p>${escapeHtml(description)}</p></div></section>${productIndex(locale)}${content}${seriesAboutBlock(locale, category, series)}${enquiryCtaSection(locale, series)}${seriesSiblings(locale, category, series)}`;
 }
 
 function categoryBreadcrumb(locale, category) {
@@ -1039,6 +1077,18 @@ function guideArticleContent(g) {
   return `<section class="page-intro page-intro--compact"><div class="site-shell"><nav class="product-breadcrumb" aria-label="Breadcrumb"><a href="/en/">Home</a><span aria-hidden="true">/</span><a href="/en/guides/">Guides</a><span aria-hidden="true">/</span><span aria-current="page">Guide</span></nav><p class="eyebrow">Guide</p><h1>${escapeHtml(g.title)}</h1><p>${escapeHtml(g.intro)}</p></div></section><section class="section"><div class="site-shell guide-article">${body}<div class="guide-cta"><p>${escapeHtml(g.cta)}</p><a class="btn btn--primary" href="/en/contact-us/">Contact us</a></div></div></section>`;
 }
 
+function privacyContent() {
+  return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">Legal</p><h1>Privacy Policy</h1><p>How this website handles your personal data.</p></div></section><section class="section"><div class="site-shell legal-body"><h2>What we collect</h2><p>This website does not use analytics, advertising cookies or tracking scripts. We do not collect personal data automatically.</p><p>We only receive information you choose to send us — for example, when you write to our e-mail or WhatsApp to ask about products. We use that information solely to answer your enquiry and to communicate with you about the products and services you asked about.</p><h2>How we use and keep it</h2><p>We do not sell, rent or share your contact details with third parties for marketing. Access is limited to the people handling your enquiry. We keep correspondence only as long as needed to complete the business purpose you contacted us for, unless the law requires longer.</p><h2>Links to other services</h2><p>This site links to third-party services such as WhatsApp and Facebook. When you use those links, the third party processes data under its own privacy policy, which we do not control.</p><h2>Contact</h2><p>Questions about this policy can be sent to the e-mail shown in the page footer.</p></div></section>`;
+}
+
+function termsContent() {
+  return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">Legal</p><h1>Terms of Use</h1><p>The conditions for using this website.</p></div></section><section class="section"><div class="site-shell legal-body"><h2>Informational content</h2><p>This website is an informational product catalogue. It does not constitute an offer, a quotation or a warranty. Product images show appearance only and are not a source of technical parameters. Specifications, dimensions, prices and availability are confirmed in writing when you contact us.</p><h2>Business terms</h2><p>Orders, delivery, payment and quality terms are agreed individually in writing between the parties. Nothing on this website modifies those agreements.</p><h2>Intellectual property</h2><p>All text, images, design and trademarks on this site belong to their respective owners. Content may not be copied for commercial use without written permission.</p><h2>Liability</h2><p>We keep the information on this site accurate to the best of our knowledge, but it is provided as is. To the extent permitted by law, we are not liable for decisions made based on this content without confirming the details with us in writing.</p><h2>Governing law</h2><p>These terms are governed by the laws of the People's Republic of China. Any dispute will first be handled through friendly negotiation.</p></div></section>`;
+}
+
+async function buildLegalPages(routes) {
+  await writePage('en', 'privacy', page({ locale: 'en', path: 'privacy', active: '', title: `Privacy Policy | ${site.brand}`, description: 'How NATER handles personal data and cookies on this website.', content: privacyContent(), enOnly: true }), routes);
+  await writePage('en', 'terms', page({ locale: 'en', path: 'terms', active: '', title: `Terms of Use | ${site.brand}`, description: 'Terms for using the NATER website and contacting us for business terms.', content: termsContent(), enOnly: true }), routes);
+}
 async function buildGuidesLocale(routes) {
   const loc = GUIDES_LOCALE;
   await writePage(loc, 'guides', page({ locale: loc, path: 'guides', active: 'guides', title: `Bearing Housing Guides | ${site.brand}`, description: 'Plain-language engineering guides for bearing housing selection, materials, lubrication, mounting and model numbers.', content: guidesIndexContent(), enOnly: true }), routes);
@@ -1090,6 +1140,7 @@ if (productsOnly) {
     await buildLocale(locale, routes);
   }
   await buildGuidesLocale(routes);
+  await buildLegalPages(routes);
 
   await writeFile(join(root, 'index.html'), rootRedirect(), 'utf8');
   await rm(join(root, 'products.html'), { force: true });

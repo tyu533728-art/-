@@ -163,6 +163,12 @@ h2 { margin-bottom: 18px; font-size: clamp(28px, 3.6vw, 44px); }
 .series-links { display: flex; flex-wrap: wrap; gap: 10px; }
 .series-links a { padding: 10px 18px; border: 1px solid var(--line); border-radius: 6px; color: var(--ink); text-decoration: none; font-family: var(--utility); font-size: 12px; font-weight: 700; text-transform: uppercase; }
 .series-links a:hover { border-color: var(--amber); color: var(--amber); }
+.series-about { max-width: 980px; }
+.series-about h2 { margin-bottom: 12px; font-size: 30px; }
+.series-about p { color: var(--ink-soft); font-size: 17px; line-height: 1.8; }
+.legal-body { max-width: 860px; }
+.legal-body h2 { margin: 36px 0 12px; font-size: 24px; }
+.legal-body p { color: var(--ink-soft); font-size: 16px; line-height: 1.8; }
 .product-index { position: sticky; top: 76px; z-index: 10; border-bottom: 1px solid var(--line); background: var(--paper); }
 .product-index > div { display: flex; gap: 30px; overflow-x: auto; }
 .product-index a { flex: 0 0 auto; padding: 17px 0; color: var(--steel); font-family: var(--utility); font-size: 11px; font-weight: 700; text-transform: uppercase; }
