@@ -54,6 +54,11 @@
       "source": "/:locale/about-us/(.*)",
       "destination": "/:locale/",
       "statusCode": 301
+    },
+    {
+      "source": "/:locale(es|de|fr|pt|ar|tr|ru|it|vi|id|ja|ko)/guides/:path*",
+      "destination": "/en/guides/:path*",
+      "statusCode": 308
     }
   ]
 }
