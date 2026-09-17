@@ -56,8 +56,13 @@
       "statusCode": 301
     },
     {
-      "source": "/:locale(es|de|fr|pt|ar|tr|ru|it|vi|id|ja|ko)/guides/:path*",
-      "destination": "/en/guides/:path*",
+      "source": "/(de|es|fr|pt|ar|tr|ru|it|vi|id|ja|ko)/guides/(.*)",
+      "destination": "/en/guides/$2",
+      "statusCode": 308
+    },
+    {
+      "source": "/(de|es|fr|pt|ar|tr|ru|it|vi|id|ja|ko)/guides",
+      "destination": "/en/guides/",
       "statusCode": 308
     }
   ]
