@@ -686,8 +686,23 @@ function seriesSchema(locale, category, series, path) {
   ];
 }
 
+// Meta description must stay inside the ~160 character display limit: trim at a sentence or
+// clause boundary rather than cutting a word in half.
+function clampMetaDescription(text, max = 158) {
+  const value = String(text ?? '').replace(/\s+/g, ' ').trim();
+  if (value.length <= max) return value;
+  const cut = value.slice(0, max);
+  const sentence = Math.max(cut.lastIndexOf('. '), cut.lastIndexOf('! '), cut.lastIndexOf('? '));
+  if (sentence >= 60) return cut.slice(0, sentence + 1).trim();
+  const clause = Math.max(cut.lastIndexOf(' — '), cut.lastIndexOf(', '), cut.lastIndexOf('; '));
+  if (clause >= 60) return `${cut.slice(0, clause).trim()}.`;
+  const space = cut.lastIndexOf(' ');
+  return `${cut.slice(0, space > 0 ? space : cut.length).trim()}.`;
+}
+
 function head({ locale, path, title, description, schema = organizationSchema(locale), noindex = false, enOnly = false }) {
   const canonical = absoluteUrl(publicPath(locale, path));
+  const metaDescription = clampMetaDescription(description);
   const direction = locale === 'ar' ? ' dir="rtl"' : '';
   return `<!doctype html>
 <html lang="${locale}"${direction}>
@@ -695,7 +710,7 @@ function head({ locale, path, title, description, schema = organizationSchema(lo
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${escapeHtml(title)}</title>
-  <meta name="description" content="${escapeHtml(description)}">
+  <meta name="description" content="${escapeHtml(metaDescription)}">
   <meta name="robots" content="${noindex ? 'noindex, follow' : 'index, follow'}">
   <link rel="canonical" href="${canonical}">
   ${languageLinks(path, enOnly)}
@@ -705,7 +720,7 @@ function head({ locale, path, title, description, schema = organizationSchema(lo
   <meta name="twitter:image" content="${absoluteUrl('/assets/bearing-housing.webp')}">
   <meta property="og:type" content="website">
   <meta property="og:title" content="${escapeHtml(title)}">
-  <meta property="og:description" content="${escapeHtml(description)}">
+  <meta property="og:description" content="${escapeHtml(metaDescription)}">
   <meta property="og:url" content="${canonical}">
   <meta property="og:image" content="${absoluteUrl('/assets/bearing-housing.webp')}">
   <meta property="og:image:width" content="1280">
@@ -1027,7 +1042,7 @@ function seriesPageDescription(locale, category, series) {
   const name = series.displayName ?? series.seriesCode;
   if (locale === 'en') {
     const sentence = series.alt ? `${series.alt.charAt(0).toUpperCase()}${series.alt.slice(1)}` : `${series.displayName ?? series.seriesCode}`;
-    return `${sentence} — NATER. In-house machined and assembled by a bearing housing manufacturer with 20+ years of experience. Enquire for specifications, dimensions and availability.`;
+    return `${sentence} — NATER, bearing housing manufacturer with 20+ years of experience. Enquire for specifications.`;
   }
   return `${name} — ${structure} — ${localizedCategoryTitle(locale, category)} — NATER.`;
 }
@@ -1151,7 +1166,8 @@ async function buildProductsLocale(locale, routes) {
     await writePage(locale, categoryPath, page({ locale, path: categoryPath, active: 'products', title: `${localizedCategoryTitle(locale, category)} | ${site.brand}`, description, content: categoryContent(locale, category), schema: categorySchema(locale, category, categoryPath, description) }), routes);
     for (const series of (category.series ?? []).filter(item => item.status === 'active')) {
       const seriesRoute = `${categoryPath}/${series.seriesCode.toLowerCase()}`;
-      const seriesTitle = `${seriesDescriptiveName(locale, series)} | ${localizedCategoryTitle(locale, category)} | ${site.brand}`;
+      // Title keeps the series short name so it stays inside the ~65 character display limit.
+      const seriesTitle = `${series.displayName ?? series.seriesCode} | ${localizedCategoryTitle(locale, category)} | ${site.brand}`;
       const seriesDescription = seriesPageDescription(locale, category, series);
       await writePage(locale, seriesRoute, page({ locale, path: seriesRoute, active: 'products', title: seriesTitle, description: seriesDescription, content: seriesContent(locale, category, series), schema: seriesSchema(locale, category, series, seriesRoute) }), routes);
     }
