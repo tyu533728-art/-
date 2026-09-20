@@ -3,13 +3,15 @@ export const LOCALE_CODES = ['en', 'es', 'de', 'fr', 'pt', 'ar', 'tr', 'ru', 'it
 export const PRODUCT_CATEGORIES = ['Pillow Block Bearing Units', 'Bearing Housing Series', 'Custom'];
 
 export const SERIES_BY_CATEGORY = Object.freeze({
-  'Pillow Block Bearing Units': ['UCT', 'UEL', 'UK', 'UCP', 'UCF', 'UCFC', 'UCFL', 'UCPA', 'UCPH', 'UCFA', 'UCFB', 'PBU', 'MBU', 'UC'],
-  'Bearing Housing Series': ['T', 'P', 'F', 'FC', 'FL', 'PA', 'PH', 'FU', 'FB', 'PAS', 'PBH', 'FS'],
+  // UELP and UCFS are staged from the owner's cross-reference workbook. Both stay pending until a
+  // confirmed product image is supplied, so they add no route, no card and no sitemap entry yet.
+  'Pillow Block Bearing Units': ['UCT', 'UEL', 'UK', 'UELP', 'UCP', 'UCF', 'UCFC', 'UCFS', 'UCFL', 'UCPA', 'UCPH', 'UCFA', 'UCFB', 'PBU', 'UC'],
+  'Bearing Housing Series': ['T', 'P', 'F', 'FC', 'FL', 'PA', 'PH', 'FU', 'FB', 'PAS', 'FS'],
   Custom: []
 });
 
-export const ACTIVE_SERIES = ['UCT', 'UCP', 'UCF', 'UCFC', 'UCFL', 'UCPA', 'UCPH', 'UCFA', 'UCFB', 'PBU', 'MBU', 'UC', 'T', 'P', 'F', 'FC', 'FL', 'PA', 'PH', 'FU', 'FB', 'PAS', 'PBH'];
-export const PENDING_SERIES = ['UEL', 'UK', 'FS'];
+export const ACTIVE_SERIES = ['UCT', 'UCP', 'UCF', 'UCFC', 'UCFL', 'UCPA', 'UCPH', 'UCFA', 'UCFB', 'PBU', 'UC', 'T', 'P', 'F', 'FC', 'FL', 'PA', 'PH', 'FU', 'FB', 'PAS'];
+export const PENDING_SERIES = ['UEL', 'UK', 'UELP', 'UCFS', 'FS'];
 export const MODEL_TECHNICAL_FIELD_NAMES = [];
 export const PRODUCT_MODEL_FIELDS = [];
 export const STANDARD_MATERIAL_NAMES = ['GCr15', 'Cast Iron', 'Ductile Iron', 'Stainless Steel'];
@@ -38,7 +40,13 @@ export function validateSeries(series, category, expectedCode) {
   assertImage(series.image, expectedCode);
   if (series.status === 'active') {
     assert(series.image, `${expectedCode}: active Series must have a confirmed image`);
-    assert(series.alt.toLowerCase().includes(expectedCode.toLowerCase()), `${expectedCode}: active Series ALT must identify its code`);
+    // A renamed series (PBU -> UCHA, PAS -> HA) is identified by the code the owner displays,
+    // so the alternative text must lead with that code instead of the catalogue code.
+    const displayedCode = series.displayName ?? expectedCode;
+    assert(
+      series.alt.toLowerCase().includes(displayedCode.toLowerCase()),
+      `${expectedCode}: active Series ALT must identify ${displayedCode}`
+    );
   } else {
     assert(series.image === null, `${expectedCode}: pending Series must not expose an image`);
     assert(series.alt === '', `${expectedCode}: pending Series ALT must be empty`);
@@ -73,5 +81,5 @@ export function validateProductCatalog(productCatalog) {
   const activeCodes = productCatalog.categories.flatMap(category => category.series.filter(series => series.status === 'active').map(series => series.seriesCode));
   assert(JSON.stringify(activeCodes) === JSON.stringify(ACTIVE_SERIES), 'active Series order must remain fixed');
   const pendingCodes = productCatalog.categories.flatMap(category => category.series.filter(series => series.status === 'pending').map(series => series.seriesCode));
-  assert(JSON.stringify(pendingCodes) === JSON.stringify(PENDING_SERIES), 'pending Series must remain UEL and UK');
+  assert(JSON.stringify(pendingCodes) === JSON.stringify(PENDING_SERIES), 'pending Series order must match PENDING_SERIES');
 }

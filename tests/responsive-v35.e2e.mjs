@@ -40,10 +40,20 @@ const sitemap = await readFile(new URL('../sitemap.xml', import.meta.url), 'utf8
 const paths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)]
   .map(match => new URL(match[1]).pathname)
   .filter(pathname => locales.some(locale => pathname.startsWith(`/${locale}/`)));
+// The language switcher is only allowed to point at pages that exist: the guides have no
+// translated version, so their switcher entries open the locale home page instead.
+const sitemapPathSet = new Set(paths);
 
-// V4.0: 29 pages per locale x 13 locales = 377 indexable localized routes.
-if (paths.length !== locales.length * 29) {
-  fail(`Expected ${locales.length * 29} indexable localized routes, found ${paths.length}.`);
+// V4.0 core catalogue: 28 localized routes per locale (MBU and PBH series removed; the
+// cross-reference page added). English-only additions (guides, privacy, terms) may raise the
+// total, so assert a floor plus a per-locale floor.
+const coreRoutesPerLocale = 28;
+if (paths.length < locales.length * coreRoutesPerLocale) {
+  fail(`Expected at least ${locales.length * coreRoutesPerLocale} indexable localized routes, found ${paths.length}.`);
+}
+for (const locale of locales) {
+  const count = paths.filter(pathname => pathname.startsWith(`/${locale}/`)).length;
+  if (count < coreRoutesPerLocale) fail(`${locale}: expected at least ${coreRoutesPerLocale} routes, found ${count}`);
 }
 
 if (captureScreenshots) await mkdir(artifactDirectory, { recursive: true });
@@ -165,7 +175,6 @@ try {
       checkedImages += state.imageCount;
       const locale = pathname.split('/')[1];
       const suffix = localeSuffix(pathname);
-      const expectedLanguageLinks = locales.map(code => `/${code}${suffix}`);
       if (state.lang !== locale) fail(`${viewport.name} ${pathname}: html lang is ${state.lang}`);
       if (locale === 'ar' && state.dir !== 'rtl') fail(`${viewport.name} ${pathname}: Arabic page is not RTL`);
       if (locale !== 'ar' && state.dir === 'rtl') fail(`${viewport.name} ${pathname}: non-Arabic page is RTL`);
@@ -177,8 +186,16 @@ try {
       if (!state.footerPresent) fail(`${viewport.name} ${pathname}: footer missing`);
       if (state.footerOutOfBounds.length) fail(`${viewport.name} ${pathname}: footer item out of bounds: ${state.footerOutOfBounds.map(item => item.label).join(' | ')}`);
       if (state.imageIssues.length) fail(`${viewport.name} ${pathname}: image issue: ${state.imageIssues.map(image => `${image.src} (${image.loaded ? 'distorted' : 'not loaded'})`).join(' | ')}`);
-      if (state.switcherLinks.length !== 13 || state.localeCount !== 13 || state.switcherLinks.some((href, linkIndex) => href !== expectedLanguageLinks[linkIndex])) {
-        fail(`${viewport.name} ${pathname}: language switcher does not preserve the current page across all 13 locales`);
+      // Pages published in every language keep the current path in the switcher. A page that only
+      // exists in English (the guides) sends the other languages to their home page instead of the
+      // same slug — pointing at /de/guides/… was 108 dead links. Every entry must resolve to a
+      // generated route either way.
+      const englishOnly = pathname.startsWith('/en/guides/');
+      const expectedLanguageLinks = locales.map(code => (englishOnly && code !== 'en' ? `/${code}/` : `/${code}${suffix}`));
+      if (state.switcherLinks.length !== 13 || state.localeCount !== 13
+        || state.switcherLinks.some((href, linkIndex) => href !== expectedLanguageLinks[linkIndex])
+        || state.switcherLinks.some(href => !sitemapPathSet.has(href))) {
+        fail(`${viewport.name} ${pathname}: language switcher links are wrong or point at a missing page`);
       }
       if (state.menuOutOfBounds) fail(`${viewport.name} ${pathname}: open language menu is outside the viewport`);
       if (locale === 'ar' && state.parameterTables.some(table => table.direction !== 'ltr' || table.textAlign !== 'left' || table.overflow > 1)) {

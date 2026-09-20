@@ -5,7 +5,7 @@
 export const guides = [
   {
     slug: 'ucp-vs-ucf-vs-ucfl-which-housing',
-    title: 'UCP vs UCF vs UCFL: Which Pillow Block Housing Fits Your Shaft?',
+    title: 'UCP vs UCF vs UCFL: Which Housing Fits Your Shaft?',
     description: 'A plain-language guide to the three most common pillow block bearing housing types, what the letters mean, and how to choose the right one for your equipment.',
     date: '2026-09-02',
     intro: 'Pillow block housings look similar, but the base shape decides how they mount — and choosing the wrong type means rework on your machine frame. This guide explains the three most common series and where each one belongs.',

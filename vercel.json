@@ -3,6 +3,37 @@
   "framework": null,
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "trailingSlash": true,
+  "headers": [
+    {
+      "source": "/assets/(.*)\\.(webp|avif|png|jpg|jpeg|svg|ico)$",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    },
+    {
+      "source": "/assets/(.*)\\.(css|js)$",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/assets/(.*)\\.xlsx$",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Permissions-Policy", "value": "geolocation=(), camera=(), microphone=(), payment=()" },
+        { "key": "Strict-Transport-Security", "value": "max-age=31536000" }
+      ]
+    }
+  ],
   "redirects": [
     {
       "source": "/(.*)",
@@ -43,6 +74,26 @@
     {
       "source": "/:locale/products/bearing-housing/(.*)",
       "destination": "/:locale/products/bearing-housing-series/",
+      "statusCode": 301
+    },
+    {
+      "source": "/:locale/products/bearing-housing-series/pbh",
+      "destination": "/:locale/products/bearing-housing-series/",
+      "statusCode": 301
+    },
+    {
+      "source": "/:locale/products/bearing-housing-series/pbh/(.*)",
+      "destination": "/:locale/products/bearing-housing-series/",
+      "statusCode": 301
+    },
+    {
+      "source": "/:locale/products/pillow-block-bearing-units/mbu",
+      "destination": "/:locale/products/pillow-block-bearing-units/",
+      "statusCode": 301
+    },
+    {
+      "source": "/:locale/products/pillow-block-bearing-units/mbu/(.*)",
+      "destination": "/:locale/products/pillow-block-bearing-units/",
       "statusCode": 301
     },
     {

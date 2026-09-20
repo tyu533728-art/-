@@ -13,14 +13,12 @@ const confirmedImages = Object.freeze({
   UCFA: image('/assets/product-images/ucfa-unit.webp', 800, 800),
   UCFB: image('/assets/product-images/ucfb-unit.webp', 800, 800),
   PBU: image('/assets/product-images/pbu-unit.webp', 800, 800),
-  MBU: image('/assets/product-images/mbu-unit.webp', 800, 800),
   UC: image('/assets/product-images/uc-product.webp', 800, 800),
   FB: image('/assets/product-images/housing-1.webp', 900, 1000),
   FL: image('/assets/product-images/housing-2.webp', 900, 1000),
   P: image('/assets/product-images/housing-3.webp', 900, 1000),
   T: image('/assets/product-images/housing-4.webp', 900, 1000),
   F: image('/assets/product-images/housing-5.webp', 900, 1000),
-  PBH: image('/assets/product-images/housing-6.webp', 900, 1000),
   FC: image('/assets/product-images/housing-7.webp', 900, 1000),
   FU: image('/assets/product-images/housing-8.webp', 900, 1000),
   PH: image('/assets/product-images/housing-9.webp', 900, 1000),
@@ -32,6 +30,8 @@ const englishAlts = Object.freeze({
   UCT: 'UCT wide inner ring insert bearing, set-screw locking',
   UEL: 'UEL wide inner ring insert bearing, eccentric locking collar',
   UK: 'UK insert bearing, tapered bore for adapter sleeve',
+  UELP: 'UELP pillow block unit with eccentric locking insert bearing',
+  UCFS: 'UCFS four-bolt flanged unit with locating spigot and insert bearing',
   UCPA: 'UCPA tapped-base pillow block unit with insert bearing',
   UCF: 'UCF four-bolt flanged unit with insert bearing',
   UCFC: 'UCFC piloted round flanged unit with insert bearing',
@@ -40,20 +40,20 @@ const englishAlts = Object.freeze({
   UCPH: 'UCPH pillow block unit with long shaft and insert bearing',
   UCFA: 'UCFA flanged unit with insert bearing',
   UCFB: 'UCFB flanged unit with insert bearing',
-  PBU: 'PBU mounted bearing unit with insert bearing',
-  MBU: 'MBU pillow block bearing unit with insert bearing',
+  // Published as UCHA on the site; the alternative text must use the displayed code.
+  PBU: 'UCHA mounted bearing unit with insert bearing',
   UC: 'UC wide inner ring insert bearing, set-screw locking',
   FB: 'FB pillow block housing',
   FL: 'FL two-bolt flanged housing',
   P: 'P pillow block housing',
   T: 'T take-up housing',
   F: 'F four-bolt flanged housing',
-  PBH: 'PBH pillow block housing',
   FC: 'FC bearing housing',
   FU: 'FU bearing housing',
   PH: 'PH bearing housing',
   PA: 'PA bearing housing',
-  PAS: 'PAS pillow block housing PA',
+  // Published as HA on the site; the alternative text must use the displayed code.
+  PAS: 'HA hanger type bearing housing',
   FS: 'FS square flange with spigot housing'
 });
 
@@ -63,7 +63,9 @@ export function userConfirmedSeries(category, seriesCode, seriesImage = null, di
     category,
     seriesCode,
     seriesName: `${seriesCode} Series`,
-    displayName: displayName ?? seriesCode,
+    // null keeps the series code as the fallback; a value here is an explicit display override
+    // (UCHA, FK, Pillow Block Housing, …) that also drives H1, breadcrumb and card labels.
+    displayName: displayName ?? null,
     image: seriesImage,
     alt: isActive ? englishAlts[seriesCode] : '',
     description: isActive ? 'Confirmed series reference image. No model-level data is published.' : 'Series retained for future publication after a confirmed image is supplied.',
@@ -90,16 +92,20 @@ export const productCatalog = {
         userConfirmedSeries(pillowBlockBearingUnits, 'UCT', confirmedImages.UCT),
         userConfirmedSeries(pillowBlockBearingUnits, 'UEL'),
         userConfirmedSeries(pillowBlockBearingUnits, 'UK'),
+        // Staged from the owner's cross-reference workbook (UELP204–213). No image yet, so the
+        // series stays pending: the data is ready and one image activates the page.
+        userConfirmedSeries(pillowBlockBearingUnits, 'UELP'),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCP', confirmedImages.UCP),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCF', confirmedImages.UCF),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCFC', confirmedImages.UCFC),
+        // Staged from the owner's cross-reference workbook (UCFS305–312); pending until an image.
+        userConfirmedSeries(pillowBlockBearingUnits, 'UCFS'),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCFL', confirmedImages.UCFL),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCPA', confirmedImages.UCPA),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCPH', confirmedImages.UCPH),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCFA', confirmedImages.UCFA),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCFB', confirmedImages.UCFB),
-        userConfirmedSeries(pillowBlockBearingUnits, 'PBU', confirmedImages.PBU, 'Mounted Bearing Unit'),
-        userConfirmedSeries(pillowBlockBearingUnits, 'MBU', confirmedImages.MBU, 'Pillow Block Bearing Unit'),
+        userConfirmedSeries(pillowBlockBearingUnits, 'PBU', confirmedImages.PBU, 'UCHA'),
         userConfirmedSeries(pillowBlockBearingUnits, 'UC', confirmedImages.UC)
       ],
       products: [],
@@ -109,7 +115,7 @@ export const productCatalog = {
       category: bearingHousingSeries,
       slug: 'bearing-housing-series',
       images: [],
-      series: SERIES_BY_CATEGORY[bearingHousingSeries].map(seriesCode => userConfirmedSeries(bearingHousingSeries, seriesCode, confirmedImages[seriesCode], seriesCode === 'PBH' ? 'Pillow Block Housing' : seriesCode === 'PAS' ? 'Pillow Block Housing PA' : null)),
+      series: SERIES_BY_CATEGORY[bearingHousingSeries].map(seriesCode => userConfirmedSeries(bearingHousingSeries, seriesCode, confirmedImages[seriesCode], seriesCode === 'PAS' ? 'HA' : seriesCode === 'FB' ? 'FB' : null)),
       products: [],
       publish: true
     },

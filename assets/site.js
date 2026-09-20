@@ -102,9 +102,15 @@
   function finish() {
     root.classList.add('splash-done');
     root.classList.remove('splash-active');
+    try { window.sessionStorage.setItem('nater-splash-seen', '1'); } catch (error) { /* ignore */ }
     window.dispatchEvent(new CustomEvent('nater:splash-done'));
   }
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { finish(); return; }
+  // Repeat visitors in the same tab session skip the intro; a first visit still plays it in full.
+  // sessionStorage holds a UI preference only — no personal data, no tracking.
+  try {
+    if (window.sessionStorage.getItem('nater-splash-seen')) { finish(); return; }
+  } catch (error) { /* storage unavailable — play the intro as usual */ }
 
   var cubicBezier = function (p1x, p1y, p2x, p2y) {
     var ax = 3 * p1x - 3 * p2x + 1, bx = 3 * p2x - 6 * p1x, cx = 3 * p1x;
@@ -199,4 +205,50 @@
     }
   }
   requestAnimationFrame(frame);
+})();
+
+// ---- Cross-reference page: filter the model tables by code ----
+(function () {
+  'use strict';
+  var filter = document.getElementById('xref-filter');
+  if (!filter) return;
+  filter.addEventListener('input', function () {
+    var query = filter.value.trim().toUpperCase();
+    var rows = document.querySelectorAll('[data-xref-row]');
+    for (var index = 0; index < rows.length; index += 1) {
+      var code = (rows[index].getAttribute('data-xref-row') || '').toUpperCase();
+      rows[index].style.display = !query || code.indexOf(query) !== -1 ? '' : 'none';
+    }
+  });
+})();
+
+// ---- 404 page: show the message in the visitor's language ----
+// The host serves one file for every missing URL and keeps the requested URL in the address bar, so
+// the first path segment decides the language when it names a locale (a mistyped /de/… link);
+// otherwise the browser's own language is used. Without JavaScript the English block stays visible.
+(function () {
+  'use strict';
+  var blocks = document.querySelectorAll('[data-not-found]');
+  if (!blocks.length) return;
+  var supported = [];
+  for (var i = 0; i < blocks.length; i += 1) supported.push(blocks[i].getAttribute('data-not-found'));
+  var segments = window.location.pathname.split('/');
+  var fromPath = null;
+  for (var s = 0; s < segments.length; s += 1) {
+    if (supported.indexOf(segments[s].toLowerCase()) !== -1) { fromPath = segments[s].toLowerCase(); break; }
+  }
+  var preferred = fromPath;
+  if (!preferred) {
+    var tags = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'en'];
+    for (var t = 0; t < tags.length; t += 1) {
+      var short = String(tags[t]).slice(0, 2).toLowerCase();
+      if (supported.indexOf(short) !== -1) { preferred = short; break; }
+    }
+  }
+  var code = preferred || 'en';
+  for (var b = 0; b < blocks.length; b += 1) blocks[b].hidden = blocks[b].getAttribute('data-not-found') !== code;
+  if (code !== 'en') {
+    document.documentElement.lang = code;
+    if (code === 'ar') document.documentElement.dir = 'rtl';
+  }
 })();

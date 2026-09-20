@@ -1,7 +1,7 @@
 :root {
   --ink: #172126;
   --ink-soft: #344248;
-  --steel: #68777d;
+  --steel: #5e6d73;
   --steel-soft: #9aa7ac;
   --line: #cbd4d6;
   --line-soft: #e4eaec;
@@ -28,10 +28,13 @@ a { color: inherit; text-decoration: none; }
 .site-shell { width: min(calc(100% - 48px), var(--shell)); margin-inline: auto; }
 .skip-link { position: fixed; top: -60px; left: 18px; z-index: 100; padding: 9px 12px; color: var(--paper); background: var(--ink); }
 .skip-link:focus { top: 18px; }
+/* 404 page: one message block per locale; assets/site.js reveals the visitor's language. */
+.not-found { padding: 72px 0 28px; }
+/* Notice on pages that have no translated version (guides, privacy, terms). */
+.page-note { width: min(calc(100% - 48px), var(--shell)); margin: 22px auto 0; padding: 11px 15px; border: 1px solid var(--line); border-radius: 8px; background: var(--mist); color: var(--ink-soft); font-size: 14px; }
 .eyebrow { display: flex; align-items: center; gap: 10px; margin: 0 0 13px; color: var(--steel); font-family: var(--utility); font-size: 11px; font-weight: 700; letter-spacing: 0; line-height: 1.3; text-transform: uppercase; }
-.eyebrow::before { width: 26px; height: 2px; background: var(--amber); content: ""; }
 h1, h2, p { margin-top: 0; }
-h1, h2 { overflow-wrap: anywhere; color: var(--ink); font-family: var(--display); font-weight: 700; letter-spacing: 0; line-height: 1; }
+h1, h2 { overflow-wrap: anywhere; color: var(--ink); font-family: var(--display); font-weight: 700; letter-spacing: 0; line-height: 1.07; }
 h1 { margin-bottom: 24px; font-size: clamp(44px, 5.4vw, 72px); }
 h2 { margin-bottom: 18px; font-size: clamp(28px, 3.6vw, 44px); }
 
@@ -42,15 +45,17 @@ h2 { margin-bottom: 18px; font-size: clamp(28px, 3.6vw, 44px); }
 .brand-mark { position: relative; display: inline-block; width: 33px; height: 33px; flex: 0 0 auto; border: 7px solid var(--ink); border-radius: 50%; }
 .brand-mark::after { position: absolute; right: -10px; bottom: -7px; width: 18px; height: 7px; background: var(--amber); content: ""; }
 .site-nav { display: flex; flex: 0 0 auto; align-items: center; gap: 23px; font-family: var(--utility); font-size: 11px; font-weight: 700; text-transform: uppercase; }
-.site-nav a { position: relative; padding: 27px 0; color: var(--ink-soft); }
+.site-nav a { position: relative; padding: 27px 0; min-width: 24px; text-align: center; color: var(--ink-soft); }
 .site-nav a[aria-current="page"] { color: var(--blue-dark); }
 .site-nav a[aria-current="page"]::after { position: absolute; right: 0; bottom: 18px; left: 0; height: 2px; background: var(--amber); content: ""; }
 .language-switcher { position: relative; flex: 0 0 auto; margin-left: auto; color: var(--ink-soft); font-family: var(--utility); font-size: 10px; font-weight: 700; }
-.language-switcher summary { cursor: pointer; list-style: none; padding: 8px 0; }
+.language-switcher summary { cursor: pointer; list-style: none; padding: 8px 6px; min-width: 28px; text-align: center; }
 .language-switcher summary::-webkit-details-marker { display: none; }
 .language-switcher summary::after { padding-left: 5px; content: "\25BE"; }
 .language-switcher[open] summary::after { content: "\25B4"; }
-.language-switcher__menu { position: absolute; top: 34px; right: 0; z-index: 30; display: grid; width: 152px; max-height: 300px; overflow-y: auto; border: 1px solid var(--line); background: var(--paper); box-shadow: 0 8px 20px rgb(23 33 38 / 12%); }
+/* All 13 languages must be reachable without scrolling the dropdown; the viewport cap only
+   applies on very short screens (landscape phones), where the menu scrolls instead. */
+.language-switcher__menu { position: absolute; top: 34px; right: 0; z-index: 30; display: grid; width: 152px; max-height: min(440px, 72vh); overflow-y: auto; border: 1px solid var(--line); background: var(--paper); box-shadow: 0 8px 20px rgb(23 33 38 / 12%); }
 .language-switcher__menu a { padding: 8px 10px; }
 .language-switcher__menu a:hover, .language-switcher__menu a[aria-current="true"] { color: var(--paper); background: var(--blue); }
 
@@ -80,7 +85,7 @@ h2 { margin-bottom: 18px; font-size: clamp(28px, 3.6vw, 44px); }
 .category-card > *, .catalogue-card > *, .series-card > * { position: relative; z-index: 1; }
 .category-card__blank, .catalogue-card__blank, .series-card__blank, .category-card__visual, .catalogue-card__visual { position: absolute; top: 18px; right: 20px; left: 20px; color: var(--steel); font-family: var(--utility); font-size: 10px; font-weight: 700; letter-spacing: .08em; line-height: 1.3; text-transform: uppercase; }
 .category-card__label { margin: 0 26px 8px; color: var(--steel); font-family: var(--utility); font-size: 10px; font-weight: 700; text-transform: uppercase; }
-.category-card h2, .catalogue-card h2, .series-card h2 { margin: 0 26px 28px; padding-top: 16px; border-top: 2px solid var(--amber); color: var(--ink); font-size: 28px; line-height: 1.1; }
+.category-card h2, .catalogue-card h2, .series-card h2 { margin: 0 26px 28px; padding-top: 16px; color: var(--ink); font-size: 28px; line-height: 1.1; }
 .category-card__link { margin: 0 26px 26px; color: var(--blue-dark); font-family: var(--utility); font-size: 11px; font-weight: 700; text-transform: uppercase; }
 .catalogue-card { min-height: 390px; }
 .catalogue-card > div, .series-card > div { padding: 26px; }
@@ -106,7 +111,7 @@ h2 { margin-bottom: 18px; font-size: clamp(28px, 3.6vw, 44px); }
 .custom-solutions__pattern { height: 72px; margin: 34px auto 0; max-width: 560px; border-radius: 6px; background-color: var(--paper); background-image: repeating-linear-gradient(135deg, rgb(23 63 83 / 8%) 0 10px, transparent 10px 20px); }
 .custom-solutions__lead { margin: 30px auto 0; max-width: 640px; color: var(--ink-soft); font-size: 18px; line-height: 1.7; }
 .custom-solutions__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 40px auto 0; max-width: 860px; }
-.custom-solutions__item { display: flex; flex-direction: column; align-items: center; gap: 16px; border-top: 3px solid var(--amber); padding: 26px 16px 22px; background: var(--paper); }
+.custom-solutions__item { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 26px 16px 22px; background: var(--paper); }
 .custom-solutions__icon { position: relative; width: 32px; height: 32px; flex: 0 0 auto; }
 .custom-solutions__icon::before { position: absolute; inset: 6px; transform: rotate(45deg); border: 2px solid var(--blue); content: ""; }
 .custom-solutions__item:nth-child(2) .custom-solutions__icon::before { border-radius: 50%; border-color: var(--amber); }
@@ -114,7 +119,7 @@ h2 { margin-bottom: 18px; font-size: clamp(28px, 3.6vw, 44px); }
 .custom-solutions__item h3 { margin: 0; color: var(--ink); font-family: var(--utility); font-size: 15px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
 .custom-solutions__note { margin: 34px auto 0; max-width: 560px; color: var(--steel); font-size: 13px; }
 .company-intro { max-width: 880px; }
-.company-intro__body { margin: 0; max-width: 720px; color: var(--ink-soft); font-size: 18px; line-height: 1.8; }
+.company-intro__body { margin: 0; max-width: 68ch; color: var(--ink-soft); font-size: 18px; line-height: 1.8; }
 
 .factory-banner { display: grid; grid-template-columns: 1fr 1.3fr; gap: 48px; align-items: end; }
 .factory-banner__lead { margin: 0; max-width: 540px; color: var(--ink-soft); font-size: 18px; line-height: 1.7; }
@@ -126,7 +131,7 @@ h2 { margin-bottom: 18px; font-size: clamp(28px, 3.6vw, 44px); }
 .factory-spotlight__body h3 { margin: 0 0 12px; font-size: clamp(23px, 2.4vw, 30px); }
 .factory-spotlight__body p:last-child { margin: 0; color: var(--ink-soft); font-size: 16px; line-height: 1.8; }
 .factory-features { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; margin-top: 52px; }
-.factory-feature { border-top: 3px solid var(--amber); padding: 24px 18px 22px; background: var(--mist); }
+.factory-feature { padding: 24px 18px 22px; background: var(--mist); }
 .factory-feature__mark { display: block; width: 24px; height: 24px; margin-bottom: 14px; border: 2px solid var(--blue); transform: rotate(45deg); }
 .factory-feature:nth-child(2) .factory-feature__mark { border-radius: 50%; border-color: var(--amber); }
 .factory-feature:nth-child(3) .factory-feature__mark { transform: none; border-style: dashed; border-color: var(--blue-dark); }
@@ -157,7 +162,9 @@ h2 { margin-bottom: 18px; font-size: clamp(28px, 3.6vw, 44px); }
 .page-intro .eyebrow { color: var(--on-dark-soft); }
 .page-intro--compact { padding: 82px 0 66px; }
 .page-intro--compact h1 { font-size: clamp(40px, 4.6vw, 60px); }
-.product-breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 24px; color: var(--on-dark-soft); font-family: var(--utility); font-size: 10px; font-weight: 700; text-transform: uppercase; }
+.product-breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 24px; color: var(--on-dark-soft); font-family: var(--utility); font-size: 11px; font-weight: 700; text-transform: uppercase; }
+/* Breadcrumb links get a 24px touch area; the negative margin keeps the visual rhythm identical. */
+.product-breadcrumb a { display: inline-block; padding: 5px 3px; margin: -5px -3px; min-width: 24px; text-align: center; }
 .product-breadcrumb a:hover { color: var(--paper); }
 .product-breadcrumb [aria-current="page"] { color: var(--paper); }
 .series-links { display: flex; flex-wrap: wrap; gap: 10px; }
@@ -166,6 +173,8 @@ h2 { margin-bottom: 18px; font-size: clamp(28px, 3.6vw, 44px); }
 .series-about { max-width: 980px; }
 .series-about h2 { margin-bottom: 12px; font-size: 30px; }
 .series-about p { color: var(--ink-soft); font-size: 17px; line-height: 1.8; }
+/* Keep the measure readable on wide screens (about 70 characters per line, not 110). */
+.series-about > p { max-width: 70ch; }
 .legal-body { max-width: 860px; }
 .legal-body h2 { margin: 36px 0 12px; font-size: 24px; }
 .legal-body p { color: var(--ink-soft); font-size: 16px; line-height: 1.8; }
@@ -190,6 +199,151 @@ h2 { margin-bottom: 18px; font-size: clamp(28px, 3.6vw, 44px); }
 .parameter-table th { width: 42%; padding-right: 14px; color: var(--steel); font-family: var(--utility); font-size: 10px; font-weight: 700; text-transform: uppercase; }
 .parameter-table td { color: var(--ink-soft); }
 
+/* Mounted unit model data: one block per model, listed in website product order. */
+/* Unit specification block: compact key/value rows. */
+.unit-spec-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 22px; }
+.unit-spec-grid--compact { grid-template-columns: minmax(0, 1fr); margin-top: 16px; }
+.unit-spec { border: 1px solid var(--line); border-top: 3px solid var(--blue); padding: 18px 20px; }
+.unit-spec h3 { margin: 0 0 10px; font-family: var(--display); font-size: 21px; font-weight: 700; }
+.unit-spec dl { margin: 0; }
+.unit-spec dl > div { display: grid; grid-template-columns: minmax(92px, max-content) minmax(0, 1fr); gap: 10px; padding: 5px 0; border-top: 1px solid var(--line); }
+.unit-spec dl > div:first-child { border-top: 0; }
+.unit-spec dt { max-width: 100%; color: var(--steel); font-family: var(--utility); font-size: 10px; font-weight: 700; text-transform: uppercase; overflow-wrap: anywhere; hyphens: auto; }
+.unit-spec dd { margin: 0; color: var(--ink-soft); font-size: 13.5px; line-height: 1.55; overflow-wrap: anywhere; }
+.spec-note { margin: 16px 0 0; max-width: 780px; color: var(--ink-soft); font-size: 14px; line-height: 1.7; }
+
+/* Series pages stack four blocks (intro, image+data, about, enquiry). The global 104px section
+   padding makes that read as one huge gap, so series blocks use a tighter rhythm. */
+.section--tight { padding: 52px 0; }
+.section--tight + .section--tight { padding-top: 0; }
+
+/* Pillow block unit series page: product image on the left, specification block on the right. */
+.unit-pair { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 36px; align-items: start; }
+.unit-pair__media .product-display-card { margin: 0; }
+.unit-pair__data h2 { margin: 6px 0 0; font-size: 28px; }
+.unit-pair .spec-note { margin-top: 20px; }
+
+/* Flange-family comparison (UCF page). */
+.unit-flange-notes { margin-top: 28px; }
+.unit-flange-notes dl { display: grid; gap: 6px; margin: 10px 0 0; }
+.unit-flange-notes dl > div { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 12px; }
+.unit-flange-notes dt { color: var(--ink); font-family: var(--utility); font-size: 12px; font-weight: 700; letter-spacing: .02em; }
+.unit-flange-notes dd { margin: 0; color: var(--ink-soft); font-size: 13.5px; line-height: 1.6; }
+
+/* Lightweight enquiry line under the data column. */
+.unit-contact { margin: 14px 0 0; font-size: 13.5px; line-height: 1.7; color: var(--ink-soft); }
+.unit-contact a { color: var(--blue-dark); text-decoration: none; border-bottom: 1px solid currentColor; }
+.unit-contact a:hover { color: var(--blue); }
+
+/* Full model range sits below the image/data columns at full width. */
+.unit-range { margin-top: 34px; }
+.unit-range .model-groups { margin-top: 14px; }
+.series-final__more .section-heading { margin-bottom: 24px; }
+
+/* Full model range list (e.g. every UCT size), grouped by series type. */
+.model-groups { display: grid; gap: 20px; margin-top: 18px; }
+.model-group h3 { margin: 0 0 8px; font-family: var(--display); font-size: 17px; font-weight: 700; line-height: 1.4; }
+.model-names { margin: 0; max-width: 900px; color: var(--ink-soft); font-size: 13.5px; line-height: 1.7; }
+.model-subgroup { margin-top: 14px; }
+.model-subgroup:first-child { margin-top: 0; }
+.model-subgroup h4 { margin: 0 0 4px; font-size: 14.5px; font-weight: 700; line-height: 1.45; }
+.model-subgroup__note { margin: 0 0 6px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+
+/* UCT layout: data block on top, product image below (per owner annotation). */
+.unit-stack { display: grid; gap: 48px; }
+.unit-stack .unit-pair__media { width: 100%; max-width: 560px; margin: 0 auto; }
+.unit-stack .unit-pair__data { max-width: 100%; }
+
+@media (max-width: 1040px) {
+  .unit-spec-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .unit-pair { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .unit-stack { gap: 36px; }
+}
+
+@media (max-width: 760px) {
+  .unit-spec-grid { grid-template-columns: minmax(0, 1fr); }
+  .unit-spec dl > div { grid-template-columns: minmax(84px, max-content) minmax(0, 1fr); }
+}
+
+/* Localized spec labels are longer than the English ones (Bohrungsbereich, Caractéristique).
+   Below this width the label sits above its value instead of squeezing into a column. */
+@media (max-width: 430px) {
+  .unit-spec { padding: 16px 14px; }
+  .unit-spec dl > div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+}
+
+/* Category page introduction and series comparison table. */
+.category-intro { max-width: 980px; }
+.category-intro h2 { margin-bottom: 14px; font-size: 30px; }
+.category-intro p { max-width: 70ch; color: var(--ink-soft); font-size: 17px; line-height: 1.75; }
+.category-intro__subheading { margin: 40px 0 0; font-size: 21px; }
+.series-table { width: 100%; margin-top: 16px; border-collapse: collapse; text-align: start; }
+.series-table th, .series-table td { padding: 13px 16px 13px 0; border-bottom: 1px solid var(--line); text-align: start; vertical-align: top; }
+.series-table thead th { padding-top: 0; color: var(--steel); font-family: var(--utility); font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.series-table tbody th { font-size: 15px; font-weight: 600; }
+/* Series codes are links: give them a 24px touch area (a single-letter code is only 9px wide
+   otherwise). The negative margin keeps the table rhythm unchanged. */
+.series-table tbody th a { display: inline-block; min-width: 24px; padding: 5px 0; color: var(--blue-dark); text-decoration: none; }
+.series-table tbody th a:hover { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
+/* The cross-reference comparison tables carry the code in the first data cell, not in a row
+   header, so the same 24px touch area is applied there too. Vertical padding only: horizontal
+   padding plus a negative margin overflowed the cell by 2px in the RTL tables. */
+.series-table tbody td:first-child a { display: inline-block; min-width: 24px; padding: 5px 0; color: var(--blue-dark); text-decoration: none; }
+.series-table tbody td:first-child a:hover { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
+.series-table td { color: var(--ink-soft); font-size: 14.5px; }
+
+/* On phones the four columns become one card per series, labelled from data-label. The rows are
+   drawn as cards (same language as .unit-spec) so a stacked list does not read as loose text. */
+@media (max-width: 720px) {
+  .series-table, .series-table thead, .series-table tbody, .series-table tr, .series-table th, .series-table td { display: block; width: 100%; }
+  .series-table thead { display: none; }
+  .series-table tbody { display: grid; gap: 12px; }
+  .series-table tr { padding: 15px 16px; border: 1px solid var(--line-soft); border-top: 3px solid var(--blue); background: var(--paper); }
+  .series-table th, .series-table td { padding: 3px 0; border: 0; }
+  .series-table tbody th { font-size: 17px; }
+  .series-table td::before { display: block; margin-bottom: 2px; color: var(--steel); font-family: var(--utility); font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; content: attr(data-label); }
+}
+
+/* Phones: two product columns instead of one. Eleven single-column cards with 300px-tall images
+   made the category page more than fifteen screens long. */
+@media (max-width: 560px) {
+  .catalogue-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .product-display-card { min-height: 0; padding-bottom: 14px; }
+  .product-display-card__image { min-height: 140px; height: 165px; }
+  .product-display-card h2 { margin: 12px 8px 0; font-size: 14px; }
+}
+
+/* ===== Cross-reference page ===== */
+.xref-page { max-width: 980px; }
+.xref-filter input { width: min(100%, 420px); padding: 12px 14px; border: 1px solid var(--line); border-radius: 0; background: var(--paper); color: var(--ink); font-family: var(--utility); font-size: 14px; }
+.xref-filter input:focus { outline: 2px solid var(--blue); outline-offset: 2px; }
+.xref-download { margin: 14px 0 0; }
+.download-link { display: inline-block; padding: 11px 16px; border: 1px solid var(--blue-dark); background: var(--blue-dark); color: var(--paper); text-decoration: none; font-family: var(--utility); font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.download-link:hover { background: var(--blue); border-color: var(--blue); }
+.xref-section { margin-top: 44px; }
+.xref-section h2 { margin-bottom: 12px; font-size: 24px; }
+.table-scroll { overflow-x: auto; margin-top: 16px; -webkit-overflow-scrolling: touch; }
+.table-scroll .xref-table { min-width: 760px; }
+/* The two model tables carry four and three columns instead of the workbook's seven, so they need
+   far less horizontal scrolling on a phone. */
+.table-scroll .xref-table--slim { min-width: 560px; }
+.xref-table { width: 100%; border-collapse: collapse; text-align: start; }
+.xref-table th, .xref-table td { padding: 10px 14px 10px 0; border-bottom: 1px solid var(--line); text-align: start; vertical-align: top; }
+.xref-table thead th { padding-top: 0; color: var(--steel); font-family: var(--utility); font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.xref-table td { color: var(--ink-soft); font-size: 13.5px; }
+.xref-table td:first-child { color: var(--blue-dark); font-family: var(--utility); font-weight: 700; }
+.xref-table td:first-child a { display: inline-block; min-width: 24px; padding: 5px 0; color: var(--blue-dark); text-decoration: none; }
+.xref-table td:first-child a:hover { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
+.xref-table tbody tr:nth-child(even) { background: var(--mist); }
+/* Cross-reference page: the two questions sit below the tables. */
+.xref-faq { margin: 0; }
+.xref-faq dt { margin-top: 20px; color: var(--ink); font-family: var(--display); font-size: 17px; font-weight: 700; line-height: 1.3; }
+.xref-faq dd { max-width: 78ch; margin: 6px 0 0; color: var(--ink-soft); font-size: 14px; line-height: 1.7; }
+.xref-entry { margin: 16px 0 0; }
+.xref-entry a { color: var(--blue-dark); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.xref-entry a:hover { color: var(--blue); }
+.xref-note { max-width: 78ch; margin: 14px 0 0; padding-left: 14px; border-left: 3px solid var(--line); color: var(--steel); font-size: 13px; line-height: 1.75; }
+
 .about-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .about-grid article { min-height: 260px; border-top: 3px solid var(--blue); padding: 28px 0; }
 .about-grid article:nth-child(odd) { padding-right: 42px; }
@@ -199,6 +353,8 @@ h2 { margin-bottom: 18px; font-size: clamp(28px, 3.6vw, 44px); }
 .public-info dl > div { min-width: 0; padding: 22px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .public-info dt, .footer-contact dt { margin-bottom: 6px; color: var(--steel); font-family: var(--utility); font-size: 10px; font-weight: 700; text-transform: uppercase; }
 .public-info dd, .footer-contact dd { margin: 0; overflow-wrap: anywhere; }
+/* Long technical values stay readable instead of running the full width of a wide cell. */
+.public-info dd { max-width: 60ch; }
 .contact-value { unicode-bidi: plaintext; }
 
 [dir="rtl"] [dir="ltr"] {
@@ -212,11 +368,19 @@ h2 { margin-bottom: 18px; font-size: clamp(28px, 3.6vw, 44px); }
 .brand--footer { color: var(--paper); }
 .brand--footer .brand-mark { border-color: var(--paper); }
 .footer-inner > div > p { max-width: 380px; margin: 20px 0 0; color: var(--on-dark-soft); font-size: 14px; }
-.footer-contact { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px 24px; margin: 0; }
+/* Five contact items over six columns: three per row, then two half-width items that fill the
+   second row completely instead of leaving half of it empty. */
+.footer-contact { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 22px 24px; margin: 0; }
+/* Six cells at two columns each fill exactly two rows: e-mail / WhatsApp / Facebook, then
+   LinkedIn / company name / facility. */
+.footer-contact > div { grid-column: span 2; min-width: 0; }
 .footer-contact > div { min-width: 0; }
 .footer-contact dt { color: var(--on-dark-soft); }
 .footer-contact dd { color: var(--on-dark); font-size: 14px; line-height: 1.45; }
 .footer-contact a:hover { color: var(--paper); text-decoration: underline; text-underline-offset: 3px; }
+/* E-mail, WhatsApp and Facebook are the primary conversion path: comfortable touch area on phones. */
+.footer-contact dd a.contact-value, .public-info dd a.contact-value { display: inline-block; padding-block: 8px; }
+.footer-bottom a { display: inline-block; padding-block: 7px; }
 .footer-bottom { border-top: 1px solid var(--on-dark-line); padding: 16px 0; color: var(--on-dark-soft); font-family: var(--utility); font-size: 10px; text-transform: uppercase; }
 
 [dir="rtl"] { text-align: right; }
@@ -231,11 +395,12 @@ h2 { margin-bottom: 18px; font-size: clamp(28px, 3.6vw, 44px); }
 /* ---- V4.1 design refinements: engineering blueprint accents ---- */
 body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
 .eyebrow { letter-spacing: .07em; }
-.home-hero__copy { position: relative; }
+/* z-index: 1 keeps the copy column above the decorative .hero-factory bleed in every state, even
+   while the intro's transform animation briefly gives the column its own stacking context. */
+.home-hero__copy { position: relative; z-index: 1; }
 .home-hero__copy::before { position: absolute; top: 0; right: -40px; bottom: 0; left: -60px; z-index: 0; background-image: linear-gradient(rgb(18 63 83 / 5%) 1px, transparent 1px), linear-gradient(90deg, rgb(18 63 83 / 5%) 1px, transparent 1px); background-size: 36px 36px; content: ""; pointer-events: none; }
 .home-hero__copy > * { position: relative; z-index: 1; }
 .home-hero__copy h1 { position: relative; }
-.home-hero__copy h1::after { display: block; width: 64px; height: 4px; margin-top: 22px; background: var(--amber); content: ""; }
 .category-card, .catalogue-card, .series-card { border-radius: 2px; }
 .category-card::before, .catalogue-card::before, .series-card::before { position: absolute; top: 10px; left: 10px; z-index: 2; width: 12px; height: 12px; border-top: 2px solid var(--steel); border-left: 2px solid var(--steel); content: ""; opacity: .5; }
 .category-card::after, .catalogue-card::after, .series-card::after { position: absolute; right: 10px; bottom: 10px; z-index: 2; display: block; width: 12px; height: 12px; border-right: 2px solid var(--steel); border-bottom: 2px solid var(--steel); content: ""; opacity: .5; }
@@ -254,9 +419,13 @@ body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; 
 @media (max-width: 1040px) {
   .home-hero__grid { grid-template-columns: minmax(0, 1fr) minmax(340px, .9fr); gap: 30px; }
   .home-hero__media { min-height: 500px; }
+  /* Note: .hero-factory keeps its desktop -54px bleed here. The photo overlaps the right edge of
+     the copy column by about 24px between 768px and 1000px, but the copy paints above it and the
+     overlap falls on the photo's light border, so the approved layered look is preserved. If the
+     text ever looks crowded on a tablet, add `.hero-factory { left: 0 }` back to this block. */
   .category-grid, .catalogue-grid, .series-grid, .product-display-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .footer-inner { grid-template-columns: 1fr; gap: 30px; }
-  .footer-contact { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .footer-contact { grid-template-columns: repeat(6, minmax(0, 1fr)); }
   .series-layout { gap: 40px; }
   .factory-banner { gap: 40px; }
   .factory-features { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -300,29 +469,56 @@ body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; 
   .series-gallery img { min-height: 260px; }
   .about-grid article:nth-child(odd) { padding-right: 0; }
   .footer-contact { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .footer-contact > div { grid-column: span 1; }
+  .footer-contact > div:nth-child(n + 5) { grid-column: span 2; }
+}
+
+/* Small phones: tighten the header so brand, navigation and language switcher always fit,
+   including locales with longer navigation labels (e.g. Indonesian). */
+@media (max-width: 480px) {
+  .header-inner { gap: 14px; }
+  .site-nav { gap: 9px; font-size: 10px; }
+  .site-nav a { padding: 14px 3px; }
+  .language-switcher { font-size: 9px; }
 }
 
 @media (max-width: 390px) {
   .brand { flex: 0 0 auto; }
   .brand > span:last-child { display: none; }
-  .site-nav { gap: 12px; font-size: 11px; }
+  .site-nav { gap: 8px; font-size: 10px; }
   .site-nav a { padding: 14px 3px; }
   .language-switcher { display: block; }
 }
 
+/* Very narrow phones (320-340px): tighten header further. */
+@media (max-width: 340px) {
+  .header-inner { gap: 10px; }
+  .site-nav { gap: 6px; font-size: 9px; }
+  .site-nav a { padding: 14px 2px; }
+  .language-switcher { font-size: 9px; }
+  .language-switcher summary { padding: 8px 2px; }
+}
+
 /* ===== Guides（技术文档栏目） ===== */
-.guide-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.guide-card { display: flex; flex-direction: column; gap: 10px; padding: 20px; border: 1px solid var(--border, #e3e3e3); border-radius: 10px; background: var(--card-bg, #fff); text-decoration: none; color: inherit; transition: transform .15s ease, box-shadow .15s ease; }
-.guide-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
-.guide-card h3 { font-size: 1.05rem; line-height: 1.4; margin: 0; }
-.guide-card h2 { font-size: 1.1rem; line-height: 1.4; margin: 0; }
-.guide-card h2 a { text-decoration: none; color: inherit; }
-.guide-card p { margin: 0; font-size: .92rem; color: var(--muted, #666); line-height: 1.55; }
-.guide-card__more { margin-top: auto; font-size: .9rem; font-weight: 600; color: var(--accent, #2563eb); }
+/* These cards used to be the only component written in a foreign design language: rem sizes,
+   soft shadows, rounded corners, and two CSS variables (--muted, --accent) that were never
+   defined, so they always fell back to #666 and a Tailwind blue outside the palette. They now
+   use the site's own scale and tokens, and a printed index number gives the text-only cards a
+   visual anchor without needing photography. */
+.guide-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; counter-reset: guide; }
+.guide-card { display: flex; flex-direction: column; gap: 12px; padding: 24px 22px 22px; border: 1px solid var(--line); border-top: 3px solid var(--blue); background: var(--paper); color: inherit; text-decoration: none; counter-increment: guide; transition: border-color 180ms ease; }
+.guide-card::before { color: var(--line); font-family: var(--utility); font-size: 20px; font-weight: 700; letter-spacing: .06em; line-height: 1; content: counter(guide, decimal-leading-zero); }
+.guide-card:hover { border-color: var(--amber); }
+.guide-card h2, .guide-card h3 { margin: 0; font-family: var(--display); font-size: 21px; line-height: 1.3; }
+.guide-card h2 a { color: inherit; text-decoration: none; }
+.guide-card h2 a:hover { color: var(--blue); }
+.guide-card p { margin: 0; color: var(--ink-soft); font-size: 14.5px; line-height: 1.7; }
+.guide-card .eyebrow { margin: 0; }
+.guide-card__more { margin-top: auto; color: var(--blue-dark); font-family: var(--utility); font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
 .guide-card--plain { cursor: default; }
 .guide-article { max-width: 780px; }
 .guide-section { margin-bottom: 28px; }
-.guide-section h2 { font-size: 1.25rem; margin: 0 0 10px; }
+.guide-section h2 { font-size: 22px; margin: 0 0 10px; }
 .guide-section p { line-height: 1.75; margin: 0 0 10px; }
 .guide-section ul { margin: 0 0 10px; padding-left: 20px; line-height: 1.75; }
 .guide-section li { margin-bottom: 6px; }
@@ -358,12 +554,20 @@ html.splash-active { overflow: hidden; }
   align-items: center;
   justify-content: center;
   background: var(--mesh-bg);
+  /* Failsafe: the overlay is removed by site.js, so if the script never runs the intro must not
+     trap the page. The <noscript> rule in the document head hides it immediately in that case. */
+  animation: splash-failsafe 0s linear 5s forwards;
 }
-.brand-splash__stage { text-align: center; padding: 0 20px; will-change: transform, opacity, filter; }
+@keyframes splash-failsafe {
+  to { visibility: hidden; opacity: 0; pointer-events: none; }
+}
+.brand-splash__stage { max-width: 100%; text-align: center; padding: 0 20px; will-change: transform, opacity, filter; }
 .brand-splash__word {
   margin: 0;
   white-space: nowrap;
-  font-size: clamp(40px, 7vw, 96px);
+  /* 16 characters must fit a 320px phone: the wordmark needs <= 8.6vw there, so the
+     viewport-driven size carries the whole range and the clamp floor only guards extreme cases. */
+  font-size: clamp(22px, 7.6vw, 96px);
   font-weight: 600;
   letter-spacing: -0.03em;
   line-height: 1.1;
@@ -386,3 +590,32 @@ html.splash-active { overflow: hidden; }
   filter: blur(9px);
 }
 html.splash-done .brand-splash { display: none; }
+
+/* Arabic script carries taller ascenders and descenders than Latin text, so it needs a looser
+   default leading than the Latin values set above. */
+html[lang="ar"] main p,
+html[lang="ar"] main dd,
+html[lang="ar"] main li,
+html[lang="ar"] .unit-spec dd,
+html[lang="ar"] .spec-note,
+html[lang="ar"] .series-about p { line-height: 1.85; }
+
+/* Buyers print or save the specification pages and forward them to engineers: print the data,
+   not the navigation, the dark hero band or the footer. */
+@media print {
+  .site-header, .site-footer, .product-index, .brand-splash, .language-switcher,
+  .product-image-zoom, .enquiry-cta, .back-to-top { display: none !important; }
+
+  body, .page-intro, .section, .section--soft, .section--tight { color: #000 !important; background: #fff !important; }
+
+  .page-intro h1, .page-intro p, .page-intro .eyebrow, .product-breadcrumb, .product-breadcrumb a,
+  .unit-spec dd, .unit-spec dt, .spec-note, .model-names, .model-group h3, .model-group h4,
+  .series-about p, .series-about dd, .series-about dt, .unit-contact a { color: #000 !important; }
+
+  main a { color: #000 !important; text-decoration: none !important; }
+  .unit-spec, .model-group, .product-display-card, .model-subgroup { break-inside: avoid; }
+  .page-intro { padding: 0 0 18px !important; }
+  .section, .section--tight { padding: 18px 0 !important; }
+  .product-display-card__image { height: auto !important; min-height: 0 !important; }
+  .product-display-card__image img { position: static !important; max-height: 260px; }
+}

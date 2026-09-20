@@ -4,6 +4,19 @@ import { fileURLToPath } from 'node:url';
 import { categories, productCatalog, validateProductCatalog } from '../data/product-catalog.mjs';
 import { LOCALE_CODES } from '../data/product-schema.mjs';
 import { guides } from '../data/guides.mjs';
+import { flangeTypeNotes, seriesBoreRange, unitModelGroups, mountedUnitsForSeries } from '../data/mounted-units-spec.mjs';
+import { housingSeriesSpec } from '../data/bearing-housing-spec.mjs';
+import { specText } from '../data/spec-i18n.mjs';
+import { categoryIntro } from '../data/category-intro.mjs';
+import { XREF_LIGHT, XREF_HEAVY, XREF_SERIES, XREF_INSERTS } from '../data/cross-reference.mjs';
+import { xrefText, validateXrefI18n } from '../data/cross-reference-i18n.mjs';
+import { xrefNotes, validateXrefNotes } from '../data/cross-reference-notes.mjs';
+import { LEGAL_I18N, validateLegalI18n } from '../data/legal-i18n.mjs';
+import { NOT_FOUND_I18N, validateNotFoundI18n } from '../data/not-found-i18n.mjs';
+import { XREF_FAQ, validateXrefFaq } from '../data/cross-reference-faq.mjs';
+
+const translationIssues = [...validateXrefI18n(), ...validateXrefNotes(), ...validateLegalI18n(), ...validateNotFoundI18n(), ...validateXrefFaq()];
+if (translationIssues.length) throw new Error(`Translation data is incomplete:\n  ${translationIssues.join('\n  ')}`);
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const domain = 'https://www.natermanufacture.com';
@@ -15,6 +28,9 @@ const site = {
   email: '729865273lq@gmail.com',
   whatsapp: '+8617600510039',
   facebook: 'https://www.facebook.com/profile.php?id=61591625294939',
+  // LinkedIn profile supplied by the owner on 2026-09-19. The scheme and www host are added so the
+  // link resolves and matches LinkedIn's canonical profile URL.
+  linkedin: 'https://www.linkedin.com/in/liu-bearing-housing-factory-439594427',
   companyName: 'Guantao County Naite Bearing Co., Ltd.',
   manufacturingFacility: 'No. 005, Malan Village, Nanxu Township, Guantao County, Handan City, Hebei Province, P.R.China'
 };
@@ -239,19 +255,19 @@ const companyIntro = Object.freeze({
     ko: '회사 소개'
   },
   body: {
-    en: 'Established more than 20 years ago, we operate our own bearing housing machining workshop with full in-house machining and assembly capability. Our storefront is located in Yandian Town, Linqing City — China\'s largest bearing distribution hub — giving us direct access to a mature local market and a complete supply chain. This strategic location, combined with two decades of manufacturing experience, delivers a strong cost advantage without compromising quality. We provide cost-effective bearing housings, mounted bearing units and customized solutions to customers worldwide.',
-    es: 'Llevamos más de 20 años fabricando soportes de rodamientos, con taller de mecanizado propio y capacidad completa de mecanizado y montaje. Nuestra tienda se encuentra en Yandian, Linqing — el mayor centro de distribución de rodamientos de China — con acceso directo a un mercado local maduro y una cadena de suministro completa. Esta ubicación estratégica nos permite ofrecer una fuerte ventaja de coste sin renunciar a la calidad. Suministramos soportes de rodamientos, unidades con soporte y soluciones personalizadas a clientes de todo el mundo.',
-    de: 'Seit mehr als 20 Jahren fertigen wir Lagergehäuse in unserer eigenen Bearbeitungswerkstatt mit vollständiger Bearbeitungs- und Montagekapazität. Unser Geschäft befindet sich in Yandian, Linqing — dem größten Lagervertriebszentrum Chinas — mit direktem Zugang zu einem ausgereiften Markt und einer vollständigen Lieferkette. Diese strategische Lage bietet einen deutlichen Kostenvorteil ohne Qualitätseinbußen. Wir liefern kostengünstige Lagergehäuse, Lagergehäuseeinheiten und Sonderlösungen an Kunden weltweit.',
-    fr: 'Depuis plus de 20 ans, nous fabriquons des paliers dans notre propre atelier d\'usinage, avec une capacité complète d\'usinage et d\'assemblage. Notre magasin est situé à Yandian, Linqing — le plus grand centre de distribution de roulements de Chine — avec un accès direct à un marché local mature et à une chaîne d\'approvisionnement complète. Cet emplacement stratégique offre un avantage de coût important sans compromis sur la qualité. Nous fournissons des paliers, des unités à palier et des solutions sur mesure à des clients du monde entier.',
-    pt: 'Há mais de 20 anos fabricamos mancais, com oficina própria de usinagem e capacidade completa de usinagem e montagem. Nossa loja está localizada em Yandian, Linqing — o maior centro de distribuição de rolamentos da China — com acesso direto a um mercado local maduro e a uma cadeia de suprimentos completa. Essa localização estratégica proporciona uma forte vantagem de custo sem comprometer a qualidade. Fornecemos mancais, unidades com mancal e soluções personalizadas a clientes no mundo todo.',
-    ar: 'منذ أكثر من 20 عامًا ونحن نصنع بيوت المحامل، مع ورشة تصنيع خاصة وقدرة كاملة على التصنيع والتجميع. يقع متجرنا في بلدة يانديان، مدينة لينغتشينغ — أكبر مركز لتوزيع المحامل في الصين — مع وصول مباشر إلى سوق محلي ناضج وسلسلة توريد كاملة. يمنحنا هذا الموقع الاستراتيجي ميزة تكلفة قوية دون المساس بالجودة. نوفر بيوت المحامل ووحدات المحامل والحلول المخصصة لعملاء حول العالم.',
-    tr: '20 yılı aşkın süredir kendi işleme atölyemizde rulman yatakları üretiyor ve tam işleme ve montaj kapasitesi sunuyoruz. Mağazamız, Çin\'in en büyük rulman dağıtım merkezi olan Lingqing şehrindeki Yandian kasabasında yer alıyor ve olgun bir yerel pazara ve eksiksiz bir tedarik zincirine doğrudan erişim sağlıyor. Bu stratejik konum, kaliteden ödün vermeden güçlü bir maliyet avantajı sağlar. Dünya çapındaki müşterilere rulman yatakları, yatak birimleri ve özel çözümler sunuyoruz.',
-    ru: 'Более 20 лет мы производим корпуса подшипников, имея собственный механический цех и полный цикл механической обработки и сборки. Наш магазин расположен в поселке Яньдянь города Линьцин — крупнейшем центре распределения подшипников в Китае — с прямым доступом к зрелому местному рынку и полной цепочке поставок. Это стратегическое расположение дает значительное ценовое преимущество без ущерба для качества. Мы поставляем корпуса подшипников, корпусные узлы и индивидуальные решения клиентам по всему миру.',
-    it: 'Da oltre 20 anni produciamo supporti per cuscinetti, con officina di lavorazione propria e piena capacità di lavorazione e assemblaggio. Il nostro negozio si trova a Yandian, Linqing — il più grande centro di distribuzione di cuscinetti in Cina — con accesso diretto a un mercato locale maturo e a una filiera completa. Questa posizione strategica offre un forte vantaggio di costo senza compromettere la qualità. Forniamo supporti per cuscinetti, unità con supporto e soluzioni personalizzate a clienti in tutto il mondo.',
-    vi: 'Hơn 20 năm qua, chúng tôi sản xuất gối đỡ vòng bi với xưởng gia công riêng và năng lực gia công, lắp ráp hoàn chỉnh. Cửa hàng của chúng tôi nằm tại thị trấn Yandian, thành phố Linqing — trung tâm phân phối vòng bi lớn nhất Trung Quốc — với khả năng tiếp cận trực tiếp thị trường địa phương trưởng thành và chuỗi cung ứng hoàn chỉnh. Vị trí chiến lược này mang lại lợi thế chi phí lớn mà không ảnh hưởng đến chất lượng. Chúng tôi cung cấp gối đỡ vòng bi, bộ gối đỡ và giải pháp tùy chỉnh cho khách hàng toàn cầu.',
-    id: 'Selama lebih dari 20 tahun, kami memproduksi rumah bantalan dengan bengkel pemesinan sendiri serta kapasitas pemesinan dan perakitan yang lengkap. Toko kami terletak di Kota Yandian, Linqing — pusat distribusi bantalan terbesar di Tiongkok — dengan akses langsung ke pasar lokal yang matang dan rantai pasokan yang lengkap. Lokasi strategis ini memberikan keunggulan biaya yang kuat tanpa mengorbankan kualitas. Kami menyediakan rumah bantalan, unit bantalan, dan solusi khusus kepada pelanggan di seluruh dunia.',
-    ja: '当社は20年以上にわたり、自社の加工工場でベアリングハウジングを製造し、機械加工から組立までの一貫した生産能力を有しています。店舗は中国最大のベアリング流通拠点である山東省臨清市煙店鎮に位置し、成熟した地域市場と完全なサプライチェーンに直接アクセスできます。この戦略的な立地により、品質を損なうことなく大きなコスト優位性を実現しています。世界中のお客様にベアリングハウジング、ユニット製品、カスタムソリューションを提供しています。',
-    ko: '저희는 20년 이상 자체 가공 공장에서 베어링 하우징을 제조하며 기계 가공부터 조립까지 일관된 생산 능력을 갖추고 있습니다. 매장은 중국 최대 베어링 유통 중심지인 산둥성 린칭시 옌뎬진에 위치하여 성숙한 지역 시장과 완전한 공급망에 직접 접근할 수 있습니다. 이러한 전략적 입지는 품질 저하 없이 강력한 비용 우위를 제공합니다. 전 세계 고객에게 베어링 하우징, 유닛 제품, 맞춤형 솔루션을 공급합니다.'
+    en: 'We operate our own bearing housing machining workshop with full in-house machining and assembly capability. Our storefront is located in Yandian Town, Linqing City — China\'s largest bearing distribution hub — giving us direct access to a mature local market and a complete supply chain. This strategic location delivers a strong cost advantage without compromising quality. We provide cost-effective bearing housings, mounted bearing units and customized solutions to customers worldwide.',
+    es: 'Contamos con taller de mecanizado propio y capacidad completa de mecanizado y montaje. Nuestra tienda se encuentra en Yandian, Linqing — el mayor centro de distribución de rodamientos de China — con acceso directo a un mercado local maduro y una cadena de suministro completa. Esta ubicación estratégica nos permite ofrecer una fuerte ventaja de coste sin renunciar a la calidad. Suministramos soportes de rodamientos, unidades con soporte y soluciones personalizadas a clientes de todo el mundo.',
+    de: 'Wir fertigen Lagergehäuse in unserer eigenen Bearbeitungswerkstatt mit vollständiger Bearbeitungs- und Montagekapazität. Unser Geschäft befindet sich in Yandian, Linqing — dem größten Lagervertriebszentrum Chinas — mit direktem Zugang zu einem ausgereiften Markt und einer vollständigen Lieferkette. Diese strategische Lage bietet einen deutlichen Kostenvorteil ohne Qualitätseinbußen. Wir liefern kostengünstige Lagergehäuse, Lagergehäuseeinheiten und Sonderlösungen an Kunden weltweit.',
+    fr: 'Nous fabriquons des paliers dans notre propre atelier d\'usinage, avec une capacité complète d\'usinage et d\'assemblage. Notre magasin est situé à Yandian, Linqing — le plus grand centre de distribution de roulements de Chine — avec un accès direct à un marché local mature et à une chaîne d\'approvisionnement complète. Cet emplacement stratégique offre un avantage de coût important sans compromis sur la qualité. Nous fournissons des paliers, des unités à palier et des solutions sur mesure à des clients du monde entier.',
+    pt: 'Fabricamos mancais em oficina própria de usinagem e capacidade completa de usinagem e montagem. Nossa loja está localizada em Yandian, Linqing — o maior centro de distribuição de rolamentos da China — com acesso direto a um mercado local maduro e a uma cadeia de suprimentos completa. Essa localização estratégica proporciona uma forte vantagem de custo sem comprometer a qualidade. Fornecemos mancais, unidades com mancal e soluções personalizadas a clientes no mundo todo.',
+    ar: 'نصنع بيوت المحامل في ورشة تصنيع خاصة بنا، مع قدرة كاملة على التصنيع والتجميع. يقع متجرنا في بلدة يانديان، مدينة لينغتشينغ — أكبر مركز لتوزيع المحامل في الصين — مع وصول مباشر إلى سوق محلي ناضج وسلسلة توريد كاملة. يمنحنا هذا الموقع الاستراتيجي ميزة تكلفة قوية دون المساس بالجودة. نوفر بيوت المحامل ووحدات المحامل والحلول المخصصة لعملاء حول العالم.',
+    tr: 'Kendi işleme atölyemizde rulman yatakları üretiyor ve tam işleme ve montaj kapasitesi sunuyoruz. Mağazamız, Çin\'in en büyük rulman dağıtım merkezi olan Lingqing şehrindeki Yandian kasabasında yer alıyor ve olgun bir yerel pazara ve eksiksiz bir tedarik zincirine doğrudan erişim sağlıyor. Bu stratejik konum, kaliteden ödün vermeden güçlü bir maliyet avantajı sağlar. Dünya çapındaki müşterilere rulman yatakları, yatak birimleri ve özel çözümler sunuyoruz.',
+    ru: 'Мы производим корпуса подшипников, имея собственный механический цех и полный цикл механической обработки и сборки. Наш магазин расположен в поселке Яньдянь города Линьцин — крупнейшем центре распределения подшипников в Китае — с прямым доступом к зрелому местному рынку и полной цепочке поставок. Это стратегическое расположение дает значительное ценовое преимущество без ущерба для качества. Мы поставляем корпуса подшипников, корпусные узлы и индивидуальные решения клиентам по всему миру.',
+    it: 'Produciamo supporti per cuscinetti con officina di lavorazione propria e piena capacità di lavorazione e assemblaggio. Il nostro negozio si trova a Yandian, Linqing — il più grande centro di distribuzione di cuscinetti in Cina — con accesso diretto a un mercato locale maturo e a una filiera completa. Questa posizione strategica offre un forte vantaggio di costo senza compromettere la qualità. Forniamo supporti per cuscinetti, unità con supporto e soluzioni personalizzate a clienti in tutto il mondo.',
+    vi: 'Chúng tôi sản xuất gối đỡ vòng bi với xưởng gia công riêng và năng lực gia công, lắp ráp hoàn chỉnh. Cửa hàng của chúng tôi nằm tại thị trấn Yandian, thành phố Linqing — trung tâm phân phối vòng bi lớn nhất Trung Quốc — với khả năng tiếp cận trực tiếp thị trường địa phương trưởng thành và chuỗi cung ứng hoàn chỉnh. Vị trí chiến lược này mang lại lợi thế chi phí lớn mà không ảnh hưởng đến chất lượng. Chúng tôi cung cấp gối đỡ vòng bi, bộ gối đỡ và giải pháp tùy chỉnh cho khách hàng toàn cầu.',
+    id: 'Kami memproduksi rumah bantalan dengan bengkel pemesinan sendiri serta kapasitas pemesinan dan perakitan yang lengkap. Toko kami terletak di Kota Yandian, Linqing — pusat distribusi bantalan terbesar di Tiongkok — dengan akses langsung ke pasar lokal yang matang dan rantai pasokan yang lengkap. Lokasi strategis ini memberikan keunggulan biaya yang kuat tanpa mengorbankan kualitas. Kami menyediakan rumah bantalan, unit bantalan, dan solusi khusus kepada pelanggan di seluruh dunia.',
+    ja: '当社は自社の加工工場でベアリングハウジングを製造し、機械加工から組立までの一貫した生産能力を有しています。店舗は中国最大のベアリング流通拠点である山東省臨清市煙店鎮に位置し、成熟した地域市場と完全なサプライチェーンに直接アクセスできます。この戦略的な立地により、品質を損なうことなく大きなコスト優位性を実現しています。世界中のお客様にベアリングハウジング、ユニット製品、カスタムソリューションを提供しています。',
+    ko: '저희는 자체 가공 공장에서 베어링 하우징을 제조하며 기계 가공부터 조립까지 일관된 생산 능력을 갖추고 있습니다. 매장은 중국 최대 베어링 유통 중심지인 산둥성 린칭시 옌뎬진에 위치하여 성숙한 지역 시장과 완전한 공급망에 직접 접근할 수 있습니다. 이러한 전략적 입지는 품질 저하 없이 강력한 비용 우위를 제공합니다. 전 세계 고객에게 베어링 하우징, 유닛 제품, 맞춤형 솔루션을 공급합니다.'
   }
 });
 
@@ -438,19 +454,19 @@ const factorySection = Object.freeze({
 });
 
 const homePresentation = Object.freeze({
-  en: { eyebrow: 'Industrial Product Catalogue', title: 'Industrial Bearings & Bearing Housings', lead: 'Bearing housing manufacturer with 20+ years of experience. NATER supplies pillow block bearing units, bearing housing series and custom solutions — machined in-house, supplied directly to buyers worldwide.', productsHeading: 'Bearings, bearing housings and custom products.', partnerHeading: 'Manufacturing Partner', partnerLead: 'Supported by a long-term manufacturing partner with industrial production capabilities.' },
-  es: { eyebrow: 'Catálogo de productos industriales', title: 'Rodamientos industriales y soportes de rodamientos', lead: 'Fabricante de soportes de rodamientos con más de 20 años de experiencia. NATER suministra unidades de rodamientos de pie, series de soportes de rodamientos y soluciones a medida, mecanizados internamente y enviados directamente a compradores de todo el mundo.', productsHeading: 'Rodamientos, soportes de rodamientos y productos personalizados.', partnerHeading: 'Socio de fabricación', partnerLead: 'Con el respaldo de un socio de fabricación a largo plazo con capacidades de producción industrial.' },
-  de: { eyebrow: 'Industrieller Produktkatalog', title: 'Industrielager und Lagergehäuse', lead: 'Hersteller von Lagergehäusen mit über 20 Jahren Erfahrung. NATER liefert Stehlagereinheiten, Lagergehäuse-Serien und Sonderlösungen — hauseigen bearbeitet, direkt an Käufer weltweit.', productsHeading: 'Lager, Lagergehäuse und kundenspezifische Produkte.', partnerHeading: 'Fertigungspartner', partnerLead: 'Unterstützt durch einen langfristigen Fertigungspartner mit industriellen Produktionskapazitäten.' },
-  fr: { eyebrow: 'Catalogue de produits industriels', title: 'Roulements industriels et paliers', lead: 'Fabricant de paliers avec plus de 20 ans d\'expérience. NATER fournit des unités de paliers à semelle, des séries de paliers et des solutions sur mesure, usinés en interne et livrés directement aux acheteurs du monde entier.', productsHeading: 'Roulements, paliers et produits sur mesure.', partnerHeading: 'Partenaire de fabrication', partnerLead: 'Soutenu par un partenaire de fabrication de longue date disposant de capacités de production industrielle.' },
-  pt: { eyebrow: 'Catálogo de produtos industriais', title: 'Rolamentos industriais e mancais', lead: 'Fabricante de mancais com mais de 20 anos de experiência. A NATER fornece unidades de mancais de pé, séries de mancais e soluções personalizadas — maquinados internamente e entregues diretamente a compradores em todo o mundo.', productsHeading: 'Rolamentos, mancais e produtos personalizados.', partnerHeading: 'Parceiro de fabricação', partnerLead: 'Com o apoio de um parceiro de fabricação de longo prazo com capacidades de produção industrial.' },
-  ar: { eyebrow: 'كتالوج المنتجات الصناعية', title: 'محامل صناعية وبيوت محامل', lead: 'مصنع بيوت محامل بخبرة تزيد عن 20 عامًا. توفر NATER وحدات المحامل ذات القاعدة وسلسلات بيوت المحامل والحلول المخصصة — تصنيع داخلي وتوريد مباشر للمشترين حول العالم.', productsHeading: 'المحامل وبيوت المحامل والمنتجات المخصصة.', partnerHeading: 'شريك التصنيع', partnerLead: 'مدعوم بشريك تصنيع طويل الأجل يتمتع بقدرات إنتاج صناعي.' },
-  tr: { eyebrow: 'Endüstriyel ürün kataloğu', title: 'Endüstriyel rulmanlar ve rulman yatakları', lead: '20 yılı aşkın deneyime sahip rulman yatağı üreticisi. NATER, ayaklı rulman yatakları, rulman yatağı serileri ve özel çözümler sunar — kendi tesislerinde işlenir ve dünya genelindeki alıcılara doğrudan tedarik edilir.', productsHeading: 'Rulmanlar, rulman yatakları ve özel ürünler.', partnerHeading: 'Üretim ortağı', partnerLead: 'Endüstriyel üretim kapasitesine sahip uzun vadeli bir üretim ortağı tarafından desteklenmektedir.' },
-  ru: { eyebrow: 'Каталог промышленной продукции', title: 'Промышленные подшипники и корпуса подшипников', lead: 'Производитель корпусов подшипников с более чем 20-летним опытом. NATER поставляет опорные подшипниковые узлы, серии корпусов подшипников и индивидуальные решения — собственная механическая обработка и прямые поставки покупателям по всему миру.', productsHeading: 'Подшипники, корпуса подшипников и изделия на заказ.', partnerHeading: 'Производственный партнер', partnerLead: 'При поддержке долгосрочного производственного партнера с возможностями промышленного производства.' },
-  it: { eyebrow: 'Catalogo di prodotti industriali', title: 'Cuscinetti industriali e supporti per cuscinetti', lead: 'Produttore di supporti per cuscinetti con oltre 20 anni di esperienza. NATER fornisce unità di supporti a piedistallo, serie di supporti e soluzioni personalizzate — lavorati internamente e forniti direttamente ad acquirenti di tutto il mondo.', productsHeading: 'Cuscinetti, supporti per cuscinetti e prodotti personalizzati.', partnerHeading: 'Partner produttivo', partnerLead: 'Supportato da un partner produttivo di lunga data con capacità di produzione industriale.' },
-  vi: { eyebrow: 'Danh mục sản phẩm công nghiệp', title: 'Vòng bi công nghiệp và gối đỡ vòng bi', lead: 'Nhà sản xuất gối đỡ vòng bi với hơn 20 năm kinh nghiệm. NATER cung cấp bộ gối đỡ vòng bi, dòng gối đỡ vòng bi và giải pháp tùy chỉnh — gia công tại xưởng và cung cấp trực tiếp cho người mua toàn cầu.', productsHeading: 'Vòng bi, gối đỡ vòng bi và sản phẩm tùy chỉnh.', partnerHeading: 'Đối tác sản xuất', partnerLead: 'Được hỗ trợ bởi đối tác sản xuất lâu dài có năng lực sản xuất công nghiệp.' },
-  id: { eyebrow: 'Katalog produk industri', title: 'Bantalan industri dan rumah bantalan', lead: 'Produsen rumah bantalan dengan pengalaman lebih dari 20 tahun. NATER memasok unit bantalan duduk, seri rumah bantalan, dan solusi khusus — diproses internal dan dipasok langsung ke pembeli di seluruh dunia.', productsHeading: 'Bantalan, rumah bantalan, dan produk khusus.', partnerHeading: 'Mitra manufaktur', partnerLead: 'Didukung oleh mitra manufaktur jangka panjang dengan kemampuan produksi industri.' },
-  ja: { eyebrow: '産業用製品カタログ', title: '産業用ベアリングとベアリングハウジング', lead: '20年以上の実績を持つベアリングハウジングメーカー。NATERはピローブロックベアリングユニット、ベアリングハウジングシリーズ、カスタムソリューションを自社工場で機械加工し、世界中のバイヤーへ直接供給しています。', productsHeading: 'ベアリング、ベアリングハウジング、カスタム製品。', partnerHeading: '製造パートナー', partnerLead: '産業生産能力を持つ長期的な製造パートナーの支援を受けています。' },
-  ko: { eyebrow: '산업 제품 카탈로그', title: '산업용 베어링 및 베어링 하우징', lead: '20년 이상의 경력을 가진 베어링 하우징 제조업체입니다. NATER는 필로우 블록 베어링 유닛, 베어링 하우징 시리즈, 맞춤형 솔루션을 자체 가공하여 전 세계 바이어에게 직접 공급합니다.', productsHeading: '베어링, 베어링 하우징 및 맞춤형 제품.', partnerHeading: '제조 파트너', partnerLead: '산업 생산 역량을 갖춘 장기 제조 파트너의 지원을 받고 있습니다.' }
+  en: { eyebrow: 'Industrial Product Catalogue', title: 'Industrial Bearings & Bearing Housings', lead: 'Bearing housing manufacturer. NATER supplies pillow block bearing units, bearing housing series and custom solutions — machined in-house, supplied directly to buyers worldwide.', productsHeading: 'Bearings, bearing housings and custom products.', partnerHeading: 'Manufacturing Partner', partnerLead: 'Supported by a long-term manufacturing partner with industrial production capabilities.' },
+  es: { eyebrow: 'Catálogo de productos industriales', title: 'Rodamientos industriales y soportes de rodamientos', lead: 'Fabricante de soportes de rodamientos. NATER suministra unidades de rodamientos de pie, series de soportes de rodamientos y soluciones a medida, mecanizados internamente y enviados directamente a compradores de todo el mundo.', productsHeading: 'Rodamientos, soportes de rodamientos y productos personalizados.', partnerHeading: 'Socio de fabricación', partnerLead: 'Con el respaldo de un socio de fabricación a largo plazo con capacidades de producción industrial.' },
+  de: { eyebrow: 'Industrieller Produktkatalog', title: 'Industrielager und Lagergehäuse', lead: 'Hersteller von Lagergehäusen. NATER liefert Stehlagereinheiten, Lagergehäuse-Serien und Sonderlösungen — hauseigen bearbeitet, direkt an Käufer weltweit.', productsHeading: 'Lager, Lagergehäuse und kundenspezifische Produkte.', partnerHeading: 'Fertigungspartner', partnerLead: 'Unterstützt durch einen langfristigen Fertigungspartner mit industriellen Produktionskapazitäten.' },
+  fr: { eyebrow: 'Catalogue de produits industriels', title: 'Roulements industriels et paliers', lead: 'Fabricant de paliers. NATER fournit des unités de paliers à semelle, des séries de paliers et des solutions sur mesure, usinés en interne et livrés directement aux acheteurs du monde entier.', productsHeading: 'Roulements, paliers et produits sur mesure.', partnerHeading: 'Partenaire de fabrication', partnerLead: 'Soutenu par un partenaire de fabrication de longue date disposant de capacités de production industrielle.' },
+  pt: { eyebrow: 'Catálogo de produtos industriais', title: 'Rolamentos industriais e mancais', lead: 'Fabricante de mancais. A NATER fornece unidades de mancais de pé, séries de mancais e soluções personalizadas — maquinados internamente e entregues diretamente a compradores em todo o mundo.', productsHeading: 'Rolamentos, mancais e produtos personalizados.', partnerHeading: 'Parceiro de fabricação', partnerLead: 'Com o apoio de um parceiro de fabricação de longo prazo com capacidades de produção industrial.' },
+  ar: { eyebrow: 'كتالوج المنتجات الصناعية', title: 'محامل صناعية وبيوت محامل', lead: 'مصنع بيوت محامل. توفر NATER وحدات المحامل ذات القاعدة وسلسلات بيوت المحامل والحلول المخصصة — تصنيع داخلي وتوريد مباشر للمشترين حول العالم.', productsHeading: 'المحامل وبيوت المحامل والمنتجات المخصصة.', partnerHeading: 'شريك التصنيع', partnerLead: 'مدعوم بشريك تصنيع طويل الأجل يتمتع بقدرات إنتاج صناعي.' },
+  tr: { eyebrow: 'Endüstriyel ürün kataloğu', title: 'Endüstriyel rulmanlar ve rulman yatakları', lead: 'Rulman yatağı üreticisi. NATER, ayaklı rulman yatakları, rulman yatağı serileri ve özel çözümler sunar — kendi tesislerinde işlenir ve dünya genelindeki alıcılara doğrudan tedarik edilir.', productsHeading: 'Rulmanlar, rulman yatakları ve özel ürünler.', partnerHeading: 'Üretim ortağı', partnerLead: 'Endüstriyel üretim kapasitesine sahip uzun vadeli bir üretim ortağı tarafından desteklenmektedir.' },
+  ru: { eyebrow: 'Каталог промышленной продукции', title: 'Промышленные подшипники и корпуса подшипников', lead: 'Производитель корпусов подшипников. NATER поставляет опорные подшипниковые узлы, серии корпусов подшипников и индивидуальные решения — собственная механическая обработка и прямые поставки покупателям по всему миру.', productsHeading: 'Подшипники, корпуса подшипников и изделия на заказ.', partnerHeading: 'Производственный партнер', partnerLead: 'При поддержке долгосрочного производственного партнера с возможностями промышленного производства.' },
+  it: { eyebrow: 'Catalogo di prodotti industriali', title: 'Cuscinetti industriali e supporti per cuscinetti', lead: 'Produttore di supporti per cuscinetti. NATER fornisce unità di supporti a piedistallo, serie di supporti e soluzioni personalizzate — lavorati internamente e forniti direttamente ad acquirenti di tutto il mondo.', productsHeading: 'Cuscinetti, supporti per cuscinetti e prodotti personalizzati.', partnerHeading: 'Partner produttivo', partnerLead: 'Supportato da un partner produttivo di lunga data con capacità di produzione industriale.' },
+  vi: { eyebrow: 'Danh mục sản phẩm công nghiệp', title: 'Vòng bi công nghiệp và gối đỡ vòng bi', lead: 'Nhà sản xuất gối đỡ vòng bi. NATER cung cấp bộ gối đỡ vòng bi, dòng gối đỡ vòng bi và giải pháp tùy chỉnh — gia công tại xưởng và cung cấp trực tiếp cho người mua toàn cầu.', productsHeading: 'Vòng bi, gối đỡ vòng bi và sản phẩm tùy chỉnh.', partnerHeading: 'Đối tác sản xuất', partnerLead: 'Được hỗ trợ bởi đối tác sản xuất lâu dài có năng lực sản xuất công nghiệp.' },
+  id: { eyebrow: 'Katalog produk industri', title: 'Bantalan industri dan rumah bantalan', lead: 'Produsen rumah bantalan. NATER memasok unit bantalan duduk, seri rumah bantalan, dan solusi khusus — diproses internal dan dipasok langsung ke pembeli di seluruh dunia.', productsHeading: 'Bantalan, rumah bantalan, dan produk khusus.', partnerHeading: 'Mitra manufaktur', partnerLead: 'Didukung oleh mitra manufaktur jangka panjang dengan kemampuan produksi industri.' },
+  ja: { eyebrow: '産業用製品カタログ', title: '産業用ベアリングとベアリングハウジング', lead: 'ベアリングハウジングメーカー。NATERはピローブロックベアリングユニット、ベアリングハウジングシリーズ、カスタムソリューションを自社工場で機械加工し、世界中のバイヤーへ直接供給しています。', productsHeading: 'ベアリング、ベアリングハウジング、カスタム製品。', partnerHeading: '製造パートナー', partnerLead: '産業生産能力を持つ長期的な製造パートナーの支援を受けています。' },
+  ko: { eyebrow: '산업 제품 카탈로그', title: '산업용 베어링 및 베어링 하우징', lead: '베어링 하우징 제조업체입니다. NATER는 필로우 블록 베어링 유닛, 베어링 하우징 시리즈, 맞춤형 솔루션을 자체 가공하여 전 세계 바이어에게 직접 공급합니다.', productsHeading: '베어링, 베어링 하우징 및 맞춤형 제품.', partnerHeading: '제조 파트너', partnerLead: '산업 생산 역량을 갖춘 장기 제조 파트너의 지원을 받고 있습니다.' }
 });
 
 for (const locale of localeCodes) locales[locale].navAbout = contactLabels[locale];
@@ -493,35 +509,35 @@ const productsPageTitle = Object.freeze({
 });
 
 const productsPageMeta = Object.freeze({
-  en: 'Browse NATER pillow block bearing units, bearing housing series and custom solutions — in-house machined by a bearing housing manufacturer with 20+ years of experience. Enquire for specifications and availability.',
-  es: 'Explore las unidades de rodamientos de pie, las series de soportes de rodamientos y las soluciones personalizadas de NATER — mecanizadas internamente por un fabricante de soportes de rodamientos con más de 20 años de experiencia. Consulte especificaciones y disponibilidad.',
-  de: 'Entdecken Sie Stehlagereinheiten, Lagergehäuse-Serien und Sonderlösungen von NATER — hauseigen gefertigt von einem Lagergehäuse-Hersteller mit über 20 Jahren Erfahrung. Fragen Sie Spezifikationen und Verfügbarkeit an.',
-  fr: 'Découvrez les unités de paliers à semelle, les séries de paliers et les solutions sur mesure NATER — usinées en interne par un fabricant de paliers fort de plus de 20 ans d\'expérience. Renseignez-vous sur les spécifications et la disponibilité.',
-  pt: 'Conheça as unidades de mancais de pé, as séries de mancais e as soluções personalizadas da NATER — maquinadas internamente por um fabricante de mancais com mais de 20 anos de experiência. Consulte especificações e disponibilidade.',
-  ar: 'تصفح وحدات المحامل ذات القاعدة وسلسلات بيوت المحامل والحلول المخصصة من NATER — تصنيع داخلي من مصنع بيوت محامل بخبرة تزيد عن 20 عامًا. استفسر عن المواصفات والتوفر.',
-  tr: 'NATER ayaklı rulman yataklarını, rulman yatağı serilerini ve özel çözümlerini keşfedin — 20 yılı aşkın deneyime sahip bir rulman yatağı üreticisi tarafından kendi tesislerinde işlenir. Özellikler ve stok durumu için bilgi alın.',
-  ru: 'Ознакомьтесь с опорными подшипниковыми узлами, сериями корпусов подшипников и индивидуальными решениями NATER — собственная механическая обработка производителем корпусов подшипников с более чем 20-летним опытом. Запросите спецификации и наличие.',
-  it: 'Scopri le unità di supporti a piedistallo, le serie di supporti e le soluzioni personalizzate NATER — lavorate internamente da un produttore di supporti con oltre 20 anni di esperienza. Richiedi specifiche e disponibilità.',
-  vi: 'Khám phá bộ gối đỡ vòng bi, dòng gối đỡ vòng bi và giải pháp tùy chỉnh của NATER — gia công tại xưởng bởi nhà sản xuất gối đỡ vòng bi với hơn 20 năm kinh nghiệm. Liên hệ để biết thông số và tình trạng hàng.',
-  id: 'Jelajahi unit bantalan duduk, seri rumah bantalan, dan solusi khusus NATER — diproses internal oleh produsen rumah bantalan berpengalaman lebih dari 20 tahun. Tanyakan spesifikasi dan ketersediaan.',
-  ja: 'NATERのピローブロックベアリングユニット、ベアリングハウジングシリーズ、カスタムソリューションをご覧ください。20年以上の実績を持つベアリングハウジングメーカーが自社工場で機械加工しています。仕様・在庫状況はお問い合わせください。',
-  ko: 'NATER의 필로우 블록 베어링 유닛, 베어링 하우징 시리즈, 맞춤형 솔루션을 확인하세요 — 20년 이상의 경력을 가진 베어링 하우징 제조업체가 자체 가공합니다. 사양 및 재고 여부를 문의하세요.'
+  en: 'Browse NATER pillow block bearing units, bearing housing series and custom solutions — in-house machined by a bearing housing manufacturer. Enquire for specifications and availability.',
+  es: 'Explore las unidades de rodamientos de pie, las series de soportes de rodamientos y las soluciones personalizadas de NATER — mecanizadas internamente por un fabricante de soportes de rodamientos. Consulte especificaciones y disponibilidad.',
+  de: 'Entdecken Sie Stehlagereinheiten, Lagergehäuse-Serien und Sonderlösungen von NATER — hauseigen gefertigt von einem Lagergehäuse-Hersteller. Fragen Sie Spezifikationen und Verfügbarkeit an.',
+  fr: 'Découvrez les unités de paliers à semelle, les séries de paliers et les solutions sur mesure NATER — usinées en interne par un fabricant de paliers. Renseignez-vous sur les spécifications et la disponibilité.',
+  pt: 'Conheça as unidades de mancais de pé, as séries de mancais e as soluções personalizadas da NATER — maquinadas internamente por um fabricante de mancais. Consulte especificações e disponibilidade.',
+  ar: 'تصفح وحدات المحامل ذات القاعدة وسلسلات بيوت المحامل والحلول المخصصة من NATER — تصنيع داخلي من مصنع بيوت محامل. استفسر عن المواصفات والتوفر.',
+  tr: 'NATER ayaklı rulman yataklarını, rulman yatağı serilerini ve özel çözümlerini keşfedin — bir rulman yatağı üreticisi tarafından kendi tesislerinde işlenir. Özellikler ve stok durumu için bilgi alın.',
+  ru: 'Ознакомьтесь с опорными подшипниковыми узлами, сериями корпусов подшипников и индивидуальными решениями NATER — собственная механическая обработка производителем корпусов подшипников. Запросите спецификации и наличие.',
+  it: 'Scopri le unità di supporti a piedistallo, le serie di supporti e le soluzioni personalizzate NATER — lavorate internamente da un produttore di supporti. Richiedi specifiche e disponibilità.',
+  vi: 'Khám phá bộ gối đỡ vòng bi, dòng gối đỡ vòng bi và giải pháp tùy chỉnh của NATER — gia công tại xưởng bởi nhà sản xuất gối đỡ vòng bi. Liên hệ để biết thông số và tình trạng hàng.',
+  id: 'Jelajahi unit bantalan duduk, seri rumah bantalan, dan solusi khusus NATER — diproses internal oleh produsen rumah bantalan. Tanyakan spesifikasi dan ketersediaan.',
+  ja: 'NATERのピローブロックベアリングユニット、ベアリングハウジングシリーズ、カスタムソリューションをご覧ください。ベアリングハウジングメーカーが自社工場で機械加工しています。仕様・在庫状況はお問い合わせください。',
+  ko: 'NATER의 필로우 블록 베어링 유닛, 베어링 하우징 시리즈, 맞춤형 솔루션을 확인하세요 — 베어링 하우징 제조업체가 자체 가공합니다. 사양 및 재고 여부를 문의하세요.'
 });
 
 const categoryPageTail = Object.freeze({
-  en: 'from NATER — in-house machined by a bearing housing manufacturer with 20+ years of experience. Enquire for specifications and availability.',
-  es: 'de NATER — mecanizadas internamente por un fabricante de soportes de rodamientos con más de 20 años de experiencia. Consulte especificaciones y disponibilidad.',
-  de: 'von NATER — hauseigen gefertigt von einem Lagergehäuse-Hersteller mit über 20 Jahren Erfahrung. Fragen Sie Spezifikationen und Verfügbarkeit an.',
-  fr: 'de NATER — usinés en interne par un fabricant de paliers fort de plus de 20 ans d\'expérience. Renseignez-vous sur les spécifications et la disponibilité.',
-  pt: 'da NATER — maquinados internamente por um fabricante de mancais com mais de 20 anos de experiência. Consulte especificações e disponibilidade.',
-  ar: 'من NATER — تصنيع داخلي من مصنع بيوت محامل بخبرة تزيد عن 20 عامًا. استفسر عن المواصفات والتوفر.',
-  tr: 'NATER — 20 yılı aşkın deneyime sahip rulman yatağı üreticisi tarafından kendi tesislerinde işlenir. Özellikler ve stok durumu için bilgi alın.',
-  ru: 'от NATER — собственная механическая обработка производителем корпусов подшипников с более чем 20-летним опытом. Запросите спецификации и наличие.',
-  it: 'di NATER — lavorati internamente da un produttore di supporti con oltre 20 anni di esperienza. Richiedi specifiche e disponibilità.',
-  vi: 'của NATER — gia công tại xưởng bởi nhà sản xuất gối đỡ vòng bi với hơn 20 năm kinh nghiệm. Liên hệ để biết thông số và tình trạng hàng.',
-  id: 'dari NATER — diproses internal oleh produsen rumah bantalan berpengalaman lebih dari 20 tahun. Tanyakan spesifikasi dan ketersediaan.',
-  ja: '— 20年以上の実績を持つベアリングハウジングメーカー NATER が自社工場で機械加工。仕様・在庫状況はお問い合わせください。',
-  ko: '— 20년 이상의 경력을 가진 베어링 하우징 제조업체 NATER가 자체 가공합니다. 사양 및 재고 여부를 문의하세요.'
+  en: 'from NATER — in-house machined by a bearing housing manufacturer. Enquire for specifications and availability.',
+  es: 'de NATER — mecanizadas internamente por un fabricante de soportes de rodamientos. Consulte especificaciones y disponibilidad.',
+  de: 'von NATER — hauseigen gefertigt von einem Lagergehäuse-Hersteller. Fragen Sie Spezifikationen und Verfügbarkeit an.',
+  fr: 'de NATER — usinés en interne par un fabricant de paliers. Renseignez-vous sur les spécifications et la disponibilité.',
+  pt: 'da NATER — maquinados internamente por um fabricante de mancais. Consulte especificações e disponibilidade.',
+  ar: 'من NATER — تصنيع داخلي من مصنع بيوت محامل. استفسر عن المواصفات والتوفر.',
+  tr: 'NATER — rulman yatağı üreticisi tarafından kendi tesislerinde işlenir. Özellikler ve stok durumu için bilgi alın.',
+  ru: 'от NATER — собственная механическая обработка производителем корпусов подшипников. Запросите спецификации и наличие.',
+  it: 'di NATER — lavorati internamente da un produttore di supporti. Richiedi specifiche e disponibilità.',
+  vi: 'của NATER — gia công tại xưởng bởi nhà sản xuất gối đỡ vòng bi. Liên hệ để biết thông số và tình trạng hàng.',
+  id: 'dari NATER — diproses internal oleh produsen rumah bantalan. Tanyakan spesifikasi dan ketersediaan.',
+  ja: '— ベアリングハウジングメーカー NATER が自社工場で機械加工。仕様・在庫状況はお問い合わせください。',
+  ko: '— 베어링 하우징 제조업체 NATER가 자체 가공합니다. 사양 및 재고 여부를 문의하세요.'
 });
 
 const moreSeriesHeading = Object.freeze({
@@ -627,7 +643,9 @@ function organizationSchema(locale) {
     description: homePresentation[locale].lead,
     logo: absoluteUrl('/assets/favicon.svg')
   };
-  if (confirmedContactValue(site.facebook)) schema.sameAs = [site.facebook];
+  // Profiles the owner confirmed. Both are public company profiles, so they belong in sameAs.
+  const sameAs = [site.facebook, site.linkedin].filter(confirmedContactValue);
+  if (sameAs.length) schema.sameAs = sameAs;
   const contactPoints = [];
   if (confirmedContactValue(site.email)) contactPoints.push({ '@type': 'ContactPoint', contactType: 'sales', email: site.email });
   if (confirmedContactValue(site.whatsapp)) contactPoints.push({ '@type': 'ContactPoint', contactType: 'sales', telephone: site.whatsapp });
@@ -636,13 +654,48 @@ function organizationSchema(locale) {
 }
 
 function seriesDescriptiveName(locale, series) {
+  // An explicit display override (UCHA, FK, Pillow Block Housing, …) wins in every locale,
+  // so headings, breadcrumbs and card labels all follow it.
+  if (series.displayName) return series.displayName;
   if (locale === 'en') {
-    return series.alt ? `${series.alt.charAt(0).toUpperCase()}${series.alt.slice(1)}` : (series.displayName ?? series.seriesCode);
+    return series.alt ? `${series.alt.charAt(0).toUpperCase()}${series.alt.slice(1)}` : series.seriesCode;
   }
   const local = displayItemAlts[locale]?.[series.seriesCode];
   if (local) return local;
-  const fallback = series.displayName ?? series.seriesCode;
-  return fallback.toLowerCase().includes(series.seriesCode.toLowerCase()) ? fallback : `${series.seriesCode} ${fallback}`;
+  return series.seriesCode;
+}
+
+// Locales whose headings lower-case the type phrase after the series code. German capitalises
+// nouns and Chinese/Japanese/Korean/Arabic have no case, so those keep the phrase as written.
+const HEADING_LOWERCASE_LOCALES = new Set(['en', 'es', 'fr', 'pt', 'it', 'vi', 'id', 'tr', 'ru']);
+
+function lowerFirst(value) {
+  return value ? `${value.charAt(0).toLowerCase()}${value.slice(1)}` : value;
+}
+
+// The type phrase that follows the series code in headings and image alternatives.
+// English keeps the owner-confirmed ALT wording; every other locale reuses the structure phrase
+// that already appears in that page's "About this series" block, so no series is left as a bare
+// code and nothing has to be translated twice.
+function seriesDescriptor(locale, series) {
+  if (locale === 'en') {
+    const alt = series.alt ?? '';
+    if (!alt) return '';
+    const display = series.displayName ?? series.seriesCode;
+    return alt.toLowerCase().startsWith(display.toLowerCase()) ? alt.slice(display.length).trim() : alt;
+  }
+  const phrase = seriesStructureSentence(locale, series);
+  if (!phrase) return '';
+  return HEADING_LOWERCASE_LOCALES.has(locale) ? lowerFirst(phrase) : phrase;
+}
+
+// Heading, breadcrumb label and image alternative for a series: "UCT wide inner ring insert
+// bearing, set-screw locking", "UCHA mounted bearing unit with insert bearing", "HA hanger type
+// bearing housing". The displayed code always comes first, so the owner's renames survive.
+function seriesHeading(locale, series) {
+  const code = series.displayName ?? series.seriesCode;
+  const descriptor = seriesDescriptor(locale, series);
+  return descriptor ? `${code} ${descriptor}` : code;
 }
 
 function categorySchema(locale, category, path, description) {
@@ -700,7 +753,10 @@ function clampMetaDescription(text, max = 158) {
   return `${cut.slice(0, space > 0 ? space : cut.length).trim()}.`;
 }
 
-function head({ locale, path, title, description, schema = organizationSchema(locale), noindex = false, enOnly = false }) {
+// Social share image: series pages share their own product photo, everything else the workshop hero.
+const defaultShareImage = Object.freeze({ src: '/assets/bearing-housing.webp', width: 1280, height: 956 });
+
+function head({ locale, path, title, description, schema = organizationSchema(locale), image = defaultShareImage, noindex = false, enOnly = false }) {
   const canonical = absoluteUrl(publicPath(locale, path));
   const metaDescription = clampMetaDescription(description);
   const direction = locale === 'ar' ? ' dir="rtl"' : '';
@@ -717,29 +773,44 @@ function head({ locale, path, title, description, schema = organizationSchema(lo
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escapeHtml(title)}">
   <meta name="twitter:description" content="${escapeHtml(description)}">
-  <meta name="twitter:image" content="${absoluteUrl('/assets/bearing-housing.webp')}">
+  <meta name="twitter:image" content="${absoluteUrl(image.src)}">
   <meta property="og:type" content="website">
   <meta property="og:title" content="${escapeHtml(title)}">
   <meta property="og:description" content="${escapeHtml(metaDescription)}">
   <meta property="og:url" content="${canonical}">
-  <meta property="og:image" content="${absoluteUrl('/assets/bearing-housing.webp')}">
-  <meta property="og:image:width" content="1280">
-  <meta property="og:image:height" content="956">
+  <meta property="og:image" content="${absoluteUrl(image.src)}">
+  <meta property="og:image:width" content="${image.width}">
+  <meta property="og:image:height" content="${image.height}">
   <meta property="og:image:alt" content="${escapeHtml(title)}">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="stylesheet" href="/assets/styles.css">
+  <noscript><style>.brand-splash { display: none !important; }</style></noscript>
   <script src="/assets/site.js" defer></script>
   <script type="application/ld+json">${Array.isArray(schema) ? JSON.stringify({ '@context': 'https://schema.org', '@graph': schema }) : JSON.stringify(schema)}</script>
 </head>`;
 }
 
-function languageSwitcher(locale, path) {
-  return `<details class="language-switcher"><summary aria-label="Language">${locale.toUpperCase()}</summary><div class="language-switcher__menu">${localeCodes.map(code => `<a href="${publicPath(code, path)}" lang="${code}"${code === locale ? ' aria-current="true"' : ''}>${escapeHtml(locales[code].name)}</a>`).join('')}</div></details>`;
+// Pages that exist in English only (guides, privacy, terms) must not offer the other languages as
+// dead links: those entries open that language's home page instead and say so in the tooltip.
+function languageSwitcher(locale, path, enOnly = false) {
+  const entries = localeCodes.map(code => {
+    const elsewhere = enOnly && code !== 'en';
+    const href = elsewhere ? publicPath(code) : publicPath(code, path);
+    const hint = elsewhere ? ` title="English only — opens the ${escapeHtml(locales[code].name)} home page"` : '';
+    return `<a href="${href}" lang="${code}"${code === locale ? ' aria-current="true"' : ''}${hint}>${escapeHtml(locales[code].name)}</a>`;
+  }).join('');
+  return `<details class="language-switcher"><summary aria-label="Language">${locale.toUpperCase()}</summary><div class="language-switcher__menu">${entries}</div></details>`;
 }
 
-function nav(locale, path, active) {
+function nav(locale, path, active, enOnly = false) {
   const text = locales[locale];
-  return `<header class="site-header"><div class="site-shell header-inner"><a class="brand" href="${publicPath(locale)}" aria-label="${site.brand} home"><span class="brand-mark" aria-hidden="true"></span><span>${site.brand}<small>BEARING &amp; BEARING HOUSING</small></span></a><nav class="site-nav" aria-label="Primary navigation"><a href="${publicPath(locale)}"${active === 'home' ? ' aria-current="page"' : ''}>${escapeHtml(text.navHome)}</a><a href="${publicPath(locale, 'products')}"${active === 'products' ? ' aria-current="page"' : ''}>${escapeHtml(text.navProducts)}</a><a href="/en/guides/"${active === 'guides' ? ' aria-current="page"' : ''}>Guides</a><a href="${publicPath(locale, 'contact-us')}"${active === 'contact' ? ' aria-current="page"' : ''}>${escapeHtml(contactLabels[locale])}</a></nav>${languageSwitcher(locale, path)}</div></header>`;
+  // The guides exist in English only. The label stays the short English word: a longer marker such
+  // as "Guides (EN)" widened the header enough to push the language switcher 4px past the viewport
+  // on German phones. The warning lives in the link's title and in the English-only note that the
+  // guides pages themselves render.
+  const guidesHint = locale === 'en' ? '' : ' lang="en" title="The guides are published in English only"';
+  return `<header class="site-header"><div class="site-shell header-inner"><a class="brand" href="${publicPath(locale)}" aria-label="${site.brand} home"><span class="brand-mark" aria-hidden="true"></span><span>${site.brand}<small>BEARING &amp; BEARING HOUSING</small></span></a><nav class="site-nav" aria-label="Primary navigation"><a href="${publicPath(locale)}"${active === 'home' ? ' aria-current="page"' : ''}>${escapeHtml(text.navHome)}</a><a href="${publicPath(locale, 'products')}"${active === 'products' ? ' aria-current="page"' : ''}>${escapeHtml(text.navProducts)}</a><a href="/en/guides/"${active === 'guides' ? ' aria-current="page"' : ''}${guidesHint}>Guides</a><a href="${publicPath(locale, 'contact-us')}"${active === 'contact' ? ' aria-current="page"' : ''}>${escapeHtml(contactLabels[locale])}</a></nav>${languageSwitcher(locale, path, enOnly)}</div></header>`;
 }
 
 function confirmedContactValue(value) {
@@ -769,16 +840,28 @@ function contactValue(value, locale, kind = 'text', displayLabel = null) {
   return `<a class="contact-value" dir="ltr" href="${escapeHtml(href)}"${external}>${escapeHtml(display)}</a>`;
 }
 
+// The contact rows are labelled per locale; WhatsApp, Facebook and LinkedIn stay as brand names.
+const contactFieldLabels = Object.freeze({
+  email: { en: 'E-mail', es: 'Correo electrónico', de: 'E-Mail', fr: 'E-mail', pt: 'E-mail', ar: 'البريد الإلكتروني', tr: 'E-posta', ru: 'Электронная почта', it: 'E-mail', vi: 'Email', id: 'E-mail', ja: 'メール', ko: '이메일' },
+  facility: { en: 'Manufacturing Facility', es: 'Planta de fabricación', de: 'Fertigungsstandort', fr: 'Site de fabrication', pt: 'Unidade de fabricação', ar: 'منشأة التصنيع', tr: 'Üretim tesisi', ru: 'Производственная площадка', it: 'Sede di produzione', vi: 'Cơ sở sản xuất', id: 'Fasilitas produksi', ja: '製造工場', ko: '생산 공장' },
+  legal: { en: 'Legal', es: 'Legal', de: 'Rechtliches', fr: 'Mentions légales', pt: 'Jurídico', ar: 'قانوني', tr: 'Yasal', ru: 'Правовая информация', it: 'Note legali', vi: 'Pháp lý', id: 'Legal', ja: '法的情報', ko: '법적 고지' }
+});
+
 function footer(locale) {
-  return `<footer class="site-footer"><div class="site-shell footer-inner"><div><a class="brand brand--footer" href="${publicPath(locale)}"><span class="brand-mark" aria-hidden="true"></span><span>${site.brand}<small>BEARING &amp; BEARING HOUSING</small></span></a></div><dl class="footer-contact"><div><dt>E-mail</dt><dd>${contactValue(site.email, locale, 'email')}</dd></div><div><dt>WhatsApp</dt><dd>${contactValue(site.whatsapp, locale, 'whatsapp')}</dd></div><div><dt>Facebook</dt><dd>${contactValue(site.facebook, locale, 'website', 'Facebook')}</dd></div><div><dt>${escapeHtml(companyNameLabels[locale])}</dt><dd>${contactValue(site.companyName, locale)}</dd></div><div><dt>Manufacturing Facility</dt><dd>${contactValue(site.manufacturingFacility, locale)}</dd></div></dl></div><div class="site-shell footer-bottom">© 2026 ${site.brand}. All rights reserved. <a href="/en/privacy/">Privacy Policy</a> · <a href="/en/terms/">Terms of Use</a></div></footer>`;
+  return `<footer class="site-footer"><div class="site-shell footer-inner"><div><a class="brand brand--footer" href="${publicPath(locale)}"><span class="brand-mark" aria-hidden="true"></span><span>${site.brand}<small>BEARING &amp; BEARING HOUSING</small></span></a></div><dl class="footer-contact"><div><dt>${escapeHtml(contactFieldLabels.email[locale] ?? contactFieldLabels.email.en)}</dt><dd>${contactValue(site.email, locale, 'email')}</dd></div><div><dt>WhatsApp</dt><dd>${contactValue(site.whatsapp, locale, 'whatsapp')}</dd></div><div><dt>Facebook</dt><dd>${contactValue(site.facebook, locale, 'website', 'Facebook')}</dd></div><div><dt>LinkedIn</dt><dd>${contactValue(site.linkedin, locale, 'website', 'LinkedIn')}</dd></div><div><dt>${escapeHtml(companyNameLabels[locale])}</dt><dd>${contactValue(site.companyName, locale)}</dd></div><div><dt>${escapeHtml(contactFieldLabels.facility[locale] ?? contactFieldLabels.facility.en)}</dt><dd>${contactValue(site.manufacturingFacility, locale)}</dd></div></dl></div><div class="site-shell footer-bottom">© 2026 ${site.brand}. All rights reserved. <a href="${publicPath(locale, 'privacy')}">${escapeHtml((LEGAL_I18N[locale] ?? LEGAL_I18N.en).privacy.title)}</a> · <a href="${publicPath(locale, 'terms')}">${escapeHtml((LEGAL_I18N[locale] ?? LEGAL_I18N.en).terms.title)}</a> · <a href="${publicPath(locale, 'cross-reference')}">${escapeHtml(xrefText(locale).footer)}</a></div></footer>`;
 }
 
-function page({ locale, path = '', active, title, description, content, schema, enOnly = false }) {
-  return `${head({ locale, path, title, description, schema, enOnly })}
+function page({ locale, path = '', active, title, description, content, schema, image, enOnly = false, noindex = false }) {
+  // A page with no translated version states that once, in English, instead of leaving the visitor
+  // to work out why the language menu sent them to a home page.
+  const englishOnlyNote = enOnly
+    ? '<p class="page-note" lang="en">This page is available in English only. The language menu opens the home page in the other languages.</p>'
+    : '';
+  return `${head({ locale, path, title, description, schema, image, enOnly, noindex })}
 <body data-page="${active}">
   <a class="skip-link" href="#main-content">${escapeHtml(skipLinkText[locale])}</a>
-  ${nav(locale, path, active)}
-  <main id="main-content">${content}</main>
+  ${nav(locale, path, active, enOnly)}
+  <main id="main-content">${englishOnlyNote}${content}</main>
   ${footer(locale)}
 </body>
 </html>`;
@@ -796,7 +879,8 @@ function displayItemImage(locale, item) {
 function seriesImage(locale, series) {
   const image = series.image;
   if (!image) return '';
-  return lazyImage({ ...image, alt: displayItemAlts[locale][series.seriesCode] ?? series.alt });
+  // The alternative text states what the photo shows, in the page's own language.
+  return lazyImage({ ...image, alt: seriesHeading(locale, series) });
 }
 
 const categoryCardPresentation = Object.freeze({
@@ -862,7 +946,6 @@ const housingGalleryImages = [
   '/assets/product-images/housing-3.webp',
   '/assets/product-images/housing-4.webp',
   '/assets/product-images/housing-5.webp',
-  '/assets/product-images/housing-6.webp',
   '/assets/product-images/housing-7.webp',
   '/assets/product-images/housing-8.webp',
   '/assets/product-images/housing-9.webp',
@@ -887,11 +970,132 @@ const housingGalleryAlt = Object.freeze({
 
 function housingImageCards(locale, badgeCodes = false) {
   const category = categories.find(category => category.code === 'bearing-housing-series');
-  const confirmedCodes = new Set(['FB', 'FL', 'P', 'T', 'F', 'PBH', 'FC', 'FU', 'PH', 'PA', 'PAS']);
+  const confirmedCodes = new Set(['FB', 'FL', 'P', 'T', 'F', 'FC', 'FU', 'PH', 'PA', 'PAS']);
   return (category.series ?? []).filter(series => series.status === 'active' && series.image).map(series => {
     const code = badgeCodes && confirmedCodes.has(series.seriesCode) ? `<h2 dir="ltr">${escapeHtml(series.displayName ?? series.seriesCode)}</h2>` : '';
     return `<a class="product-display-card" href="${seriesPath(locale, category, series)}" dir="ltr"><div class="product-display-card__image">${seriesImage(locale, series)}</div>${code}</a>`;
   }).join('');
+}
+
+// ---- Mounted ball bearing unit data (Pillow Block Bearing Units series pages) ----
+
+// One data block per confirmed model record. The model code is deliberately NOT shown: a card
+// headed "UCP206" sitting above the series-wide bore span read as if UCP206 itself were available
+// in every bore from 12 mm to 100 mm. The rows are the confirmed series values plus that record's
+// application text; net weight is supplied by the owner but not published.
+// Every visible string comes from the locale's specification text, so all 13 locales render the
+// same data with their own wording.
+function unitSpecItemHtml(item, locale) {
+  const text = specText(locale);
+  const copy = text.unitModels[item.model] ?? { application: item.application };
+  const bore = seriesBoreRange(item.series);
+  const boreRow = bore ? `<div><dt>${escapeHtml(text.ui.boreRange)}</dt><dd dir="ltr">${escapeHtml(bore)}</dd></div>` : '';
+  // The Feature row was removed on the owner's instruction: every other row carries a series-level
+  // value, while Feature held one model record's marketing phrase ("Universal type, stable loading").
+  return `<article class="unit-spec"><dl>${boreRow}<div><dt>${escapeHtml(text.ui.housing)}</dt><dd>${escapeHtml(text.materials.housingCastIron)}</dd></div><div><dt>${escapeHtml(text.ui.bearing)}</dt><dd>${escapeHtml(text.materials.bearingChromeSteel)}</dd></div><div><dt>${escapeHtml(text.ui.application)}</dt><dd>${escapeHtml(copy.application)}</dd></div></dl></article>`;
+}
+
+function mountedUnitStandardNote(locale) {
+  return specText(locale).unitStandardNote;
+}
+
+function modelGroupListHtml(models) {
+  return `<p class="model-names" dir="ltr">${models.map(escapeHtml).join(', ')}</p>`;
+}
+
+// Full model range for a series, grouped by series type.
+// Group headings and notes are keyed so each locale renders its own wording.
+function modelGroupsHtml(seriesCode, locale) {
+  const groups = unitModelGroups(seriesCode);
+  if (!groups) return '';
+  const text = specText(locale);
+  const label = (key, fallback) => (key && text.modelGroups[key]) || fallback;
+  const blocks = groups.map(group => {
+    if (group.models) {
+      return `<div class="model-group"><h3>${escapeHtml(label(group.titleKey, group.title))}</h3>${modelGroupListHtml(group.models)}</div>`;
+    }
+    const subgroups = (group.subgroups ?? []).map(sub => `<div class="model-subgroup"><h4>${escapeHtml(label(sub.titleKey, sub.title))}</h4>${sub.note ? `<p class="model-subgroup__note">${escapeHtml(label(sub.noteKey, sub.note))}</p>` : ''}${modelGroupListHtml(sub.models)}</div>`).join('');
+    return `<div class="model-group"><h3>${escapeHtml(label(group.titleKey, group.title))}</h3>${subgroups}</div>`;
+  }).join('');
+  return `<div class="model-groups">${blocks}</div>`;
+}
+
+// One-line enquiry link shown under the data column. Both actions are pre-filled with the series
+// so the buyer does not have to retype the model and the seller knows which page it came from.
+function unitContactLine(locale, series) {
+  const text = specText(locale);
+  const phone = site.whatsapp.replace(/\D/g, '');
+  const subject = series ? `${enquiryCtaText[locale].heading}: ${seriesHeading(locale, series)}` : `${enquiryCtaText[locale].heading} - ${site.brand}`;
+  return `<p class="unit-contact">${escapeHtml(text.ui.needSpecs)} <a href="https://wa.me/${phone}?text=${encodeURIComponent(subject)}" target="_blank" rel="noopener noreferrer">WhatsApp ${escapeHtml(site.whatsapp)}</a> · <a href="mailto:${site.email}?subject=${encodeURIComponent(subject)}">${escapeHtml(text.ui.emailUs)}</a></p>`;
+}
+
+// Flange-family comparison block (UCF page only).
+function flangeNotesHtml(seriesCode, locale) {
+  const notes = flangeTypeNotes(seriesCode);
+  if (!notes) return '';
+  const text = specText(locale);
+  const rows = notes.map(note => `<div><dt dir="ltr">${escapeHtml(note.code)}</dt><dd>${escapeHtml(text.flangeTypes[note.code] ?? note.text)}</dd></div>`).join('');
+  return `<div class="unit-flange-notes"><p class="eyebrow">${escapeHtml(text.ui.flangeTypes)}</p><dl>${rows}</dl></div>`;
+}
+
+// Bearing housing series page: product image on the left, confirmed specification on the right.
+function housingPairSection(locale, category, series, imageHtml, labels) {
+  const spec = housingSeriesSpec(series.seriesCode);
+  if (!spec || !imageHtml) return '';
+  const text = specText(locale);
+  const name = series.displayName ?? series.seriesCode;
+  // "F Series" / "HA Series" hold the displayed model code; the surrounding word is localized.
+  const modelLabel = text.ui.seriesPattern.replace('{code}', spec.housingModel.replace(/\s+Series$/, ''));
+  const bearingLabel = text.ui.seriesPattern.replace('{code}', spec.matchingBearing.replace(/\s+Series$/, ''));
+  const media = `<div class="unit-pair__media"><p class="eyebrow">${escapeHtml(text.ui.productImage)}</p><article class="product-display-card" dir="ltr"><div class="product-display-card__image"><button type="button" class="product-image-zoom" data-lightbox="${escapeHtml(series.image.src)}" data-close="${escapeHtml(labels.close)}" aria-label="${escapeHtml(labels.zoom)}">${imageHtml}</button></div><h2 dir="ltr">${escapeHtml(name)}</h2></article></div>`;
+  const rows = [
+    [text.ui.housingModel, modelLabel],
+    [text.ui.matchingBearing, bearingLabel],
+    [text.ui.boreRange, spec.boreRange],
+    [text.ui.housing, text.materials.housingCastIron],
+    [text.ui.feature, text.housingFeatures[series.seriesCode] ?? spec.feature],
+    [text.ui.application, text.housingApplications[series.seriesCode] ?? spec.application]
+  ].map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join('');
+  const noteText = text.housingStandardNotes[series.seriesCode] ?? spec.standardNote;
+  const note = noteText ? `<p class="spec-note">${escapeHtml(noteText)}</p>` : '';
+  const data = `<div class="unit-pair__data"><p class="eyebrow">${escapeHtml(text.ui.productData)}</p><h2>${escapeHtml(name)}</h2><div class="unit-spec-grid unit-spec-grid--compact"><article class="unit-spec"><h3 dir="auto">${escapeHtml(modelLabel)}</h3><dl>${rows}</dl></article></div>${note}${unitContactLine(locale, series)}</div>`;
+  return `<section class="section section--tight"><div class="site-shell"><div class="unit-pair">${media}${data}</div></div></section>`;
+}
+
+// Unit series hero: product image on the left, model specification block on the right,
+// full model range below the two columns at full width.
+function unitPairSection(locale, category, series, imageHtml, labels) {
+  const text = specText(locale);
+  // Only the first confirmed record is rendered: the page presents series-level data, and
+  // publishing two rows would print the same five rows twice with only Feature/Application
+  // differing (UCPA is the only series with two confirmed records).
+  const models = mountedUnitsForSeries(series.seriesCode).slice(0, 1);
+  const groups = modelGroupsHtml(series.seriesCode, locale);
+  if ((!models.length && !groups) || !imageHtml) return '';
+  const name = series.displayName ?? series.seriesCode;
+  const media = `<div class="unit-pair__media"><p class="eyebrow">${escapeHtml(text.ui.productImage)}</p><article class="product-display-card" dir="ltr"><div class="product-display-card__image"><button type="button" class="product-image-zoom" data-lightbox="${escapeHtml(series.image.src)}" data-close="${escapeHtml(labels.close)}" aria-label="${escapeHtml(labels.zoom)}">${imageHtml}</button></div><h2 dir="ltr">${escapeHtml(name)}</h2></article></div>`;
+  const specBlocks = models.length ? `<div class="unit-spec-grid unit-spec-grid--compact">${models.map(model => unitSpecItemHtml(model, locale)).join('')}</div>` : '';
+  const data = `<div class="unit-pair__data"><p class="eyebrow">${escapeHtml(text.ui.productData)}</p><h2>${escapeHtml(name)}</h2>${specBlocks}<p class="spec-note">${escapeHtml(mountedUnitStandardNote(locale))}</p>${unitContactLine(locale, series)}</div>`;
+  // The series page links to the cross-reference table in the body, not only in the footer: the
+  // model list is where a buyer starts looking for the SKF / FYH / NSK equivalent.
+  const xrefEntry = `<p class="xref-entry"><a href="${publicPath(locale, 'cross-reference')}">${escapeHtml(xrefText(locale).categoryLink)}</a></p>`;
+  const range = groups ? `<div class="unit-range"><p class="eyebrow">${escapeHtml(text.ui.fullModelRange)}</p>${groups}${flangeNotesHtml(series.seriesCode, locale)}${xrefEntry}</div>` : '';
+  return `<section class="section section--tight"><div class="site-shell"><div class="unit-pair">${media}${data}</div>${range}</div></section>`;
+}
+
+// Category-level explanation plus the series comparison block. The prose comes from
+// data/category-intro/<locale>.mjs; every cell of the comparison is generated from the confirmed
+// catalogue and specification data, so nothing here is a second source of truth.
+function categoryIntroSection(locale, category) {
+  const intro = categoryIntro(locale).categories[category.code];
+  if (!intro) return '';
+  const text = specText(locale);
+  // The owner keeps only the heading, the cross-reference link and the enquiry line here.
+  // The three descriptive paragraphs and the "at a glance" comparison table are intentionally not
+  // rendered; their text and column labels stay in data/category-intro/ so either can be
+  // reinstated without re-translating.
+  const xrefEntry = `<p class="xref-entry"><a href="${publicPath(locale, 'cross-reference')}">${escapeHtml(xrefText(locale).categoryLink)}</a></p>`;
+  return `<section class="section section--tight category-intro-section"><div class="site-shell category-intro"><h2>${escapeHtml(intro.heading)}</h2>${xrefEntry}${unitContactLine(locale, null)}</div></section>`;
 }
 
 function categoryContent(locale, category) {
@@ -902,7 +1106,9 @@ function categoryContent(locale, category) {
     : (category.series ?? []).filter(series => series.status === 'active').map(series => `<a class="product-display-card" href="${seriesPath(locale, category, series)}" dir="ltr"><div class="product-display-card__image">${seriesImage(locale, series)}</div><h2 dir="ltr">${escapeHtml(series.displayName ?? series.seriesCode)}</h2></a>`).join('');
   const content = seriesCards ? `<section class="section"><div class="site-shell"><div class="catalogue-grid">${seriesCards}</div></div></section>` : '';
   const solutions = category.code === 'custom' ? `<section class="section section--soft"><div class="site-shell custom-solutions"><div class="section-heading section-heading--center"><h2>${escapeHtml(customSolutionsText.heading[locale])}</h2></div><div class="custom-solutions__pattern" aria-hidden="true"></div><p class="custom-solutions__lead">${escapeHtml(customSolutionsText.lead[locale])}</p><div class="custom-solutions__grid">${customSolutionsText.features[locale].map(feature => `<div class="custom-solutions__item"><span class="custom-solutions__icon" aria-hidden="true"></span><h3>${escapeHtml(feature)}</h3></div>`).join('')}</div><p class="custom-solutions__note">${escapeHtml(customStatement[locale])}</p></div></section>` : '';
-  return `<section class="page-intro page-intro--compact"><div class="site-shell">${categoryBreadcrumb(locale, category)}<p class="eyebrow">${escapeHtml(text.category)}</p><h1>${escapeHtml(localizedCategoryTitle(locale, category))}</h1></div></section>${productIndex(locale)}${solutions}${content}`;
+  // Order: header, switcher, then the series cards, and the category explanation and comparison
+  // table at the bottom — on every viewport, per the owner's placement decision.
+  return `<section class="page-intro page-intro--compact"><div class="site-shell">${categoryBreadcrumb(locale, category)}<p class="eyebrow">${escapeHtml(text.category)}</p><h1>${escapeHtml(localizedCategoryTitle(locale, category))}</h1></div></section>${productIndex(locale)}${solutions}${content}${categoryIntroSection(locale, category)}`;
 }
 
 const seriesZoomLabels = Object.freeze({
@@ -942,36 +1148,42 @@ function enquiryCtaSection(locale, series) {
   const code = series.displayName ?? series.seriesCode;
   const subject = `Enquiry about ${code} - ${site.brand}`;
   const phone = site.whatsapp.replace(/\D/g, '');
-  return `<section class="section section--soft"><div class="site-shell"><div class="enquiry-cta"><h2>${escapeHtml(copy.heading)}</h2><p>${escapeHtml(copy.text)}</p><div class="enquiry-cta__actions"><a class="enquiry-cta__button" href="https://wa.me/${phone}?text=${encodeURIComponent(subject)}" target="_blank" rel="noopener noreferrer">WhatsApp</a><a class="enquiry-cta__button enquiry-cta__button--ghost" href="mailto:${site.email}?subject=${encodeURIComponent(subject)}">E-mail</a></div></div></div></section>`;
+  return `<section class="section section--soft section--tight"><div class="site-shell"><div class="enquiry-cta"><h2>${escapeHtml(copy.heading)}</h2><p>${escapeHtml(copy.text)}</p><div class="enquiry-cta__actions"><a class="enquiry-cta__button" href="https://wa.me/${phone}?text=${encodeURIComponent(subject)}" target="_blank" rel="noopener noreferrer">WhatsApp</a><a class="enquiry-cta__button enquiry-cta__button--ghost" href="mailto:${site.email}?subject=${encodeURIComponent(subject)}">E-mail</a></div></div></div></section>`;
 }
 
 // Series page description: English uses the user-confirmed ALT structure sentence;
 // other locales use a verified template (series code + localized category + brand + CTA).
+// Closing enquiry line. It used to open with "Reference image confirmed" — internal workflow
+// wording that leaked onto the page and into the search snippet in all 13 locales.
 const seriesCta = Object.freeze({
-  en: 'Reference image confirmed. Enquire for specifications, dimensions and availability.',
-  es: 'Imagen de referencia confirmada. Consulte especificaciones, dimensiones y disponibilidad.',
-  de: 'Referenzbild bestätigt. Anfrage für Spezifikationen, Abmessungen und Verfügbarkeit.',
-  fr: 'Image de référence confirmée. Renseignez-vous sur les spécifications, dimensions et disponibilité.',
-  pt: 'Imagem de referência confirmada. Consulte especificações, dimensões e disponibilidade.',
-  ar: 'تم تأكيد الصورة المرجعية. استفسر عن المواصفات والأبعاد والتوفر.',
-  tr: 'Referans görsel onaylandı. Özellikler, boyutlar ve stok durumu için bilgi alın.',
-  ru: 'Эталонное изображение подтверждено. Запросите спецификации, размеры и наличие.',
-  it: 'Immagine di riferimento confermata. Richiedi specifiche, dimensioni e disponibilità.',
-  vi: 'Hình ảnh tham chiếu đã xác nhận. Liên hệ để biết thông số, kích thước và tình trạng hàng.',
-  id: 'Gambar referensi terkonfirmasi. Tanyakan spesifikasi, dimensi, dan ketersediaan.',
-  ja: '参考画像確認済み。仕様・寸法・在庫状況はお問い合わせください。',
-  ko: '참조 이미지 확인 완료. 사양, 치수 및 재고 여부를 문의하세요.'
+  en: 'Enquire for specifications, dimensions and availability.',
+  es: 'Consulte especificaciones, dimensiones y disponibilidad.',
+  de: 'Fragen Sie Spezifikationen, Abmessungen und Verfügbarkeit an.',
+  fr: 'Renseignez-vous sur les spécifications, dimensions et disponibilité.',
+  pt: 'Consulte especificações, dimensões e disponibilidade.',
+  ar: 'استفسر عن المواصفات والأبعاد والتوفر.',
+  tr: 'Özellikler, boyutlar ve stok durumu için bilgi alın.',
+  ru: 'Запросите спецификации, размеры и наличие.',
+  it: 'Richiedi specifiche, dimensioni e disponibilità.',
+  vi: 'Liên hệ để biết thông số, kích thước và tình trạng hàng.',
+  id: 'Tanyakan spesifikasi, dimensi, dan ketersediaan.',
+  ja: '仕様・寸法・在庫状況はお問い合わせください。',
+  ko: '사양, 치수 및 재고 여부를 문의하세요.'
 });
 
 const seriesAboutFact = Object.freeze({
-  UCP: 'Pillow block units mount on a flat base with two bolt holes — the classic choice for conveyors, fans and line shafts.',
+  // Note: the "Thermoplastic pillow block units …" sentence belongs to the thermoplastic pillow
+  // block line, not to UCHA. PBU was renamed to UCHA (a hanger unit, HT200 cast iron), so that
+  // copy was removed from the UCHA page; the MBU entry below keeps it with its own series.
+  MBU: 'Mini thermoplastic pillow block units for light loads and compact machines.',
+  // The application list ("conveyors, fans and line shafts") was removed: the Application row of
+  // the data block directly above already carries the same applications.
+  UCP: 'Pillow block units mount on a flat base with two bolt holes.',
   UCF: 'Square four-bolt flange units bolt to a vertical face, where the bearing must hang or mount against a wall.',
   UCFL: 'Compact two-bolt oval flange units for narrow mounting surfaces and light-duty machinery.',
   UCFC: 'Round flange units with a circular bolt pattern, used where a square flange does not fit the machine face.',
   UCT: 'Take-up units slide in a guide frame so the shaft centre distance can be adjusted — keeps belts and chains tensioned.',
   UC: 'Wide-inner-ring ball bearing units: the UC bearing inside pillow, flange and take-up housings. The standard insert for mounted bearing sets.',
-  PBU: 'Thermoplastic pillow block units: light, corrosion-resistant housings for clean and washdown environments.',
-  MBU: 'Mini thermoplastic pillow block units for light loads and compact machines.',
   T: 'Take-up housings: the housing slides in a frame so the shaft can be tensioned and re-tensioned as belts wear.',
   P: 'Plummer block housings: the classic two-bolt base housing, the workhorse of split-bearing arrangements.',
   F: 'Square flange housings that bolt to a vertical plate or machine face.',
@@ -998,29 +1210,32 @@ const seriesAboutHeading = Object.freeze({
 // Structure text per series, localized in all 13 locales. Every value restates only the
 // user-confirmed ALT structure of that series, so each page carries unique text without invented facts.
 const seriesStructureText = Object.freeze({
-  en: { insertSetScrew: 'Wide inner ring insert bearing with set-screw locking', insertEccentric: 'Wide inner ring insert bearing with eccentric locking collar', insertTapered: 'Insert bearing with tapered bore for adapter sleeve mounting', pillowUnit: 'Pillow block unit with insert bearing', fourBoltUnit: 'Four-bolt flanged unit with insert bearing', pilotedRoundUnit: 'Piloted round flanged unit with insert bearing', twoBoltUnit: 'Two-bolt flanged unit with insert bearing', tappedBaseUnit: 'Tapped-base pillow block unit with insert bearing', longShaftUnit: 'Pillow block unit with long shaft and insert bearing', flangedUnit: 'Flanged unit with insert bearing', mountedUnit: 'Mounted bearing unit with insert bearing', pillowHousing: 'Pillow block housing', twoBoltHousing: 'Two-bolt flanged housing', takeUpHousing: 'Take-up housing', fourBoltHousing: 'Four-bolt flanged housing', bearingHousing: 'Housing body for insert bearings' },
-  es: { insertSetScrew: 'Rodamiento inserto de anillo interior ancho con fijación por tornillos prisioneros', insertEccentric: 'Rodamiento inserto de anillo interior ancho con collar excéntrico de fijación', insertTapered: 'Rodamiento inserto con agujero cónico para manguito adaptador', pillowUnit: 'Soporte de pie con rodamiento inserto', fourBoltUnit: 'Soporte de brida de cuatro tornillos con rodamiento inserto', pilotedRoundUnit: 'Soporte de brida redondo con centrado y rodamiento inserto', twoBoltUnit: 'Soporte de brida de dos tornillos con rodamiento inserto', tappedBaseUnit: 'Soporte de base roscada con rodamiento inserto', longShaftUnit: 'Soporte de pie con eje largo y rodamiento inserto', flangedUnit: 'Soporte de brida con rodamiento inserto', mountedUnit: 'Unidad de rodamiento montada con rodamiento inserto', pillowHousing: 'Soporte de pie (pillow block)', twoBoltHousing: 'Soporte de brida de dos tornillos', takeUpHousing: 'Soporte tensor (take-up)', fourBoltHousing: 'Soporte de brida de cuatro tornillos', bearingHousing: 'Cuerpo de soporte para rodamientos insertos' },
-  de: { insertSetScrew: 'Innenlager mit breitem Innenring und Gewindestift-Befestigung', insertEccentric: 'Innenlager mit breitem Innenring und Exzenterring-Befestigung', insertTapered: 'Innenlager mit Kegelbohrung für Spannhülse', pillowUnit: 'Stehlager-Einheit mit Innenlager', fourBoltUnit: 'Vierloch-Flanschlager-Einheit mit Innenlager', pilotedRoundUnit: 'Flanschlager-Einheit mit Zentrierbund und Innenlager', twoBoltUnit: 'Zweiloch-Flanschlager-Einheit mit Innenlager', tappedBaseUnit: 'Stehlager-Einheit mit Gewindebohrungen und Innenlager', longShaftUnit: 'Stehlager-Einheit mit langer Welle und Innenlager', flangedUnit: 'Flanschlager-Einheit mit Innenlager', mountedUnit: 'Lager-Einheit mit Innenlager', pillowHousing: 'Stehlagergehäuse', twoBoltHousing: 'Zweiloch-Flanschgehäuse', takeUpHousing: 'Spannlagergehäuse', fourBoltHousing: 'Vierloch-Flanschgehäuse', bearingHousing: 'Gehäusekörper für Innenlager' },
-  fr: { insertSetScrew: 'Roulement inséré à bague intérieure large avec blocage par vis', insertEccentric: 'Roulement inséré à bague intérieure large avec bague excentrique', insertTapered: 'Roulement inséré à alésage conique pour manchon de serrage', pillowUnit: 'Palier à semelle avec roulement inséré', fourBoltUnit: 'Palier à bride quatre trous avec roulement inséré', pilotedRoundUnit: 'Palier à bride rond centré avec roulement inséré', twoBoltUnit: 'Palier à bride deux trous avec roulement inséré', tappedBaseUnit: 'Palier à semelle à trous taraudés avec roulement inséré', longShaftUnit: 'Palier à semelle à arbre long avec roulement inséré', flangedUnit: 'Palier à bride avec roulement inséré', mountedUnit: 'Palier monté avec roulement inséré', pillowHousing: 'Boîtier de palier à semelle', twoBoltHousing: 'Boîtier à bride deux trous', takeUpHousing: 'Boîtier tendeur', fourBoltHousing: 'Boîtier à bride quatre trous', bearingHousing: 'Corps de boîtier pour roulements insérés' },
-  pt: { insertSetScrew: 'Rolamento inserto de anel interno largo com fixação por parafusos', insertEccentric: 'Rolamento inserto de anel interno largo com anel excêntrico', insertTapered: 'Rolamento inserto com furo cónico para bucha de fixação', pillowUnit: 'Mancal de pé com rolamento inserto', fourBoltUnit: 'Mancal flangeado de quatro furos com rolamento inserto', pilotedRoundUnit: 'Mancal flangeado redondo com centragem e rolamento inserto', twoBoltUnit: 'Mancal flangeado de dois furos com rolamento inserto', tappedBaseUnit: 'Mancal de base roscada com rolamento inserto', longShaftUnit: 'Mancal de pé com eixo longo e rolamento inserto', flangedUnit: 'Mancal flangeado com rolamento inserto', mountedUnit: 'Unidade de rolamento montada com rolamento inserto', pillowHousing: 'Mancal de pé (caixa)', twoBoltHousing: 'Caixa flangeada de dois furos', takeUpHousing: 'Caixa tensora', fourBoltHousing: 'Caixa flangeada de quatro furos', bearingHousing: 'Corpo de caixa para rolamentos insertos' },
-  ar: { insertSetScrew: 'محمل إدخالي بحلقة داخلية عريضة مع تثبيت بمسامير', insertEccentric: 'محمل إدخالي بحلقة داخلية عريضة مع حلقة تثبيت لا مركزية', insertTapered: 'محمل إدخالي بتجويف مخروطي لجِلبة تثبيت', pillowUnit: 'وحدة محمل بوسادة مع محمل إدخالي', fourBoltUnit: 'وحدة محمل بشفة أربعة مسامير مع محمل إدخالي', pilotedRoundUnit: 'وحدة محمل بشفة دائرية موجهة مع محمل إدخالي', twoBoltUnit: 'وحدة محمل بشفة مسمارين مع محمل إدخالي', tappedBaseUnit: 'وحدة محمل بوسادة بقاعدة ملولبة مع محمل إدخالي', longShaftUnit: 'وحدة محمل بوسادة بعمود طويل مع محمل إدخالي', flangedUnit: 'وحدة محمل بشفة مع محمل إدخالي', mountedUnit: 'وحدة محمل مركّبة مع محمل إدخالي', pillowHousing: 'بيت محمل بوسادة', twoBoltHousing: 'بيت محمل بشفة مسمارين', takeUpHousing: 'بيت محمل شداد', fourBoltHousing: 'بيت محمل بشفة أربعة مسامير', bearingHousing: 'جسم بيت المحمل للمحامل الإدخالية' },
-  tr: { insertSetScrew: 'Geniş iç halkalı rulman, setuskur ile sabitleme', insertEccentric: 'Geniş iç halkalı rulman, eksantrik halka ile sabitleme', insertTapered: 'Konik delikli rulman, adaptör manşon için', pillowUnit: 'İç rulmanlı yatak ünitesi', fourBoltUnit: 'Dört delikli flanşlı ünite, iç rulmanlı', pilotedRoundUnit: 'Merkezlemeli yuvarlak flanşlı ünite, iç rulmanlı', twoBoltUnit: 'İki delikli flanşlı ünite, iç rulmanlı', tappedBaseUnit: 'Vidalı tabanlı yatak ünitesi, iç rulmanlı', longShaftUnit: 'Uzun milli yatak ünitesi, iç rulmanlı', flangedUnit: 'Flanşlı ünite, iç rulmanlı', mountedUnit: 'Montajlı rulman ünitesi, iç rulmanlı', pillowHousing: 'Yatak gövdesi (pillow block)', twoBoltHousing: 'İki delikli flanşlı gövde', takeUpHousing: 'Gergi gövdesi (take-up)', fourBoltHousing: 'Dört delikli flanşlı gövde', bearingHousing: 'İç rulmanlar için yatak gövdesi' },
-  ru: { insertSetScrew: 'Вставной подшипник с широким внутренним кольцом, крепление стопорными винтами', insertEccentric: 'Вставной подшипник с широким внутренним кольцом, эксцентриковое кольцо', insertTapered: 'Вставной подшипник с коническим отверстием под закрепительную втулку', pillowUnit: 'Корпус с вставным подшипником (pillow block)', fourBoltUnit: 'Фланцевый узел на четырёх болтах со вставным подшипником', pilotedRoundUnit: 'Фланцевый узел с центрирующим буртом и вставным подшипником', twoBoltUnit: 'Фланцевый узел на двух болтах со вставным подшипником', tappedBaseUnit: 'Узел с резьбовым основанием и вставным подшипником', longShaftUnit: 'Узел с удлинённым валом и вставным подшипником', flangedUnit: 'Фланцевый узел со вставным подшипником', mountedUnit: 'Смонтированный подшипниковый узел', pillowHousing: 'Корпус подшипника (pillow block)', twoBoltHousing: 'Фланцевый корпус на двух болтах', takeUpHousing: 'Натяжной корпус (take-up)', fourBoltHousing: 'Фланцевый корпус на четырёх болтах', bearingHousing: 'Корпус для вставных подшипников' },
-  it: { insertSetScrew: 'Cuscinetto inserto con anello interno largo e fissaggio a grani', insertEccentric: 'Cuscinetto inserto con anello interno largo e collarino eccentrico', insertTapered: 'Cuscinetto inserto con foro conico per bussola di serraggio', pillowUnit: 'Supporto a piedini con cuscinetto inserto', fourBoltUnit: 'Supporto flangiato a quattro fori con cuscinetto inserto', pilotedRoundUnit: 'Supporto flangiato tondo centrato con cuscinetto inserto', twoBoltUnit: 'Supporto flangiato a due fori con cuscinetto inserto', tappedBaseUnit: 'Supporto a base filettata con cuscinetto inserto', longShaftUnit: 'Supporto a piedini con albero lungo e cuscinetto inserto', flangedUnit: 'Supporto flangiato con cuscinetto inserto', mountedUnit: 'Unità cuscinetto montata con cuscinetto inserto', pillowHousing: 'Supporto a piedini (scatola)', twoBoltHousing: 'Scatola flangiata a due fori', takeUpHousing: 'Scatola tenditore', fourBoltHousing: 'Scatola flangiata a quattro fori', bearingHousing: 'Corpo scatola per cuscinetti inserti' },
-  vi: { insertSetScrew: 'Vòng bi lắp ghép vòng trong rộng, khóa bằng vít', insertEccentric: 'Vòng bi lắp ghép vòng trong rộng, khóa lệch tâm', insertTapered: 'Vòng bi lắp ghép lỗ côn cho ống lót', pillowUnit: 'Gối đỡ vòng bi (pillow block)', fourBoltUnit: 'Gối đỡ mặt bích bốn lỗ, có vòng bi lắp ghép', pilotedRoundUnit: 'Gối đỡ mặt bích tròn định vị, có vòng bi lắp ghép', twoBoltUnit: 'Gối đỡ mặt bích hai lỗ, có vòng bi lắp ghép', tappedBaseUnit: 'Gối đỡ đế ren, có vòng bi lắp ghép', longShaftUnit: 'Gối đỡ trục dài, có vòng bi lắp ghép', flangedUnit: 'Gối đỡ mặt bích, có vòng bi lắp ghép', mountedUnit: 'Cụm vòng bi gối đỡ hoàn chỉnh', pillowHousing: 'Vỏ gối đỡ (pillow block)', twoBoltHousing: 'Vỏ mặt bích hai lỗ', takeUpHousing: 'Vỏ căng (take-up)', fourBoltHousing: 'Vỏ mặt bích bốn lỗ', bearingHousing: 'Thân vỏ cho vòng bi lắp ghép' },
-  id: { insertSetScrew: 'Bantalan sisipan cincin dalam lebar, penguncian baut', insertEccentric: 'Bantalan sisipan cincin dalam lebar, cincin eksentrik', insertTapered: 'Bantalan sisipan lubang tirus untuk selongsong adaptor', pillowUnit: 'Unit rumah bantalan dengan bantalan sisipan', fourBoltUnit: 'Unit flensa empat baut dengan bantalan sisipan', pilotedRoundUnit: 'Unit flensa bundar berpusat dengan bantalan sisipan', twoBoltUnit: 'Unit flensa dua baut dengan bantalan sisipan', tappedBaseUnit: 'Unit rumah bantalan dasar berulir dengan bantalan sisipan', longShaftUnit: 'Unit rumah bantalan poros panjang dengan bantalan sisipan', flangedUnit: 'Unit flensa dengan bantalan sisipan', mountedUnit: 'Unit bantalan terpasang dengan bantalan sisipan', pillowHousing: 'Rumah bantalan (pillow block)', twoBoltHousing: 'Rumah flensa dua baut', takeUpHousing: 'Rumah penegang (take-up)', fourBoltHousing: 'Rumah flensa empat baut', bearingHousing: 'Badan rumah untuk bantalan sisipan' },
-  ja: { insertSetScrew: '広幅内輪インサートベアリング、止めねじ固定', insertEccentric: '広幅内輪インサートベアリング、偏心リング固定', insertTapered: 'テーパ穴インサートベアリング、アダプタスリーブ用', pillowUnit: 'インサートベアリング付きピローブロックユニット', fourBoltUnit: '4穴フランジユニット、インサートベアリング付き', pilotedRoundUnit: 'インサートベアリング付き丸形フランジユニット', twoBoltUnit: '2穴フランジユニット、インサートベアリング付き', tappedBaseUnit: 'インサートベアリング付きねじ穴ベースユニット', longShaftUnit: 'インサートベアリング付き長軸ピローブロックユニット', flangedUnit: 'フランジユニット、インサートベアリング付き', mountedUnit: 'インサートベアリング付き軸受ユニット', pillowHousing: 'ピローブロックハウジング', twoBoltHousing: '2穴フランジハウジング', takeUpHousing: 'テークアップハウジング', fourBoltHousing: '4穴フランジハウジング', bearingHousing: 'インサートベアリング用ハウジング' },
-  ko: { insertSetScrew: '광폭 내륜 인서트 베어링, 고정 나사 잠금', insertEccentric: '광폭 내륜 인서트 베어링, 편심 링 잠금', insertTapered: '테이퍼 보어 인서트 베어링, 어댑터 슬리브용', pillowUnit: '인서트 베어링이 있는 필로우 블록 유닛', fourBoltUnit: '4볼트 플랜지 유닛, 인서트 베어링 포함', pilotedRoundUnit: '인서트 베어링이 있는 원형 플랜지 유닛', twoBoltUnit: '2볼트 플랜지 유닛, 인서트 베어링 포함', tappedBaseUnit: '인서트 베어링이 있는 나사 베이스 유닛', longShaftUnit: '인서트 베어링이 있는 장축 필로우 블록 유닛', flangedUnit: '플랜지 유닛, 인서트 베어링 포함', mountedUnit: '인서트 베어링이 있는 조립형 베어링 유닛', pillowHousing: '필로우 블록 하우징', twoBoltHousing: '2볼트 플랜지 하우징', takeUpHousing: '테이크업 하우징', fourBoltHousing: '4볼트 플랜지 하우징', bearingHousing: '인서트 베어링용 하우징' }
+  en: { insertSetScrew: 'Wide inner ring insert bearing with set-screw locking', insertEccentric: 'Wide inner ring insert bearing with eccentric locking collar', insertTapered: 'Insert bearing with tapered bore for adapter sleeve mounting', pillowUnit: 'Pillow block unit with insert bearing', fourBoltUnit: 'Four-bolt flanged unit with insert bearing', pilotedRoundUnit: 'Piloted round flanged unit with insert bearing', twoBoltUnit: 'Two-bolt flanged unit with insert bearing', tappedBaseUnit: 'Tapped-base pillow block unit with insert bearing', longShaftUnit: 'Pillow block unit with long shaft and insert bearing', flangedUnit: 'Flanged unit with insert bearing', mountedUnit: 'Mounted bearing unit with insert bearing', pillowHousing: 'Pillow block housing', twoBoltHousing: 'Two-bolt flanged housing', takeUpHousing: 'Take-up housing', fourBoltHousing: 'Four-bolt flanged housing', roundFlangeHousing: 'Round flanged housing', hangerHousing: 'Hanger type bearing housing', bearingHousing: 'Housing body for insert bearings' },
+  es: { insertSetScrew: 'Rodamiento inserto de anillo interior ancho con fijación por tornillos prisioneros', insertEccentric: 'Rodamiento inserto de anillo interior ancho con collar excéntrico de fijación', insertTapered: 'Rodamiento inserto con agujero cónico para manguito adaptador', pillowUnit: 'Soporte de pie con rodamiento inserto', fourBoltUnit: 'Soporte de brida de cuatro tornillos con rodamiento inserto', pilotedRoundUnit: 'Soporte de brida redondo con centrado y rodamiento inserto', twoBoltUnit: 'Soporte de brida de dos tornillos con rodamiento inserto', tappedBaseUnit: 'Soporte de base roscada con rodamiento inserto', longShaftUnit: 'Soporte de pie con eje largo y rodamiento inserto', flangedUnit: 'Soporte de brida con rodamiento inserto', mountedUnit: 'Unidad de rodamiento montada con rodamiento inserto', pillowHousing: 'Soporte de pie (pillow block)', twoBoltHousing: 'Soporte de brida de dos tornillos', takeUpHousing: 'Soporte tensor (take-up)', fourBoltHousing: 'Soporte de brida de cuatro tornillos', roundFlangeHousing: 'Soporte de brida redondo', hangerHousing: 'Soporte de rodamiento tipo colgante', bearingHousing: 'Cuerpo de soporte para rodamientos insertos' },
+  de: { insertSetScrew: 'Innenlager mit breitem Innenring und Gewindestift-Befestigung', insertEccentric: 'Innenlager mit breitem Innenring und Exzenterring-Befestigung', insertTapered: 'Innenlager mit Kegelbohrung für Spannhülse', pillowUnit: 'Stehlager-Einheit mit Innenlager', fourBoltUnit: 'Vierloch-Flanschlager-Einheit mit Innenlager', pilotedRoundUnit: 'Flanschlager-Einheit mit Zentrierbund und Innenlager', twoBoltUnit: 'Zweiloch-Flanschlager-Einheit mit Innenlager', tappedBaseUnit: 'Stehlager-Einheit mit Gewindebohrungen und Innenlager', longShaftUnit: 'Stehlager-Einheit mit langer Welle und Innenlager', flangedUnit: 'Flanschlager-Einheit mit Innenlager', mountedUnit: 'Lager-Einheit mit Innenlager', pillowHousing: 'Stehlagergehäuse', twoBoltHousing: 'Zweiloch-Flanschgehäuse', takeUpHousing: 'Spannlagergehäuse', fourBoltHousing: 'Vierloch-Flanschgehäuse', roundFlangeHousing: 'Rundes Flanschlagergehäuse', hangerHousing: 'Hänger-Lagergehäuse', bearingHousing: 'Gehäusekörper für Innenlager' },
+  fr: { insertSetScrew: 'Roulement inséré à bague intérieure large avec blocage par vis', insertEccentric: 'Roulement inséré à bague intérieure large avec bague excentrique', insertTapered: 'Roulement inséré à alésage conique pour manchon de serrage', pillowUnit: 'Palier à semelle avec roulement inséré', fourBoltUnit: 'Palier à bride quatre trous avec roulement inséré', pilotedRoundUnit: 'Palier à bride rond centré avec roulement inséré', twoBoltUnit: 'Palier à bride deux trous avec roulement inséré', tappedBaseUnit: 'Palier à semelle à trous taraudés avec roulement inséré', longShaftUnit: 'Palier à semelle à arbre long avec roulement inséré', flangedUnit: 'Palier à bride avec roulement inséré', mountedUnit: 'Palier monté avec roulement inséré', pillowHousing: 'Boîtier de palier à semelle', twoBoltHousing: 'Boîtier à bride deux trous', takeUpHousing: 'Boîtier tendeur', fourBoltHousing: 'Boîtier à bride quatre trous', roundFlangeHousing: 'Boîtier à bride rond', hangerHousing: 'Boîtier de palier suspendu', bearingHousing: 'Corps de boîtier pour roulements insérés' },
+  pt: { insertSetScrew: 'Rolamento inserto de anel interno largo com fixação por parafusos', insertEccentric: 'Rolamento inserto de anel interno largo com anel excêntrico', insertTapered: 'Rolamento inserto com furo cónico para bucha de fixação', pillowUnit: 'Mancal de pé com rolamento inserto', fourBoltUnit: 'Mancal flangeado de quatro furos com rolamento inserto', pilotedRoundUnit: 'Mancal flangeado redondo com centragem e rolamento inserto', twoBoltUnit: 'Mancal flangeado de dois furos com rolamento inserto', tappedBaseUnit: 'Mancal de base roscada com rolamento inserto', longShaftUnit: 'Mancal de pé com eixo longo e rolamento inserto', flangedUnit: 'Mancal flangeado com rolamento inserto', mountedUnit: 'Unidade de rolamento montada com rolamento inserto', pillowHousing: 'Mancal de pé (caixa)', twoBoltHousing: 'Caixa flangeada de dois furos', takeUpHousing: 'Caixa tensora', fourBoltHousing: 'Caixa flangeada de quatro furos', roundFlangeHousing: 'Caixa flangeada redonda', hangerHousing: 'Caixa de mancal suspensa', bearingHousing: 'Corpo de caixa para rolamentos insertos' },
+  ar: { insertSetScrew: 'محمل إدخالي بحلقة داخلية عريضة مع تثبيت بمسامير', insertEccentric: 'محمل إدخالي بحلقة داخلية عريضة مع حلقة تثبيت لا مركزية', insertTapered: 'محمل إدخالي بتجويف مخروطي لجِلبة تثبيت', pillowUnit: 'وحدة محمل بوسادة مع محمل إدخالي', fourBoltUnit: 'وحدة محمل بشفة أربعة مسامير مع محمل إدخالي', pilotedRoundUnit: 'وحدة محمل بشفة دائرية موجهة مع محمل إدخالي', twoBoltUnit: 'وحدة محمل بشفة مسمارين مع محمل إدخالي', tappedBaseUnit: 'وحدة محمل بوسادة بقاعدة ملولبة مع محمل إدخالي', longShaftUnit: 'وحدة محمل بوسادة بعمود طويل مع محمل إدخالي', flangedUnit: 'وحدة محمل بشفة مع محمل إدخالي', mountedUnit: 'وحدة محمل مركّبة مع محمل إدخالي', pillowHousing: 'بيت محمل بوسادة', twoBoltHousing: 'بيت محمل بشفة مسمارين', takeUpHousing: 'بيت محمل شداد', fourBoltHousing: 'بيت محمل بشفة أربعة مسامير', roundFlangeHousing: 'بيت محمل بشفة دائرية', hangerHousing: 'بيت محمل معلّق', bearingHousing: 'جسم بيت المحمل للمحامل الإدخالية' },
+  tr: { insertSetScrew: 'Geniş iç halkalı rulman, setuskur ile sabitleme', insertEccentric: 'Geniş iç halkalı rulman, eksantrik halka ile sabitleme', insertTapered: 'Konik delikli rulman, adaptör manşon için', pillowUnit: 'İç rulmanlı yatak ünitesi', fourBoltUnit: 'Dört delikli flanşlı ünite, iç rulmanlı', pilotedRoundUnit: 'Merkezlemeli yuvarlak flanşlı ünite, iç rulmanlı', twoBoltUnit: 'İki delikli flanşlı ünite, iç rulmanlı', tappedBaseUnit: 'Vidalı tabanlı yatak ünitesi, iç rulmanlı', longShaftUnit: 'Uzun milli yatak ünitesi, iç rulmanlı', flangedUnit: 'Flanşlı ünite, iç rulmanlı', mountedUnit: 'Montajlı rulman ünitesi, iç rulmanlı', pillowHousing: 'Yatak gövdesi (pillow block)', twoBoltHousing: 'İki delikli flanşlı gövde', takeUpHousing: 'Gergi gövdesi (take-up)', fourBoltHousing: 'Dört delikli flanşlı gövde', roundFlangeHousing: 'Yuvarlak flanşlı gövde', hangerHousing: 'Askı tipi yatak gövdesi', bearingHousing: 'İç rulmanlar için yatak gövdesi' },
+  ru: { insertSetScrew: 'Вставной подшипник с широким внутренним кольцом, крепление стопорными винтами', insertEccentric: 'Вставной подшипник с широким внутренним кольцом, эксцентриковое кольцо', insertTapered: 'Вставной подшипник с коническим отверстием под закрепительную втулку', pillowUnit: 'Корпус с вставным подшипником (pillow block)', fourBoltUnit: 'Фланцевый узел на четырёх болтах со вставным подшипником', pilotedRoundUnit: 'Фланцевый узел с центрирующим буртом и вставным подшипником', twoBoltUnit: 'Фланцевый узел на двух болтах со вставным подшипником', tappedBaseUnit: 'Узел с резьбовым основанием и вставным подшипником', longShaftUnit: 'Узел с удлинённым валом и вставным подшипником', flangedUnit: 'Фланцевый узел со вставным подшипником', mountedUnit: 'Смонтированный подшипниковый узел', pillowHousing: 'Корпус подшипника (pillow block)', twoBoltHousing: 'Фланцевый корпус на двух болтах', takeUpHousing: 'Натяжной корпус (take-up)', fourBoltHousing: 'Фланцевый корпус на четырёх болтах', roundFlangeHousing: 'Круглый фланцевый корпус', hangerHousing: 'Подвесной корпус подшипника', bearingHousing: 'Корпус для вставных подшипников' },
+  it: { insertSetScrew: 'Cuscinetto inserto con anello interno largo e fissaggio a grani', insertEccentric: 'Cuscinetto inserto con anello interno largo e collarino eccentrico', insertTapered: 'Cuscinetto inserto con foro conico per bussola di serraggio', pillowUnit: 'Supporto a piedini con cuscinetto inserto', fourBoltUnit: 'Supporto flangiato a quattro fori con cuscinetto inserto', pilotedRoundUnit: 'Supporto flangiato tondo centrato con cuscinetto inserto', twoBoltUnit: 'Supporto flangiato a due fori con cuscinetto inserto', tappedBaseUnit: 'Supporto a base filettata con cuscinetto inserto', longShaftUnit: 'Supporto a piedini con albero lungo e cuscinetto inserto', flangedUnit: 'Supporto flangiato con cuscinetto inserto', mountedUnit: 'Unità cuscinetto montata con cuscinetto inserto', pillowHousing: 'Supporto a piedini (scatola)', twoBoltHousing: 'Scatola flangiata a due fori', takeUpHousing: 'Scatola tenditore', fourBoltHousing: 'Scatola flangiata a quattro fori', roundFlangeHousing: 'Scatola flangiata tonda', hangerHousing: 'Scatola portacuscinetto a sospensione', bearingHousing: 'Corpo scatola per cuscinetti inserti' },
+  vi: { insertSetScrew: 'Vòng bi lắp ghép vòng trong rộng, khóa bằng vít', insertEccentric: 'Vòng bi lắp ghép vòng trong rộng, khóa lệch tâm', insertTapered: 'Vòng bi lắp ghép lỗ côn cho ống lót', pillowUnit: 'Gối đỡ vòng bi (pillow block)', fourBoltUnit: 'Gối đỡ mặt bích bốn lỗ, có vòng bi lắp ghép', pilotedRoundUnit: 'Gối đỡ mặt bích tròn định vị, có vòng bi lắp ghép', twoBoltUnit: 'Gối đỡ mặt bích hai lỗ, có vòng bi lắp ghép', tappedBaseUnit: 'Gối đỡ đế ren, có vòng bi lắp ghép', longShaftUnit: 'Gối đỡ trục dài, có vòng bi lắp ghép', flangedUnit: 'Gối đỡ mặt bích, có vòng bi lắp ghép', mountedUnit: 'Cụm vòng bi gối đỡ hoàn chỉnh', pillowHousing: 'Vỏ gối đỡ (pillow block)', twoBoltHousing: 'Vỏ mặt bích hai lỗ', takeUpHousing: 'Vỏ căng (take-up)', fourBoltHousing: 'Vỏ mặt bích bốn lỗ', roundFlangeHousing: 'Vỏ mặt bích tròn', hangerHousing: 'Vỏ gối đỡ treo', bearingHousing: 'Thân vỏ cho vòng bi lắp ghép' },
+  id: { insertSetScrew: 'Bantalan sisipan cincin dalam lebar, penguncian baut', insertEccentric: 'Bantalan sisipan cincin dalam lebar, cincin eksentrik', insertTapered: 'Bantalan sisipan lubang tirus untuk selongsong adaptor', pillowUnit: 'Unit rumah bantalan dengan bantalan sisipan', fourBoltUnit: 'Unit flensa empat baut dengan bantalan sisipan', pilotedRoundUnit: 'Unit flensa bundar berpusat dengan bantalan sisipan', twoBoltUnit: 'Unit flensa dua baut dengan bantalan sisipan', tappedBaseUnit: 'Unit rumah bantalan dasar berulir dengan bantalan sisipan', longShaftUnit: 'Unit rumah bantalan poros panjang dengan bantalan sisipan', flangedUnit: 'Unit flensa dengan bantalan sisipan', mountedUnit: 'Unit bantalan terpasang dengan bantalan sisipan', pillowHousing: 'Rumah bantalan (pillow block)', twoBoltHousing: 'Rumah flensa dua baut', takeUpHousing: 'Rumah penegang (take-up)', fourBoltHousing: 'Rumah flensa empat baut', roundFlangeHousing: 'Rumah flensa bundar', hangerHousing: 'Rumah bantalan tipe gantung', bearingHousing: 'Badan rumah untuk bantalan sisipan' },
+  ja: { insertSetScrew: '広幅内輪インサートベアリング、止めねじ固定', insertEccentric: '広幅内輪インサートベアリング、偏心リング固定', insertTapered: 'テーパ穴インサートベアリング、アダプタスリーブ用', pillowUnit: 'インサートベアリング付きピローブロックユニット', fourBoltUnit: '4穴フランジユニット、インサートベアリング付き', pilotedRoundUnit: 'インサートベアリング付き丸形フランジユニット', twoBoltUnit: '2穴フランジユニット、インサートベアリング付き', tappedBaseUnit: 'インサートベアリング付きねじ穴ベースユニット', longShaftUnit: 'インサートベアリング付き長軸ピローブロックユニット', flangedUnit: 'フランジユニット、インサートベアリング付き', mountedUnit: 'インサートベアリング付き軸受ユニット', pillowHousing: 'ピローブロックハウジング', twoBoltHousing: '2穴フランジハウジング', takeUpHousing: 'テークアップハウジング', fourBoltHousing: '4穴フランジハウジング', roundFlangeHousing: '丸形フランジハウジング', hangerHousing: 'ハンガータイプハウジング', bearingHousing: 'インサートベアリング用ハウジング' },
+  ko: { insertSetScrew: '광폭 내륜 인서트 베어링, 고정 나사 잠금', insertEccentric: '광폭 내륜 인서트 베어링, 편심 링 잠금', insertTapered: '테이퍼 보어 인서트 베어링, 어댑터 슬리브용', pillowUnit: '인서트 베어링이 있는 필로우 블록 유닛', fourBoltUnit: '4볼트 플랜지 유닛, 인서트 베어링 포함', pilotedRoundUnit: '인서트 베어링이 있는 원형 플랜지 유닛', twoBoltUnit: '2볼트 플랜지 유닛, 인서트 베어링 포함', tappedBaseUnit: '인서트 베어링이 있는 나사 베이스 유닛', longShaftUnit: '인서트 베어링이 있는 장축 필로우 블록 유닛', flangedUnit: '플랜지 유닛, 인서트 베어링 포함', mountedUnit: '인서트 베어링이 있는 조립형 베어링 유닛', pillowHousing: '필로우 블록 하우징', twoBoltHousing: '2볼트 플랜지 하우징', takeUpHousing: '테이크업 하우징', fourBoltHousing: '4볼트 플랜지 하우징', roundFlangeHousing: '원형 플랜지 하우징', hangerHousing: '행거형 베어링 하우징', bearingHousing: '인서트 베어링용 하우징' }
 });
 
 const SERIES_STRUCTURE_KEY = Object.freeze({
   UCT: 'insertSetScrew', UEL: 'insertEccentric', UK: 'insertTapered', UCP: 'pillowUnit',
+  // Staged series reuse the closest confirmed structure phrase; both are pending, so neither
+  // sentence is rendered until the owner supplies a product image.
+  UELP: 'pillowUnit', UCFS: 'fourBoltUnit',
   UCF: 'fourBoltUnit', UCFC: 'pilotedRoundUnit', UCFL: 'twoBoltUnit', UCPA: 'tappedBaseUnit',
   UCPH: 'longShaftUnit', UCFA: 'flangedUnit', UCFB: 'flangedUnit', PBU: 'mountedUnit',
   MBU: 'pillowUnit', UC: 'insertSetScrew', FB: 'pillowHousing', FL: 'twoBoltHousing',
-  P: 'pillowHousing', T: 'takeUpHousing', F: 'fourBoltHousing', PBH: 'pillowHousing',
-  FC: 'bearingHousing', FU: 'bearingHousing', PH: 'bearingHousing', PA: 'bearingHousing',
-  PAS: 'pillowHousing'
+  P: 'pillowHousing', T: 'takeUpHousing', F: 'fourBoltHousing',
+  FC: 'roundFlangeHousing', FU: 'bearingHousing', PH: 'bearingHousing', PA: 'bearingHousing',
+  PAS: 'hangerHousing'
 });
 
 function seriesStructureSentence(locale, series) {
@@ -1029,22 +1244,80 @@ function seriesStructureSentence(locale, series) {
   return (key && table[key]) || '';
 }
 
+// Lead sentence for the top of a series page. It used to repeat the H1 word for word; it now
+// states the confirmed model count and bore range instead, which is what a buyer looks for first.
+// The "more than 20 years" manufacturing claim and the closing call to action were both removed
+// on the owner's instruction: the claim is not published anywhere else on the site, and the
+// enquiry line under the data column is the page's only ask.
+const seriesLeadText = Object.freeze({
+  en: { models: '{models} models, bore range {bore}.', bore: 'Bore range {bore}.' },
+  es: { models: '{models} modelos, rango de diámetro {bore}.', bore: 'Rango de diámetro {bore}.' },
+  de: { models: '{models} Modelle, Bohrungsbereich {bore}.', bore: 'Bohrungsbereich {bore}.' },
+  fr: { models: '{models} modèles, plage d’alésage {bore}.', bore: 'Plage d’alésage {bore}.' },
+  pt: { models: '{models} modelos, faixa de diâmetro {bore}.', bore: 'Faixa de diâmetro {bore}.' },
+  ar: { models: '{models} طرازًا، نطاق التجويف {bore}.', bore: 'نطاق التجويف {bore}.' },
+  tr: { models: '{models} model, delik çapı aralığı {bore}.', bore: 'Delik çapı aralığı {bore}.' },
+  ru: { models: '{models} моделей, диапазон посадочных диаметров {bore}.', bore: 'Диапазон посадочных диаметров {bore}.' },
+  it: { models: '{models} modelli, gamma di alesaggio {bore}.', bore: 'Gamma di alesaggio {bore}.' },
+  vi: { models: '{models} mã, dải đường kính lỗ {bore}.', bore: 'Dải đường kính lỗ {bore}.' },
+  id: { models: '{models} model, kisaran diameter lubang {bore}.', bore: 'Kisaran diameter lubang {bore}.' },
+  ja: { models: '全{models}型式、内径範囲{bore}。', bore: '内径範囲{bore}。' },
+  ko: { models: '총 {models}개 모델, 내경 범위 {bore}.', bore: '내경 범위 {bore}.' }
+});
+
+/** Counts the confirmed models of a series across its groups and subgroups. */
+function seriesModelCount(seriesCode) {
+  const groups = unitModelGroups(seriesCode);
+  if (!groups) return 0;
+  return groups.reduce((total, group) => total
+    + (group.models?.length ?? 0)
+    + (group.subgroups ?? []).reduce((sum, subgroup) => sum + subgroup.models.length, 0), 0);
+}
+
+/** "39 models, bore range 12 – 100 mm." — the confirmed facts a buyer scans for. Shared by the
+ *  visible lead and by the meta description, so a search snippet carries them too. */
+function seriesDataPhrase(locale, series) {
+  const text = seriesLeadText[locale] ?? seriesLeadText.en;
+  const spec = housingSeriesSpec(series.seriesCode);
+  const bore = spec?.boreRange ?? seriesBoreRange(series.seriesCode) ?? '';
+  const models = seriesModelCount(series.seriesCode);
+  if (models && bore) return text.models.replace('{models}', String(models)).replace('{bore}', bore);
+  if (bore) return text.bore.replace('{bore}', bore);
+  return '';
+}
+
+/** Lead paragraph shown under the H1, built from confirmed data rather than copied from the H1. */
+function seriesLead(locale, series) {
+  return seriesDataPhrase(locale, series) || seriesCta[locale];
+}
+
+// Rendered only where it carries something the page does not already say: a unique series note
+// (currently the English notes for UCP, UCF, UCFL, UCFC and UCT). Without one the block merely
+// repeated the H1 — as the heading, the code and the structure phrase — so it is omitted. The
+// model list in "Full model range" stays: for UCFA, UCFB, UCHA and the housing series it is the
+// only place on the site where those model codes appear.
+// The call to action used to be appended here as well, which printed the same enquiry sentence
+// twice on one page (lead + this block). The enquiry line under the data column is the only ask.
 function seriesAboutBlock(locale, category, series) {
-  const name = seriesDescriptiveName(locale, series);
-  const structure = seriesStructureSentence(locale, series);
   const fact = locale === 'en' ? (seriesAboutFact[series.seriesCode] ?? '') : '';
-  const structureLine = structure ? `<dt>${escapeHtml(series.seriesCode)}</dt><dd dir="ltr">${escapeHtml(structure)}</dd>` : '';
-  return `<section class="section"><div class="site-shell series-about"><h2>${escapeHtml(seriesAboutHeading[locale])}</h2><p>${escapeHtml(name)} — ${escapeHtml(localizedCategoryTitle(locale, category))} · ${site.brand}.${fact ? ` ${escapeHtml(fact)}` : ''} ${escapeHtml(seriesCta[locale])}</p><dl class="public-info"><div>${structureLine}</div><div><dt>${escapeHtml(locales[locale].series)}</dt><dd dir="ltr">${escapeHtml(series.seriesCode)}</dd></div></dl></div></section>`;
+  if (!fact) return '';
+  return `<section class="section section--tight"><div class="site-shell series-about"><h2>${escapeHtml(seriesAboutHeading[locale])}</h2><p>${escapeHtml(fact)}</p></div></section>`;
 }
 
 function seriesPageDescription(locale, category, series) {
   const structure = seriesStructureSentence(locale, series);
   const name = series.displayName ?? series.seriesCode;
+  // The model count and bore span are the two facts a buyer looks for in a product snippet, so they
+  // lead the description instead of only appearing further down the page.
+  const data = seriesDataPhrase(locale, series);
+  const facts = data ? `${data} ` : '';
   if (locale === 'en') {
     const sentence = series.alt ? `${series.alt.charAt(0).toUpperCase()}${series.alt.slice(1)}` : `${series.displayName ?? series.seriesCode}`;
-    return `${sentence} — NATER, bearing housing manufacturer with 20+ years of experience. Enquire for specifications.`;
+    return `${sentence} — ${facts}NATER, bearing housing manufacturer. Enquire for specifications.`;
   }
-  return `${name} — ${structure} — ${localizedCategoryTitle(locale, category)} — NATER.`;
+  // Non-English descriptions append the localized call to action: without it the Japanese and
+  // Korean snippets sat at 40-55 characters while search engines show roughly 80 for CJK.
+  return `${name} — ${structure} — ${facts}${localizedCategoryTitle(locale, category)} — NATER. ${seriesCta[locale]}`;
 }
 
 function seriesContent(locale, category, series) {
@@ -1052,8 +1325,22 @@ function seriesContent(locale, category, series) {
   const image = seriesImage(locale, series);
   const labels = seriesZoomLabels[locale];
   const description = seriesPageDescription(locale, category, series);
+  // The visible lead states the model count and bore range; the meta description keeps its own
+  // wording, so the page no longer opens with the H1 repeated.
+  const lead = seriesLead(locale, series);
   const content = image ? `<section class="section"><div class="site-shell"><div class="product-display-grid product-display-grid--single"><article class="product-display-card" dir="ltr"><div class="product-display-card__image"><button type="button" class="product-image-zoom" data-lightbox="${escapeHtml(series.image.src)}" data-close="${escapeHtml(labels.close)}" aria-label="${escapeHtml(labels.zoom)}">${image}</button></div><h2 dir="ltr">${escapeHtml(series.displayName ?? series.seriesCode)}</h2></article></div></div></section>` : '';
-  return `<section class="page-intro page-intro--compact"><div class="site-shell">${seriesBreadcrumb(locale, category, series)}<p class="eyebrow">${escapeHtml(localizedCategoryTitle(locale, category))}</p><h1 dir="ltr">${escapeHtml(seriesDescriptiveName(locale, series))}</h1><p>${escapeHtml(description)}</p></div></section>${productIndex(locale)}${content}${seriesAboutBlock(locale, category, series)}${enquiryCtaSection(locale, series)}${seriesSiblings(locale, category, series)}`;
+  // Pillow block unit series pages share the published-data layout: image left, data right.
+  // Bearing housing series use the same layout once a confirmed specification exists.
+  // Both layouts render in every locale; their wording comes from data/spec-i18n/.
+  const unitEligible = category.code === 'pillow-block-bearing-units';
+  const housingEligible = category.code === 'bearing-housing-series' && Boolean(housingSeriesSpec(series.seriesCode));
+  const paired = unitEligible
+    ? unitPairSection(locale, category, series, image, labels)
+    : housingEligible
+      ? housingPairSection(locale, category, series, image, labels)
+      : '';
+  const hero = paired || content;
+  return `<section class="page-intro page-intro--compact"><div class="site-shell">${seriesBreadcrumb(locale, category, series)}<p class="eyebrow">${escapeHtml(localizedCategoryTitle(locale, category))}</p><h1 dir="ltr">${escapeHtml(seriesHeading(locale, series))}</h1><p>${escapeHtml(lead)}</p></div></section>${productIndex(locale)}${hero}${seriesAboutBlock(locale, category, series)}`;
 }
 
 function categoryBreadcrumb(locale, category) {
@@ -1063,7 +1350,7 @@ function categoryBreadcrumb(locale, category) {
 
 function seriesBreadcrumb(locale, category, series) {
   const text = locales[locale];
-  return `<nav class="product-breadcrumb" aria-label="Product breadcrumb"><a href="${publicPath(locale)}">${escapeHtml(text.navHome)}</a><span aria-hidden="true">/</span><a href="${publicPath(locale, 'products')}">${escapeHtml(text.navProducts)}</a><span aria-hidden="true">/</span><a href="${categoryPath(locale, category)}">${escapeHtml(localizedCategoryTitle(locale, category))}</a><span aria-hidden="true">/</span><span aria-current="page" dir="ltr">${escapeHtml(seriesDescriptiveName(locale, series))}</span></nav>`;
+  return `<nav class="product-breadcrumb" aria-label="Product breadcrumb"><a href="${publicPath(locale)}">${escapeHtml(text.navHome)}</a><span aria-hidden="true">/</span><a href="${publicPath(locale, 'products')}">${escapeHtml(text.navProducts)}</a><span aria-hidden="true">/</span><a href="${categoryPath(locale, category)}">${escapeHtml(localizedCategoryTitle(locale, category))}</a><span aria-hidden="true">/</span><span aria-current="page" dir="auto">${escapeHtml(seriesHeading(locale, series))}</span></nav>`;
 }
 
 function seriesSiblings(locale, category, series) {
@@ -1076,6 +1363,137 @@ function seriesSiblings(locale, category, series) {
 function productBreadcrumb(locale, category, product) {
   const text = locales[locale];
   return `<nav class="product-breadcrumb" aria-label="Product breadcrumb"><a href="${publicPath(locale, 'products')}">${escapeHtml(text.navProducts)}</a><span aria-hidden="true">/</span><a href="${categoryPath(locale, category)}">${escapeHtml(localizedCategoryTitle(locale, category))}</a><span aria-hidden="true">/</span><span aria-current="page" dir="ltr">${escapeHtml(product.code)}</span></nav>`;
+}
+
+// ---- Cross-reference page (SKF / FYH / NSK / NTN / KOYO equivalents) ----
+
+// A model code in the first column links to its series page when that series exists on the site.
+function xrefModelLink(locale, code) {
+  const prefix = (String(code).match(/^[A-Z]+/) ?? [''])[0];
+  const record = prefix
+    ? categories.flatMap(category => category.series).find(series => series.seriesCode === prefix && series.status === 'active')
+    : null;
+  if (!record) return escapeHtml(code);
+  const category = categories.find(item => item.series.includes(record));
+  return `<a href="${seriesPath(locale, category, record)}">${escapeHtml(code)}</a>`;
+}
+
+function crossReferenceContent(locale) {
+  const text = xrefText(locale);
+  const notes = xrefNotes(locale);
+  // The workbook carries the table footnotes as ordinary last rows and the SKF / ISO cells carry
+  // Chinese parentheticals. Both are presentation, not data: the notes are rendered from
+  // cross-reference-notes.mjs and the parentheticals are rebuilt in the page's own language.
+  const isNoteRow = row => /^[注（]/.test(String(row[0]));
+  const skfCell = value => {
+    const raw = String(value);
+    if (raw === '__SKF_NONE__') return text.skfNone;
+    const match = raw.match(/^(.+?)（单元 (.+)）$/);
+    return match ? `${match[1]} ${notes.unitTemplate.replace('{code}', match[2])}` : raw;
+  };
+  const isoCell = value => {
+    const raw = String(value);
+    if (raw.endsWith('（配 UEL 内圈）')) return raw.replace('（配 UEL 内圈）', notes.isoWithUelSuffix);
+    if (raw.endsWith('（配 UK 内圈 + H 紧定套）')) return raw.replace('（配 UK 内圈 + H 紧定套）', notes.isoWithUkSuffix);
+    return raw;
+  };
+  const insertSkfCell = value => (/SKF 无对应/.test(String(value)) ? notes.skfNoneInsert : String(value));
+  // The workbook's four brand columns repeat our own model number in 88% of the 2xx rows and 100% of
+  // the 3xx rows — the note under each table already says the model numbers are interchangeable — and
+  // the SKF column of the heavy sheet holds the same placeholder in all 48 rows. They collapse into a
+  // single equivalents column, and the heavy table drops the SKF column entirely.
+  const equivalents = row => {
+    const [ours, , , fyh, nsk, ntn, koyo] = row.map(String);
+    const others = [nsk, ntn, koyo];
+    if (fyh === ours && others.every(value => value === ours)) return ours;
+    const shared = others.every(value => value === others[0]) ? others[0] : others.join(' · ');
+    return `FYH ${fyh} · NSK/NTN/KOYO ${shared}`;
+  };
+  const slimTable = (rows, withSkf, note) => {
+    // text.cols keeps its seven workbook labels, of which the first three are still rendered; the four
+    // brand labels are replaced by the merged column, which needs no translation (brand names).
+    const brands = 'FYH / NSK / NTN / KOYO';
+    const columns = withSkf ? [text.cols[0], text.cols[1], text.cols[2], brands] : [text.cols[0], text.cols[1], brands];
+    const head = columns.map(column => `<th scope="col">${escapeHtml(column)}</th>`).join('');
+    const body = rows.filter(row => !isNoteRow(row)).map(row => {
+      const cells = [
+        `<td>${xrefModelLink(locale, String(row[0]))}</td>`,
+        `<td dir="ltr">${escapeHtml(String(row[1]))}</td>`,
+        ...(withSkf ? [`<td>${escapeHtml(skfCell(row[2]))}</td>`] : []),
+        `<td dir="ltr">${escapeHtml(equivalents(row))}</td>`
+      ].join('');
+      return `<tr data-xref-row="${escapeHtml(row[0])}">${cells}</tr>`;
+    }).join('');
+    const noteHtml = note ? `<p class="xref-note">${escapeHtml(note)}</p>` : '';
+    return `<div class="table-scroll"><table class="xref-table xref-table--slim"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>${noteHtml}`;
+  };
+  const stackedTable = (rows, columns, linkFirst, formatCell) => {
+    const head = columns.map(column => `<th scope="col">${escapeHtml(column)}</th>`).join('');
+    const body = rows.map(row => {
+      const cells = row.map((cell, index) => {
+        const value = formatCell && index === formatCell.index ? formatCell.format(cell) : String(cell);
+        return `<td data-label="${escapeHtml(columns[index])}">${index === 0 && linkFirst ? xrefModelLink(locale, value) : escapeHtml(value)}</td>`;
+      }).join('');
+      return `<tr data-xref-row="${escapeHtml(row[0])}">${cells}</tr>`;
+    }).join('');
+    return `<table class="series-table"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
+  };
+  const seriesRows = XREF_SERIES.map(row => {
+    const local = text.series[row[0]] ?? [row[1], row[2], row[3], row[5]];
+    return [row[0], local[0], local[1], local[2], row[4], local[3]];
+  });
+  const insertRows = XREF_INSERTS.map(row => {
+    const local = text.inserts[row[0]] ?? [row[1], row[2], row[4]];
+    return [row[0], local[0], local[1], row[3], local[2]];
+  });
+  // The bore-size-code table is no longer rendered: the bore already sits next to every model in the
+  // two tables above, and its one extra fact (the heavy range uses the same bores with a larger
+  // outside diameter) is already part of the heavy note. Its rows and labels stay in
+  // data/cross-reference.mjs and cross-reference-i18n.mjs so the section can be reinstated without
+  // re-translating.
+  // The heavy sheet's SKF cell is the placeholder in all 48 rows, so that statement moves into the
+  // note. The localized placeholder reads "— (SKF has no 3xx heavy series)"; the dash and brackets are
+  // stripped so it can stand as its own sentence in every language.
+  const skfNoneSentence = String(text.skfNone).replace(/^\s*—\s*/, '').replace(/^\(|\)$/g, '').trim();
+  const heavyNote = `${notes.noteHeavy} ${skfNoneSentence}`;
+  // Two questions whose answers add what the page does not already say. The notes under the tables
+  // already cover the ISO interchangeability, the FYH UKP adapter sleeve and the missing SKF heavy
+  // range, so those are deliberately not repeated here as Q&A.
+  const faq = XREF_FAQ[locale] ?? XREF_FAQ.en;
+  const faqHtml = `<div class="xref-section"><h2>${escapeHtml(faq.heading)}</h2><dl class="xref-faq">${faq.items.map(([question, answer]) => `<dt>${escapeHtml(question)}</dt><dd>${escapeHtml(answer)}</dd>`).join('')}</dl></div>`;
+  // Coverage line under the title. The series lists are derived from the table data itself, so the
+  // line stays true when the owner extends the workbook. Without it a buyer whose model is absent
+  // from the table may conclude that the series is not manufactured at all.
+  const seriesList = rows => [...new Set(rows.filter(row => !isNoteRow(row)).map(row => String(row[0]).replace(/\d.*$/, '')))].join(' · ');
+  const covered = `<p class="xref-covered">${escapeHtml(text.covered).replace('{light}', `<span dir="ltr">${escapeHtml(seriesList(XREF_LIGHT))}</span>`).replace('{heavy}', `<span dir="ltr">${escapeHtml(seriesList(XREF_HEAVY))}</span>`)}</p>`;
+  return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.footer)}</p><h1 dir="ltr">${escapeHtml(text.title)}</h1><p>${escapeHtml(text.intro)}</p>${covered}</div></section>
+<section class="section section--tight"><div class="site-shell xref-page">
+<div class="xref-filter"><input id="xref-filter" type="search" placeholder="${escapeHtml(text.filter)}" aria-label="${escapeHtml(text.filter)}"></div>
+<p class="xref-download"><a class="download-link" href="/assets/nater-cross-reference.xlsx" download>${escapeHtml(text.download)}</a></p>
+<div class="xref-section"><h2>${escapeHtml(text.lightHeading)}</h2>${slimTable(XREF_LIGHT, true, notes.noteLight)}</div>
+<div class="xref-section"><h2>${escapeHtml(text.heavyHeading)}</h2>${slimTable(XREF_HEAVY, false, heavyNote)}</div>
+<div class="xref-section"><h2>${escapeHtml(text.seriesHeading)}</h2>${stackedTable(seriesRows, text.seriesCols, true, { index: 4, format: isoCell })}</div>
+<div class="xref-section"><h2>${escapeHtml(text.insertHeading)}</h2>${stackedTable(insertRows, text.insertCols, true, { index: 3, format: insertSkfCell })}</div>
+${faqHtml}
+</div></section>`;
+}
+
+// FAQ markup for the two questions shown on the cross-reference page. Google stopped showing FAQ
+// rich results for commercial sites in 2023, so this is not a snippet play: it lets search engines and
+// answer engines read the answers in the page's own language, and it matches visible content, which
+// is what the structured-data guidelines require.
+function xrefFaqSchema(locale) {
+  const faq = XREF_FAQ[locale] ?? XREF_FAQ.en;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    inLanguage: locale,
+    mainEntity: faq.items.map(([question, answer]) => ({
+      '@type': 'Question',
+      name: question,
+      acceptedAnswer: { '@type': 'Answer', text: answer }
+    }))
+  };
 }
 
 function productSchema(locale, category, product) {
@@ -1105,7 +1523,7 @@ function productContent(locale, category, product) {
 
 function contactContent(locale) {
   const label = contactLabels[locale];
-  return `<section class="page-intro"><div class="site-shell"><p class="eyebrow">${escapeHtml(label)}</p><h1>${escapeHtml(label)}</h1><p>${escapeHtml(contactLeads[locale])}</p></div></section><section class="section section--soft"><div class="site-shell public-info"><dl><div><dt>E-mail</dt><dd>${contactValue(site.email, locale, 'email')}</dd></div><div><dt>WhatsApp</dt><dd>${contactValue(site.whatsapp, locale, 'whatsapp')}</dd></div><div><dt>Facebook</dt><dd>${contactValue(site.facebook, locale, 'website', 'Facebook')}</dd></div><div><dt>${escapeHtml(companyNameLabels[locale])}</dt><dd>${contactValue(site.companyName, locale)}</dd></div><div><dt>Manufacturing Facility</dt><dd>${contactValue(site.manufacturingFacility, locale)}</dd></div></dl></div></section>`;
+  return `<section class="page-intro"><div class="site-shell"><p class="eyebrow">${escapeHtml(label)}</p><h1>${escapeHtml(label)}</h1><p>${escapeHtml(contactLeads[locale])}</p></div></section><section class="section section--soft"><div class="site-shell public-info"><dl><div><dt>${escapeHtml(contactFieldLabels.email[locale] ?? contactFieldLabels.email.en)}</dt><dd>${contactValue(site.email, locale, 'email')}</dd></div><div><dt>WhatsApp</dt><dd>${contactValue(site.whatsapp, locale, 'whatsapp')}</dd></div><div><dt>Facebook</dt><dd>${contactValue(site.facebook, locale, 'website', 'Facebook')}</dd></div><div><dt>LinkedIn</dt><dd>${contactValue(site.linkedin, locale, 'website', 'LinkedIn')}</dd></div><div><dt>${escapeHtml(companyNameLabels[locale])}</dt><dd>${contactValue(site.companyName, locale)}</dd></div><div><dt>${escapeHtml(contactFieldLabels.facility[locale] ?? contactFieldLabels.facility.en)}</dt><dd>${contactValue(site.manufacturingFacility, locale)}</dd></div></dl></div></section>`;
 }
 
 async function writePage(locale, path, html, routes) {
@@ -1129,24 +1547,51 @@ function guideArticleContent(g) {
   return `<section class="page-intro page-intro--compact"><div class="site-shell"><nav class="product-breadcrumb" aria-label="Breadcrumb"><a href="/en/">Home</a><span aria-hidden="true">/</span><a href="/en/guides/">Guides</a><span aria-hidden="true">/</span><span aria-current="page">Guide</span></nav><p class="eyebrow">Guide</p><h1>${escapeHtml(g.title)}</h1><p>${escapeHtml(g.intro)}</p></div></section><section class="section"><div class="site-shell guide-article">${body}<div class="guide-cta"><p>${escapeHtml(g.cta)}</p><a class="btn btn--primary" href="/en/contact-us/">Contact us</a></div></div></section>`;
 }
 
-function privacyContent() {
-  return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">Legal</p><h1>Privacy Policy</h1><p>How this website handles your personal data.</p></div></section><section class="section"><div class="site-shell legal-body"><h2>What we collect</h2><p>This website does not use analytics, advertising cookies or tracking scripts. We do not collect personal data automatically.</p><p>We only receive information you choose to send us — for example, when you write to our e-mail or WhatsApp to ask about products. We use that information solely to answer your enquiry and to communicate with you about the products and services you asked about.</p><h2>How we use and keep it</h2><p>We do not sell, rent or share your contact details with third parties for marketing. Access is limited to the people handling your enquiry. We keep correspondence only as long as needed to complete the business purpose you contacted us for, unless the law requires longer.</p><h2>Links to other services</h2><p>This site links to third-party services such as WhatsApp and Facebook. When you use those links, the third party processes data under its own privacy policy, which we do not control.</p><h2>Contact</h2><p>Questions about this policy can be sent to the e-mail shown in the page footer.</p></div></section>`;
-}
-
-function termsContent() {
-  return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">Legal</p><h1>Terms of Use</h1><p>The conditions for using this website.</p></div></section><section class="section"><div class="site-shell legal-body"><h2>Informational content</h2><p>This website is an informational product catalogue. It does not constitute an offer, a quotation or a warranty. Product images show appearance only and are not a source of technical parameters. Specifications, dimensions, prices and availability are confirmed in writing when you contact us.</p><h2>Business terms</h2><p>Orders, delivery, payment and quality terms are agreed individually in writing between the parties. Nothing on this website modifies those agreements.</p><h2>Intellectual property</h2><p>All text, images, design and trademarks on this site belong to their respective owners. Content may not be copied for commercial use without written permission.</p><h2>Liability</h2><p>We keep the information on this site accurate to the best of our knowledge, but it is provided as is. To the extent permitted by law, we are not liable for decisions made based on this content without confirming the details with us in writing.</p><h2>Governing law</h2><p>These terms are governed by the laws of the People's Republic of China. Any dispute will first be handled through friendly negotiation.</p></div></section>`;
+// Privacy and Terms are rendered from data/legal-i18n.mjs, which holds the source English text and
+// its 12 translations. Non-English pages carry the "English version prevails" line, so a wording
+// difference between languages can never change the meaning of the terms.
+function legalContent(locale, document) {
+  const entry = LEGAL_I18N[locale] ?? LEGAL_I18N.en;
+  const value = entry[document];
+  const body = value.blocks.map(([heading, paragraphs]) => `<h2>${escapeHtml(heading)}</h2>${paragraphs.map(paragraph => `<p>${escapeHtml(paragraph)}</p>`).join('')}`).join('');
+  const prevails = locale === 'en' ? '' : `<p class="legal-prevails">${escapeHtml(entry.prevails)}</p>`;
+  return `<section class="page-intro page-intro--compact"><div class="site-shell"><p class="eyebrow">${escapeHtml(contactFieldLabels.legal[locale] ?? contactFieldLabels.legal.en)}</p><h1>${escapeHtml(value.title)}</h1><p>${escapeHtml(value.lead)}</p></div></section><section class="section"><div class="site-shell legal-body">${body}${prevails}</div></section>`;
 }
 
 async function buildLegalPages(routes) {
-  await writePage('en', 'privacy', page({ locale: 'en', path: 'privacy', active: '', title: `Privacy Policy | ${site.brand}`, description: 'How NATER handles personal data and cookies on this website.', content: privacyContent(), enOnly: true }), routes);
-  await writePage('en', 'terms', page({ locale: 'en', path: 'terms', active: '', title: `Terms of Use | ${site.brand}`, description: 'Terms for using the NATER website and contacting us for business terms.', content: termsContent(), enOnly: true }), routes);
+  // Every locale gets its own privacy policy and terms of use. The English text is the source and
+  // remains the version that prevails; the footer links each language to its own copy.
+  for (const locale of localeCodes) {
+    const entry = LEGAL_I18N[locale] ?? LEGAL_I18N.en;
+    // The lead alone is too thin for a search result, so the description names the document and the
+    // brand as well. Both come from the same translated data, so no extra wording is needed.
+    const privacyDescription = `${entry.privacy.title} — ${entry.privacy.lead} ${site.brand}`;
+    const termsDescription = `${entry.terms.title} — ${entry.terms.lead} ${site.brand}`;
+    await writePage(locale, 'privacy', page({ locale, path: 'privacy', active: '', title: `${entry.privacy.title} | ${site.brand}`, description: privacyDescription, content: legalContent(locale, 'privacy') }), routes);
+    await writePage(locale, 'terms', page({ locale, path: 'terms', active: '', title: `${entry.terms.title} | ${site.brand}`, description: termsDescription, content: legalContent(locale, 'terms') }), routes);
+  }
 }
+// Article markup for the guides: they are the only long-form English content on the site and the
+// only pages whose schema type is Article rather than a product or a landing page.
+function guideArticleSchema(locale, guide) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: guide.title,
+    description: guide.description,
+    inLanguage: locale,
+    mainEntityOfPage: absoluteUrl(publicPath(locale, `guides/${guide.slug}`)),
+    author: { '@type': 'Organization', name: site.brand },
+    publisher: { '@type': 'Organization', name: site.brand, logo: { '@type': 'ImageObject', url: absoluteUrl('/assets/favicon.svg') } }
+  };
+}
+
 async function buildGuidesLocale(routes) {
   const loc = GUIDES_LOCALE;
   await writePage(loc, 'guides', page({ locale: loc, path: 'guides', active: 'guides', title: `Bearing Housing Guides | ${site.brand}`, description: 'Plain-language engineering guides for bearing housing selection, materials, lubrication, mounting and model numbers.', content: guidesIndexContent(), enOnly: true }), routes);
   for (const g of guides) {
     const p = `guides/${g.slug}`;
-    await writePage(loc, p, page({ locale: loc, path: p, active: 'guides', title: `${g.title} | ${site.brand}`, description: g.description, content: guideArticleContent(g), enOnly: true }), routes);
+    await writePage(loc, p, page({ locale: loc, path: p, active: 'guides', title: `${g.title} | ${site.brand}`, description: g.description, content: guideArticleContent(g), enOnly: true, schema: [organizationSchema(loc), guideArticleSchema(loc, g)] }), routes);
   }
 }
 
@@ -1155,6 +1600,8 @@ async function buildLocale(locale, routes) {
   await writePage(locale, '', page({ locale, active: 'home', title: `${home.title} | ${site.brand}`, description: home.lead, content: homeContent(locale) }), routes);
   await buildProductsLocale(locale, routes);
   await writePage(locale, 'contact-us', page({ locale, path: 'contact-us', active: 'contact', title: `${contactLabels[locale]} | ${site.brand}`, description: contactLeads[locale], content: contactContent(locale) }), routes);
+  const xref = xrefText(locale);
+  await writePage(locale, 'cross-reference', page({ locale, path: 'cross-reference', active: '', title: `${xref.title} | ${site.brand}`, description: xref.intro, content: crossReferenceContent(locale), schema: [organizationSchema(locale), xrefFaqSchema(locale)] }), routes);
 }
 
 async function buildProductsLocale(locale, routes) {
@@ -1169,13 +1616,36 @@ async function buildProductsLocale(locale, routes) {
       // Title keeps the series short name so it stays inside the ~65 character display limit.
       const seriesTitle = `${series.displayName ?? series.seriesCode} | ${localizedCategoryTitle(locale, category)} | ${site.brand}`;
       const seriesDescription = seriesPageDescription(locale, category, series);
-      await writePage(locale, seriesRoute, page({ locale, path: seriesRoute, active: 'products', title: seriesTitle, description: seriesDescription, content: seriesContent(locale, category, series), schema: seriesSchema(locale, category, series, seriesRoute) }), routes);
+      await writePage(locale, seriesRoute, page({ locale, path: seriesRoute, active: 'products', title: seriesTitle, description: seriesDescription, content: seriesContent(locale, category, series), schema: seriesSchema(locale, category, series, seriesRoute), image: series.image }), routes);
     }
   }
 }
 
 function rootRedirect() {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex, follow"><link rel="canonical" href="${absoluteUrl('/en/')}"><meta http-equiv="refresh" content="0; url=/en/"><title>${site.brand}</title></head><body><a href="/en/">English</a></body></html>`;
+}
+
+// 404 page. A static host serves this single file for every unmatched path and keeps the requested
+// URL in the address bar, so the visitor's language can be read from that URL (a mistyped /<locale>/…
+// link) or from the browser, and assets/site.js reveals the matching block below.
+//
+// Separate /<locale>/404.html files would need Vercel's legacy `routes` property to be served, and
+// that property switches the `headers` block of vercel.json off (cache and security headers silently
+// stop working), so the one-page approach keeps the correct 404 status and the headers.
+function notFoundPage() {
+  const blocks = localeCodes.map(code => {
+    const copy = NOT_FOUND_I18N[code] ?? NOT_FOUND_I18N.en;
+    const text = locales[code];
+    const categoryLinks = categories
+      .map(category => `<a href="${categoryPath(code, category)}">${escapeHtml(localizedCategoryTitle(code, category))}</a>`)
+      .join('');
+    return `<section class="not-found" data-not-found="${code}"${code === 'en' ? '' : ' hidden'}>
+<div class="site-shell"><p class="eyebrow">404</p><h1>${escapeHtml(copy.title)}</h1><p>${escapeHtml(copy.lead)}</p>
+<nav class="product-index" aria-label="${escapeHtml(text.navProducts)}"><div class="site-shell">${categoryLinks}</div></nav>
+<p class="xref-entry"><a href="${publicPath(code)}">${escapeHtml(text.navHome)}</a></p>${unitContactLine(code, null)}</div>
+</section>`;
+  }).join('');
+  return page({ locale: 'en', path: '', active: '', title: `Page not found | ${site.brand}`, description: 'The requested page does not exist. Browse the bearing unit and bearing housing series, or contact NATER directly.', content: blocks, noindex: true });
 }
 
 const productsOnly = process.argv.includes('--products-only');
@@ -1196,6 +1666,7 @@ if (productsOnly) {
   await buildLegalPages(routes);
 
   await writeFile(join(root, 'index.html'), rootRedirect(), 'utf8');
+  await writeFile(join(root, '404.html'), notFoundPage(), 'utf8');
   await rm(join(root, 'products.html'), { force: true });
   await writeFile(join(root, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${absoluteUrl('/sitemap.xml')}\n`, 'utf8');
   const buildDate = new Date().toISOString().slice(0, 10);
@@ -1206,13 +1677,13 @@ if (productsOnly) {
   await rm(output, { recursive: true, force: true });
   await mkdir(join(output, 'assets'), { recursive: true });
   await mkdir(join(output, 'assets', 'product-images'), { recursive: true });
-  const publicAssets = ['bearing-housing.webp', 'cnc-milling.webp', 'cnc-turning.webp', 'factory-floor.webp', 'factory-15.webp', 'factory-25.webp', 'custom-solutions.webp', 'favicon.svg', 'styles.css', 'site.js'];
+  const publicAssets = ['bearing-housing.webp', 'cnc-milling.webp', 'cnc-turning.webp', 'factory-floor.webp', 'factory-15.webp', 'factory-25.webp', 'custom-solutions.webp', 'favicon.svg', 'apple-touch-icon.png', 'styles.css', 'site.js', 'nater-cross-reference.xlsx'];
   const publicProductImages = [...productCatalog.categories.flatMap(category => category.series.filter(series => series.status === 'active' && series.image).map(series => series.image.src.slice(1))), ...housingGalleryImages.slice(5).map(src => src.slice(1))];
   await Promise.all([
     ...publicProductImages.map(file => copyFile(join(root, file), join(output, file))),
     ...publicAssets.map(file => copyFile(join(root, 'assets', file), join(output, 'assets', file))),
     ...localeCodes.map(locale => cp(join(root, locale), join(output, locale), { recursive: true })),
-    ...['index.html', 'robots.txt', 'sitemap.xml'].map(file => copyFile(join(root, file), join(output, file)))
+    ...['index.html', '404.html', 'robots.txt', 'sitemap.xml'].map(file => copyFile(join(root, file), join(output, file)))
   ]);
 
   console.log(`Generated V4.0 static site: ${routes.length} localized pages across ${localeCodes.length} languages.`);

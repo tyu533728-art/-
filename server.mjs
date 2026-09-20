@@ -12,6 +12,7 @@ const mimeTypes = {
   '.svg': 'image/svg+xml',
   '.txt': 'text/plain; charset=utf-8',
   '.webp': 'image/webp',
+  '.xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   '.xml': 'application/xml; charset=utf-8'
 };
 
@@ -45,8 +46,16 @@ const server = createServer(async (request, response) => {
 
   const file = await safeFile(url);
   if (!file) {
-    response.writeHead(404);
-    response.end('Not found');
+    // Mirror the static host: an unmatched path is answered with 404.html and a 404 status, but the
+    // URL the visitor typed stays in the address bar — the page reads its language from that path.
+    try {
+      const body = await readFile(resolve(root, '404.html'));
+      response.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8', 'X-Content-Type-Options': 'nosniff' });
+      response.end(request.method === 'HEAD' ? undefined : body);
+    } catch {
+      response.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+      response.end('Not found');
+    }
     return;
   }
 

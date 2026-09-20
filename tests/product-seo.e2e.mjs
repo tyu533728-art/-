@@ -11,16 +11,17 @@ const series = [
   { code: 'UCT', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UEL', image: false, category: 'pillow-block-bearing-units' },
   { code: 'UK', image: false, category: 'pillow-block-bearing-units' },
+  { code: 'UELP', image: false, category: 'pillow-block-bearing-units' },
   { code: 'UCP', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UCF', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UCFC', image: true, category: 'pillow-block-bearing-units' },
+  { code: 'UCFS', image: false, category: 'pillow-block-bearing-units' },
   { code: 'UCFL', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UCPA', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UCPH', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UCFA', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UCFB', image: true, category: 'pillow-block-bearing-units' },
-  { code: 'PBU', image: true, category: 'pillow-block-bearing-units' },
-  { code: 'MBU', image: true, category: 'pillow-block-bearing-units' },
+  { code: 'PBU', display: 'UCHA', image: true, category: 'pillow-block-bearing-units' },
   { code: 'T', image: true, category: 'bearing-housing-series' },
   { code: 'P', image: true, category: 'bearing-housing-series' },
   { code: 'F', image: true, category: 'bearing-housing-series' },
@@ -30,10 +31,9 @@ const series = [
   { code: 'PH', image: true, category: 'bearing-housing-series' },
   { code: 'FU', image: true, category: 'bearing-housing-series' },
   { code: 'FB', image: true, category: 'bearing-housing-series' },
-  { code: 'PBH', image: true, category: 'bearing-housing-series' },
-  { code: 'PAS', image: true, category: 'bearing-housing-series' },
+  { code: 'PAS', display: 'HA', image: true, category: 'bearing-housing-series' },
   { code: 'FS', image: false, category: 'bearing-housing-series' }
-].map(item => ({ ...item, name: item.code, href: `/en/products/${item.category}/${item.code.toLowerCase()}/` }));
+].map(item => ({ ...item, name: item.display ?? item.code, href: `/en/products/${item.category}/${item.code.toLowerCase()}/` }));
 const failures = [];
 
 function assert(condition, message) {
@@ -60,7 +60,11 @@ try {
       continue;
     }
     for (const item of series.filter(item => item.category === category.slug && item.image)) {
-      assert(await page.locator(`a[href="${item.href}"]`).count() === 1, `${item.name} entry is missing`);
+      // A category page links each active series twice by design: once as a card and once in the
+      // series-comparison table. The bound still fails if a series is missing or gets linked a
+      // third time, so accidental duplicates are caught.
+      const links = await page.locator(`a[href="${item.href}"]`).count();
+      assert(links >= 1 && links <= 2, `${item.name} entry count is ${links}, expected 1 (card) or 2 (card + comparison table)`);
     }
     for (const item of series.filter(item => item.category === category.slug && !item.image)) {
       assert(await page.locator(`a[href="${item.href}"]`).count() === 0, `${item.name} pending entry is visible`);
@@ -74,7 +78,11 @@ try {
       continue;
     }
     assert(response?.ok(), `${item.name} did not return HTTP 200`);
-    assert((await page.locator('h1').textContent())?.trim() === item.name, `${item.name} H1 is incorrect`);
+    // Series headings carry either the display name (UCHA, HA, FB) or the owner-confirmed
+    // descriptive ALT ("UCT wide inner ring insert bearing, set-screw locking"). The series
+    // identity must always lead the H1.
+    const heading = (await page.locator('h1').textContent())?.trim() ?? '';
+    assert(heading === item.name || heading.startsWith(`${item.name} `), `${item.name} H1 is incorrect: "${heading}"`);
     assert(await page.locator('main img').count() === 1, `${item.name} must contain exactly one image`);
     assert(await page.locator('main .catalogue-card, main .model-list, main .parameter-table').count() === 0, `${item.name} exposes model/detail content`);
   }
@@ -98,4 +106,4 @@ if (failures.length) {
   console.error(failures.join('\n'));
   process.exit(1);
 }
-console.log('PRODUCTS browser checks passed: three categories, sixteen active Series pages, two pending Series 404s, and no third-level routes.');
+console.log('PRODUCTS browser checks passed: three categories, twenty-one active Series pages, five pending Series 404s, and no third-level routes.');
