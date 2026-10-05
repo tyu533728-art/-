@@ -141,6 +141,57 @@ export function seriesBoreRange(seriesCode) {
   return SERIES_BORE_RANGE[seriesCode] ?? null;
 }
 
+// The last three digits of an ISO/JIS unit number are the bore size code: 204 = 20 mm, 205 = 25 mm,
+// 213 = 65 mm, 305 = 25 mm, 320 = 100 mm. Codes 201-203 use the ISO starting steps 12/15/17 mm.
+// Imperial models (UCP205-16 and similar) already state their size in the suffix and are left alone.
+const BORE_CODE_SPECIAL = Object.freeze({ 201: 12, 202: 15, 203: 17 });
+
+export function boreMmForModel(model) {
+  const match = /^([A-Z]+)(\d{3})(?:-\d+)?$/.exec(model);
+  if (!match) return null;
+  if (model.includes('-')) return null;
+  const code = Number(match[2]);
+  if (BORE_CODE_SPECIAL[code] !== undefined) return BORE_CODE_SPECIAL[code];
+  const step = code % 100;
+  if (step < 4) return null;
+  return 20 + (step - 4) * 5;
+}
+
+// "UCP205" -> "UCP205 (25 mm)". Models whose size the code does not state stay unchanged.
+export function modelLabelWithBore(model) {
+  const mm = boreMmForModel(model);
+  return mm === null ? model : `${model} (${mm} mm)`;
+}
+
+// The code-to-bore mapping is derived, not copied, so it is checked against the bore span the owner
+// confirmed for each series: a wrong calculation fails the build instead of reaching the site.
+export function verifySeriesBoreMapping() {
+  const issues = [];
+  for (const [seriesCode, groups] of Object.entries(SERIES_MODEL_GROUPS)) {
+    const expected = SERIES_BORE_RANGE[seriesCode];
+    if (!expected) continue;
+    const bores = [];
+    const walk = list => {
+      for (const group of list) {
+        for (const model of group.models ?? []) {
+          const mm = boreMmForModel(model);
+          if (mm !== null) bores.push(mm);
+        }
+        if (group.subgroups) walk(group.subgroups);
+      }
+    };
+    walk(groups);
+    const span = /(\d+)\s*[–-]\s*(\d+)/.exec(expected);
+    if (!bores.length || !span) continue;
+    const low = Math.min(...bores);
+    const high = Math.max(...bores);
+    if (low !== Number(span[1]) || high !== Number(span[2])) {
+      issues.push(`${seriesCode}: calculated ${low}–${high} mm but the owner confirmed ${expected}`);
+    }
+  }
+  return issues;
+}
+
 // Type differences, phrased per series so similar-looking units are not confused.
 export const FLANGE_TYPES = Object.freeze({
   UCF: 'Square four-bolt flange, no locating spigot',

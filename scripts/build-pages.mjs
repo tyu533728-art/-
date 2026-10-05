@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { categories, productCatalog, validateProductCatalog } from '../data/product-catalog.mjs';
 import { LOCALE_CODES } from '../data/product-schema.mjs';
 import { guides } from '../data/guides.mjs';
-import { flangeTypeNotes, seriesBoreRange, unitModelGroups, mountedUnitsForSeries } from '../data/mounted-units-spec.mjs';
+import { flangeTypeNotes, seriesBoreRange, unitModelGroups, mountedUnitsForSeries, modelLabelWithBore, verifySeriesBoreMapping } from '../data/mounted-units-spec.mjs';
 import { housingSeriesSpec } from '../data/bearing-housing-spec.mjs';
 import { specText } from '../data/spec-i18n.mjs';
 import { categoryIntro } from '../data/category-intro.mjs';
@@ -22,6 +22,8 @@ const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const domain = 'https://www.natermanufacture.com';
 const localeCodes = [...LOCALE_CODES];
 validateProductCatalog(productCatalog);
+const boreMappingIssues = verifySeriesBoreMapping();
+if (boreMappingIssues.length) throw new Error(`Bore size mapping does not match the confirmed series spans:\n  ${boreMappingIssues.join('\n  ')}`);
 
 const site = {
   brand: 'NATER',
@@ -1000,7 +1002,7 @@ function mountedUnitStandardNote(locale) {
 }
 
 function modelGroupListHtml(models) {
-  return `<p class="model-names" dir="ltr">${models.map(escapeHtml).join(', ')}</p>`;
+  return `<p class="model-names" dir="ltr">${models.map(model => escapeHtml(modelLabelWithBore(model))).join(', ')}</p>`;
 }
 
 // Full model range for a series, grouped by series type.

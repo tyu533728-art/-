@@ -243,7 +243,9 @@ h2 { margin-bottom: 18px; font-size: clamp(28px, 3.6vw, 44px); }
 /* Full model range list (e.g. every UCT size), grouped by series type. */
 .model-groups { display: grid; gap: 20px; margin-top: 18px; }
 .model-group h3 { margin: 0 0 8px; font-family: var(--display); font-size: 17px; font-weight: 700; line-height: 1.4; }
-.model-names { margin: 0; max-width: 900px; color: var(--ink-soft); font-size: 13.5px; line-height: 1.7; }
+/* Every model now carries its bore ("UCP205 (25 mm)"), so the list needs a narrower measure to stay
+   inside the readable line length on wide screens. */
+.model-names { margin: 0; max-width: 640px; color: var(--ink-soft); font-size: 13.5px; line-height: 1.7; }
 .model-subgroup { margin-top: 14px; }
 .model-subgroup:first-child { margin-top: 0; }
 .model-subgroup h4 { margin: 0 0 4px; font-size: 14.5px; font-weight: 700; line-height: 1.45; }
