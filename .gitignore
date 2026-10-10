@@ -3,3 +3,8 @@ dist/
 
 # Local video work files - never commit
 video-output/
+
+# Local image tooling and downloaded working files - never commit
+*.py
+*.log
+preview-images/

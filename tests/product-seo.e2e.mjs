@@ -5,17 +5,18 @@ const edge = 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe';
 const categories = [
   { name: 'Pillow Block Bearing Units', slug: 'pillow-block-bearing-units' },
   { name: 'Bearing Housing Series', slug: 'bearing-housing-series' },
-  { name: 'Custom', slug: 'custom' }
+  { name: 'Custom', slug: 'custom' },
+  { name: 'Fasteners & Hardware', slug: 'fasteners-hardware' }
 ];
 const series = [
   { code: 'UCT', image: true, category: 'pillow-block-bearing-units' },
-  { code: 'UEL', image: false, category: 'pillow-block-bearing-units' },
-  { code: 'UK', image: false, category: 'pillow-block-bearing-units' },
-  { code: 'UELP', image: false, category: 'pillow-block-bearing-units' },
+  { code: 'UEL', image: true, category: 'pillow-block-bearing-units' },
+  { code: 'UK', image: true, category: 'pillow-block-bearing-units' },
+  { code: 'UELP', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UCP', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UCF', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UCFC', image: true, category: 'pillow-block-bearing-units' },
-  { code: 'UCFS', image: false, category: 'pillow-block-bearing-units' },
+  { code: 'UCFS', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UCFL', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UCPA', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UCPH', image: true, category: 'pillow-block-bearing-units' },
@@ -32,7 +33,13 @@ const series = [
   { code: 'FU', image: true, category: 'bearing-housing-series' },
   { code: 'FB', image: true, category: 'bearing-housing-series' },
   { code: 'PAS', display: 'HA', image: true, category: 'bearing-housing-series' },
-  { code: 'FS', image: false, category: 'bearing-housing-series' }
+  { code: 'FS', image: true, category: 'bearing-housing-series' },
+  { code: 'BNSW', display: 'Bolts, Nuts, Screws & Washers', image: true, category: 'fasteners-hardware' },
+  { code: 'TRS', display: 'Threaded Rods & Studs', image: true, category: 'fasteners-hardware' },
+  { code: 'CONS', display: 'Construction Fixings', image: true, category: 'fasteners-hardware' },
+  { code: 'HTR', display: 'High-Tensile Fasteners', image: true, category: 'fasteners-hardware' },
+  { code: 'PRO', display: 'Pins, Rivets, Rings & Others', image: true, category: 'fasteners-hardware' },
+  { code: 'CST', display: 'Custom / Special Fasteners', image: true, category: 'fasteners-hardware' }
 ].map(item => ({ ...item, name: item.display ?? item.code, href: `/en/products/${item.category}/${item.code.toLowerCase()}/` }));
 const failures = [];
 
@@ -83,7 +90,13 @@ try {
     // identity must always lead the H1.
     const heading = (await page.locator('h1').textContent())?.trim() ?? '';
     assert(heading === item.name || heading.startsWith(`${item.name} `), `${item.name} H1 is incorrect: "${heading}"`);
-    assert(await page.locator('main img').count() === 1, `${item.name} must contain exactly one image`);
+    if (item.category === 'fasteners-hardware') {
+      // A fastener series keeps its one series image and adds a photo per product.
+      assert(await page.locator('main img').count() >= 1, `${item.name} is missing the series image`);
+      assert(await page.locator('main .fastener-item__photo img').count() > 0, `${item.name} is missing the product photos`);
+    } else {
+      assert(await page.locator('main img').count() === 1, `${item.name} must contain exactly one image`);
+    }
     assert(await page.locator('main .catalogue-card, main .model-list, main .parameter-table').count() === 0, `${item.name} exposes model/detail content`);
   }
 
@@ -106,4 +119,4 @@ if (failures.length) {
   console.error(failures.join('\n'));
   process.exit(1);
 }
-console.log('PRODUCTS browser checks passed: three categories, twenty-one active Series pages, five pending Series 404s, and no third-level routes.');
+console.log('PRODUCTS browser checks passed: four categories, thirty-two active Series pages, no pending Series and no third-level routes.');

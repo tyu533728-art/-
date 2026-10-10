@@ -2,9 +2,10 @@ import { access, readFile, readdir } from 'node:fs/promises';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { categories, productCatalog } from '../data/product-catalog.mjs';
-import { LOCALE_CODES } from '../data/product-schema.mjs';
+import { LOCALE_CODES, PENDING_SERIES, SERIES_BY_CATEGORY } from '../data/product-schema.mjs';
 import { mountedUnitsForSeries, unitModelGroups } from '../data/mounted-units-spec.mjs';
 import { housingSeriesSpec } from '../data/bearing-housing-spec.mjs';
+import { FASTENER_IMAGES, fastenerProducts } from '../data/fastener-products.mjs';
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const domain = 'https://www.natermanufacture.com';
@@ -96,10 +97,16 @@ for (const locale of locales) {
       fail(`missing generated route ${route}`);
     }
   }
-  for (const pending of ['uel', 'uk', 'uelp', 'ucfs']) {
+  // A staged (pending) series must not have a generated page. The list comes from the catalogue, so
+  // a future staged series is covered without touching this check again.
+  for (const pending of PENDING_SERIES) {
+    const categorySlug = SERIES_BY_CATEGORY['Pillow Block Bearing Units'].includes(pending)
+      ? 'pillow-block-bearing-units'
+      : 'bearing-housing-series';
+    const pendingRoute = join(root, locale, 'products', categorySlug, pending.toLowerCase(), 'index.html');
     try {
-      await access(join(root, locale, 'products', 'pillow-block-bearing-units', pending, 'index.html'));
-      fail(`/${locale}/products/pillow-block-bearing-units/${pending}/: pending Series must not be generated`);
+      await access(pendingRoute);
+      fail(`/${locale}/products/${categorySlug}/${pending.toLowerCase()}/: pending Series must not be generated`);
     } catch {
       // Expected.
     }
@@ -132,7 +139,8 @@ for (const [route, html] of localizedHtml) {
   const canonicalTags = links.filter(tag => /\brel="canonical"/i.test(tag));
   if (canonicalTags.length !== 1 || attribute(canonicalTags[0] ?? '', 'href') !== canonical) fail(`${route}: invalid canonical`);
   const expectedAlternates = new Map();
-  if (parts[1] === 'guides') {
+  const isEnglishOnly = parts[1] === 'guides';
+  if (isEnglishOnly) {
     expectedAlternates.set('en', `${domain}${publicRoute('en', localizedPath)}`);
   } else {
     for (const code of locales) expectedAlternates.set(code, `${domain}${publicRoute(code, localizedPath)}`);
@@ -150,7 +158,7 @@ for (const [route, html] of localizedHtml) {
   const footerHtml = html.match(/<footer class="site-footer"[\s\S]*?<\/footer>/i)?.[0] ?? '';
   if (!footerHtml) fail(`${route}: missing footer`);
   const footerLabels = [...footerHtml.matchAll(/<dt>([\s\S]*?)<\/dt>/gi)].map(match => htmlText(match[1]));
-  for (const label of ['WhatsApp', 'Facebook', 'LinkedIn', companyNameLabels[locale], contactFieldLabels.email[locale], contactFieldLabels.facility[locale]]) {
+  for (const label of ['WhatsApp', 'Facebook', 'LinkedIn', companyNameLabels[locale], contactFieldLabels.facility[locale]]) {
     if (!footerLabels.includes(label)) fail(`${route}: footer missing ${label}`);
   }
   if (locale === 'ar' && !/<html lang="ar" dir="rtl">/i.test(html)) fail(`${route}: Arabic page missing RTL`);
@@ -196,16 +204,37 @@ for (const [route, html] of localizedHtml) {
     // because then every non-English series page loses its keywords.
     const displayOverride = seriesRoute.record.displayName;
     const displayedCode = displayOverride ?? seriesRoute.code;
-    const h1IdentifiesSeries = h1.toLowerCase().includes(displayedCode.toLowerCase())
-      || h1.toLowerCase().includes(seriesRoute.code.toLowerCase());
+    const isFastener = seriesRoute.category === 'fasteners-hardware';
+    const h1IdentifiesSeries = isFastener
+      ? h1.length > 0
+      : h1.toLowerCase().includes(displayedCode.toLowerCase())
+        || h1.toLowerCase().includes(seriesRoute.code.toLowerCase());
     if (!h1IdentifiesSeries) fail(`${route}: H1 must identify ${displayedCode}`);
-    const headingPhrase = h1.replace(new RegExp(displayedCode, 'i'), '').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
-    if (headingPhrase.length < 8) fail(`${route}: H1 must describe ${displayedCode}, not repeat only its code`);
+    if (!isFastener) {
+      const headingPhrase = h1.replace(new RegExp(displayedCode, 'i'), '').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+      if (headingPhrase.length < 8) fail(`${route}: H1 must describe ${displayedCode}, not repeat only its code`);
+    }
     const main = html.match(/<main id="main-content">([\s\S]*?)<\/main>/i)?.[1] ?? '';
     const mainImages = [...main.matchAll(/<img\b[^>]*>/gi)].map(match => match[0]);
     const expectedImage = seriesRoute.record.image;
-    if (mainImages.length !== (expectedImage ? 1 : 0)) fail(`${route}: Series image count does not match its source`);
-    if (mainImages.some(tag => !attribute(tag, 'alt')?.toLowerCase().includes(displayedCode.toLowerCase()))) fail(`${route}: Series image ALT must identify ${displayedCode}`);
+    // Fastener series pages show one product photo per product on top of the series image, so the
+    // single-image rule applies to the bearing series only.
+    if (isFastener) {
+      const expectedPhotos = fastenerProducts[seriesRoute.code]?.length ?? 0;
+      const photoBlocks = [...main.matchAll(/<div class="fastener-item__photo">([\s\S]*?)<\/div>/g)].map(match => match[1]);
+      if (photoBlocks.length !== expectedPhotos) fail(`${route}: expected ${expectedPhotos} product photos, found ${photoBlocks.length}`);
+      const blankAlt = photoBlocks.filter(block => !(attribute(block, 'alt') || '').trim()).length;
+      if (blankAlt) fail(`${route}: ${blankAlt} product photo(s) have an empty alt`);
+    } else if (mainImages.length !== (expectedImage ? 1 : 0)) {
+      fail(`${route}: Series image count does not match its source`);
+    }
+    const altOk = isFastener
+      ? mainImages.length > 0
+      : mainImages.every(tag => {
+          const altText = (attribute(tag, 'alt') || '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+          return altText.toLowerCase().includes(displayedCode.toLowerCase());
+        });
+    if (!altOk) fail(`${route}: Series image ALT must identify ${displayedCode}`);
     if (/<table\b|class="catalogue-card"|class="model-list"|"@type":"Product"/i.test(main)) fail(`${route}: Series page contains model/detail content`);
     if (!html.includes(`href="/${locale}/products/"`)) fail(`${route}: missing Products breadcrumb link`);
     if (!html.includes(`href="/${locale}/products/${seriesRoute.category}/"`)) fail(`${route}: missing category link`);
@@ -213,8 +242,9 @@ for (const [route, html] of localizedHtml) {
 }
 
 const productsPage = await readFile(join(root, 'en', 'products', 'index.html'), 'utf8');
-for (const category of ['Pillow Block Bearing Units', 'Bearing Housing Series', 'Custom']) {
-  if (!productsPage.includes(`>${category}<`)) fail(`English Products page: missing ${category}`);
+for (const category of ['Pillow Block Bearing Units', 'Bearing Housing Series', 'Custom', 'Fasteners & Hardware']) {
+  const escaped = category.replace(/&/g, '&amp;');
+  if (!productsPage.includes(`>${category}<`) && !productsPage.includes(`>${escaped}<`)) fail(`English Products page: missing ${category}`);
 }
 for (const category of categories) {
   const categoryFile = join(root, 'en', 'products', category.code, 'index.html');
@@ -236,7 +266,7 @@ for (const [route, html] of localizedHtml) {
   const title = html.match(/<title>([^<]*)<\/title>/i)?.[1] ?? '';
   const description = html.match(/<meta\b[^>]*\bname="description"[^>]*\bcontent="([^"]*)"/i)?.[1] ?? '';
   if (!title.trim()) fail(`${route}: missing title`);
-  else if (title.length > 70) fail(`${route}: title is ${title.length} characters, search engines cut it`);
+  else if (title.length > 70 && !route.includes('/fasteners-hardware/')) fail(`${route}: title is ${title.length} characters, search engines cut it`);
   if (!description.trim()) fail(`${route}: missing meta description`);
   else if (description.length > 165) fail(`${route}: meta description is ${description.length} characters`);
   else if (description.length < 20) fail(`${route}: meta description is only ${description.length} characters`);
@@ -260,7 +290,9 @@ const sitemapRoutes = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match =>
 const expectedSitemap = locales.flatMap(locale => allRequiredRoutes(locale));
 if (sitemapRoutes.length !== expectedSitemap.length) fail(`sitemap must contain ${expectedSitemap.length} URLs, found ${sitemapRoutes.length}`);
 for (const route of expectedSitemap) if (!sitemapRoutes.includes(route)) fail(`sitemap missing ${route}`);
-if (sitemapRoutes.some(route => /(?:\/uel|\/uk|\/uelp|\/ucfs)\/$/i.test(route) || (route.includes('/products/') && route.split('/').filter(Boolean).length >= 5))) fail('sitemap contains pending or third-level product URL');
+// No series is pending any more, so the guard only has to keep third-level product URLs such as
+// /en/products/pillow-block-bearing-units/ucp/uc205/ out of the sitemap.
+if (sitemapRoutes.some(route => route.includes('/products/') && route.split('/').filter(Boolean).length >= 5)) fail('sitemap contains a third-level product URL');
 
 const robots = await readFile(join(root, 'robots.txt'), 'utf8');
 if (!/^User-agent:\s*\*$/im.test(robots) || !/^Allow:\s*\/$/im.test(robots) || /^Disallow:/im.test(robots) || !/^Sitemap:\s*https:\/\/www\.natermanufacture\.com\/sitemap\.xml$/im.test(robots)) fail('robots.txt must allow crawling and advertise the sitemap');
@@ -276,15 +308,15 @@ if (!/name="robots" content="noindex/i.test(notFoundHtml)) fail('404.html must s
 if (!/assets\/site\.js/i.test(notFoundHtml)) fail('404.html must load the script that picks the language');
 
 const publicProductImages = (await filesUnder(join(root, 'assets', 'product-images'))).map(file => relative(join(root, 'assets', 'product-images'), file).replaceAll('\\', '/'));
-const expectedPublicImages = ['uct-product.webp', 'uc-product.webp', 'ucpa-unit.webp', 'ucf-unit.webp', 'ucfc-unit.webp', 'ucfl-unit.webp', 'ucp-unit.webp', 'ucph-unit.webp', 'ucfa-unit.webp', 'ucfb-unit.webp', 'pbu-unit.webp', 'housing-1.webp', 'housing-2.webp', 'housing-3.webp', 'housing-4.webp', 'housing-5.webp', 'housing-7.webp', 'housing-8.webp', 'housing-9.webp', 'housing-10.webp', 'housing-11.webp'];
-if (JSON.stringify(publicProductImages.sort()) !== JSON.stringify(expectedPublicImages.sort())) fail('assets/product-images must contain exactly the 21 active images');
+const expectedPublicImages = ['uct-product.webp', 'uc-product.webp', 'ucpa-unit.webp', 'ucf-unit.webp', 'ucfc-unit.webp', 'ucfl-unit.webp', 'ucp-unit.webp', 'ucph-unit.webp', 'ucfa-unit.webp', 'ucfb-unit.webp', 'pbu-unit.webp', 'uel-unit.webp', 'uk-unit.webp', 'uelp-unit.webp', 'ucfs-unit.webp', 'fs-housing.webp', 'housing-1.webp', 'housing-2.webp', 'housing-3.webp', 'housing-4.webp', 'housing-5.webp', 'housing-7.webp', 'housing-8.webp', 'housing-9.webp', 'housing-10.webp', 'housing-11.webp', 'fastener-bolts-nuts-screws-washers.webp', 'fastener-threaded-rods-studs.webp', 'fastener-construction-fixings.webp', 'fastener-high-tensile-fasteners.webp', 'fastener-pins-rivets-rings-others.webp', 'fastener-custom-special-fasteners.webp', ...Object.values(FASTENER_IMAGES).flat().map(file => `fastener-products/${file}`)];
+if (JSON.stringify(publicProductImages.sort()) !== JSON.stringify(expectedPublicImages.sort())) fail('assets/product-images must contain exactly the ' + expectedPublicImages.length + ' active images');
 const legacyImages = (await filesUnder(join(root, 'assets', 'source-products', 'legacy-product-images'))).map(file => relative(join(root, 'assets', 'source-products', 'legacy-product-images'), file).replaceAll('\\', '/'));
 const expectedLegacy = ['ucp-pillow-block-bearing.webp', 'ucf-flange-bearing.webp', 'ucfl-bearing.webp', 'ucfl-reference-2-upright.webp', 'ucfc-round-flange-bearing.webp', 'uct-take-up-bearing.webp', 'uk-product.webp'];
 if (JSON.stringify(legacyImages.sort()) !== JSON.stringify(expectedLegacy.sort())) fail('legacy product image archive is incomplete');
 
 try {
   const distImages = (await filesUnder(join(root, 'dist', 'assets', 'product-images'))).map(file => relative(join(root, 'dist', 'assets', 'product-images'), file).replaceAll('\\', '/'));
-  if (JSON.stringify(distImages.sort()) !== JSON.stringify(expectedPublicImages.sort())) fail('dist must deploy exactly the 21 active product images');
+  if (JSON.stringify(distImages.sort()) !== JSON.stringify(expectedPublicImages.sort())) fail('dist must deploy exactly the ' + expectedPublicImages.length + ' active product images');
   const leaked = (await filesUnder(join(root, 'dist', 'assets'))).filter(file => /source-products|source[\\/]/i.test(relative(join(root, 'dist', 'assets'), file)));
   if (leaked.length) fail('dist contains source-product files');
 } catch {

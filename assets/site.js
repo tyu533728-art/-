@@ -252,3 +252,126 @@
     if (code === 'ar') document.documentElement.dir = 'rtl';
   }
 })();
+
+// ---- Mobile: collapse fastener spec details by default ----
+(function () {
+  'use strict';
+  if (window.innerWidth > 760) return;
+  var details = document.querySelectorAll('.fastener-specs[open]');
+  for (var i = 0; i < details.length; i++) details[i].removeAttribute('open');
+})();
+
+// ---- Site search ----
+(function () {
+  'use strict';
+  var input = document.getElementById('site-search-input');
+  var results = document.getElementById('site-search-results');
+  if (!input || !results) return;
+  var index = null;
+  var matches = [];
+  var activeIdx = -1;
+  // Labels follow the page language; English is the fallback.
+  var searchText = {
+    en: { series: 'Series', product: 'Product', guide: 'Guide', none: 'No results found' },
+    es: { series: 'Serie', product: 'Producto', guide: 'Guía', none: 'Sin resultados' },
+    de: { series: 'Serie', product: 'Produkt', guide: 'Anleitung', none: 'Keine Ergebnisse' },
+    fr: { series: 'Série', product: 'Produit', guide: 'Guide', none: 'Aucun résultat' },
+    pt: { series: 'Série', product: 'Produto', guide: 'Guia', none: 'Sem resultados' },
+    ar: { series: 'سلسلة', product: 'منتج', guide: 'دليل', none: 'لا توجد نتائج' },
+    tr: { series: 'Seri', product: 'Ürün', guide: 'Kılavuz', none: 'Sonuç bulunamadı' },
+    ru: { series: 'Серия', product: 'Продукт', guide: 'Руководство', none: 'Ничего не найдено' },
+    it: { series: 'Serie', product: 'Prodotto', guide: 'Guida', none: 'Nessun risultato' },
+    vi: { series: 'Dòng', product: 'Sản phẩm', guide: 'Hướng dẫn', none: 'Không có kết quả' },
+    id: { series: 'Seri', product: 'Produk', guide: 'Panduan', none: 'Tidak ada hasil' },
+    ja: { series: 'シリーズ', product: '製品', guide: 'ガイド', none: '該当する結果はありません' },
+    ko: { series: '시리즈', product: '제품', guide: '가이드', none: '검색 결과가 없습니다' }
+  };
+
+  // Detect current locale from URL path: /de/products/... -> de
+  var seg = window.location.pathname.split('/');
+  var locale = (seg.length > 1 && seg[1].length === 2) ? seg[1] : 'en';
+  var localePrefix = locale === 'en' ? '' : '/' + locale;
+  var t = searchText[locale] || searchText.en;
+
+  function resolveUrl(itemUrl) {
+    // Guide URLs start with /en/ — keep them English-only
+    if (itemUrl.indexOf('/en/') === 0) return itemUrl;
+    return localePrefix + itemUrl;
+  }
+
+  function highlight(text, query) {
+    if (!query) return escapeHtml(text);
+    var lower = text.toLowerCase();
+    var q = query.toLowerCase();
+    var idx = lower.indexOf(q);
+    if (idx === -1) return escapeHtml(text);
+    return escapeHtml(text.slice(0, idx)) + '<mark>' + escapeHtml(text.slice(idx, idx + q.length)) + '</mark>' + escapeHtml(text.slice(idx + q.length));
+  }
+
+  function escapeHtml(s) {
+    var d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  function loadIndex(callback) {
+    if (index) { callback(index); return; }
+    fetch('/assets/search-index.json')
+      .then(function (r) { return r.json(); })
+      .then(function (data) { index = data; callback(data); })
+      .catch(function () {});
+  }
+
+  function doSearch(query) {
+    query = query.trim();
+    if (!query) { results.classList.remove('is-open'); results.innerHTML = ''; matches = []; activeIdx = -1; return; }
+    var q = query.toLowerCase();
+    loadIndex(function (data) {
+      matches = data.filter(function (item) {
+        return item.name.toLowerCase().indexOf(q) !== -1 ||
+          (item.code && item.code.toLowerCase().indexOf(q) !== -1) ||
+          (item.series && item.series.toLowerCase().indexOf(q) !== -1);
+      }).slice(0, 10);
+      activeIdx = -1;
+      if (!matches.length) {
+        results.innerHTML = '<div class="site-search__empty">' + escapeHtml(t.none) + '</div>';
+      } else {
+        results.innerHTML = matches.map(function (item, i) {
+          return '<a class="site-search__item" data-idx="' + i + '" href="' + resolveUrl(item.url) + '">' +
+            '<div class="site-search__item--type">' + (t[item.t] || item.t) + '</div>' +
+            '<div class="site-search__item--name">' + highlight(item.name, query) + '</div>' +
+            (item.series ? '<div class="site-search__item--sub">' + highlight(item.series, query) + '</div>' : '') +
+            '</a>';
+        }).join('');
+      }
+      results.classList.add('is-open');
+    });
+  }
+
+  function setActive(idx) {
+    var items = results.querySelectorAll('.site-search__item');
+    for (var i = 0; i < items.length; i++) items[i].style.background = '';
+    if (idx >= 0 && items[idx]) {
+      items[idx].style.background = '#f5f0e0';
+      activeIdx = idx;
+    }
+  }
+
+  var timer = null;
+  input.addEventListener('input', function () {
+    clearTimeout(timer);
+    timer = setTimeout(function () { doSearch(input.value); }, 200);
+  });
+  input.addEventListener('focus', function () {
+    if (input.value) doSearch(input.value);
+  });
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowDown') { e.preventDefault(); setActive(Math.min(activeIdx + 1, matches.length - 1)); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(Math.max(activeIdx - 1, 0)); }
+    else if (e.key === 'Enter' && activeIdx >= 0 && matches[activeIdx]) { window.location.href = resolveUrl(matches[activeIdx].url); }
+    else if (e.key === 'Escape') { results.classList.remove('is-open'); input.blur(); }
+  });
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.site-search')) results.classList.remove('is-open');
+  });
+})();

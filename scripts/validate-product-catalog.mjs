@@ -7,7 +7,9 @@ const activeCount = productCatalog.categories.flatMap(category => category.serie
 const pendingCount = productCatalog.categories.flatMap(category => category.series).filter(series => series.status === 'pending').length;
 const modelCount = productCatalog.categories.reduce((total, category) => total + category.products.length, 0);
 
-if (PRODUCT_CATEGORIES.length !== 3 || ACTIVE_SERIES.length !== 21 || PENDING_SERIES.length !== 5 || modelCount !== 0) {
+// Frozen structure: four categories (bearings, housings, custom, fasteners) with 32 active and
+// 0 pending Series, and no model-level pages. Any intentional change must update these counts.
+if (PRODUCT_CATEGORIES.length !== 4 || ACTIVE_SERIES.length !== 32 || PENDING_SERIES.length !== 0 || modelCount !== 0) {
   throw new Error('V4.0 product catalog counts do not match the frozen structure.');
 }
 for (const category of productCatalog.categories) {

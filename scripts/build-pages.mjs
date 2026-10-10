@@ -8,6 +8,8 @@ import { flangeTypeNotes, seriesBoreRange, unitModelGroups, mountedUnitsForSerie
 import { housingSeriesSpec } from '../data/bearing-housing-spec.mjs';
 import { specText } from '../data/spec-i18n.mjs';
 import { categoryIntro } from '../data/category-intro.mjs';
+import { fastenerProducts, fastenerImageFor, FASTENER_IMAGES } from '../data/fastener-products.mjs';
+import { fastenerPhotoAlt, validateFastenerPhotoAlt } from '../data/fastener-alt-i18n.mjs';
 import { XREF_LIGHT, XREF_HEAVY, XREF_SERIES, XREF_INSERTS } from '../data/cross-reference.mjs';
 import { xrefText, validateXrefI18n } from '../data/cross-reference-i18n.mjs';
 import { xrefNotes, validateXrefNotes } from '../data/cross-reference-notes.mjs';
@@ -24,6 +26,14 @@ const localeCodes = [...LOCALE_CODES];
 validateProductCatalog(productCatalog);
 const boreMappingIssues = verifySeriesBoreMapping();
 if (boreMappingIssues.length) throw new Error(`Bore size mapping does not match the confirmed series spans:\n  ${boreMappingIssues.join('\n  ')}`);
+// One photo per product, and a localized alt for every photo in every locale.
+const fastenerPhotoIssues = [];
+for (const [code, files] of Object.entries(FASTENER_IMAGES)) {
+  const expected = fastenerProducts[code]?.length ?? 0;
+  if (files.length !== expected) fastenerPhotoIssues.push(`${code}: ${files.length} photos for ${expected} products`);
+}
+fastenerPhotoIssues.push(...validateFastenerPhotoAlt());
+if (fastenerPhotoIssues.length) throw new Error(`Fastener product photos do not match their product data:\n  ${fastenerPhotoIssues.join('\n  ')}`);
 
 const site = {
   brand: 'NATER',
@@ -146,6 +156,114 @@ const categoryNames = Object.freeze({
     id: 'Khusus',
     ja: 'カスタム',
     ko: '맞춤형'
+  },
+  'fasteners-hardware': {
+    en: 'Fasteners & Hardware',
+    es: 'Sujetadores y Herrajes',
+    de: 'Befestigungselemente & Beschläge',
+    fr: 'Fixations et Quincaillerie',
+    pt: 'Fixadores e Ferragens',
+    ar: 'مثبتات ومعدات',
+    tr: 'Bağlantı Elemanları ve Hırdavat',
+    ru: 'Крепеж и Метизы',
+    it: 'Elementi di fissaggio e Ferramenta',
+    vi: 'Vật tư và Phụ kiện lắp ráp',
+    id: 'Pengencat dan Perangkat Keras',
+    ja: 'ファスナー & ハードウェア',
+    ko: '패스너 및 하드웨어'
+  }
+});
+
+const fastenerSeriesNames = Object.freeze({
+  BNSW: {
+    en: 'Bolts, Nuts, Screws & Washers',
+    es: 'Pernos, Tuercas, Tornillos y Arandelas',
+    de: 'Schrauben, Muttern, Bolzen und Unterlegscheiben',
+    fr: 'Boulons, Écrous, Vis et Rondelles',
+    pt: 'Parafusos, Porcas e Arruelas',
+    ar: 'براغي وصواميل ومسامير وغسالات',
+    tr: 'Cıvatalar, Somunlar, Vidalar ve Pullar',
+    ru: 'Болты, Гайки, Винты и Шайбы',
+    it: 'Bulloni, Dadi, Viti e Rondelle',
+    vi: 'Bu lông, đai ốc, vít và vòng đệm',
+    id: 'Baut, Mur, Sekrup dan Ring',
+    ja: 'ボルト、ナット、ネジ、ワッシャー',
+    ko: '볼트, 너트, 나사 및 와셔'
+  },
+  TRS: {
+    en: 'Threaded Rods & Studs',
+    es: 'Varillas roscadas y Espárragos',
+    de: 'Gewindestäbe und Bolzen',
+    fr: 'Tiges filetées et Goujons',
+    pt: 'Barras roscadas e Estojos',
+    ar: 'قضبان ملولبة ومسامير',
+    tr: 'Dişli Çubuklar ve Saplamalar',
+    ru: 'Резьбовые стержни и Шпильки',
+    it: 'Barre filettate e Prigionieri',
+    vi: 'Thanh ren và Bulong đôi',
+    id: 'Batang Berulir dan Stud',
+    ja: '寸切り・スタッド',
+    ko: '전산봉 및 스터드'
+  },
+  CON: {
+    en: 'Construction Fixings',
+    es: 'Fijaciones para Construcción',
+    de: 'Bau-Befestigungen',
+    fr: 'Fixations de Construction',
+    pt: 'Fixações para Construção',
+    ar: 'مثبتات البناء',
+    tr: 'İnşaat Bağlantı Elemanları',
+    ru: 'Строительный крепеж',
+    it: 'Fissaggi per Edilizia',
+    vi: 'Đinh tán xây dựng',
+    id: 'Pengencat Konstruksi',
+    ja: '建築用ファスナー',
+    ko: '건축용 고정 부품'
+  },
+  HTR: {
+    en: 'High-Tensile Fasteners',
+    es: 'Sujetadores de Alta Resistencia',
+    de: 'Hochfeste Befestigungselemente',
+    fr: 'Fixations à Haute Résistance',
+    pt: 'Fixadores de Alta Resistência',
+    ar: 'مثبتات عالية الشد',
+    tr: 'Yüksek Mukavemetli Bağlantılar',
+    ru: 'Высокопрочный крепеж',
+    it: 'Elementi di fissaggio ad Alta Resistenza',
+    vi: 'Bu lông cường độ cao',
+    id: 'Pengencat Tarik Tinggi',
+    ja: '高力ファスナー',
+    ko: '고장력 패스너'
+  },
+  PRO: {
+    en: 'Pins, Rivets, Rings & Others',
+    es: 'Pasadores, Remaches, Anillos y Otros',
+    de: 'Stifte, Niete, Ringe und Sonstiges',
+    fr: 'Goupilles, Rivets, Anneaux et Divers',
+    pt: 'Pinos, Rebites, Anéis e Outros',
+    ar: 'دبابيس ومسامير وحلقات وأخرى',
+    tr: 'Pimler, Perçinler, Segmanlar ve Diğer',
+    ru: 'Штифты, Заклепки, Кольца и Прочее',
+    it: 'Spine, Rivetti, Anelli e Altri',
+    vi: 'Chốt, đinh tán, vòng và khác',
+    id: 'Pen, Rivet, Ring dan Lainnya',
+    ja: 'ピン、リベット、リング他',
+    ko: '핀, 리벳, 링 및 기타'
+  },
+  CST: {
+    en: 'Custom / Special Fasteners',
+    es: 'Personalizado / Especiales',
+    de: 'Sonderanfertigungen / Spezial',
+    fr: 'Personnalisé / Spécial',
+    pt: 'Personalizado / Especial',
+    ar: 'مخصص / خاص',
+    tr: 'Özel İmalat',
+    ru: 'Индивидуальный / Специальный',
+    it: 'Personalizzato / Speciale',
+    vi: 'Tùy chỉnh / Đặc biệt',
+    id: 'Khusus / Special',
+    ja: 'カスタム /特殊',
+    ko: '맞춤 / 특수'
   }
 });
 
@@ -649,13 +767,15 @@ function organizationSchema(locale) {
   const sameAs = [site.facebook, site.linkedin].filter(confirmedContactValue);
   if (sameAs.length) schema.sameAs = sameAs;
   const contactPoints = [];
-  if (confirmedContactValue(site.email)) contactPoints.push({ '@type': 'ContactPoint', contactType: 'sales', email: site.email });
   if (confirmedContactValue(site.whatsapp)) contactPoints.push({ '@type': 'ContactPoint', contactType: 'sales', telephone: site.whatsapp });
   if (contactPoints.length) schema.contactPoint = contactPoints;
   return schema;
 }
 
-function seriesDescriptiveName(locale, series) {
+function localizedSeriesName(locale, series) {
+  // Fastener sub-series have curated translations per locale.
+  const fastenerName = fastenerSeriesNames[series.seriesCode]?.[locale];
+  if (fastenerName) return fastenerName;
   // An explicit display override (UCHA, FK, Pillow Block Housing, …) wins in every locale,
   // so headings, breadcrumbs and card labels all follow it.
   if (series.displayName) return series.displayName;
@@ -695,7 +815,10 @@ function seriesDescriptor(locale, series) {
 // bearing, set-screw locking", "UCHA mounted bearing unit with insert bearing", "HA hanger type
 // bearing housing". The displayed code always comes first, so the owner's renames survive.
 function seriesHeading(locale, series) {
-  const code = series.displayName ?? series.seriesCode;
+  const isFastener = Boolean(fastenerSeriesNames[series.seriesCode]);
+  const code = isFastener
+    ? (fastenerSeriesNames[series.seriesCode]?.[locale] ?? series.displayName ?? series.seriesCode)
+    : (series.displayName ?? series.seriesCode);
   const descriptor = seriesDescriptor(locale, series);
   return descriptor ? `${code} ${descriptor}` : code;
 }
@@ -715,7 +838,7 @@ function categorySchema(locale, category, path, description) {
 }
 
 function seriesSchema(locale, category, series, path) {
-  const name = seriesDescriptiveName(locale, series);
+  const name = localizedSeriesName(locale, series);
   const url = absoluteUrl(publicPath(locale, path));
   const product = {
     '@type': 'Product',
@@ -805,14 +928,18 @@ function languageSwitcher(locale, path, enOnly = false) {
   return `<details class="language-switcher"><summary aria-label="Language">${locale.toUpperCase()}</summary><div class="language-switcher__menu">${entries}</div></details>`;
 }
 
+const searchPlaceholder = Object.freeze({
+  en: 'Search products...', es: 'Buscar productos...', de: 'Produkte suchen...',
+  fr: 'Rechercher des produits...', pt: 'Pesquisar produtos...', ar: 'ابحث عن منتجات...',
+  tr: 'Ürün ara...', ru: 'Поиск продуктов...', it: 'Cerca prodotti...',
+  vi: 'Tìm kiếm sản phẩm...', id: 'Cari produk...', ja: '製品を検索...', ko: '제품 검색...'
+});
+
 function nav(locale, path, active, enOnly = false) {
   const text = locales[locale];
-  // The guides exist in English only. The label stays the short English word: a longer marker such
-  // as "Guides (EN)" widened the header enough to push the language switcher 4px past the viewport
-  // on German phones. The warning lives in the link's title and in the English-only note that the
-  // guides pages themselves render.
   const guidesHint = locale === 'en' ? '' : ' lang="en" title="The guides are published in English only"';
-  return `<header class="site-header"><div class="site-shell header-inner"><a class="brand" href="${publicPath(locale)}" aria-label="${site.brand} home"><span class="brand-mark" aria-hidden="true"></span><span>${site.brand}<small>BEARING &amp; BEARING HOUSING</small></span></a><nav class="site-nav" aria-label="Primary navigation"><a href="${publicPath(locale)}"${active === 'home' ? ' aria-current="page"' : ''}>${escapeHtml(text.navHome)}</a><a href="${publicPath(locale, 'products')}"${active === 'products' ? ' aria-current="page"' : ''}>${escapeHtml(text.navProducts)}</a><a href="/en/guides/"${active === 'guides' ? ' aria-current="page"' : ''}${guidesHint}>Guides</a><a href="${publicPath(locale, 'contact-us')}"${active === 'contact' ? ' aria-current="page"' : ''}>${escapeHtml(contactLabels[locale])}</a></nav>${languageSwitcher(locale, path, enOnly)}</div></header>`;
+  const sp = searchPlaceholder[locale] ?? searchPlaceholder.en;
+  return `<header class="site-header"><div class="site-shell header-inner"><a class="brand" href="${publicPath(locale)}" aria-label="${site.brand} home"><span class="brand-mark" aria-hidden="true"></span><span>${site.brand}<small>BEARING &amp; BEARING HOUSING</small></span></a><nav class="site-nav" aria-label="Primary navigation"><a href="${publicPath(locale)}"${active === 'home' ? ' aria-current="page"' : ''}>${escapeHtml(text.navHome)}</a><a href="${publicPath(locale, 'products')}"${active === 'products' ? ' aria-current="page"' : ''}>${escapeHtml(text.navProducts)}</a><a href="/en/guides/"${active === 'guides' ? ' aria-current="page"' : ''}${guidesHint}>Guides</a><a href="${publicPath(locale, 'contact-us')}"${active === 'contact' ? ' aria-current="page"' : ''}>${escapeHtml(contactLabels[locale])}</a></nav><div class="site-search"><input type="search" id="site-search-input" placeholder="${escapeHtml(sp)}" aria-label="${escapeHtml(sp)}" autocomplete="off"><div id="site-search-results" class="site-search__results"></div></div>${languageSwitcher(locale, path, enOnly)}</div></header>`;
 }
 
 function confirmedContactValue(value) {
@@ -850,7 +977,7 @@ const contactFieldLabels = Object.freeze({
 });
 
 function footer(locale) {
-  return `<footer class="site-footer"><div class="site-shell footer-inner"><div><a class="brand brand--footer" href="${publicPath(locale)}"><span class="brand-mark" aria-hidden="true"></span><span>${site.brand}<small>BEARING &amp; BEARING HOUSING</small></span></a></div><dl class="footer-contact"><div><dt>${escapeHtml(contactFieldLabels.email[locale] ?? contactFieldLabels.email.en)}</dt><dd>${contactValue(site.email, locale, 'email')}</dd></div><div><dt>WhatsApp</dt><dd>${contactValue(site.whatsapp, locale, 'whatsapp')}</dd></div><div><dt>Facebook</dt><dd>${contactValue(site.facebook, locale, 'website', 'Facebook')}</dd></div><div><dt>LinkedIn</dt><dd>${contactValue(site.linkedin, locale, 'website', 'LinkedIn')}</dd></div><div><dt>${escapeHtml(companyNameLabels[locale])}</dt><dd>${contactValue(site.companyName, locale)}</dd></div><div><dt>${escapeHtml(contactFieldLabels.facility[locale] ?? contactFieldLabels.facility.en)}</dt><dd>${contactValue(site.manufacturingFacility, locale)}</dd></div></dl></div><div class="site-shell footer-bottom">© 2026 ${site.brand}. All rights reserved. <a href="${publicPath(locale, 'privacy')}">${escapeHtml((LEGAL_I18N[locale] ?? LEGAL_I18N.en).privacy.title)}</a> · <a href="${publicPath(locale, 'terms')}">${escapeHtml((LEGAL_I18N[locale] ?? LEGAL_I18N.en).terms.title)}</a> · <a href="${publicPath(locale, 'cross-reference')}">${escapeHtml(xrefText(locale).footer)}</a></div></footer>`;
+  return `<footer class="site-footer"><div class="site-shell footer-inner"><div><a class="brand brand--footer" href="${publicPath(locale)}"><span class="brand-mark" aria-hidden="true"></span><span>${site.brand}<small>BEARING &amp; BEARING HOUSING</small></span></a></div><dl class="footer-contact"><div><dt>WhatsApp</dt><dd>${contactValue(site.whatsapp, locale, 'whatsapp')}</dd></div><div><dt>Facebook</dt><dd>${contactValue(site.facebook, locale, 'website', 'Facebook')}</dd></div><div><dt>LinkedIn</dt><dd>${contactValue(site.linkedin, locale, 'website', 'LinkedIn')}</dd></div><div><dt>${escapeHtml(companyNameLabels[locale])}</dt><dd>${contactValue(site.companyName, locale)}</dd></div><div><dt>${escapeHtml(contactFieldLabels.facility[locale] ?? contactFieldLabels.facility.en)}</dt><dd>${contactValue(site.manufacturingFacility, locale)}</dd></div></dl></div><div class="site-shell footer-bottom">© 2026 ${site.brand}. All rights reserved. <a href="${publicPath(locale, 'privacy')}">${escapeHtml((LEGAL_I18N[locale] ?? LEGAL_I18N.en).privacy.title)}</a> · <a href="${publicPath(locale, 'terms')}">${escapeHtml((LEGAL_I18N[locale] ?? LEGAL_I18N.en).terms.title)}</a> · <a href="${publicPath(locale, 'cross-reference')}">${escapeHtml(xrefText(locale).footer)}</a></div></footer>`;
 }
 
 function page({ locale, path = '', active, title, description, content, schema, image, enOnly = false, noindex = false }) {
@@ -921,7 +1048,7 @@ function homeContent(locale) {
   const text = locales[locale];
   const home = homePresentation[locale];
   const productCards = categories.map(category => `<a class="category-card${category.code === 'custom' ? ' category-card--custom' : ''}" href="${categoryPath(locale, category)}">${categoryCardMedia(locale, category, 'category-card')}<h2>${escapeHtml(categoryCardCopy(locale, category).title)}</h2></a>`).join('');
-  return `<div class="brand-splash" id="brand-splash"><div class="brand-splash__stage"><p class="brand-splash__word" dir="ltr"><span class="brand-splash__accent">NATER</span>MANUFACTURE</p><p class="brand-splash__sub">${escapeHtml(heroSubline[locale])}</p></div></div><section class="home-hero"><div class="site-shell home-hero__grid"><div class="home-hero__copy"><h1>${escapeHtml(home.title)}</h1><p>${escapeHtml(home.lead)}</p></div><div class="home-hero__media">${heroImage(locale)}<img class="hero-factory" src="/assets/cnc-milling.webp" alt="${escapeHtml(imageAlts.heroFactory[locale])}" width="1280" height="853" loading="lazy"></div></div></section><section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h2>${escapeHtml(text.homeCategoriesHeading)}</h2></div><div class="category-grid">${productCards}</div></div></section>${locale === 'en' ? homeGuidesSection() : ''}<section class="section"><div class="site-shell company-intro"><div class="section-heading"><p class="eyebrow">${escapeHtml(companyIntro.eyebrow[locale])}</p><h2>${escapeHtml(companyIntro.heading[locale])}</h2></div><p class="company-intro__body">${escapeHtml(companyIntro.body[locale])}</p></div></section><section class="section"><div class="site-shell factory-banner"><div class="factory-banner__copy"><p class="eyebrow">${escapeHtml(factorySection.eyebrow[locale])}</p><h2>${escapeHtml(factorySection.heading[locale])}</h2></div><p class="factory-banner__lead">${escapeHtml(factorySection.lead[locale])}</p></div><div class="site-shell factory-spotlights"><article class="factory-spotlight"><figure class="factory-spotlight__media"><img src="/assets/factory-15.webp" alt="${escapeHtml(imageAlts.factorySpot1[locale])}" width="1280" height="960" loading="lazy"></figure><div class="factory-spotlight__body"><p class="eyebrow">${escapeHtml(factorySection.spotlights.s1.eyebrow[locale])}</p><h3>${escapeHtml(factorySection.spotlights.s1.title[locale])}</h3><p>${escapeHtml(factorySection.spotlights.s1.text[locale])}</p></div></article><article class="factory-spotlight factory-spotlight--reverse"><div class="factory-spotlight__body"><p class="eyebrow">${escapeHtml(factorySection.spotlights.s2.eyebrow[locale])}</p><h3>${escapeHtml(factorySection.spotlights.s2.title[locale])}</h3><p>${escapeHtml(factorySection.spotlights.s2.text[locale])}</p></div><figure class="factory-spotlight__media"><img src="/assets/factory-25.webp" alt="${escapeHtml(imageAlts.factorySpot2[locale])}" width="1280" height="960" loading="lazy"></figure></article></div><div class="site-shell factory-features">${factorySection.features[locale].map(feature => `<article class="factory-feature"><span class="factory-feature__mark" aria-hidden="true"></span><h3>${escapeHtml(feature.title)}</h3><p>${escapeHtml(feature.text)}</p></article>`).join('')}</div></section>`;
+  return `<div class="brand-splash" id="brand-splash"><div class="brand-splash__stage"><p class="brand-splash__word" dir="ltr"><span class="brand-splash__accent">NATER</span>MANUFACTURE</p><p class="brand-splash__sub">${escapeHtml(heroSubline[locale])}</p></div></div><section class="home-hero"><div class="site-shell home-hero__grid"><div class="home-hero__copy"><h1>${escapeHtml(home.title)}</h1><p>${escapeHtml(home.lead)}</p><div class="home-hero__actions"><a class="btn btn--primary" href="${publicPath(locale, 'contact-us')}">Get Quote</a><a class="btn btn--ghost" href="https://wa.me/${site.whatsapp.replace(/\D/g,'')}" target="_blank" rel="noopener noreferrer">WhatsApp Us</a></div></div><div class="home-hero__media">${heroImage(locale)}<img class="hero-factory" src="/assets/cnc-milling.webp" alt="${escapeHtml(imageAlts.heroFactory[locale])}" width="1280" height="853" loading="lazy"></div></div></section><section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h2>${escapeHtml(text.homeCategoriesHeading)}</h2></div><div class="category-grid">${productCards}</div></div></section>${locale === 'en' ? homeGuidesSection() : ''}<section class="section"><div class="site-shell company-intro"><div class="section-heading"><p class="eyebrow">${escapeHtml(companyIntro.eyebrow[locale])}</p><h2>${escapeHtml(companyIntro.heading[locale])}</h2></div><p class="company-intro__body">${escapeHtml(companyIntro.body[locale])}</p></div></section><section class="section"><div class="site-shell factory-banner"><div class="factory-banner__copy"><p class="eyebrow">${escapeHtml(factorySection.eyebrow[locale])}</p><h2>${escapeHtml(factorySection.heading[locale])}</h2></div><p class="factory-banner__lead">${escapeHtml(factorySection.lead[locale])}</p></div><div class="site-shell factory-spotlights"><article class="factory-spotlight"><figure class="factory-spotlight__media"><img src="/assets/factory-15.webp" alt="${escapeHtml(imageAlts.factorySpot1[locale])}" width="1280" height="960" loading="lazy"></figure><div class="factory-spotlight__body"><p class="eyebrow">${escapeHtml(factorySection.spotlights.s1.eyebrow[locale])}</p><h3>${escapeHtml(factorySection.spotlights.s1.title[locale])}</h3><p>${escapeHtml(factorySection.spotlights.s1.text[locale])}</p></div></article><article class="factory-spotlight factory-spotlight--reverse"><div class="factory-spotlight__body"><p class="eyebrow">${escapeHtml(factorySection.spotlights.s2.eyebrow[locale])}</p><h3>${escapeHtml(factorySection.spotlights.s2.title[locale])}</h3><p>${escapeHtml(factorySection.spotlights.s2.text[locale])}</p></div><figure class="factory-spotlight__media"><img src="/assets/factory-25.webp" alt="${escapeHtml(imageAlts.factorySpot2[locale])}" width="1280" height="960" loading="lazy"></figure></article></div><div class="site-shell factory-features">${factorySection.features[locale].map(feature => `<article class="factory-feature"><span class="factory-feature__mark" aria-hidden="true"></span><h3>${escapeHtml(feature.title)}</h3><p>${escapeHtml(feature.text)}</p></article>`).join('')}</div></section>`;
 }
 
 function productIndex(locale) {
@@ -1103,10 +1230,12 @@ function categoryIntroSection(locale, category) {
 function categoryContent(locale, category) {
   const text = locales[locale];
   const isHousing = category.code === 'bearing-housing-series';
+  const isFasteners = category.code === 'fasteners-hardware';
   const seriesCards = isHousing
     ? housingImageCards(locale, true)
     : (category.series ?? []).filter(series => series.status === 'active').map(series => `<a class="product-display-card" href="${seriesPath(locale, category, series)}" dir="ltr"><div class="product-display-card__image">${seriesImage(locale, series)}</div><h2 dir="ltr">${escapeHtml(series.displayName ?? series.seriesCode)}</h2></a>`).join('');
-  const content = seriesCards ? `<section class="section"><div class="site-shell"><div class="catalogue-grid">${seriesCards}</div></div></section>` : '';
+  const gridClass = isFasteners ? 'catalogue-grid catalogue-grid--5' : 'catalogue-grid';
+  const content = seriesCards ? `<section class="section"><div class="site-shell"><div class="${gridClass}">${seriesCards}</div></div></section>` : '';
   const solutions = category.code === 'custom' ? `<section class="section section--soft"><div class="site-shell custom-solutions"><div class="section-heading section-heading--center"><h2>${escapeHtml(customSolutionsText.heading[locale])}</h2></div><div class="custom-solutions__pattern" aria-hidden="true"></div><p class="custom-solutions__lead">${escapeHtml(customSolutionsText.lead[locale])}</p><div class="custom-solutions__grid">${customSolutionsText.features[locale].map(feature => `<div class="custom-solutions__item"><span class="custom-solutions__icon" aria-hidden="true"></span><h3>${escapeHtml(feature)}</h3></div>`).join('')}</div><p class="custom-solutions__note">${escapeHtml(customStatement[locale])}</p></div></section>` : '';
   // Order: header, switcher, then the series cards, and the category explanation and comparison
   // table at the bottom — on every viewport, per the owner's placement decision.
@@ -1229,15 +1358,17 @@ const seriesStructureText = Object.freeze({
 
 const SERIES_STRUCTURE_KEY = Object.freeze({
   UCT: 'insertSetScrew', UEL: 'insertEccentric', UK: 'insertTapered', UCP: 'pillowUnit',
-  // Staged series reuse the closest confirmed structure phrase; both are pending, so neither
-  // sentence is rendered until the owner supplies a product image.
+  // UELP and UCFS were staged series; both are published now and reuse the closest confirmed phrase.
   UELP: 'pillowUnit', UCFS: 'fourBoltUnit',
   UCF: 'fourBoltUnit', UCFC: 'pilotedRoundUnit', UCFL: 'twoBoltUnit', UCPA: 'tappedBaseUnit',
   UCPH: 'longShaftUnit', UCFA: 'flangedUnit', UCFB: 'flangedUnit', PBU: 'mountedUnit',
   MBU: 'pillowUnit', UC: 'insertSetScrew', FB: 'pillowHousing', FL: 'twoBoltHousing',
   P: 'pillowHousing', T: 'takeUpHousing', F: 'fourBoltHousing',
   FC: 'roundFlangeHousing', FU: 'bearingHousing', PH: 'bearingHousing', PA: 'bearingHousing',
-  PAS: 'hangerHousing'
+  PAS: 'hangerHousing',
+  // FS is a square four-bolt flange housing with a locating spigot; it reuses the confirmed
+  // four-bolt phrase so the heading never falls back to the bare code.
+  FS: 'fourBoltHousing'
 });
 
 function seriesStructureSentence(locale, series) {
@@ -1322,6 +1453,76 @@ function seriesPageDescription(locale, category, series) {
   return `${name} — ${structure} — ${facts}${localizedCategoryTitle(locale, category)} — NATER. ${seriesCta[locale]}`;
 }
 
+const fastenerUiText = Object.freeze({
+  en: { available: 'Available Products', sizeRange: 'Size range', material: 'Material', grade: 'Grade', finish: 'Finish', standard: 'Standard', ctaTitle: 'Have a drawing or sample?', ctaBody: 'Send us your specifications, drawings or samples — we manufacture non-standard fasteners to your requirements. Materials: carbon steel, alloy steel, stainless 304/316. Finish: zinc, hot-dip galvanized, Dacromet, black oxide.', ctaBtn: 'WhatsApp Us with Your Drawing' },
+  es: { available: 'Productos Disponibles', sizeRange: 'Medida', material: 'Material', grade: 'Grado', finish: 'Acabado', standard: 'Norma', ctaTitle: '¿Tiene un plano o muestra?', ctaBody: 'Envíenos sus especificaciones, planos o muestras — fabricamos sujetadores no estándar según sus requisitos.', ctaBtn: 'Envíenos su plano por WhatsApp' },
+  de: { available: 'Verfügbare Produkte', sizeRange: 'Größe', material: 'Material', grade: 'Festigkeitsklasse', finish: 'Oberfläche', standard: 'Norm', ctaTitle: 'Sie haben eine Zeichnung oder ein Muster?', ctaBody: 'Senden Sie uns Ihre Spezifikationen, Zeichnungen oder Muster — wir fertigen Sonderschrauben nach Ihren Anforderungen.', ctaBtn: 'Zeichnung per WhatsApp senden' },
+  fr: { available: 'Produits Disponibles', sizeRange: 'Dimensions', material: 'Matière', grade: 'Classe', finish: 'Finition', standard: 'Norme', ctaTitle: 'Vous avez un plan ou un échantillon ?', ctaBody: 'Envoyez-nous vos spécifications, plans ou échantillons — nous fabriquons des fixations non standard selon vos besoins.', ctaBtn: 'Envoyez votre plan via WhatsApp' },
+  pt: { available: 'Produtos Disponíveis', sizeRange: 'Dimensões', material: 'Material', grade: 'Classe', finish: 'Acabamento', standard: 'Norma', ctaTitle: 'Tem um desenho ou amostra?', ctaBody: 'Envie suas especificações, desenhos ou amostras — fabricamos fixadores não padronizados conforme sua necessidade.', ctaBtn: 'Envie seu desenho pelo WhatsApp' },
+  ar: { available: 'المنتجات المتاحة', sizeRange: 'القياس', material: 'المادة', grade: 'الدرجة', finish: 'المعالجة', standard: 'المعيار', ctaTitle: 'هل لديك رسم أو عينة؟', ctaBody: 'أرسل لنا المواصفات أو الرسومات أو العينات — نصنع مثبتات غير قياسية حسب متطلباتك.', ctaBtn: 'أرسل رسمك عبر واتساب' },
+  tr: { available: 'Mevcut Ürünler', sizeRange: 'Ölçü', material: 'Malzeme', grade: 'Dayanım Sınıfı', finish: 'Yüzey', standard: 'Standart', ctaTitle: 'Çiziminiz veya numuneniz var mı?', ctaBody: 'Spesifikasyonlarınızı, çizimlerinizi veya numunelerinizi gönderin — isteğinize göre özel bağlantı elemanları üretiyoruz.', ctaBtn: 'Çiziminizi WhatsApp\'tan gönderin' },
+  ru: { available: 'Доступные продукты', sizeRange: 'Размер', material: 'Материал', grade: 'Класс прочности', finish: 'Покрытие', standard: 'Стандарт', ctaTitle: 'Есть чертёж или образец?', ctaBody: 'Пришлите ваши спецификации, чертежи или образцы — мы изготовим нестандартный крепёж по вашим требованиям.', ctaBtn: 'Отправьте чертёж через WhatsApp' },
+  it: { available: 'Prodotti Disponibili', sizeRange: 'Misure', material: 'Materiale', grade: 'Classe', finish: 'Finitura', standard: 'Norma', ctaTitle: 'Hai un disegno o un campione?', ctaBody: 'Inviaci le tue specifiche, disegni o campioni — produciamo elementi di fissaggio non standard secondo le tue esigenze.', ctaBtn: 'Invia il disegno via WhatsApp' },
+  vi: { available: 'Sản Phẩm Có Sẵn', sizeRange: 'Kích thước', material: 'Vật liệu', grade: 'Cấp độ bền', finish: 'Bề mặt', standard: 'Tiêu chuẩn', ctaTitle: 'Bạn có bản vẽ hoặc mẫu?', ctaBody: 'Gửi cho chúng tôi thông số kỹ thuật, bản vẽ hoặc mẫu — chúng tôi sản xuất bu lông ốc phi tiêu chuẩn theo yêu cầu.', ctaBtn: 'Gửi bản vẽ qua WhatsApp' },
+  id: { available: 'Produk Tersedia', sizeRange: 'Ukuran', material: 'Material', grade: 'Kelas', finish: 'Lapisan', standard: 'Standar', ctaTitle: 'Punya gambar atau sampel?', ctaBody: 'Kirim spesifikasi, gambar atau sampel Anda — kami mem Fasteners non-standar sesuai kebutuhan.', ctaBtn: 'Kirim gambar via WhatsApp' },
+  ja: { available: '製品一覧', sizeRange: 'サイズ', material: '材質', grade: '強度区分', finish: '表面処理', standard: '規格', ctaTitle: '図面やサンプルをお持ちですか？', ctaBody: '仕様、図面、サンプルをお送りください — ご要望に応じて特殊ファスナーを製造いたします。', ctaBtn: '図面をWhatsAppで送る' },
+  ko: { available: '제품 목록', sizeRange: '사이즈', material: '소재', grade: '강도 등급', finish: '표면 처리', standard: '규격', ctaTitle: '도면이나 샘플이 있으신가요?', ctaBody: '사양, 도면 또는 샘플을 보내주세요 — 요구 사항에 맞춰 특수 패스너를 제조합니다.', ctaBtn: '도면을 WhatsApp으로 보내기' }
+});
+
+const fastenerGroupNames = Object.freeze({
+  'Bolts': { en: 'Bolts', es: 'Pernos', de: 'Schrauben', fr: 'Boulons', pt: 'Parafusos', ar: 'براغي', tr: 'Cıvatalar', ru: 'Болты', it: 'Bulloni', vi: 'Bu lông', id: 'Baut', ja: 'ボルト', ko: '볼트' },
+  'Nuts': { en: 'Nuts', es: 'Tuercas', de: 'Muttern', fr: 'Écrous', pt: 'Porcas', ar: 'صواميل', tr: 'Somunlar', ru: 'Гайки', it: 'Dadi', vi: 'Đai ốc', id: 'Mur', ja: 'ナット', ko: '너트' },
+  'Screws': { en: 'Screws', es: 'Tornillos', de: 'Schrauben', fr: 'Vis', pt: 'Parafusos', ar: 'مسامير', tr: 'Vidalar', ru: 'Винты', it: 'Viti', vi: 'Vít', id: 'Sekrup', ja: 'ネジ', ko: '나사' },
+  'Washers': { en: 'Washers', es: 'Arandelas', de: 'Unterlegscheiben', fr: 'Rondelles', pt: 'Arruelas', ar: 'غسالات', tr: 'Pullar', ru: 'Шайбы', it: 'Rondelle', vi: 'Vòng đệm', id: 'Ring', ja: 'ワッシャー', ko: '와셔' },
+  'Threaded Rods': { en: 'Threaded Rods', es: 'Varillas roscadas', de: 'Gewindestäbe', fr: 'Tiges filetées', pt: 'Barras roscadas', ar: 'قضبان ملولبة', tr: 'Dişli çubuklar', ru: 'Резьбовые стержни', it: 'Barre filettate', vi: 'Thanh ren', id: 'Batang berulir', ja: '寸切り', ko: '전산봉' },
+  'Studs': { en: 'Studs', es: 'Espárragos', de: 'Bolzen', fr: 'Goujons', pt: 'Estojos', ar: 'مسامير', tr: 'Saplamalar', ru: 'Шпильки', it: 'Prigionieri', vi: 'Bulong đôi', id: 'Stud', ja: 'スタッド', ko: '스터드' },
+  'Anchors': { en: 'Anchors', es: 'Anclajes', de: 'Dübel', fr: 'Chevilles', pt: 'Âncoras', ar: 'مثبتات', tr: 'Ankrajlar', ru: 'Анкеры', it: 'Ancoranti', vi: 'Bulông nở', id: 'Angkur', ja: 'アンカー', ko: '앵커' },
+  'Formwork': { en: 'Formwork', es: 'Encofrado', de: 'Schalung', fr: 'Coffrage', pt: 'Fôrma', ar: 'قوالب', tr: 'Kalas', ru: 'Опалубка', it: 'Casserature', vi: 'Ván khuôn', id: 'Prapatan', ja: '型枠', ko: '거푸집' },
+  'Scaffolding': { en: 'Scaffolding', es: 'Andamios', de: 'Gerüste', fr: 'Échafaudages', pt: 'Andaimes', ar: 'سقالات', tr: 'İskeleler', ru: 'Леса', it: 'Ponti', vi: 'Giàn giáo', id: 'Perancah', ja: '足場', ko: '비계' },
+  'Embedded': { en: 'Embedded', es: 'Empotrados', de: 'Einbetten', fr: 'Encastré', pt: 'Embutidos', ar: 'مدمجة', tr: 'Gömme', ru: 'Заливка', it: 'Integrati', vi: 'Chôn sẵn', id: 'Tanam', ja: '埋設', ko: '매립' },
+  'Stainless': { en: 'Stainless', es: 'Inoxidable', de: 'Edelstahl', fr: 'Inox', pt: 'Inoxidável', ar: 'ستانلس', tr: 'Paslanmaz', ru: 'Нержавеющие', it: 'Inox', vi: 'Inox', id: 'Stainless', ja: 'ステンレス', ko: '스테인리스' },
+  'Plastic': { en: 'Plastic', es: 'Plástico', de: 'Kunststoff', fr: 'Plastique', pt: 'Plástico', ar: 'بلاستيك', tr: 'Plastik', ru: 'Пластик', it: 'Plastica', vi: 'Nhựa', id: 'Plastik', ja: '樹脂', ko: '플라스틱' },
+  'Structural Bolts': { en: 'Structural Bolts', es: 'Tornillos estructurales', de: 'Stahlbauschrauben', fr: 'Boulons structuraux', pt: 'Parafusos estruturais', ar: 'مسامير إنشائية', tr: 'Yapısal cıvatalar', ru: 'Строительные болты', it: 'Bulloni strutturali', vi: 'Bu lông kết cấu', id: 'Baut struktural', ja: '建築ボルト', ko: '구조용 볼트' },
+  'Nuts & Washers': { en: 'Nuts & Washers', es: 'Tuercas y arandelas', de: 'Muttern & Scheiben', fr: 'Écrous et rondelles', pt: 'Porcas e arruelas', ar: 'صواميل وغسالات', tr: 'Somunlar ve pullar', ru: 'Гайки и шайбы', it: 'Dadi e rondelle', vi: 'Đai ốc và vòng đệm', id: 'Mur dan ring', ja: 'ナット・ワッシャー', ko: '너트 및 와셔' },
+  'Pins': { en: 'Pins', es: 'Pasadores', de: 'Stifte', fr: 'Goupilles', pt: 'Pinos', ar: 'دبابيس', tr: 'Pimler', ru: 'Штифты', it: 'Spine', vi: 'Chốt', id: 'Pen', ja: 'ピン', ko: '핀' },
+  'Rivets': { en: 'Rivets', es: 'Remaches', de: 'Nieten', fr: 'Rivets', pt: 'Rebites', ar: 'مسامير', tr: 'Perçinler', ru: 'Заклёпки', it: 'Rivetti', vi: 'Đinh tán', id: 'Rivet', ja: 'リベット', ko: '리벳' },
+  'Rings': { en: 'Rings', es: 'Anillos', de: 'Ringe', fr: 'Anneaux', pt: 'Anéis', ar: 'حلقات', tr: 'Segmanlar', ru: 'Кольца', it: 'Anelli', vi: 'Vòng', id: 'Ring', ja: 'リング', ko: '링' },
+  'Hardware': { en: 'Hardware', es: 'Herrajes', de: 'Beschläge', fr: 'Quincaillerie', pt: 'Ferragens', ar: 'معدات', tr: 'Hırdavat', ru: 'Фурнитура', it: 'Ferramenta', vi: 'Phụ kiện', id: 'Perangkat', ja: '金具', ko: '하드웨어' },
+  'Standard Custom': { en: 'Standard Custom', es: 'Estándar personalizado', de: 'Standard-Sonderanfertigung', fr: 'Standard personnalisé', pt: 'Padrão personalizado', ar: 'مخصص قياسي', tr: 'Standart özel', ru: 'Стандартное изготовление', it: 'Standard personalizzato', vi: 'Tùy chỉnh tiêu chuẩn', id: 'Kustom standar', ja: '標準カスタム', ko: '표준 맞춤' },
+  'Bespoke': { en: 'Bespoke', es: 'A medida', de: 'Maßanfertigung', fr: 'Sur mesure', pt: 'Sob medida', ar: 'خاص تماماً', tr: 'Tam özel', ru: 'Индивидуально', it: 'Su misura', vi: 'Đặc biệt', id: 'Bespoke', ja: '完全別注', ko: '완전 맞춤' }
+});
+
+function fastenerProductsSection(seriesCode, locale = 'en') {
+  const products = fastenerProducts[seriesCode];
+  if (!products || !products.length) return '';
+  const t = fastenerUiText[locale] ?? fastenerUiText.en;
+  const phone = site.whatsapp.replace(/\D/g, '');
+  const renderItem = p => {
+    const subject = `Enquiry: ${p.name} - NATER Hardware`;
+    const waLink = `https://wa.me/${phone}?text=${encodeURIComponent(subject)}`;
+    const mailLink = `mailto:${site.email}?subject=${encodeURIComponent(subject)}`;
+    const photo = p.image
+      ? `<div class="fastener-item__photo"><img src="/assets/product-images/fastener-products/${escapeHtml(p.image)}" alt="${escapeHtml(fastenerPhotoAlt(locale, p.image, p.name))}" width="800" height="800" loading="lazy" decoding="async"></div>`
+      : '';
+    return `<article class="fastener-item">${photo}<h3 dir="ltr">${escapeHtml(p.name)}</h3><details class="fastener-specs" open><summary>${escapeHtml(t.sizeRange)}: ${escapeHtml(p.spec)}</summary><dl><div><dt>${escapeHtml(t.sizeRange)}</dt><dd dir="ltr">${escapeHtml(p.spec)}</dd></div><div><dt>${escapeHtml(t.material)}</dt><dd>${escapeHtml(p.material)}</dd></div><div><dt>${escapeHtml(t.grade)}</dt><dd>${escapeHtml(p.grade)}</dd></div><div><dt>${escapeHtml(t.finish)}</dt><dd>${escapeHtml(p.finish)}</dd></div><div><dt>${escapeHtml(t.standard)}</dt><dd dir="ltr">${escapeHtml(p.standard)}</dd></div></dl></details><p class="fastener-enquire"><a href="${waLink}" target="_blank" rel="noopener noreferrer">WhatsApp</a> · <a href="${mailLink}">Email</a></p></article>`;
+  };
+  // Product photos are paired by position inside the series, so they must be attached before the
+  // products are split into their display groups.
+  const productsWithImages = products.map((p, index) => ({ ...p, image: fastenerImageFor(seriesCode, index) }));
+  const groups = {};
+  for (const p of productsWithImages) {
+    const g = p.group || 'Products';
+    if (!groups[g]) groups[g] = [];
+    groups[g].push(p);
+  }
+  const groupHtml = Object.entries(groups).map(([groupName, items]) => {
+    const groupLabel = fastenerGroupNames[groupName]?.[locale] ?? groupName;
+    return `<div class="fastener-group"><h3 class="fastener-group__title">${escapeHtml(groupLabel)}</h3><div class="fastener-grid">${items.map(renderItem).join('')}</div></div>`;
+  }).join('');
+  const ctaBlock = seriesCode === 'CST' ? `<section class="section"><div class="site-shell"><div class="custom-cta"><h2>${escapeHtml(t.ctaTitle)}</h2><p>${escapeHtml(t.ctaBody)}</p><a class="custom-cta__btn" href="https://wa.me/${phone}?text=${encodeURIComponent('Hello, I need custom fasteners manufactured to drawing.')}" target="_blank" rel="noopener noreferrer">${escapeHtml(t.ctaBtn)}</a></div></div></section>` : '';
+  return ctaBlock + `<section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${products.length} products</p><h2>${escapeHtml(t.available)}</h2></div>${groupHtml}</div></section>`;
+}
+
 function seriesContent(locale, category, series) {
   const text = locales[locale];
   const image = seriesImage(locale, series);
@@ -1342,7 +1543,8 @@ function seriesContent(locale, category, series) {
       ? housingPairSection(locale, category, series, image, labels)
       : '';
   const hero = paired || content;
-  return `<section class="page-intro page-intro--compact"><div class="site-shell">${seriesBreadcrumb(locale, category, series)}<p class="eyebrow">${escapeHtml(localizedCategoryTitle(locale, category))}</p><h1 dir="ltr">${escapeHtml(seriesHeading(locale, series))}</h1><p>${escapeHtml(lead)}</p></div></section>${productIndex(locale)}${hero}${seriesAboutBlock(locale, category, series)}`;
+  const fastenerList = category.code === 'fasteners-hardware' ? fastenerProductsSection(series.seriesCode, locale) : '';
+  return `<section class="page-intro page-intro--compact"><div class="site-shell">${seriesBreadcrumb(locale, category, series)}<p class="eyebrow">${escapeHtml(localizedCategoryTitle(locale, category))}</p><h1 dir="ltr">${escapeHtml(seriesHeading(locale, series))}</h1><p>${escapeHtml(lead)}</p></div></section>${productIndex(locale)}${hero}${fastenerList}${seriesAboutBlock(locale, category, series)}`;
 }
 
 function categoryBreadcrumb(locale, category) {
@@ -1358,7 +1560,7 @@ function seriesBreadcrumb(locale, category, series) {
 function seriesSiblings(locale, category, series) {
   const siblings = (category.series ?? []).filter(item => item.status === 'active' && item.seriesCode !== series.seriesCode);
   if (!siblings.length) return '';
-  const links = siblings.map(item => `<a href="${seriesPath(locale, category, item)}">${escapeHtml(seriesDescriptiveName(locale, item))}</a>`).join('');
+  const links = siblings.map(item => `<a href="${seriesPath(locale, category, item)}">${escapeHtml(localizedSeriesName(locale, item))}</a>`).join('');
   return `<section class="section"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(localizedCategoryTitle(locale, category))}</p><h2>${escapeHtml(moreSeriesHeading[locale])}</h2></div><nav class="series-links" aria-label="${escapeHtml(moreSeriesHeading[locale])}">${links}</nav></div></section>`;
 }
 
@@ -1525,7 +1727,7 @@ function productContent(locale, category, product) {
 
 function contactContent(locale) {
   const label = contactLabels[locale];
-  return `<section class="page-intro"><div class="site-shell"><p class="eyebrow">${escapeHtml(label)}</p><h1>${escapeHtml(label)}</h1><p>${escapeHtml(contactLeads[locale])}</p></div></section><section class="section section--soft"><div class="site-shell public-info"><dl><div><dt>${escapeHtml(contactFieldLabels.email[locale] ?? contactFieldLabels.email.en)}</dt><dd>${contactValue(site.email, locale, 'email')}</dd></div><div><dt>WhatsApp</dt><dd>${contactValue(site.whatsapp, locale, 'whatsapp')}</dd></div><div><dt>Facebook</dt><dd>${contactValue(site.facebook, locale, 'website', 'Facebook')}</dd></div><div><dt>LinkedIn</dt><dd>${contactValue(site.linkedin, locale, 'website', 'LinkedIn')}</dd></div><div><dt>${escapeHtml(companyNameLabels[locale])}</dt><dd>${contactValue(site.companyName, locale)}</dd></div><div><dt>${escapeHtml(contactFieldLabels.facility[locale] ?? contactFieldLabels.facility.en)}</dt><dd>${contactValue(site.manufacturingFacility, locale)}</dd></div></dl></div></section>`;
+  return `<section class="page-intro"><div class="site-shell"><p class="eyebrow">${escapeHtml(label)}</p><h1>${escapeHtml(label)}</h1><p>${escapeHtml(contactLeads[locale])}</p></div></section><section class="section section--soft"><div class="site-shell public-info"><dl><div><dt>WhatsApp</dt><dd>${contactValue(site.whatsapp, locale, 'whatsapp')}</dd></div><div><dt>Facebook</dt><dd>${contactValue(site.facebook, locale, 'website', 'Facebook')}</dd></div><div><dt>LinkedIn</dt><dd>${contactValue(site.linkedin, locale, 'website', 'LinkedIn')}</dd></div><div><dt>${escapeHtml(companyNameLabels[locale])}</dt><dd>${contactValue(site.companyName, locale)}</dd></div><div><dt>${escapeHtml(contactFieldLabels.facility[locale] ?? contactFieldLabels.facility.en)}</dt><dd>${contactValue(site.manufacturingFacility, locale)}</dd></div></dl></div></section>`;
 }
 
 async function writePage(locale, path, html, routes) {
@@ -1612,11 +1814,16 @@ async function buildProductsLocale(locale, routes) {
   for (const category of categories) {
     const categoryPath = `products/${category.code}`;
     const description = categorySeoDescription(locale, category);
+    const isFastenerCategory = category.code === 'fasteners-hardware';
     await writePage(locale, categoryPath, page({ locale, path: categoryPath, active: 'products', title: `${localizedCategoryTitle(locale, category)} | ${site.brand}`, description, content: categoryContent(locale, category), schema: categorySchema(locale, category, categoryPath, description) }), routes);
     for (const series of (category.series ?? []).filter(item => item.status === 'active')) {
       const seriesRoute = `${categoryPath}/${series.seriesCode.toLowerCase()}`;
       // Title keeps the series short name so it stays inside the ~65 character display limit.
-      const seriesTitle = `${series.displayName ?? series.seriesCode} | ${localizedCategoryTitle(locale, category)} | ${site.brand}`;
+      const isFastenerSeries = category.code === 'fasteners-hardware';
+      const seriesNameForTitle = isFastenerSeries
+        ? (fastenerSeriesNames[series.seriesCode]?.[locale] ?? series.displayName ?? series.seriesCode)
+        : (series.displayName ?? series.seriesCode);
+      const seriesTitle = `${seriesNameForTitle} | ${localizedCategoryTitle(locale, category)} | ${site.brand}`;
       const seriesDescription = seriesPageDescription(locale, category, series);
       await writePage(locale, seriesRoute, page({ locale, path: seriesRoute, active: 'products', title: seriesTitle, description: seriesDescription, content: seriesContent(locale, category, series), schema: seriesSchema(locale, category, series, seriesRoute), image: series.image }), routes);
     }
@@ -1675,12 +1882,33 @@ if (productsOnly) {
   const sitemapUrls = routes.map(route => `  <url><loc>${absoluteUrl(route)}</loc><lastmod>${buildDate}</lastmod></url>`).join('\n');
   await writeFile(join(root, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapUrls}\n</urlset>\n`, 'utf8');
 
+  // ---- Build search index (English product names, relative URLs without locale prefix) ----
+  const searchIndex = [];
+  for (const category of productCatalog.categories) {
+    for (const series of category.series) {
+      if (series.status !== 'active') continue;
+      const url = `/products/${category.slug}/${series.seriesCode.toLowerCase()}/`;
+      searchIndex.push({ t: 'series', code: series.seriesCode, name: series.displayName || `${series.seriesCode} Series`, url });
+      if (fastenerProducts[series.seriesCode]) {
+        for (const p of fastenerProducts[series.seriesCode]) {
+          searchIndex.push({ t: 'product', name: p.name, series: series.displayName || series.seriesCode, url });
+        }
+      }
+    }
+  }
+  for (const g of guides) {
+    searchIndex.push({ t: 'guide', name: g.title, url: `/en/guides/${g.slug}/` });
+  }
+  await writeFile(join(root, 'assets', 'search-index.json'), JSON.stringify(searchIndex), 'utf8');
+
   const output = join(root, 'dist');
   await rm(output, { recursive: true, force: true });
   await mkdir(join(output, 'assets'), { recursive: true });
   await mkdir(join(output, 'assets', 'product-images'), { recursive: true });
+  // copyFile does not create intermediate directories, so the product photo folder must exist first.
+  await mkdir(join(output, 'assets', 'product-images', 'fastener-products'), { recursive: true });
   const publicAssets = ['bearing-housing.webp', 'cnc-milling.webp', 'cnc-turning.webp', 'factory-floor.webp', 'factory-15.webp', 'factory-25.webp', 'custom-solutions.webp', 'favicon.svg', 'apple-touch-icon.png', 'styles.css', 'site.js', 'nater-cross-reference.xlsx'];
-  const publicProductImages = [...productCatalog.categories.flatMap(category => category.series.filter(series => series.status === 'active' && series.image).map(series => series.image.src.slice(1))), ...housingGalleryImages.slice(5).map(src => src.slice(1))];
+  const publicProductImages = [...productCatalog.categories.flatMap(category => category.series.filter(series => series.status === 'active' && series.image).map(series => series.image.src.slice(1))), ...housingGalleryImages.slice(5).map(src => src.slice(1)), ...Object.values(FASTENER_IMAGES).flat().map(file => `assets/product-images/fastener-products/${file}`)];
   await Promise.all([
     ...publicProductImages.map(file => copyFile(join(root, file), join(output, file))),
     ...publicAssets.map(file => copyFile(join(root, 'assets', file), join(output, 'assets', file))),

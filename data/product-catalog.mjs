@@ -14,6 +14,11 @@ const confirmedImages = Object.freeze({
   UCFB: image('/assets/product-images/ucfb-unit.webp', 800, 800),
   PBU: image('/assets/product-images/pbu-unit.webp', 800, 800),
   UC: image('/assets/product-images/uc-product.webp', 800, 800),
+  // Photos supplied by the owner on 2026-10-09; these five series were pending until now.
+  UEL: image('/assets/product-images/uel-unit.webp', 800, 800),
+  UK: image('/assets/product-images/uk-unit.webp', 800, 800),
+  UELP: image('/assets/product-images/uelp-unit.webp', 800, 800),
+  UCFS: image('/assets/product-images/ucfs-unit.webp', 800, 800),
   FB: image('/assets/product-images/housing-1.webp', 900, 1000),
   FL: image('/assets/product-images/housing-2.webp', 900, 1000),
   P: image('/assets/product-images/housing-3.webp', 900, 1000),
@@ -23,7 +28,16 @@ const confirmedImages = Object.freeze({
   FU: image('/assets/product-images/housing-8.webp', 900, 1000),
   PH: image('/assets/product-images/housing-9.webp', 900, 1000),
   PA: image('/assets/product-images/housing-10.webp', 900, 1000),
-  PAS: image('/assets/product-images/housing-11.webp', 900, 1000)
+  PAS: image('/assets/product-images/housing-11.webp', 900, 1000),
+  FS: image('/assets/product-images/fs-housing.webp', 900, 900),
+  BNSW: image('/assets/product-images/fastener-bolts-nuts-screws-washers.webp', 800, 800),
+  TRS: image('/assets/product-images/fastener-threaded-rods-studs.webp', 800, 800),
+  // CONS, not CON: "con" is a reserved device name on Windows, where git then cannot index the
+  // generated /cons/-style directory at all. The code is only used to build the URL.
+  CONS: image('/assets/product-images/fastener-construction-fixings.webp', 800, 800),
+  HTR: image('/assets/product-images/fastener-high-tensile-fasteners.webp', 800, 800),
+  PRO: image('/assets/product-images/fastener-pins-rivets-rings-others.webp', 800, 800),
+  CST: image('/assets/product-images/fastener-custom-special-fasteners.webp', 800, 800)
 });
 
 const englishAlts = Object.freeze({
@@ -54,7 +68,13 @@ const englishAlts = Object.freeze({
   PA: 'PA bearing housing',
   // Published as HA on the site; the alternative text must use the displayed code.
   PAS: 'HA hanger type bearing housing',
-  FS: 'FS square flange with spigot housing'
+  FS: 'FS square flange with spigot housing',
+  BNSW: 'Bolts, Nuts, Screws & Washers - complete industrial fastening range',
+  TRS: 'Threaded Rods & Studs - continuous threaded bar and double-end studs',
+  CONS: 'Construction Fixings - anchors, scaffold hardware and formwork ties',
+  HTR: 'High-Tensile Fasteners - structural bolts and nuts grade 8.8 and above',
+  PRO: 'Pins, Rivets, Rings & Others - dowels, circlips, rivets and assorted hardware',
+  CST: 'Custom / Special Fasteners - non-standard made-to-order anchor bolts and hardware'
 });
 
 export function userConfirmedSeries(category, seriesCode, seriesImage = null, displayName = null) {
@@ -80,6 +100,8 @@ export function userConfirmedSeries(category, seriesCode, seriesImage = null, di
 
 const pillowBlockBearingUnits = PRODUCT_CATEGORIES[0];
 const bearingHousingSeries = PRODUCT_CATEGORIES[1];
+const customCategory = PRODUCT_CATEGORIES[2];
+const fastenersCategory = PRODUCT_CATEGORIES[3];
 
 export const productCatalog = {
   schemaVersion: '4.0.0',
@@ -90,16 +112,13 @@ export const productCatalog = {
       images: [],
       series: [
         userConfirmedSeries(pillowBlockBearingUnits, 'UCT', confirmedImages.UCT),
-        userConfirmedSeries(pillowBlockBearingUnits, 'UEL'),
-        userConfirmedSeries(pillowBlockBearingUnits, 'UK'),
-        // Staged from the owner's cross-reference workbook (UELP204–213). No image yet, so the
-        // series stays pending: the data is ready and one image activates the page.
-        userConfirmedSeries(pillowBlockBearingUnits, 'UELP'),
+        userConfirmedSeries(pillowBlockBearingUnits, 'UEL', confirmedImages.UEL),
+        userConfirmedSeries(pillowBlockBearingUnits, 'UK', confirmedImages.UK),
+        userConfirmedSeries(pillowBlockBearingUnits, 'UELP', confirmedImages.UELP),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCP', confirmedImages.UCP),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCF', confirmedImages.UCF),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCFC', confirmedImages.UCFC),
-        // Staged from the owner's cross-reference workbook (UCFS305–312); pending until an image.
-        userConfirmedSeries(pillowBlockBearingUnits, 'UCFS'),
+        userConfirmedSeries(pillowBlockBearingUnits, 'UCFS', confirmedImages.UCFS),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCFL', confirmedImages.UCFL),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCPA', confirmedImages.UCPA),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCPH', confirmedImages.UCPH),
@@ -120,13 +139,28 @@ export const productCatalog = {
       publish: true
     },
     {
-      category: 'Custom',
+      category: customCategory,
       slug: 'custom',
       images: [],
       series: [],
       products: [],
       publish: true,
       statement: 'Custom non-standard size products.'
+    },
+    {
+      category: fastenersCategory,
+      slug: 'fasteners-hardware',
+      images: [],
+      series: [
+        userConfirmedSeries(fastenersCategory, 'BNSW', confirmedImages.BNSW, 'Bolts, Nuts, Screws & Washers'),
+        userConfirmedSeries(fastenersCategory, 'TRS', confirmedImages.TRS, 'Threaded Rods & Studs'),
+        userConfirmedSeries(fastenersCategory, 'CONS', confirmedImages.CONS, 'Construction Fixings'),
+        userConfirmedSeries(fastenersCategory, 'HTR', confirmedImages.HTR, 'High-Tensile Fasteners'),
+        userConfirmedSeries(fastenersCategory, 'PRO', confirmedImages.PRO, 'Pins, Rivets, Rings & Others'),
+        userConfirmedSeries(fastenersCategory, 'CST', confirmedImages.CST, 'Custom / Special Fasteners')
+      ],
+      products: [],
+      publish: true
     }
   ],
   retainedSourceSeries: [],
