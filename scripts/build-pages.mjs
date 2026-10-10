@@ -1907,7 +1907,8 @@ if (productsOnly) {
   await mkdir(join(output, 'assets', 'product-images'), { recursive: true });
   // copyFile does not create intermediate directories, so the product photo folder must exist first.
   await mkdir(join(output, 'assets', 'product-images', 'fastener-products'), { recursive: true });
-  const publicAssets = ['bearing-housing.webp', 'cnc-milling.webp', 'cnc-turning.webp', 'factory-floor.webp', 'factory-15.webp', 'factory-25.webp', 'custom-solutions.webp', 'favicon.svg', 'apple-touch-icon.png', 'styles.css', 'site.js', 'nater-cross-reference.xlsx'];
+  // search-index.json is generated above and fetched by assets/site.js; it must ship with the site.
+  const publicAssets = ['bearing-housing.webp', 'cnc-milling.webp', 'cnc-turning.webp', 'factory-floor.webp', 'factory-15.webp', 'factory-25.webp', 'custom-solutions.webp', 'favicon.svg', 'apple-touch-icon.png', 'styles.css', 'site.js', 'nater-cross-reference.xlsx', 'search-index.json'];
   const publicProductImages = [...productCatalog.categories.flatMap(category => category.series.filter(series => series.status === 'active' && series.image).map(series => series.image.src.slice(1))), ...housingGalleryImages.slice(5).map(src => src.slice(1)), ...Object.values(FASTENER_IMAGES).flat().map(file => `assets/product-images/fastener-products/${file}`)];
   await Promise.all([
     ...publicProductImages.map(file => copyFile(join(root, file), join(output, file))),
