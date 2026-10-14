@@ -837,18 +837,13 @@ function categorySchema(locale, category, path, description) {
   ];
 }
 
+// Deliberately no Product markup here. These pages are a catalogue of series rather than a
+// shoppable offer, so Google's product-snippet requirements (offers, review or aggregateRating)
+// can never be met honestly, and every crawled series page was landing in Search Console as a
+// severe error. Organization plus the breadcrumb stay, which is the page identity that applies.
 function seriesSchema(locale, category, series, path) {
   const name = localizedSeriesName(locale, series);
   const url = absoluteUrl(publicPath(locale, path));
-  const product = {
-    '@type': 'Product',
-    name,
-    category: localizedCategoryTitle(locale, category),
-    brand: { '@type': 'Brand', name: site.brand },
-    url,
-    description: seriesPageDescription(locale, category, series)
-  };
-  if (series.image) product.image = [absoluteUrl(series.image.src)];
   return [
     organizationSchema(locale),
     {
@@ -859,8 +854,7 @@ function seriesSchema(locale, category, series, path) {
         { '@type': 'ListItem', position: 3, name: localizedCategoryTitle(locale, category), item: absoluteUrl(categoryPath(locale, category)) },
         { '@type': 'ListItem', position: 4, name, item: url }
       ]
-    },
-    product
+    }
   ];
 }
 
@@ -1700,22 +1694,8 @@ function xrefFaqSchema(locale) {
   };
 }
 
-function productSchema(locale, category, product) {
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: product.code,
-    sku: product.code,
-    model: product.code,
-    category: localizedCategoryTitle(locale, category),
-    brand: { '@type': 'Brand', name: site.brand },
-    url: absoluteUrl(productPath(locale, category, product)),
-    image: product.images.map(image => absoluteUrl(image.src)),
-    additionalProperty: product.technical.map(([name, value]) => ({ '@type': 'PropertyValue', name, value })),
-    description: productDescription(locale, product)
-  };
-  return schema;
-}
+// productSchema() was removed together with the product markup: no model-level page is ever
+// generated, so the function had no caller left.
 
 function productContent(locale, category, product) {
   const text = locales[locale];
