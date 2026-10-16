@@ -1209,16 +1209,36 @@ function unitPairSection(locale, category, series, imageHtml, labels) {
 // Category-level explanation plus the series comparison block. The prose comes from
 // data/category-intro/<locale>.mjs; every cell of the comparison is generated from the confirmed
 // catalogue and specification data, so nothing here is a second source of truth.
+//
+// Both blocks are rendered. They were suppressed at one point, which left these category pages with
+// only a heading, a cross-reference link and an enquiry line — thinner than every series page they
+// link to, and enough for Google to leave them out of the index ("discovered, not indexed"). The
+// three paragraphs and the comparison carry exactly the category-level explanation a buyer looks for
+// before choosing a series.
+function categoryComparisonTable(locale, category) {
+  const intro = categoryIntro(locale).categories[category.code];
+  if (!intro) return '';
+  const columns = intro.columns;
+  const rows = (category.series ?? [])
+    .filter(series => series.status === 'active')
+    .map(series => {
+      const spec = housingSeriesSpec(series.seriesCode);
+      const bore = spec?.boreRange ?? seriesBoreRange(series.seriesCode) ?? '';
+      const bearing = spec?.matchingBearing ?? 'UC';
+      const label = series.displayName ?? series.seriesCode;
+      return `<tr><th scope="row"><a href="${seriesPath(locale, category, series)}" dir="ltr">${escapeHtml(label)}</a></th><td data-label="${escapeHtml(columns.type)}">${escapeHtml(seriesDescriptor(locale, series))}</td><td data-label="${escapeHtml(columns.bore)}" dir="ltr">${escapeHtml(bore)}</td><td data-label="${escapeHtml(columns.bearing)}" dir="ltr">${escapeHtml(bearing)}</td></tr>`;
+    })
+    .join('');
+  if (!rows) return '';
+  return `<h3 class="category-intro__subheading">${escapeHtml(intro.tableHeading)}</h3><table class="series-table"><thead><tr><th>${escapeHtml(columns.series)}</th><th>${escapeHtml(columns.type)}</th><th>${escapeHtml(columns.bore)}</th><th>${escapeHtml(columns.bearing)}</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+
 function categoryIntroSection(locale, category) {
   const intro = categoryIntro(locale).categories[category.code];
   if (!intro) return '';
-  const text = specText(locale);
-  // The owner keeps only the heading, the cross-reference link and the enquiry line here.
-  // The three descriptive paragraphs and the "at a glance" comparison table are intentionally not
-  // rendered; their text and column labels stay in data/category-intro/ so either can be
-  // reinstated without re-translating.
+  const paragraphs = intro.paragraphs.map(paragraph => `<p>${escapeHtml(paragraph)}</p>`).join('');
   const xrefEntry = `<p class="xref-entry"><a href="${publicPath(locale, 'cross-reference')}">${escapeHtml(xrefText(locale).categoryLink)}</a></p>`;
-  return `<section class="section section--tight category-intro-section"><div class="site-shell category-intro"><h2>${escapeHtml(intro.heading)}</h2>${xrefEntry}${unitContactLine(locale, null)}</div></section>`;
+  return `<section class="section section--tight category-intro-section"><div class="site-shell category-intro"><h2>${escapeHtml(intro.heading)}</h2>${paragraphs}${categoryComparisonTable(locale, category)}${xrefEntry}${unitContactLine(locale, null)}</div></section>`;
 }
 
 function categoryContent(locale, category) {

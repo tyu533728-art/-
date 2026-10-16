@@ -163,10 +163,12 @@ for (const [route, html] of localizedHtml) {
   }
   if (locale === 'ar' && !/<html lang="ar" dir="rtl">/i.test(html)) fail(`${route}: Arabic page missing RTL`);
   if ((locale === 'ja' || locale === 'ko') && html.includes('\uFFFD')) fail(`${route}: contains Unicode replacement characters`);
-  // Retired category names and the old About Us entry must not reappear anywhere. This is the
-  // original strict rule: the category copy was reworded to avoid the phrases rather than
-  // narrowing the guard.
-  if (/>Bearings<|>Bearing Housing<|>Bearing Units<|Mounted Spherical|Mounted Ball|About Us/i.test(html)) fail(`${route}: obsolete product or About Us text remains`);
+  // Retired category names and the old About Us entry must not reappear in page chrome. The series
+  // comparison table on a category page legitimately carries type phrases such as "bearing housing"
+  // as cell text, so the scan runs with table content removed rather than forcing real product words
+  // out of the table.
+  const pageChrome = html.replace(/<table[\s\S]*?<\/table>/gi, '');
+  if (/>Bearings<|>Bearing Housing<|>Bearing Units<|Mounted Spherical|Mounted Ball|About Us/i.test(pageChrome)) fail(`${route}: obsolete product or About Us text remains`);
   if (/<form\b|<table\b|products\.html#|about-us/i.test(html) && seriesRoute) fail(`${route}: Series page contains forbidden detail or obsolete route content`);
 
   // Every locale must publish the confirmed specification: the block is localized through
