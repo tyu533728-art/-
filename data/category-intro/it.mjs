@@ -21,6 +21,26 @@ export default Object.freeze({
       ],
       tableHeading: 'Le scatole in breve',
       columns: { series: 'Scatola', type: 'Tipo', bore: 'Alesaggio', bearing: 'Cuscinetto abbinato' }
+    },
+    custom: {
+      heading: 'Particolari su misura',
+      paragraphs: [
+        'Non ogni macchina può tornare in servizio con un pezzo di catalogo. Quando un sopporto, una boccola d’albero, una sede di cuscinetto o una staffa di montaggio deve adattarsi a un telaio già esistente, lo produciamo su vostro disegno o da un campione che ci inviate, nella stessa ghisa grigia HT200, ghisa sferoidale, acciaio o acciaio inox della gamma standard.',
+        'Il lavoro parte da un disegno 2D o da un modello 3D e quotiamo il modello o l’attrezzatura separatamente dai pezzi, così un ordine ripetuto non la paga due volte. Gli ordini tipici vanno da un singolo getto di ricambio ad alcune migliaia di pezzi all’anno, in lotti che seguono il vostro programma di montaggio e non il nostro. Le tolleranze seguono il disegno; le superfici sono verniciate, zincate, brunite o lasciate grezze come indicato.',
+        'Per quotare con precisione servono tre cose: un disegno o un campione con le quote critiche, il materiale con il trattamento superficiale e la quantità annua con la data della prima consegna. Se avete solo il pezzo rotto, inviate fotografie accanto a un righello e confermeremo quali quote se ne possono ricavare prima che ordiniate un disegno.'
+      ],
+      tableHeading: 'Cosa serve per quotare',
+      columns: { series: 'Voce', type: 'Dettaglio', bore: 'Valore', bearing: 'Nota' }
+    },
+    'fasteners-hardware': {
+      heading: 'Elementi di fissaggio e ferramenta',
+      paragraphs: [
+        'Accanto alla gamma di cuscinetti forniamo gli elementi di fissaggio che tengono insieme una macchina: bulloni esagonali, dadi, rondelle, barre filettate, ancoranti, set ad alta resistenza, perni, rivetti e anelli di arresto. Lo stock copre le misure metriche comuni in classe 4.8, 8.8 e 10.9, in acciaio zincato, zincato a caldo e inossidabile.',
+        'Sei serie coprono la gamma. Bulloni, dadi, viti e rondelle coprono il montaggio generale; le barre filettate e i prigionieri sono tagliati a misura per serraggio, ancoraggio e casseforme; gli elementi da costruzione coprono ancoranti, tiranti per casseforme e morsetti per ponteggi; gli elementi ad alta resistenza servono giunti strutturali e di macchine pesanti; perni, rivetti e anelli coprono la minuteria; e la serie speciale copre il pezzo non standard che solo un disegno descrive.',
+        'Ogni articolo è pubblicato con il suo intervallo di specifica, materiale, classe di resistenza, trattamento superficiale e la norma seguita, così un sostituto può essere confrontato con l’originale prima del montaggio. Inviate l’articolo, la misura, la classe e la quantità e quotiamo; i container misti per noi sono la norma, non l’eccezione.'
+      ],
+      tableHeading: 'Serie di fissaggio in sintesi',
+      columns: { series: 'Serie', type: 'Tipo', bore: 'Intervallo', bearing: 'Norma' }
     }
   }
 });

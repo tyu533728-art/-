@@ -29,6 +29,26 @@ export default Object.freeze({
       ],
       tableHeading: 'Housings at a glance',
       columns: { series: 'Housing', type: 'Type', bore: 'Bore range', bearing: 'Matching bearing' }
+    },
+    custom: {
+      heading: 'Made-to-order parts',
+      paragraphs: [
+        'Not every machine can be put back into service with a catalogue part. When a housing, a shaft sleeve, a bearing seat or a mounting bracket has to fit a frame that already exists, we produce it to your drawing or from a sample you send, in the same HT200 grey cast iron, ductile iron, steel or stainless steel as the standard range.',
+        'Work starts from a 2D drawing or a 3D model and we quote the pattern or tooling separately from the parts, so a repeat order never pays for it twice. Typical jobs run from one replacement casting to a few thousand pieces a year, in batches that suit your assembly schedule rather than ours. Tolerances follow the drawing, and surfaces are painted, zinc plated, blackened or left bare as you specify.',
+        'To quote accurately we need three things: a drawing or a sample showing the critical dimensions, the material with any surface treatment, and the annual quantity with the first delivery date. If all you have is a broken part, send photographs next to a ruler and we will confirm which dimensions can be worked from it before you commit to a drawing.'
+      ],
+      tableHeading: 'What we need to quote',
+      columns: { series: 'Item', type: 'Detail', bore: 'Value', bearing: 'Note' }
+    },
+    'fasteners-hardware': {
+      heading: 'Fasteners and hardware',
+      paragraphs: [
+        'Alongside the bearing range we supply the fasteners that hold a machine together: hex bolts, nuts, washers, threaded rods, anchors, high-tensile sets, pins, rivets and retaining rings. Stock covers the common metric sizes in property class 4.8, 8.8 and 10.9, in zinc-plated, hot-dip galvanised and stainless steel.',
+        'Six series cover the range. Bolts, nuts, screws and washers handle general assembly work; threaded rods and studs are cut to length for clamping, anchoring and formwork; construction fixings cover anchors, formwork ties and scaffold clamps; high-tensile fasteners serve structural and heavy machinery joints; pins, rivets and retaining rings close the small-parts gap; and the special series covers the non-standard item that only a drawing describes.',
+        'Every item is published with its specification range, material, property class, surface treatment and the standard it follows, so a substitute can be checked against the original before it is fitted. Send the item, the size, the grade and the quantity and we will quote; mixed containers are normal for us rather than an exception.'
+      ],
+      tableHeading: 'Fastener series at a glance',
+      columns: { series: 'Series', type: 'Type', bore: 'Range', bearing: 'Standard' }
     }
   }
 });

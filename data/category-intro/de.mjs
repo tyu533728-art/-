@@ -21,6 +21,26 @@ export default Object.freeze({
       ],
       tableHeading: 'Gehäuse im Überblick',
       columns: { series: 'Gehäuse', type: 'Bauart', bore: 'Bohrungsbereich', bearing: 'Passendes Lager' }
+    },
+    custom: {
+      heading: 'Sonderanfertigungen',
+      paragraphs: [
+        'Nicht jede Maschine lässt sich mit einem Katalogteil wieder in Betrieb nehmen. Wenn ein Gehäuse, eine Wellenbuchse, ein Lagersitz oder ein Montagewinkel in ein bereits vorhandenes Gestell passen muss, fertigen wir es nach Ihrer Zeichnung oder nach einem Muster, das Sie uns senden – im gleichen HT200-Grauguss, Sphäroguss, Stahl oder Edelstahl wie die Standardreihe.',
+        'Die Arbeit beginnt mit einer 2D-Zeichnung oder einem 3D-Modell; Modell- oder Werkzeugkosten berechnen wir getrennt von den Teilen, damit eine Wiederholbestellung sie nicht erneut bezahlt. Übliche Aufträge reichen von einem einzelnen Ersatzguss bis zu einigen tausend Stück pro Jahr, in Losgrößen, die zu Ihrem Montageplan passen und nicht zu unserem. Die Toleranzen folgen der Zeichnung; Oberflächen werden lackiert, verzinkt, gebräunt oder blank geliefert, wie angegeben.',
+        'Für ein genaues Angebot brauchen wir drei Dinge: eine Zeichnung oder ein Muster mit den kritischen Maßen, das Material mit der Oberflächenbehandlung und die Jahresmenge mit dem ersten Liefertermin. Wenn nur ein defektes Teil vorliegt, senden Sie Fotos neben einem Lineal, und wir bestätigen, welche Maße sich daraus ableiten lassen, bevor Sie eine Zeichnung beauftragen.'
+      ],
+      tableHeading: 'Was wir zum Angebot brauchen',
+      columns: { series: 'Position', type: 'Angabe', bore: 'Wert', bearing: 'Hinweis' }
+    },
+    'fasteners-hardware': {
+      heading: 'Verbindungselemente und Beschläge',
+      paragraphs: [
+        'Ergänzend zur Lagerreihe liefern wir die Verbindungselemente, die eine Maschine zusammenhalten: Sechskantschrauben, Muttern, Scheiben, Gewindestangen, Anker, hochfeste Garnituren, Stifte, Niete und Sicherungsringe. Das Lager deckt die gängigen metrischen Größen in den Festigkeitsklassen 4.8, 8.8 und 10.9 ab, verzinkt, feuerverzinkt und in Edelstahl.',
+        'Sechs Serien decken das Sortiment ab. Schrauben, Muttern, Gewinde und Scheiben decken die allgemeine Montage ab; Gewindestangen und Stehbolzen werden auf Länge geschnitten für Spannen, Verankern und Schalung; Baubefestigungen umfassen Anker, Schalungsanker und Gerüstklemmen; hochfeste Verbindungselemente dienen tragenden und schweren Maschinenverbindungen; Stifte, Niete und Ringe schließen die Kleinteilelücke; und die Sonderserie deckt das nicht genormte Teil ab, das nur eine Zeichnung beschreibt.',
+        'Jeder Artikel wird mit Spezifikationsbereich, Werkstoff, Festigkeitsklasse, Oberflächenbehandlung und der zugrunde liegenden Norm veröffentlicht, damit ein Ersatzteil vor dem Einbau mit dem Original verglichen werden kann. Senden Sie Artikel, Größe, Festigkeitsklasse und Menge, dann bieten wir an; gemischte Container sind für uns normal, nicht die Ausnahme.'
+      ],
+      tableHeading: 'Befestigungsserien auf einen Blick',
+      columns: { series: 'Serie', type: 'Typ', bore: 'Bereich', bearing: 'Norm' }
     }
   }
 });

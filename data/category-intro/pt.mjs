@@ -21,6 +21,26 @@ export default Object.freeze({
       ],
       tableHeading: 'Os mancais em resumo',
       columns: { series: 'Mancal', type: 'Tipo', bore: 'Faixa de diâmetro interno', bearing: 'Rolamento correspondente' }
+    },
+    custom: {
+      heading: 'Peças sob medida',
+      paragraphs: [
+        'Nem toda máquina pode voltar a operar com uma peça de catálogo. Quando um mancal, uma bucha de eixo, um assento de rolamento ou uma aba de fixação precisa se encaixar num chassi já existente, fabricamos conforme o seu desenho ou a partir de uma amostra que você nos envie, no mesmo ferro fundido cinzento HT200, ferro nodular, aço ou inox da linha padrão.',
+        'O trabalho parte de um desenho 2D ou de um modelo 3D e orçamos o modelo ou a ferramenta separadamente das peças, para que um pedido repetido nunca o pague duas vezes. Os pedidos típicos vão de uma única peça de reposição a alguns milhares de unidades por ano, em lotes que acompanham o seu cronograma de montagem e não o nosso. As tolerâncias seguem o desenho; as superfícies são pintadas, zincadas, oxidadas ou entregues sem tratamento conforme indicado.',
+        'Para orçar com exatidão precisamos de três itens: um desenho ou amostra com as cotas críticas, o material com o tratamento de superfície e a quantidade anual com a data da primeira entrega. Se você só tem a peça quebrada, envie fotos ao lado de uma régua e confirmaremos quais cotas podem ser tiradas dela antes de você encomendar um desenho.'
+      ],
+      tableHeading: 'O que precisamos para orçar',
+      columns: { series: 'Item', type: 'Detalhe', bore: 'Valor', bearing: 'Observação' }
+    },
+    'fasteners-hardware': {
+      heading: 'Fixadores e ferragens',
+      paragraphs: [
+        'Ao lado da linha de rolamentos fornecemos os fixadores que mantêm uma máquina unida: parafusos sextavados, porcas, arruelas, barras roscadas, chumbadores, conjuntos de alta resistência, pinos, rebites e anéis de retenção. O estoque cobre os tamanhos métricos comuns nas classes 4.8, 8.8 e 10.9, em aço zincado, galvanizado a quente e inoxidável.',
+        'Seis séries cobrem a linha. Parafusos, porcas, roscas e arruelas atendem à montagem geral; barras roscadas e prisioneiros são cortados no comprimento para fixação, ancoragem e formas; fixações de construção cobrem chumbadores, tirantes de forma e abraçadeiras de andaime; fixadores de alta resistência atendem a juntas estruturais e de máquinas pesadas; pinos, rebites e anéis cobrem a miudeza; e a série especial cobre a peça fora de padrão que só um desenho descreve.',
+        'Cada item é publicado com sua faixa de especificação, material, classe de resistência, tratamento de superfície e a norma que segue, para que um substituto possa ser comparado ao original antes da montagem. Envie o item, a medida, a classe e a quantidade e orçamos; contêineres mistos são a regra para nós, não a exceção.'
+      ],
+      tableHeading: 'Séries de fixadores em resumo',
+      columns: { series: 'Série', type: 'Tipo', bore: 'Faixa', bearing: 'Norma' }
     }
   }
 });

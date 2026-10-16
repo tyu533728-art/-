@@ -21,6 +21,26 @@ export default Object.freeze({
       ],
       tableHeading: 'Tổng quan các loại vỏ',
       columns: { series: 'Vỏ', type: 'Kiểu', bore: 'Đường kính lỗ', bearing: 'Vòng bi lắp ghép' }
+    },
+    custom: {
+      heading: 'Chi tiết gia công theo yêu cầu',
+      paragraphs: [
+        'Không phải máy nào cũng có thể hoạt động lại bằng một chi tiết trong catalogue. Khi một gối đỡ, một bạc trục, một ổ đặt vòng bi hay một tai bắt phải khớp với khung máy đã có, chúng tôi chế tạo theo bản vẽ của quý khách hoặc từ mẫu quý khách gửi, bằng cùng loại gang xám HT200, gang cầu, thép hoặc thép không gỉ như dòng tiêu chuẩn.',
+        'Công việc bắt đầu từ bản vẽ 2D hoặc mô hình 3D; chúng tôi báo giá mẫu hoặc đồ gá tách riêng khỏi chi tiết, để đơn hàng lặp lại không phải trả lần thứ hai. Đơn hàng thường từ một chi tiết thay thế đến vài nghìn chiếc mỗi năm, theo lô phù hợp với lịch lắp ráp của quý khách chứ không phải của chúng tôi. Dung sai theo bản vẽ; bề mặt được sơn, mạ kẽm, nhuộm đen hoặc để trần theo yêu cầu.',
+        'Để báo giá chính xác chúng tôi cần ba thứ: bản vẽ hoặc mẫu có các kích thước quan trọng, vật liệu kèm xử lý bề mặt, và sản lượng hàng năm cùng ngày giao lô đầu. Nếu chỉ có chi tiết đã hỏng, hãy gửi ảnh chụp bên cạnh một thước đo và chúng tôi sẽ xác nhận những kích thước có thể lấy được từ nó trước khi quý khách đặt làm bản vẽ.'
+      ],
+      tableHeading: 'Những gì cần để báo giá',
+      columns: { series: 'Hạng mục', type: 'Chi tiết', bore: 'Giá trị', bearing: 'Ghi chú' }
+    },
+    'fasteners-hardware': {
+      heading: 'Phụ kiện và kim khí',
+      paragraphs: [
+        'Bên cạnh dòng vòng bi, chúng tôi cung cấp các phụ kiện giữ máy lại với nhau: bu lông sáu cạnh, đai ốc, long đền, ty ren, tắc kê, bộ chịu lực cao, chốt, đinh tán và vòng hãm. Kho hàng bao phủ các cỡ mét phổ biến ở cấp bền 4.8, 8.8 và 10.9, dạng mạ kẽm, mạ kẽm nhúng nóng và thép không gỉ.',
+        'Sáu dòng bao phủ danh mục. Bu lông, đai ốc, vít và long đền phục vụ lắp ráp chung; ty ren và đinh ren được cắt đúng chiều dài cho kẹp, neo và cốp pha; phụ kiện xây dựng gồm tắc kê, ty cốp pha và khóa giàn giáo; phụ kiện chịu lực cao phục vụ mối nối kết cấu và máy hạng nặng; chốt, đinh tán và vòng hãm lấp phần chi tiết nhỏ; còn dòng đặc biệt bao phủ chi tiết phi tiêu chuẩn mà chỉ bản vẽ mới mô tả được.',
+        'Mỗi hạng mục được công bố kèm dải quy cách, vật liệu, cấp bền, xử lý bề mặt và tiêu chuẩn áp dụng, để có thể đối chiếu hàng thay thế với hàng gốc trước khi lắp. Hãy gửi hạng mục, kích cỡ, cấp bền và số lượng, chúng tôi sẽ báo giá; container hàng hỗn hợp là bình thường với chúng tôi, không phải ngoại lệ.'
+      ],
+      tableHeading: 'Các dòng phụ kiện trong nét ngắn',
+      columns: { series: 'Dòng', type: 'Loại', bore: 'Dải', bearing: 'Tiêu chuẩn' }
     }
   }
 });

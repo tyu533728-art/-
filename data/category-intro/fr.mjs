@@ -21,6 +21,26 @@ export default Object.freeze({
       ],
       tableHeading: 'Les boîtiers en un coup d’œil',
       columns: { series: 'Boîtier', type: 'Type', bore: 'Plage d’alésage', bearing: 'Roulement correspondant' }
+    },
+    custom: {
+      heading: 'Pièces sur mesure',
+      paragraphs: [
+        'Toutes les machines ne peuvent pas être remises en service avec une pièce de catalogue. Lorsqu’un boîtier, une douille d’arbre, un logement de roulement ou une patte de fixation doit s’adapter à un bâti déjà existant, nous le fabriquons selon votre plan ou à partir d’un échantillon que vous nous envoyez, dans la même fonte grise HT200, fonte ductile, acier ou inox que la gamme standard.',
+        'Le travail part d’un plan 2D ou d’un modèle 3D et nous chiffrons le modèle ou l’outillage séparément des pièces, afin qu’une commande répétée ne le paie jamais deux fois. Les commandes courantes vont d’une pièce de rechange unique à quelques milliers de pièces par an, par lots adaptés à votre planning d’assemblage et non au nôtre. Les tolérances suivent le plan ; les surfaces sont peintes, zinguées, brunies ou laissées brutes selon votre demande.',
+        'Pour chiffrer avec exactitude, il nous faut trois éléments : un plan ou un échantillon avec les cotes critiques, la matière avec le traitement de surface, et la quantité annuelle avec la date de première livraison. Si vous ne disposez que d’une pièce cassée, envoyez des photos à côté d’une règle : nous confirmerons les cotes exploitables avant que vous ne fassiez établir un plan.'
+      ],
+      tableHeading: 'Ce qu’il nous faut pour chiffrer',
+      columns: { series: 'Élément', type: 'Détail', bore: 'Valeur', bearing: 'Remarque' }
+    },
+    'fasteners-hardware': {
+      heading: 'Fixations et quincaillerie',
+      paragraphs: [
+        'À côté de la gamme de roulements, nous fournissons les fixations qui tiennent une machine ensemble : vis à tête hexagonale, écrous, rondelles, tiges filetées, ancrages, ensembles à haute résistance, goupilles, rivets et circlips. Le stock couvre les tailles métriques courantes en classes 4.8, 8.8 et 10.9, en acier zingué, galvanisé à chaud et inoxydable.',
+        'Six séries couvrent la gamme. Boulonnerie, écrous, filetages et rondelles couvrent l’assemblage général ; les tiges filetées et goujons sont coupés à longueur pour le serrage, l’ancrage et le coffrage ; les fixations de construction couvrent ancrages, tirants de coffrage et colliers d’échafaudage ; les fixations à haute résistance servent les assemblages structurels et de machines lourdes ; goupilles, rivets et anneaux comblent la petite visserie ; et la série spéciale couvre la pièce non standard qu’un plan seul décrit.',
+        'Chaque article est publié avec sa plage de spécification, sa matière, sa classe de résistance, son traitement de surface et la norme suivie, afin qu’un substitut puisse être comparé à l’original avant montage. Envoyez l’article, la taille, la classe et la quantité et nous chiffrons ; les conteneurs mixtes sont pour nous la norme, pas l’exception.'
+      ],
+      tableHeading: 'Séries de fixations en un coup d’œil',
+      columns: { series: 'Série', type: 'Type', bore: 'Plage', bearing: 'Norme' }
     }
   }
 });

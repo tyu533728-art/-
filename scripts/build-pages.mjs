@@ -1053,10 +1053,22 @@ function categoryCard(locale, category) {
   return `<a class="catalogue-card${category.code === 'custom' ? ' catalogue-card--custom' : ''}" href="${categoryPath(locale, category)}">${categoryCardMedia(locale, category, 'catalogue-card')}<div><h2>${escapeHtml(categoryCardCopy(locale, category).title)}</h2></div></a>`;
 }
 
+// The overview page carries the opening paragraph of every category introduction — the same text
+// the category pages render in full. That gives the page the category-level explanation a buyer
+// looks for before choosing one, from a single source instead of a second copy that could drift.
+function productsCategoryOverview(locale) {
+  const intro = categoryIntro(locale).categories;
+  const items = categories
+    .filter(category => intro[category.code])
+    .map(category => `<div class="products-overview__item"><h3><a href="${categoryPath(locale, category)}">${escapeHtml(localizedCategoryTitle(locale, category))}</a></h3><p>${escapeHtml(intro[category.code].paragraphs[0])}</p></div>`)
+    .join('');
+  return items ? `<section class="section section--tight"><div class="site-shell category-intro products-overview">${items}</div></section>` : '';
+}
+
 function productsContent(locale) {
   const text = locales[locale];
   const housingHeading = localizedCategoryTitle(locale, categories.find(category => category.code === 'bearing-housing-series'));
-  return `<section class="page-intro"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h1>${escapeHtml(productsPageTitle[locale])}</h1><p>${escapeHtml(productsPageMeta[locale])}</p></div></section>${productIndex(locale)}<section class="section"><div class="site-shell"><div class="catalogue-grid">${categories.map(category => categoryCard(locale, category)).join('')}</div></div></section><section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.category)}</p><h2>${escapeHtml(housingHeading)}</h2></div><div class="catalogue-grid">${housingImageCards(locale, true)}</div></div></section>`;
+  return `<section class="page-intro"><div class="site-shell"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h1>${escapeHtml(productsPageTitle[locale])}</h1><p>${escapeHtml(productsPageMeta[locale])}</p></div></section>${productIndex(locale)}<section class="section"><div class="site-shell"><div class="catalogue-grid">${categories.map(category => categoryCard(locale, category)).join('')}</div></div></section>${productsCategoryOverview(locale)}<section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.category)}</p><h2>${escapeHtml(housingHeading)}</h2></div><div class="catalogue-grid">${housingImageCards(locale, true)}</div></div></section>`;
 }
 
 function categorySeoDescription(locale, category) {
@@ -1209,6 +1221,7 @@ function unitPairSection(locale, category, series, imageHtml, labels) {
 // Category-level explanation plus the series comparison block. The prose comes from
 // data/category-intro/<locale>.mjs; every cell of the comparison is generated from the confirmed
 // catalogue and specification data, so nothing here is a second source of truth.
+const COMPARISON_CATEGORIES = new Set(['pillow-block-bearing-units', 'bearing-housing-series']);
 //
 // Both blocks are rendered. They were suppressed at one point, which left these category pages with
 // only a heading, a cross-reference link and an enquiry line — thinner than every series page they
@@ -1216,6 +1229,10 @@ function unitPairSection(locale, category, series, imageHtml, labels) {
 // three paragraphs and the comparison carry exactly the category-level explanation a buyer looks for
 // before choosing a series.
 function categoryComparisonTable(locale, category) {
+  // Only these two categories carry bore ranges and a matching insert bearing. The custom and
+  // fastener categories list their own fields on the series pages, so no comparison is generated
+  // for them rather than printing empty or wrong cells.
+  if (!COMPARISON_CATEGORIES.has(category.code)) return '';
   const intro = categoryIntro(locale).categories[category.code];
   if (!intro) return '';
   const columns = intro.columns;
