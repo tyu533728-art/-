@@ -16,6 +16,8 @@ import { xrefNotes, validateXrefNotes } from '../data/cross-reference-notes.mjs'
 import { LEGAL_I18N, validateLegalI18n } from '../data/legal-i18n.mjs';
 import { NOT_FOUND_I18N, validateNotFoundI18n } from '../data/not-found-i18n.mjs';
 import { XREF_FAQ, validateXrefFaq } from '../data/cross-reference-faq.mjs';
+import { INSERT_LOADS, UEL_LOADS, UK_LOADS, housingForSeries, isCompleteUnit } from '../data/bearing-dimensions.mjs';
+import { uiLabels } from '../data/ui-labels-i18n.mjs';
 
 const translationIssues = [...validateXrefI18n(), ...validateXrefNotes(), ...validateLegalI18n(), ...validateNotFoundI18n(), ...validateXrefFaq()];
 if (translationIssues.length) throw new Error(`Translation data is incomplete:\n  ${translationIssues.join('\n  ')}`);
@@ -919,7 +921,7 @@ function languageSwitcher(locale, path, enOnly = false) {
     const hint = elsewhere ? ` title="English only — opens the ${escapeHtml(locales[code].name)} home page"` : '';
     return `<a href="${href}" lang="${code}"${code === locale ? ' aria-current="true"' : ''}${hint}>${escapeHtml(locales[code].name)}</a>`;
   }).join('');
-  return `<details class="language-switcher"><summary aria-label="Language">${locale.toUpperCase()}</summary><div class="language-switcher__menu">${entries}</div></details>`;
+  return `<details class="language-switcher"><summary aria-label="${escapeHtml(uiLabels(locale).language)}">${locale.toUpperCase()}</summary><div class="language-switcher__menu">${entries}</div></details>`;
 }
 
 const searchPlaceholder = Object.freeze({
@@ -933,7 +935,7 @@ function nav(locale, path, active, enOnly = false) {
   const text = locales[locale];
   const guidesHint = locale === 'en' ? '' : ' lang="en" title="The guides are published in English only"';
   const sp = searchPlaceholder[locale] ?? searchPlaceholder.en;
-  return `<header class="site-header"><div class="site-shell header-inner"><a class="brand" href="${publicPath(locale)}" aria-label="${site.brand} home"><span class="brand-mark" aria-hidden="true"></span><span>${site.brand}<small>BEARING &amp; BEARING HOUSING</small></span></a><nav class="site-nav" aria-label="Primary navigation"><a href="${publicPath(locale)}"${active === 'home' ? ' aria-current="page"' : ''}>${escapeHtml(text.navHome)}</a><a href="${publicPath(locale, 'products')}"${active === 'products' ? ' aria-current="page"' : ''}>${escapeHtml(text.navProducts)}</a><a href="/en/guides/"${active === 'guides' ? ' aria-current="page"' : ''}${guidesHint}>Guides</a><a href="${publicPath(locale, 'contact-us')}"${active === 'contact' ? ' aria-current="page"' : ''}>${escapeHtml(contactLabels[locale])}</a></nav><div class="site-search"><input type="search" id="site-search-input" placeholder="${escapeHtml(sp)}" aria-label="${escapeHtml(sp)}" autocomplete="off"><div id="site-search-results" class="site-search__results"></div></div>${languageSwitcher(locale, path, enOnly)}</div></header>`;
+  return `<header class="site-header"><div class="site-shell header-inner"><a class="brand" href="${publicPath(locale)}" aria-label="${site.brand} home"><span class="brand-mark" aria-hidden="true"></span><span>${site.brand}<small>BEARING &amp; BEARING HOUSING</small></span></a><nav class="site-nav" aria-label="${escapeHtml(uiLabels(locale).primaryNav)}"><a href="${publicPath(locale)}"${active === 'home' ? ' aria-current="page"' : ''}>${escapeHtml(text.navHome)}</a><a href="${publicPath(locale, 'products')}"${active === 'products' ? ' aria-current="page"' : ''}>${escapeHtml(text.navProducts)}</a><a href="/en/guides/"${active === 'guides' ? ' aria-current="page"' : ''}${guidesHint}>Guides</a><a href="${publicPath(locale, 'contact-us')}"${active === 'contact' ? ' aria-current="page"' : ''}>${escapeHtml(contactLabels[locale])}</a></nav><div class="site-search"><input type="search" id="site-search-input" placeholder="${escapeHtml(sp)}" aria-label="${escapeHtml(sp)}" autocomplete="off"><div id="site-search-results" class="site-search__results"></div></div>${languageSwitcher(locale, path, enOnly)}</div></header>`;
 }
 
 function confirmedContactValue(value) {
@@ -1042,11 +1044,11 @@ function homeContent(locale) {
   const text = locales[locale];
   const home = homePresentation[locale];
   const productCards = categories.map(category => `<a class="category-card${category.code === 'custom' ? ' category-card--custom' : ''}" href="${categoryPath(locale, category)}">${categoryCardMedia(locale, category, 'category-card')}<h2>${escapeHtml(categoryCardCopy(locale, category).title)}</h2></a>`).join('');
-  return `<div class="brand-splash" id="brand-splash"><div class="brand-splash__stage"><p class="brand-splash__word" dir="ltr"><span class="brand-splash__accent">NATER</span>MANUFACTURE</p><p class="brand-splash__sub">${escapeHtml(heroSubline[locale])}</p></div></div><section class="home-hero"><div class="site-shell home-hero__grid"><div class="home-hero__copy"><h1>${escapeHtml(home.title)}</h1><p>${escapeHtml(home.lead)}</p><div class="home-hero__actions"><a class="btn btn--primary" href="${publicPath(locale, 'contact-us')}">Get Quote</a><a class="btn btn--ghost" href="https://wa.me/${site.whatsapp.replace(/\D/g,'')}" target="_blank" rel="noopener noreferrer">WhatsApp Us</a></div></div><div class="home-hero__media">${heroImage(locale)}<img class="hero-factory" src="/assets/cnc-milling.webp" alt="${escapeHtml(imageAlts.heroFactory[locale])}" width="1280" height="853" loading="lazy"></div></div></section><section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h2>${escapeHtml(text.homeCategoriesHeading)}</h2></div><div class="category-grid">${productCards}</div></div></section>${locale === 'en' ? homeGuidesSection() : ''}<section class="section"><div class="site-shell company-intro"><div class="section-heading"><p class="eyebrow">${escapeHtml(companyIntro.eyebrow[locale])}</p><h2>${escapeHtml(companyIntro.heading[locale])}</h2></div><p class="company-intro__body">${escapeHtml(companyIntro.body[locale])}</p></div></section><section class="section"><div class="site-shell factory-banner"><div class="factory-banner__copy"><p class="eyebrow">${escapeHtml(factorySection.eyebrow[locale])}</p><h2>${escapeHtml(factorySection.heading[locale])}</h2></div><p class="factory-banner__lead">${escapeHtml(factorySection.lead[locale])}</p></div><div class="site-shell factory-spotlights"><article class="factory-spotlight"><figure class="factory-spotlight__media"><img src="/assets/factory-15.webp" alt="${escapeHtml(imageAlts.factorySpot1[locale])}" width="1280" height="960" loading="lazy"></figure><div class="factory-spotlight__body"><p class="eyebrow">${escapeHtml(factorySection.spotlights.s1.eyebrow[locale])}</p><h3>${escapeHtml(factorySection.spotlights.s1.title[locale])}</h3><p>${escapeHtml(factorySection.spotlights.s1.text[locale])}</p></div></article><article class="factory-spotlight factory-spotlight--reverse"><div class="factory-spotlight__body"><p class="eyebrow">${escapeHtml(factorySection.spotlights.s2.eyebrow[locale])}</p><h3>${escapeHtml(factorySection.spotlights.s2.title[locale])}</h3><p>${escapeHtml(factorySection.spotlights.s2.text[locale])}</p></div><figure class="factory-spotlight__media"><img src="/assets/factory-25.webp" alt="${escapeHtml(imageAlts.factorySpot2[locale])}" width="1280" height="960" loading="lazy"></figure></article></div><div class="site-shell factory-features">${factorySection.features[locale].map(feature => `<article class="factory-feature"><span class="factory-feature__mark" aria-hidden="true"></span><h3>${escapeHtml(feature.title)}</h3><p>${escapeHtml(feature.text)}</p></article>`).join('')}</div></section>`;
+  return `<div class="brand-splash" id="brand-splash"><div class="brand-splash__stage"><p class="brand-splash__word" dir="ltr"><span class="brand-splash__accent">NATER</span>MANUFACTURE</p><p class="brand-splash__sub">${escapeHtml(heroSubline[locale])}</p></div></div><section class="home-hero"><div class="site-shell home-hero__grid"><div class="home-hero__copy"><h1>${escapeHtml(home.title)}</h1><p>${escapeHtml(home.lead)}</p><div class="home-hero__actions"><a class="btn btn--primary" href="${publicPath(locale, 'contact-us')}">${escapeHtml(uiLabels(locale).quote)}</a><a class="btn btn--ghost" href="https://wa.me/${site.whatsapp.replace(/\D/g,'')}" target="_blank" rel="noopener noreferrer">${escapeHtml(uiLabels(locale).whatsapp)}</a></div></div><div class="home-hero__media">${heroImage(locale)}<img class="hero-factory" src="/assets/cnc-milling.webp" alt="${escapeHtml(imageAlts.heroFactory[locale])}" width="1280" height="853" loading="lazy"></div></div></section><section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${escapeHtml(text.navProducts)}</p><h2>${escapeHtml(text.homeCategoriesHeading)}</h2></div><div class="category-grid">${productCards}</div></div></section>${locale === 'en' ? homeGuidesSection() : ''}<section class="section"><div class="site-shell company-intro"><div class="section-heading"><p class="eyebrow">${escapeHtml(companyIntro.eyebrow[locale])}</p><h2>${escapeHtml(companyIntro.heading[locale])}</h2></div><p class="company-intro__body">${escapeHtml(companyIntro.body[locale])}</p></div></section><section class="section"><div class="site-shell factory-banner"><div class="factory-banner__copy"><p class="eyebrow">${escapeHtml(factorySection.eyebrow[locale])}</p><h2>${escapeHtml(factorySection.heading[locale])}</h2></div><p class="factory-banner__lead">${escapeHtml(factorySection.lead[locale])}</p></div><div class="site-shell factory-spotlights"><article class="factory-spotlight"><figure class="factory-spotlight__media"><img src="/assets/factory-15.webp" alt="${escapeHtml(imageAlts.factorySpot1[locale])}" width="1280" height="960" loading="lazy"></figure><div class="factory-spotlight__body"><p class="eyebrow">${escapeHtml(factorySection.spotlights.s1.eyebrow[locale])}</p><h3>${escapeHtml(factorySection.spotlights.s1.title[locale])}</h3><p>${escapeHtml(factorySection.spotlights.s1.text[locale])}</p></div></article><article class="factory-spotlight factory-spotlight--reverse"><div class="factory-spotlight__body"><p class="eyebrow">${escapeHtml(factorySection.spotlights.s2.eyebrow[locale])}</p><h3>${escapeHtml(factorySection.spotlights.s2.title[locale])}</h3><p>${escapeHtml(factorySection.spotlights.s2.text[locale])}</p></div><figure class="factory-spotlight__media"><img src="/assets/factory-25.webp" alt="${escapeHtml(imageAlts.factorySpot2[locale])}" width="1280" height="960" loading="lazy"></figure></article></div><div class="site-shell factory-features">${factorySection.features[locale].map(feature => `<article class="factory-feature"><span class="factory-feature__mark" aria-hidden="true"></span><h3>${escapeHtml(feature.title)}</h3><p>${escapeHtml(feature.text)}</p></article>`).join('')}</div></section>`;
 }
 
 function productIndex(locale) {
-  return `<nav class="product-index" aria-label="Product categories"><div class="site-shell">${categories.map(category => `<a href="${categoryPath(locale, category)}">${escapeHtml(localizedCategoryTitle(locale, category))}</a>`).join('')}</div></nav>`;
+  return `<nav class="product-index" aria-label="${escapeHtml(uiLabels(locale).productCategories)}"><div class="site-shell">${categories.map(category => `<a href="${categoryPath(locale, category)}">${escapeHtml(localizedCategoryTitle(locale, category))}</a>`).join('')}</div></nav>`;
 }
 
 function categoryCard(locale, category) {
@@ -1554,6 +1556,126 @@ function fastenerProductsSection(seriesCode, locale = 'en') {
   return ctaBlock + `<section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${products.length} products</p><h2>${escapeHtml(t.available)}</h2></div>${groupHtml}</div></section>`;
 }
 
+// ---- Engineering dimension tables (bearings / housings) ----
+
+// Series that are sold as an insert bearing only (no dedicated housing).
+const INSERT_ONLY_SERIES = new Set(['UC', 'UEL', 'UK']);
+// A few series carry a different published model prefix than their series code.
+const MODEL_PREFIX = Object.freeze({ PBU: 'UCHA', PAS: 'HA' });
+
+const dimText = Object.freeze({
+  en: { eyebrow: 'Engineering data', heading: 'Dimensions & Specifications', model: 'Model', weight: 'Weight (kg)', note: 'Standard reference dimensions (ISO/JIS). Actual product dimensions are subject to the workshop drawing; weights carry ±5% tolerance.' },
+  es: { eyebrow: 'Datos técnicos', heading: 'Dimensiones y especificaciones', model: 'Modelo', weight: 'Peso (kg)', note: 'Dimensiones de referencia estándar (ISO/JIS). Las dimensiones reales están sujetas al plano de taller; pesos con tolerancia ±5%.' },
+  de: { eyebrow: 'Technische Daten', heading: 'Abmessungen und Spezifikationen', model: 'Modell', weight: 'Gewicht (kg)', note: 'Standard-Referenzabmessungen (ISO/JIS). Tatsächliche Abmessungen richten sich nach der Werkstattzeichnung; Gewichte mit ±5% Toleranz.' },
+  fr: { eyebrow: 'Données techniques', heading: 'Dimensions et spécifications', model: 'Modèle', weight: 'Poids (kg)', note: 'Dimensions de référence standard (ISO/JIS). Les dimensions réelles sont soumises au plan d’atelier ; poids avec tolérance ±5%.' },
+  pt: { eyebrow: 'Dados técnicos', heading: 'Dimensões e especificações', model: 'Modelo', weight: 'Peso (kg)', note: 'Dimensões de referência padrão (ISO/JIS). As dimensões reais estão sujeitas ao desenho da oficina; pesos com tolerância ±5%.' },
+  ar: { eyebrow: 'بيانات هندسية', heading: 'الأبعاد والمواصفات', model: 'الطراز', weight: 'الوزن (كجم)', note: 'أبعاد مرجعية قياسية (ISO/JIS). الأبعاد الفعلية خاضعة لرسمة الورشة؛ الأوزان بتفاوت ±5%.' },
+  tr: { eyebrow: 'Mühendislik verileri', heading: 'Boyutlar ve teknik özellikler', model: 'Model', weight: 'Ağırlık (kg)', note: 'Standart referans boyutlar (ISO/JIS). Gerçek boyutlar atölye çizimine tabidir; ağırlıklar ±5% toleranslıdır.' },
+  ru: { eyebrow: 'Технические данные', heading: 'Размеры и характеристики', model: 'Модель', weight: 'Масса (кг)', note: 'Стандартные справочные размеры (ISO/JIS). Фактические размеры указаны по цеховому чертежу; масса с допуском ±5%.' },
+  it: { eyebrow: 'Dati tecnici', heading: 'Dimensioni e specifiche', model: 'Modello', weight: 'Peso (kg)', note: 'Dimensioni di riferimento standard (ISO/JIS). Le dimensioni effettive sono soggette al disegno di officina; pesi con tolleranza ±5%.' },
+  vi: { eyebrow: 'Dữ liệu kỹ thuật', heading: 'Kích thước và thông số', model: 'Mã', weight: 'Khối lượng (kg)', note: 'Kích thước tham chiếu tiêu chuẩn (ISO/JIS). Kích thước thực tế theo bản vẽ xưởng; khối lượng dung sai ±5%.' },
+  id: { eyebrow: 'Data teknis', heading: 'Dimensi dan spesifikasi', model: 'Model', weight: 'Berat (kg)', note: 'Dimensi referensi standar (ISO/JIS). Dimensi aktual mengikuti gambar bengkel; berat dengan toleransi ±5%.' },
+  ja: { eyebrow: '技術データ', heading: '寸法と仕様', model: '型式', weight: '質量 (kg)', note: '標準参考寸法（ISO/JIS）。実際の寸法は工場図面に準じ、質量には±5%の公差があります。' },
+  ko: { eyebrow: '기술 데이터', heading: '치수 및 사양', model: '모델', weight: '무게 (kg)', note: '표준 참조 치수(ISO/JIS). 실제 치수는 공장 도면에 따르며 무게에는 ±5% 공차가 있습니다.' }
+});
+
+function dimModelPrefix(seriesCode) {
+  return MODEL_PREFIX[seriesCode] ?? seriesCode;
+}
+
+// Render an integer without a trailing .0; keep one decimal for fractional values.
+function fmtDim(n) {
+  if (n === null || n === undefined) return '';
+  return Number.isInteger(n) ? String(n) : String(Number(n.toFixed(1)));
+}
+
+// Bore codes a complete-unit series lists in its confirmed model range (used to filter the
+// housing rows so a page never shows a model the series does not carry).
+function seriesBoreCodes(seriesCode) {
+  const groups = unitModelGroups(seriesCode);
+  if (!groups) return null;
+  const set = new Set();
+  const walk = list => {
+    for (const group of list) {
+      for (const model of group.models ?? []) {
+        const match = /^[A-Z]+(\d{3})(?:-\d+)?$/.exec(model);
+        if (match) set.add(Number(match[1]));
+      }
+      if (group.subgroups) walk(group.subgroups);
+    }
+  };
+  walk(groups);
+  return set;
+}
+
+function wrapDimTable(head, body, t) {
+  const headCells = head.map(h => `<th scope="col" dir="ltr">${h}</th>`).join('');
+  return `<div class="table-scroll"><table class="dim-table"><thead><tr>${headCells}</tr></thead><tbody>${body}</tbody></table></div><p class="dim-note">${t.note}</p>`;
+}
+
+// Insert-bearing-only table (UC / UEL / UK): Model | d | D | B | Cr | Cor | Weight. Each locking
+// type carries its own width table (UEL wider with the collar, UK narrower with tapered bore).
+function insertDimensionsTable(seriesCode, t) {
+  const prefix = dimModelPrefix(seriesCode);
+  const table = seriesCode === 'UEL' ? UEL_LOADS : seriesCode === 'UK' ? UK_LOADS : INSERT_LOADS;
+  const head = [t.model, 'd', 'D', 'B', 'Cr (kN)', 'Cor (kN)', t.weight];
+  const body = Object.entries(table).map(([code, r]) => {
+    const cells = [
+      `<th scope="row" class="dim-model" dir="ltr">${prefix}${code}</th>`,
+      `<td>${r.d}</td>`,
+      `<td>${r.D}</td>`,
+      `<td>${fmtDim(r.B)}</td>`,
+      `<td>${r.Cr}</td>`,
+      `<td>${r.Cor}</td>`,
+      `<td>${fmtDim(r.iw)}</td>`
+    ].join('');
+    return `<tr>${cells}</tr>`;
+  }).join('');
+  return wrapDimTable(head, body, t);
+}
+
+// Housing-based table (complete units and bare housings).
+function housingDimensionsTable(seriesCode, complete, t) {
+  const housing = housingForSeries(seriesCode);
+  if (!housing) return '';
+  const prefix = dimModelPrefix(seriesCode);
+  const sizeFields = housing.fields;
+  const head = [t.model, ...sizeFields, ...(complete ? ['Cr (kN)', 'Cor (kN)'] : []), t.weight];
+  let codes = Object.keys(housing.rows).map(Number);
+  if (complete) {
+    const allowed = seriesBoreCodes(seriesCode);
+    if (allowed) codes = codes.filter(c => allowed.has(c));
+  }
+  codes.sort((a, b) => a - b);
+  const body = codes.map(code => {
+    const row = housing.rows[code];
+    const sizeCells = sizeFields.map(f => `<td>${fmtDim(row[f])}</td>`).join('');
+    let loadCells = '';
+    if (complete) {
+      const ins = INSERT_LOADS[code];
+      loadCells = ins ? `<td>${ins.Cr}</td><td>${ins.Cor}</td>` : '<td>—</td><td>—</td>';
+    }
+    const weight = complete
+      ? fmtDim(Number((row.hw + (INSERT_LOADS[code]?.iw ?? 0)).toFixed(1)))
+      : fmtDim(row.hw);
+    return `<tr><th scope="row" class="dim-model" dir="ltr">${prefix}${code}</th>${sizeCells}${loadCells}<td>${weight}</td></tr>`;
+  }).join('');
+  return wrapDimTable(head, body, t);
+}
+
+function seriesDimensionsSection(locale, category, series) {
+  const code = series.seriesCode;
+  const t = dimText[locale] ?? dimText.en;
+  let table;
+  if (INSERT_ONLY_SERIES.has(code)) {
+    table = insertDimensionsTable(code, t);
+  } else if (housingForSeries(code)) {
+    table = housingDimensionsTable(code, isCompleteUnit(code), t);
+  }
+  if (!table) return '';
+  return `<section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${t.eyebrow}</p><h2>${t.heading}</h2></div>${table}</div></section>`;
+}
+
 function seriesContent(locale, category, series) {
   const text = locales[locale];
   const image = seriesImage(locale, series);
@@ -1575,17 +1697,18 @@ function seriesContent(locale, category, series) {
       : '';
   const hero = paired || content;
   const fastenerList = category.code === 'fasteners-hardware' ? fastenerProductsSection(series.seriesCode, locale) : '';
-  return `<section class="page-intro page-intro--compact"><div class="site-shell">${seriesBreadcrumb(locale, category, series)}<p class="eyebrow">${escapeHtml(localizedCategoryTitle(locale, category))}</p><h1 dir="ltr">${escapeHtml(seriesHeading(locale, series))}</h1><p>${escapeHtml(lead)}</p></div></section>${productIndex(locale)}${hero}${fastenerList}${seriesAboutBlock(locale, category, series)}`;
+  const dimensions = seriesDimensionsSection(locale, category, series);
+  return `<section class="page-intro page-intro--compact"><div class="site-shell">${seriesBreadcrumb(locale, category, series)}<p class="eyebrow">${escapeHtml(localizedCategoryTitle(locale, category))}</p><h1 dir="ltr">${escapeHtml(seriesHeading(locale, series))}</h1><p>${escapeHtml(lead)}</p></div></section>${productIndex(locale)}${hero}${dimensions}${fastenerList}${seriesAboutBlock(locale, category, series)}`;
 }
 
 function categoryBreadcrumb(locale, category) {
   const text = locales[locale];
-  return `<nav class="product-breadcrumb" aria-label="Product breadcrumb"><a href="${publicPath(locale)}">${escapeHtml(text.navHome)}</a><span aria-hidden="true">/</span><a href="${publicPath(locale, 'products')}">${escapeHtml(text.navProducts)}</a><span aria-hidden="true">/</span><span aria-current="page">${escapeHtml(localizedCategoryTitle(locale, category))}</span></nav>`;
+  return `<nav class="product-breadcrumb" aria-label="${escapeHtml(uiLabels(locale).productBreadcrumb)}"><a href="${publicPath(locale)}">${escapeHtml(text.navHome)}</a><span aria-hidden="true">/</span><a href="${publicPath(locale, 'products')}">${escapeHtml(text.navProducts)}</a><span aria-hidden="true">/</span><span aria-current="page">${escapeHtml(localizedCategoryTitle(locale, category))}</span></nav>`;
 }
 
 function seriesBreadcrumb(locale, category, series) {
   const text = locales[locale];
-  return `<nav class="product-breadcrumb" aria-label="Product breadcrumb"><a href="${publicPath(locale)}">${escapeHtml(text.navHome)}</a><span aria-hidden="true">/</span><a href="${publicPath(locale, 'products')}">${escapeHtml(text.navProducts)}</a><span aria-hidden="true">/</span><a href="${categoryPath(locale, category)}">${escapeHtml(localizedCategoryTitle(locale, category))}</a><span aria-hidden="true">/</span><span aria-current="page" dir="auto">${escapeHtml(seriesHeading(locale, series))}</span></nav>`;
+  return `<nav class="product-breadcrumb" aria-label="${escapeHtml(uiLabels(locale).productBreadcrumb)}"><a href="${publicPath(locale)}">${escapeHtml(text.navHome)}</a><span aria-hidden="true">/</span><a href="${publicPath(locale, 'products')}">${escapeHtml(text.navProducts)}</a><span aria-hidden="true">/</span><a href="${categoryPath(locale, category)}">${escapeHtml(localizedCategoryTitle(locale, category))}</a><span aria-hidden="true">/</span><span aria-current="page" dir="auto">${escapeHtml(seriesHeading(locale, series))}</span></nav>`;
 }
 
 function seriesSiblings(locale, category, series) {
@@ -1597,7 +1720,7 @@ function seriesSiblings(locale, category, series) {
 
 function productBreadcrumb(locale, category, product) {
   const text = locales[locale];
-  return `<nav class="product-breadcrumb" aria-label="Product breadcrumb"><a href="${publicPath(locale, 'products')}">${escapeHtml(text.navProducts)}</a><span aria-hidden="true">/</span><a href="${categoryPath(locale, category)}">${escapeHtml(localizedCategoryTitle(locale, category))}</a><span aria-hidden="true">/</span><span aria-current="page" dir="ltr">${escapeHtml(product.code)}</span></nav>`;
+  return `<nav class="product-breadcrumb" aria-label="${escapeHtml(uiLabels(locale).productBreadcrumb)}"><a href="${publicPath(locale, 'products')}">${escapeHtml(text.navProducts)}</a><span aria-hidden="true">/</span><a href="${categoryPath(locale, category)}">${escapeHtml(localizedCategoryTitle(locale, category))}</a><span aria-hidden="true">/</span><span aria-current="page" dir="ltr">${escapeHtml(product.code)}</span></nav>`;
 }
 
 // ---- Cross-reference page (SKF / FYH / NSK / NTN / KOYO equivalents) ----
@@ -1765,7 +1888,7 @@ function guidesIndexContent() {
 
 function guideArticleContent(g) {
   const body = g.sections.map(s => `<section class="guide-section"><h2>${escapeHtml(s.h)}</h2>${(s.p || []).map(p => `<p>${escapeHtml(p)}</p>`).join('')}${s.list ? `<ul>${s.list.map(li => `<li>${escapeHtml(li)}</li>`).join('')}</ul>` : ''}</section>`).join('');
-  return `<section class="page-intro page-intro--compact"><div class="site-shell"><nav class="product-breadcrumb" aria-label="Breadcrumb"><a href="/en/">Home</a><span aria-hidden="true">/</span><a href="/en/guides/">Guides</a><span aria-hidden="true">/</span><span aria-current="page">Guide</span></nav><p class="eyebrow">Guide</p><h1>${escapeHtml(g.title)}</h1><p>${escapeHtml(g.intro)}</p></div></section><section class="section"><div class="site-shell guide-article">${body}<div class="guide-cta"><p>${escapeHtml(g.cta)}</p><a class="btn btn--primary" href="/en/contact-us/">Contact us</a></div></div></section>`;
+  return `<section class="page-intro page-intro--compact"><div class="site-shell"><nav class="product-breadcrumb" aria-label="${escapeHtml(uiLabels('en').breadcrumb)}"><a href="/en/">Home</a><span aria-hidden="true">/</span><a href="/en/guides/">Guides</a><span aria-hidden="true">/</span><span aria-current="page">Guide</span></nav><p class="eyebrow">Guide</p><h1>${escapeHtml(g.title)}</h1><p>${escapeHtml(g.intro)}</p></div></section><section class="section"><div class="site-shell guide-article">${body}<div class="guide-cta"><p>${escapeHtml(g.cta)}</p><a class="btn btn--primary" href="/en/contact-us/">Contact us</a></div></div></section>`;
 }
 
 // Privacy and Terms are rendered from data/legal-i18n.mjs, which holds the source English text and

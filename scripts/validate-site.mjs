@@ -169,7 +169,10 @@ for (const [route, html] of localizedHtml) {
   // out of the table.
   const pageChrome = html.replace(/<table[\s\S]*?<\/table>/gi, '');
   if (/>Bearings<|>Bearing Housing<|>Bearing Units<|Mounted Spherical|Mounted Ball|About Us/i.test(pageChrome)) fail(`${route}: obsolete product or About Us text remains`);
-  if (/<form\b|<table\b|products\.html#|about-us/i.test(html) && seriesRoute) fail(`${route}: Series page contains forbidden detail or obsolete route content`);
+  // The engineering dimension table is intentionally rendered as a <table class="dim-table"> on
+  // series pages, so the forbidden-detail scan removes it before looking for other tables/forms.
+  const chromeForDetail = html.replace(/<table class="dim-table"[\s\S]*?<\/table>/gi, '');
+  if (/<form\b|<table\b|products\.html#|about-us/i.test(chromeForDetail) && seriesRoute) fail(`${route}: Series page contains forbidden detail or obsolete route content`);
 
   // Every locale must publish the confirmed specification: the block is localized through
   // data/spec-i18n/, so a locale that silently loses it would fall back to a thin page.
@@ -237,7 +240,8 @@ for (const [route, html] of localizedHtml) {
           return altText.toLowerCase().includes(displayedCode.toLowerCase());
         });
     if (!altOk) fail(`${route}: Series image ALT must identify ${displayedCode}`);
-    if (/<table\b|class="catalogue-card"|class="model-list"|"@type":"Product"/i.test(main)) fail(`${route}: Series page contains model/detail content`);
+    const mainNoDimTable = main.replace(/<table class="dim-table"[\s\S]*?<\/table>/gi, '');
+    if (/<table\b|class="catalogue-card"|class="model-list"|"@type":"Product"/i.test(mainNoDimTable)) fail(`${route}: Series page contains model/detail content`);
     if (!html.includes(`href="/${locale}/products/"`)) fail(`${route}: missing Products breadcrumb link`);
     if (!html.includes(`href="/${locale}/products/${seriesRoute.category}/"`)) fail(`${route}: missing category link`);
   }

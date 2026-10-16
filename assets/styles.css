@@ -354,6 +354,17 @@ h2 { margin-bottom: 18px; font-size: clamp(28px, 3.6vw, 44px); }
 .xref-entry a:hover { color: var(--blue); }
 .xref-note { max-width: 78ch; margin: 14px 0 0; padding-left: 14px; border-left: 3px solid var(--line); color: var(--steel); font-size: 13px; line-height: 1.75; }
 
+/* Engineering dimension table (bearing / housing series pages). */
+.table-scroll .dim-table { min-width: 680px; }
+.dim-table { width: 100%; border-collapse: collapse; text-align: center; }
+.dim-table thead th { padding: 10px 12px; color: var(--steel); font-family: var(--utility); font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; border-bottom: 2px solid var(--blue); }
+.dim-table tbody td, .dim-table tbody th { padding: 9px 12px; border-bottom: 1px solid var(--line); font-size: 13.5px; vertical-align: middle; }
+.dim-table tbody tr:nth-child(even) { background: var(--mist); }
+.dim-table tbody tr:hover { background: var(--paper); }
+.dim-table .dim-model { text-align: start; color: var(--blue-dark); font-family: var(--utility); font-weight: 700; }
+.dim-table tbody td { color: var(--ink-soft); }
+.dim-note { max-width: 80ch; margin: 12px 0 0; padding-left: 14px; border-left: 3px solid var(--line); color: var(--steel); font-size: 12.5px; line-height: 1.7; }
+
 .about-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .about-grid article { min-height: 260px; border-top: 3px solid var(--blue); padding: 28px 0; }
 .about-grid article:nth-child(odd) { padding-right: 42px; }
