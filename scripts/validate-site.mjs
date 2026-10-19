@@ -6,6 +6,7 @@ import { LOCALE_CODES, PENDING_SERIES, SERIES_BY_CATEGORY } from '../data/produc
 import { mountedUnitsForSeries, unitModelGroups } from '../data/mounted-units-spec.mjs';
 import { housingSeriesSpec } from '../data/bearing-housing-spec.mjs';
 import { FASTENER_IMAGES, fastenerProducts } from '../data/fastener-products.mjs';
+import { guides } from '../data/guides.mjs';
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const domain = 'https://www.natermanufacture.com';
@@ -78,7 +79,8 @@ function requiredRoutes(locale) {
 }
 
 /** Guides 栏目（仅英文） */
-const guideRoutes = ['guides', ...['ucp-vs-ucf-vs-ucfl-which-housing', 'why-housing-bore-tolerance-matters', 'how-to-read-a-bearing-housing-model-number', 'how-to-choose-bearing-housing-material', 'bearing-lubrication-basics', 'bearing-housing-mounting-types'].map(slug => `guides/${slug}`)]
+// Derived from data/guides.mjs, so adding a guide never needs a validator edit.
+const guideRoutes = ['guides', ...guides.map(guide => `guides/${guide.slug}`)]
   .map(slug => publicRoute('en', slug));
 /** Privacy and Terms are published in all 13 locales. */
 const legalSlugs = ['privacy', 'terms'];

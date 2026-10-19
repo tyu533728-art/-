@@ -238,4 +238,98 @@ export const guides = [
       },
     ],
     cta: 'Describe your mounting surface and shaft layout, and we will recommend the matching series.',
-  },]
+  },
+  {
+    slug: 'ucp-vs-ucpa-vs-ucph-pillow-block-heights',
+    title: 'UCP vs UCPA vs UCPH: Choosing the Right Pillow Block Height',
+    description: 'The three standard pillow block base heights compared — what the letters mean, how base height changes the shaft centre line, and how to measure what your machine needs.',
+    date: '2026-10-19',
+    intro: 'UCP, UCPA and UCPH all take the same UC insert bearing, but their cast bases sit at different heights. Picking the wrong one moves the shaft centre line and forces you to shim the frame or re-machine it.',
+    sections: [
+      {
+        h: 'The three base heights',
+        p: ['The letters after UC describe the housing shape, and the third letter is the height variant:'],
+        list: [
+          'UCP — the standard pillow block. The base is a solid two-bolt foot at the normal shaft centre height.',
+          'UCPA — the low-base variant. The foot is shallower, so the shaft sits closer to the mounting surface.',
+          'UCPH — the high-base variant. The foot is taller, lifting the shaft centre further above the surface.',
+        ],
+      },
+      {
+        h: 'When the height actually matters',
+        p: [
+          'Base height only matters where the shaft position is already fixed by something else — a coupling to an existing motor, a gearbox output, or a second bearing on the same shaft. When two bearings support one shaft, both must share the same centre height, so the two units have to be the same height variant even if one sits on a raised pad.',
+          'Where the shaft is free to sit anywhere, the standard UCP is almost always the right answer. Designers reach for UCPA when headroom is tight, and for UCPH when the shaft has to clear a rail, a belt or a low obstacle.',
+        ],
+      },
+      {
+        h: 'What stays the same across the three',
+        p: [
+          'The bore range, the insert bearing, the housing material and the sealing arrangement do not change with base height. A UC205 insert fits a UCP205, a UCPA205 and a UCPH205 alike. The load rating is set by the insert, not by the foot.',
+          'That means a height change is a mounting decision, not a capacity decision. If you need more radial capacity you move to a larger bore or a heavier insert series, not to a taller base.',
+        ],
+      },
+      {
+        h: 'How to specify the right one',
+        p: ['Three measurements settle it:'],
+        list: [
+          'Measure the height from the mounting surface to the shaft centre line on the machine being repaired or copied.',
+          'Check the bolt-hole spacing and thread size on the frame — a taller base usually moves the bolts further apart.',
+          'Confirm the bore you need. Base height does not change the shaft diameter the unit accepts.',
+        ],
+      },
+    ],
+    cta: 'Send us the shaft centre height and bolt spacing from your frame, and we will confirm which height variant matches.',
+  },
+  {
+    slug: 'ucf-vs-ucfc-vs-ucfl-vs-ucfa-flange-types',
+    title: 'UCF vs UCFC vs UCFL vs UCFA: The Four Flange Types Compared',
+    description: 'Square, round with a locating spigot, two-bolt oval and slotted-hole flanges explained — how bolt pattern and spigot decide which unit fits your machine.',
+    date: '2026-10-19',
+    intro: 'Flange units all bolt to a vertical face, but the flange outline decides the bolt pattern, the space needed, and whether the unit can locate itself. Choosing between UCF, UCFC, UCFL and UCFA comes down to the plate you are mounting to.',
+    sections: [
+      {
+        h: 'The four flange shapes',
+        p: ['Each code describes a different flange outline:'],
+        list: [
+          'UCF — square four-bolt flange. The most rigid of the four, with bolts at the corners of a square.',
+          'UCFC — round four-bolt flange with a locating spigot on the back face, so the unit centres itself in a bored hole.',
+          'UCFL — two-bolt oval flange. Compact, with two bolts on the long axis and a rounded outline.',
+          'UCFA — two-bolt flange with slotted holes, letting the unit slide for position adjustment before the bolts are tightened.',
+        ],
+      },
+      {
+        h: 'The bolt pattern decides first',
+        p: [
+          'Count the holes on the plate you are mounting to. Four holes at the corners of a square take UCF; four holes on a bolt circle take UCFC; two holes take UCFL or UCFA.',
+          'Drilling a new pattern is possible but rarely worth it on a repair. Matching the existing holes is faster and keeps the original load path.',
+        ],
+      },
+      {
+        h: 'What the spigot does',
+        p: [
+          'Only UCFC carries a spigot — a raised ring on the back of the flange that fits a matching bore in the plate. The spigot takes the radial load in shear instead of relying on bolt friction, and it centres the shaft automatically.',
+          'That makes UCFC the choice where the shaft must be accurately positioned, such as the end of a conveyor roller or a machine where two flanges share one shaft. The plate needs a bored recess, so UCFC is a design decision rather than a field swap.',
+        ],
+      },
+      {
+        h: 'When slots earn their place',
+        p: [
+          'UCFA slots let the unit move a few millimetres before the bolts are tightened. That helps where belt tension or shaft alignment has to be set on site, and where the frame was not drilled to a precise pattern.',
+          'Slots are not a substitute for a take-up unit: they allow a one-time adjustment during assembly, not continuous travel under load.',
+        ],
+      },
+      {
+        h: 'How to choose',
+        p: ['Work in this order:'],
+        list: [
+          'Match the bolt pattern on the existing plate.',
+          'If the shaft must be precisely centred and the plate can be bored, prefer UCFC.',
+          'If space is tight and only two bolts fit, choose UCFL.',
+          'If you need adjustment during assembly, choose UCFA.',
+          'Otherwise the square UCF is the most rigid and the easiest to source.',
+        ],
+      },
+    ],
+    cta: 'Send a photo of the mounting plate with the bolt spacing, and we will tell you which flange type it accepts.',
+  }]
