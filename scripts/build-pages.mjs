@@ -942,9 +942,19 @@ function confirmedContactValue(value) {
   return typeof value === 'string' && value.trim() && value !== 'Pending confirmation';
 }
 
+// A mailto: link does nothing when the visitor has no default mail client configured, which is the
+// common case on Windows - clicking the address simply produces no reaction. Point at the Gmail
+// compose page instead: it opens in the browser for anyone signed in to that mailbox. The address
+// stays visible as the link text, so visitors using another client can still copy it.
+function gmailHref(address, subject) {
+  const params = [`to=${encodeURIComponent(address)}`];
+  if (subject) params.push(`su=${encodeURIComponent(subject)}`);
+  return `https://mail.google.com/mail/?view=cm&${params.join('&')}`;
+}
+
 function contactHref(value, kind) {
   if (!confirmedContactValue(value)) return null;
-  if (kind === 'email') return `mailto:${value.trim()}`;
+  if (kind === 'email') return gmailHref(value.trim());
   if (kind === 'phone') {
     const phone = value.replace(/[^\d+().\-\s]/g, '').replace(/[().\-\s]/g, '');
     return phone ? `tel:${phone}` : null;
@@ -973,7 +983,7 @@ const contactFieldLabels = Object.freeze({
 });
 
 function footer(locale) {
-  return `<footer class="site-footer"><div class="site-shell footer-inner"><div><a class="brand brand--footer" href="${publicPath(locale)}"><span class="brand-mark" aria-hidden="true"></span><span>${site.brand}<small>BEARING &amp; BEARING HOUSING</small></span></a></div><dl class="footer-contact"><div><dt>WhatsApp</dt><dd>${contactValue(site.whatsapp, locale, 'whatsapp')}</dd></div><div><dt>Facebook</dt><dd>${contactValue(site.facebook, locale, 'website', 'Facebook')}</dd></div><div><dt>LinkedIn</dt><dd>${contactValue(site.linkedin, locale, 'website', 'LinkedIn')}</dd></div><div><dt>${escapeHtml(companyNameLabels[locale])}</dt><dd>${contactValue(site.companyName, locale)}</dd></div><div><dt>${escapeHtml(contactFieldLabels.facility[locale] ?? contactFieldLabels.facility.en)}</dt><dd>${contactValue(site.manufacturingFacility, locale)}</dd></div></dl></div><div class="site-shell footer-bottom">© 2026 ${site.brand}. All rights reserved. <a href="${publicPath(locale, 'privacy')}">${escapeHtml((LEGAL_I18N[locale] ?? LEGAL_I18N.en).privacy.title)}</a> · <a href="${publicPath(locale, 'terms')}">${escapeHtml((LEGAL_I18N[locale] ?? LEGAL_I18N.en).terms.title)}</a> · <a href="${publicPath(locale, 'cross-reference')}">${escapeHtml(xrefText(locale).footer)}</a></div></footer>`;
+  return `<footer class="site-footer"><div class="site-shell footer-inner"><div><a class="brand brand--footer" href="${publicPath(locale)}"><span class="brand-mark" aria-hidden="true"></span><span>${site.brand}<small>BEARING &amp; BEARING HOUSING</small></span></a></div><dl class="footer-contact"><div><dt>WhatsApp</dt><dd>${contactValue(site.whatsapp, locale, 'whatsapp')}</dd></div><div><dt>E-mail</dt><dd>${contactValue(site.email, locale, 'email')}</dd></div><div><dt>Facebook</dt><dd>${contactValue(site.facebook, locale, 'website', 'Facebook')}</dd></div><div><dt>LinkedIn</dt><dd>${contactValue(site.linkedin, locale, 'website', 'LinkedIn')}</dd></div><div><dt>${escapeHtml(companyNameLabels[locale])}</dt><dd>${contactValue(site.companyName, locale)}</dd></div><div><dt>${escapeHtml(contactFieldLabels.facility[locale] ?? contactFieldLabels.facility.en)}</dt><dd>${contactValue(site.manufacturingFacility, locale)}</dd></div></dl></div><div class="site-shell footer-bottom">© 2026 ${site.brand}. All rights reserved. <a href="${publicPath(locale, 'privacy')}">${escapeHtml((LEGAL_I18N[locale] ?? LEGAL_I18N.en).privacy.title)}</a> · <a href="${publicPath(locale, 'terms')}">${escapeHtml((LEGAL_I18N[locale] ?? LEGAL_I18N.en).terms.title)}</a> · <a href="${publicPath(locale, 'cross-reference')}">${escapeHtml(xrefText(locale).footer)}</a></div></footer>`;
 }
 
 function page({ locale, path = '', active, title, description, content, schema, image, enOnly = false, noindex = false }) {
@@ -1163,7 +1173,7 @@ function unitContactLine(locale, series) {
   const text = specText(locale);
   const phone = site.whatsapp.replace(/\D/g, '');
   const subject = series ? `${enquiryCtaText[locale].heading}: ${seriesHeading(locale, series)}` : `${enquiryCtaText[locale].heading} - ${site.brand}`;
-  return `<p class="unit-contact">${escapeHtml(text.ui.needSpecs)} <a href="https://wa.me/${phone}?text=${encodeURIComponent(subject)}" target="_blank" rel="noopener noreferrer">WhatsApp ${escapeHtml(site.whatsapp)}</a> · <a href="mailto:${site.email}?subject=${encodeURIComponent(subject)}">${escapeHtml(text.ui.emailUs)}</a></p>`;
+  return `<p class="unit-contact">${escapeHtml(text.ui.needSpecs)} <a href="https://wa.me/${phone}?text=${encodeURIComponent(subject)}" target="_blank" rel="noopener noreferrer">WhatsApp ${escapeHtml(site.whatsapp)}</a> · <a href="${gmailHref(site.email, subject)}" target="_blank" rel="noopener noreferrer">${escapeHtml(text.ui.emailUs)}</a></p>`;
 }
 
 // Flange-family comparison block (UCF page only).
@@ -1312,7 +1322,7 @@ function enquiryCtaSection(locale, series) {
   const code = series.displayName ?? series.seriesCode;
   const subject = `Enquiry about ${code} - ${site.brand}`;
   const phone = site.whatsapp.replace(/\D/g, '');
-  return `<section class="section section--soft section--tight"><div class="site-shell"><div class="enquiry-cta"><h2>${escapeHtml(copy.heading)}</h2><p>${escapeHtml(copy.text)}</p><div class="enquiry-cta__actions"><a class="enquiry-cta__button" href="https://wa.me/${phone}?text=${encodeURIComponent(subject)}" target="_blank" rel="noopener noreferrer">WhatsApp</a><a class="enquiry-cta__button enquiry-cta__button--ghost" href="mailto:${site.email}?subject=${encodeURIComponent(subject)}">E-mail</a></div></div></div></section>`;
+  return `<section class="section section--soft section--tight"><div class="site-shell"><div class="enquiry-cta"><h2>${escapeHtml(copy.heading)}</h2><p>${escapeHtml(copy.text)}</p><div class="enquiry-cta__actions"><a class="enquiry-cta__button" href="https://wa.me/${phone}?text=${encodeURIComponent(subject)}" target="_blank" rel="noopener noreferrer">WhatsApp</a><a class="enquiry-cta__button enquiry-cta__button--ghost" href="${gmailHref(site.email, subject)}" target="_blank" rel="noopener noreferrer">E-mail</a></div></div></div></section>`;
 }
 
 // Series page description: English uses the user-confirmed ALT structure sentence;
@@ -1533,7 +1543,7 @@ function fastenerProductsSection(seriesCode, locale = 'en') {
   const renderItem = p => {
     const subject = `Enquiry: ${p.name} - NATER Hardware`;
     const waLink = `https://wa.me/${phone}?text=${encodeURIComponent(subject)}`;
-    const mailLink = `mailto:${site.email}?subject=${encodeURIComponent(subject)}`;
+    const mailLink = gmailHref(site.email, subject);
     const photo = p.image
       ? `<div class="fastener-item__photo"><img src="/assets/product-images/fastener-products/${escapeHtml(p.image)}" alt="${escapeHtml(fastenerPhotoAlt(locale, p.image, p.name))}" width="800" height="800" loading="lazy" decoding="async"></div>`
       : '';
@@ -1867,7 +1877,7 @@ function productContent(locale, category, product) {
 
 function contactContent(locale) {
   const label = contactLabels[locale];
-  return `<section class="page-intro"><div class="site-shell"><p class="eyebrow">${escapeHtml(label)}</p><h1>${escapeHtml(label)}</h1><p>${escapeHtml(contactLeads[locale])}</p></div></section><section class="section section--soft"><div class="site-shell public-info"><dl><div><dt>WhatsApp</dt><dd>${contactValue(site.whatsapp, locale, 'whatsapp')}</dd></div><div><dt>Facebook</dt><dd>${contactValue(site.facebook, locale, 'website', 'Facebook')}</dd></div><div><dt>LinkedIn</dt><dd>${contactValue(site.linkedin, locale, 'website', 'LinkedIn')}</dd></div><div><dt>${escapeHtml(companyNameLabels[locale])}</dt><dd>${contactValue(site.companyName, locale)}</dd></div><div><dt>${escapeHtml(contactFieldLabels.facility[locale] ?? contactFieldLabels.facility.en)}</dt><dd>${contactValue(site.manufacturingFacility, locale)}</dd></div></dl></div></section>`;
+  return `<section class="page-intro"><div class="site-shell"><p class="eyebrow">${escapeHtml(label)}</p><h1>${escapeHtml(label)}</h1><p>${escapeHtml(contactLeads[locale])}</p></div></section><section class="section section--soft"><div class="site-shell public-info"><dl><div><dt>WhatsApp</dt><dd>${contactValue(site.whatsapp, locale, 'whatsapp')}</dd></div><div><dt>E-mail</dt><dd>${contactValue(site.email, locale, 'email')}</dd></div><div><dt>Facebook</dt><dd>${contactValue(site.facebook, locale, 'website', 'Facebook')}</dd></div><div><dt>LinkedIn</dt><dd>${contactValue(site.linkedin, locale, 'website', 'LinkedIn')}</dd></div><div><dt>${escapeHtml(companyNameLabels[locale])}</dt><dd>${contactValue(site.companyName, locale)}</dd></div><div><dt>${escapeHtml(contactFieldLabels.facility[locale] ?? contactFieldLabels.facility.en)}</dt><dd>${contactValue(site.manufacturingFacility, locale)}</dd></div></dl></div></section>`;
 }
 
 async function writePage(locale, path, html, routes) {
