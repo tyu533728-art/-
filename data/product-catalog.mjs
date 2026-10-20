@@ -14,11 +14,13 @@ const confirmedImages = Object.freeze({
   UCFB: image('/assets/product-images/ucfb-unit.webp', 800, 800),
   PBU: image('/assets/product-images/pbu-unit.webp', 800, 800),
   UC: image('/assets/product-images/uc-product.webp', 800, 800),
-  // Photos supplied by the owner on 2026-10-09; these five series were pending until now.
-  UEL: image('/assets/product-images/uel-unit.webp', 800, 800),
-  UK: image('/assets/product-images/uk-unit.webp', 800, 800),
-  UELP: image('/assets/product-images/uelp-unit.webp', 800, 800),
-  UCFS: image('/assets/product-images/ucfs-unit.webp', 800, 800),
+  // These four reuse an existing photo. The dedicated shots supplied on 2026-10-09 showed the wrong
+  // product type — UCFS was a three-hole triangle instead of a four-bolt square flange, and UEL was
+  // a complete unit rather than an insert bearing — so they were withdrawn rather than published.
+  UEL: image('/assets/product-images/uc-product.webp', 800, 800),
+  UK: image('/assets/product-images/uc-product.webp', 800, 800),
+  UELP: image('/assets/product-images/ucp-unit.webp', 800, 800),
+  UCFS: image('/assets/product-images/ucf-unit.webp', 800, 800),
   FB: image('/assets/product-images/housing-1.webp', 900, 1000),
   FL: image('/assets/product-images/housing-2.webp', 900, 1000),
   P: image('/assets/product-images/housing-3.webp', 900, 1000),
@@ -29,7 +31,8 @@ const confirmedImages = Object.freeze({
   PH: image('/assets/product-images/housing-9.webp', 900, 1000),
   PA: image('/assets/product-images/housing-10.webp', 900, 1000),
   PAS: image('/assets/product-images/housing-11.webp', 900, 1000),
-  FS: image('/assets/product-images/fs-housing.webp', 900, 900),
+  // FS is a square four-bolt flange with a spigot; the withdrawn shot showed a two-hole round flange.
+  FS: image('/assets/product-images/ucf-unit.webp', 800, 800),
   BNSW: image('/assets/product-images/fastener-bolts-nuts-screws-washers.webp', 800, 800),
   TRS: image('/assets/product-images/fastener-threaded-rods-studs.webp', 800, 800),
   // CONS, not CON: "con" is a reserved device name on Windows, where git then cannot index the
@@ -112,13 +115,9 @@ export const productCatalog = {
       images: [],
       series: [
         userConfirmedSeries(pillowBlockBearingUnits, 'UCT', confirmedImages.UCT),
-        userConfirmedSeries(pillowBlockBearingUnits, 'UEL', confirmedImages.UEL),
-        userConfirmedSeries(pillowBlockBearingUnits, 'UK', confirmedImages.UK),
-        userConfirmedSeries(pillowBlockBearingUnits, 'UELP', confirmedImages.UELP),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCP', confirmedImages.UCP),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCF', confirmedImages.UCF),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCFC', confirmedImages.UCFC),
-        userConfirmedSeries(pillowBlockBearingUnits, 'UCFS', confirmedImages.UCFS),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCFL', confirmedImages.UCFL),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCPA', confirmedImages.UCPA),
         userConfirmedSeries(pillowBlockBearingUnits, 'UCPH', confirmedImages.UCPH),

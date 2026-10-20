@@ -10,13 +10,9 @@ const categories = [
 ];
 const series = [
   { code: 'UCT', image: true, category: 'pillow-block-bearing-units' },
-  { code: 'UEL', image: true, category: 'pillow-block-bearing-units' },
-  { code: 'UK', image: true, category: 'pillow-block-bearing-units' },
-  { code: 'UELP', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UCP', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UCF', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UCFC', image: true, category: 'pillow-block-bearing-units' },
-  { code: 'UCFS', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UCFL', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UCPA', image: true, category: 'pillow-block-bearing-units' },
   { code: 'UCPH', image: true, category: 'pillow-block-bearing-units' },
