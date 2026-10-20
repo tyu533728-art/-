@@ -332,4 +332,144 @@ export const guides = [
       },
     ],
     cta: 'Send a photo of the mounting plate with the bolt spacing, and we will tell you which flange type it accepts.',
+  },
+  {
+    slug: 'uct-vs-ucp-take-up-vs-pillow-block',
+    title: 'UCT vs UCP: Take-Up Units vs Pillow Blocks',
+    description: 'The two most common mounted unit families compared — how a take-up unit slides in its frame, when belt or chain tension needs one, and when a fixed pillow block is the better choice.',
+    date: '2026-10-20',
+    intro: 'UCP and UCT both take a UC insert bearing, but only one of them can move. That single difference decides which one goes on a conveyor tail shaft and which one goes on a drive shaft.',
+    sections: [
+      {
+        h: 'The mechanical difference',
+        p: [
+          'A UCP pillow block is bolted to the frame in one place. Its base is a solid foot with two bolt holes, and once tightened the shaft centre cannot move.',
+          'A UCT take-up unit sits inside a guide frame — usually a cast or fabricated slot — and is pulled along it by a threaded rod. The housing slides, so the shaft centre distance can be adjusted after installation. That is the whole reason the series exists.',
+        ],
+      },
+      {
+        h: 'Where each one belongs',
+        p: [
+          'Take-up units appear where something has to stay tight: the tail pulley of a belt conveyor, the driven end of a chain drive, a screen or a feeder where the belt stretches with use. The take-up frame lets an operator restore tension without moving the whole machine.',
+          'Pillow blocks appear everywhere the shaft centre is fixed: fan shafts, line shafts, mixer shafts, drive ends. There is nothing to adjust, so the simpler and stiffer fixed mount wins.',
+        ],
+      },
+      {
+        h: 'A take-up unit is not a slide bearing',
+        p: [
+          'The slot allows adjustment during setup and occasional re-tensioning — not continuous motion under load. Running a UCT unit permanently at the end of its travel, or letting the threaded rod carry the belt load, wears the frame and misaligns the shaft.',
+          'Set the unit so that roughly a third of the travel remains in each direction. That leaves room for later re-tensioning and keeps the housing supported on both sides of the slot.',
+        ],
+      },
+      {
+        h: 'What you need to order one',
+        p: ['A take-up unit is ordered as a pair of parts, and they have different sizes:'],
+        list: [
+          'The unit itself: bore size and series code, such as UCT205.',
+          'The frame: its model number, which sets the slot width and the mounting hole pattern.',
+          'The thread direction of the adjusting rod, since left- and right-hand versions exist for opposite sides of a conveyor.',
+        ],
+      },
+    ],
+    cta: 'Send the frame model and the shaft diameter, and we will confirm the matching take-up unit and rod hand.',
+  },
+  {
+    slug: 'uc-vs-uel-vs-uk-insert-bearing-locking',
+    title: 'UC vs UEL vs UK: Insert Bearing Locking Types Compared',
+    description: 'Set screws, eccentric locking collar and tapered adapter sleeve explained — how each locks an insert bearing to the shaft, and which suits reversing, high-speed or heavily loaded shafts.',
+    date: '2026-10-20',
+    intro: 'The three insert series fit the same housings and the same shaft diameters, but they grip the shaft in three different ways. The locking method decides whether the bearing stays put under vibration, reversing load or repeated removal.',
+    sections: [
+      {
+        h: 'The three locking methods',
+        p: ['Each series is named for how it fixes the inner ring to the shaft:'],
+        list: [
+          'UC — two set screws in the inner ring, tightened onto the shaft. The simplest and the cheapest.',
+          'UEL — an eccentric locking collar that rotates a few degrees and wedges against the shaft, then is held by a single set screw.',
+          'UK — a tapered bore that is pulled onto a tapered adapter sleeve by a lock nut, so the grip comes from an interference fit rather than a screw point.',
+        ],
+      },
+      {
+        h: 'What set screws do well — and what they do not',
+        p: [
+          'UC set screws are fast to fit and need no special tools, which is why they are the default on light and medium duty machinery. They grip by point contact, so on a hardened shaft, or under vibration, they can loosen and let the inner ring creep.',
+          'They also mar the shaft. Where a bearing will be replaced on the same shaft repeatedly, the burr raised by a set screw makes the next fit worse.',
+        ],
+      },
+      {
+        h: 'Where the collar and the sleeve win',
+        p: [
+          'The UEL collar spreads its grip around a larger arc than a set screw, so it holds better on reversing shafts and on equipment that vibrates — conveyors, screens, crushers. It still marks the shaft, but less severely.',
+          'The UK adapter sleeve is the choice for heavy radial load, high speed, or where the shaft must stay unmarked. The interference fit carries load around the full circumference and there is no screw point to loosen. The cost is more parts and a torque setting that has to be respected.',
+        ],
+      },
+      {
+        h: 'How to choose',
+        p: ['Match the locking method to the duty, not to the price:'],
+        list: [
+          'Light duty, occasional use, easy access: UC with set screws is adequate.',
+          'Vibration, reversing load, or a shaft that has already been marked: move to UEL.',
+          'Heavy load, high speed, or a shaft that must not be damaged: UK with an adapter sleeve.',
+          'Where the same unit must be removed and refitted often, the sleeve type is the only one that leaves the shaft reusable.',
+        ],
+      },
+    ],
+    cta: 'Tell us the shaft hardness, the duty and how often the unit is removed, and we will suggest the locking type.',
+  },
+  {
+    slug: 'mounted-bearing-unit-installation-mistakes',
+    title: 'Mounted Bearing Installation: Five Common Mistakes',
+    description: 'The five installation errors behind most premature mounted bearing failures — over-tightening, misalignment, dirty seating, wrong grease, and forcing a unit onto a damaged shaft.',
+    date: '2026-10-20',
+    intro: 'Most mounted bearing units that fail early were installed correctly enough to run, and wrongly enough to fail months later. These five mistakes account for the majority of premature failures.',
+    sections: [
+      {
+        h: '1. Over-tightening the housing bolts',
+        p: [
+          'The housing bolts hold the unit down; they do not align it. Pulling a distorted frame flat with the bolts bows the housing and pinches the bearing, which shows up as heat and noise within days.',
+          'If the frame is not flat, shim it. The bolts should be snug, not used as a clamp.',
+        ],
+      },
+      {
+        h: '2. Ignoring shaft alignment between two bearings',
+        p: [
+          'Two bearings on one shaft share the load only if their centre lines agree. A shaft that is out of line by more than the self-aligning range loads one bearing edge-on and doubles its stress.',
+          'The spherical seat absorbs about ±2° — enough for casting tolerance and slight frame deflection, not enough to correct a badly placed second unit.',
+        ],
+      },
+      {
+        h: '3. Fitting onto a damaged or undersized shaft',
+        p: [
+          'A shaft with a burr, a worn band or a score line will not give the inner ring a true seat. The ring rocks, the seal lip wears a groove, and grease escapes.',
+          'Clean the shaft, check the diameter at the bearing position, and if it is worn, either repair it or fit a sleeve-type unit rather than forcing a set-screw unit over the damage.',
+        ],
+      },
+      {
+        h: '4. Over-greasing, or never greasing',
+        p: [
+          'Too much grease in a sealed unit pushes the seals outward and can blow them. Too little lets the rolling elements run dry. Neither failure is visible until the bearing is noisy.',
+          'Follow the housing or catalogue recommendation for the initial fill, and re-grease on a schedule based on running hours and temperature rather than on guesswork.',
+        ],
+      },
+      {
+        h: '5. Hammering the unit into place',
+        p: [
+          'Striking a mounted unit to seat it transfers impact through the rolling elements to the raceways, leaving brinelling marks that become spalling later. The damage is done before the machine ever runs.',
+          'Press on the ring being fitted — never on the housing or the seal — and use a soft drift if a press is not available.',
+        ],
+      },
+      {
+        h: 'What good installation looks like',
+        p: ['In order:'],
+        list: [
+          'Check the frame is flat and the bolt holes line up before the unit goes on.',
+          'Clean and measure the shaft at the bearing seat.',
+          'Slide the unit on by hand; if it needs force, stop and find out why.',
+          'Tighten the locking method to its stated torque, not by feel.',
+          'Align both bearings on the shaft before final tightening.',
+          'Grease to the recommended quantity, then run and listen.',
+        ],
+      },
+    ],
+    cta: 'If a unit has already failed early, send us photos of the shaft seat and the housing bore — the wear pattern usually shows which of these five happened.',
   }]
