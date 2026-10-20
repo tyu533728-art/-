@@ -3,17 +3,17 @@ export const LOCALE_CODES = ['en', 'es', 'de', 'fr', 'pt', 'ar', 'tr', 'ru', 'it
 export const PRODUCT_CATEGORIES = ['Pillow Block Bearing Units', 'Bearing Housing Series', 'Custom', 'Fasteners & Hardware'];
 
 export const SERIES_BY_CATEGORY = Object.freeze({
-  // FS was staged from the owner's cross-reference workbook and activated on 2026-10-09, once its
-  // product photo was supplied. UEL, UK, UELP and UCFS were withdrawn on 2026-10-20: the photos
-  // supplied for them showed the wrong product type, so the series are held in PENDING_SERIES until
-  // correct photos exist rather than published behind a misleading image.
+  // UEL, UK, UELP, UCFS and FS were withdrawn on 2026-10-20: the photos supplied for them showed
+  // the wrong product type — UCFS was a three-hole triangle instead of a four-bolt square flange,
+  // UEL was a complete unit instead of an insert bearing, and FS was a two-hole round flange — so
+  // none of them is published behind a misleading image.
   'Pillow Block Bearing Units': ['UCT', 'UCP', 'UCF', 'UCFC', 'UCFL', 'UCPA', 'UCPH', 'UCFA', 'UCFB', 'PBU', 'UC'],
-  'Bearing Housing Series': ['T', 'P', 'F', 'FC', 'FL', 'PA', 'PH', 'FU', 'FB', 'PAS', 'FS'],
+  'Bearing Housing Series': ['T', 'P', 'F', 'FC', 'FL', 'PA', 'PH', 'FU', 'FB', 'PAS'],
   Custom: [],
   'Fasteners & Hardware': ['BNSW', 'TRS', 'CONS', 'HTR', 'PRO', 'CST']
 });
 
-export const ACTIVE_SERIES = ['UCT', 'UCP', 'UCF', 'UCFC', 'UCFL', 'UCPA', 'UCPH', 'UCFA', 'UCFB', 'PBU', 'UC', 'T', 'P', 'F', 'FC', 'FL', 'PA', 'PH', 'FU', 'FB', 'PAS', 'FS', 'BNSW', 'TRS', 'CONS', 'HTR', 'PRO', 'CST'];
+export const ACTIVE_SERIES = ['UCT', 'UCP', 'UCF', 'UCFC', 'UCFL', 'UCPA', 'UCPH', 'UCFA', 'UCFB', 'PBU', 'UC', 'T', 'P', 'F', 'FC', 'FL', 'PA', 'PH', 'FU', 'FB', 'PAS', 'BNSW', 'TRS', 'CONS', 'HTR', 'PRO', 'CST'];
 // Empty: every confirmed series is published. A future staged series is listed here until its
 // product photo exists, which keeps it out of the routes, cards and sitemap.
 export const PENDING_SERIES = [];

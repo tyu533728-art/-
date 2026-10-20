@@ -29,7 +29,6 @@ const series = [
   { code: 'FU', image: true, category: 'bearing-housing-series' },
   { code: 'FB', image: true, category: 'bearing-housing-series' },
   { code: 'PAS', display: 'HA', image: true, category: 'bearing-housing-series' },
-  { code: 'FS', image: true, category: 'bearing-housing-series' },
   { code: 'BNSW', display: 'Bolts, Nuts, Screws & Washers', image: true, category: 'fasteners-hardware' },
   { code: 'TRS', display: 'Threaded Rods & Studs', image: true, category: 'fasteners-hardware' },
   { code: 'CONS', display: 'Construction Fixings', image: true, category: 'fasteners-hardware' },
