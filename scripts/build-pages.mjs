@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { categories, productCatalog, validateProductCatalog } from '../data/product-catalog.mjs';
 import { LOCALE_CODES } from '../data/product-schema.mjs';
 import { guides } from '../data/guides.mjs';
+import { seriesFaqFor } from '../data/series-faq.mjs';
 import { flangeTypeNotes, seriesBoreRange, unitModelGroups, mountedUnitsForSeries, modelLabelWithBore, verifySeriesBoreMapping } from '../data/mounted-units-spec.mjs';
 import { housingSeriesSpec } from '../data/bearing-housing-spec.mjs';
 import { specText } from '../data/spec-i18n.mjs';
@@ -846,7 +847,7 @@ function categorySchema(locale, category, path, description) {
 function seriesSchema(locale, category, series, path) {
   const name = localizedSeriesName(locale, series);
   const url = absoluteUrl(publicPath(locale, path));
-  return [
+  const entries = [
     organizationSchema(locale),
     {
       '@type': 'BreadcrumbList',
@@ -858,6 +859,20 @@ function seriesSchema(locale, category, series, path) {
       ]
     }
   ];
+  // The FAQ block is the same data the page renders visibly, which is what Google requires: the
+  // markup must describe content the visitor can actually see. No Q&A is invented here.
+  const { items } = seriesFaqFor(locale, series.displayName ?? series.seriesCode, localizedCategoryTitle(locale, category));
+  if (items.length) {
+    entries.push({
+      '@type': 'FAQPage',
+      mainEntity: items.map(item => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a }
+      }))
+    });
+  }
+  return entries;
 }
 
 // Meta description must stay inside the ~160 character display limit: trim at a sentence or
@@ -1686,6 +1701,15 @@ function seriesDimensionsSection(locale, category, series) {
   return `<section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${t.eyebrow}</p><h2>${t.heading}</h2></div>${table}</div></section>`;
 }
 
+function seriesFaqSection(locale, category, series) {
+  const { heading, items } = seriesFaqFor(locale, series.displayName ?? series.seriesCode, localizedCategoryTitle(locale, category));
+  if (!items.length) return '';
+  const rows = items
+    .map(item => `<details class="series-faq__item"><summary>${escapeHtml(item.q)}</summary><p>${escapeHtml(item.a)}</p></details>`)
+    .join('');
+  return `<section class="section section--soft section--tight"><div class="site-shell"><div class="section-heading"><p class="eyebrow">FAQ</p><h2>${escapeHtml(heading)}</h2></div><div class="series-faq">${rows}</div></div></section>`;
+}
+
 function seriesContent(locale, category, series) {
   const text = locales[locale];
   const image = seriesImage(locale, series);
@@ -1708,7 +1732,7 @@ function seriesContent(locale, category, series) {
   const hero = paired || content;
   const fastenerList = category.code === 'fasteners-hardware' ? fastenerProductsSection(series.seriesCode, locale) : '';
   const dimensions = seriesDimensionsSection(locale, category, series);
-  return `<section class="page-intro page-intro--compact"><div class="site-shell">${seriesBreadcrumb(locale, category, series)}<p class="eyebrow">${escapeHtml(localizedCategoryTitle(locale, category))}</p><h1 dir="ltr">${escapeHtml(seriesHeading(locale, series))}</h1><p>${escapeHtml(lead)}</p></div></section>${productIndex(locale)}${hero}${dimensions}${fastenerList}${seriesAboutBlock(locale, category, series)}`;
+  return `<section class="page-intro page-intro--compact"><div class="site-shell">${seriesBreadcrumb(locale, category, series)}<p class="eyebrow">${escapeHtml(localizedCategoryTitle(locale, category))}</p><h1 dir="ltr">${escapeHtml(seriesHeading(locale, series))}</h1><p>${escapeHtml(lead)}</p></div></section>${productIndex(locale)}${hero}${dimensions}${fastenerList}${seriesAboutBlock(locale, category, series)}${seriesFaqSection(locale, category, series)}${seriesSiblings(locale, category, series)}`;
 }
 
 function categoryBreadcrumb(locale, category) {
@@ -1896,9 +1920,47 @@ function guidesIndexContent() {
   return `<section class="page-intro"><div class="site-shell"><p class="eyebrow">Guides</p><h1>Bearing Housing Guides</h1><p>Plain-language engineering guides for buyers and engineers.</p></div></section><section class="section"><div class="site-shell guide-grid">${cards}</div></section>`;
 }
 
+// Each guide points at the series it actually discusses, so the article's accumulated ranking flows
+// into the catalogue instead of ending at a "Contact us" button. Series withdrawn from the catalogue
+// (UEL, UK, UELP, UCFS, FS) are deliberately absent from these lists.
+const GUIDE_RELATED_SERIES = Object.freeze({
+  'ucp-vs-ucf-vs-ucfl-which-housing': [['UCP', 'ucp'], ['UCF', 'ucf'], ['UCFL', 'ucfl']],
+  'why-housing-bore-tolerance-matters': [['UCP', 'ucp'], ['UCF', 'ucf'], ['FC', 'fc']],
+  'how-to-read-a-bearing-housing-model-number': [['UCP', 'ucp'], ['UCF', 'ucf'], ['UCT', 'uct']],
+  'how-to-choose-bearing-housing-material': [['P', 'p'], ['F', 'f'], ['FC', 'fc']],
+  'bearing-lubrication-basics': [['UCP', 'ucp'], ['UCT', 'uct']],
+  'bearing-housing-mounting-types': [['UCP', 'ucp'], ['UCF', 'ucf'], ['T', 't']],
+  'ucp-vs-ucpa-vs-ucph-pillow-block-heights': [['UCP', 'ucp'], ['UCPA', 'ucpa'], ['UCPH', 'ucph']],
+  'ucf-vs-ucfc-vs-ucfl-vs-ucfa-flange-types': [['UCF', 'ucf'], ['UCFC', 'ucfc'], ['UCFL', 'ucfl'], ['UCFA', 'ucfa']],
+  'uct-vs-ucp-take-up-vs-pillow-block': [['UCT', 'uct'], ['UCP', 'ucp']],
+  'uc-vs-uel-vs-uk-insert-bearing-locking': [['UC', 'uc']],
+  'mounted-bearing-unit-installation-mistakes': [['UCP', 'ucp'], ['UCT', 'uct'], ['UCF', 'ucf']]
+});
+
+const HOUSING_SERIES_SLUGS = new Set(['t', 'p', 'f', 'fc', 'fl', 'pa', 'ph', 'fu', 'fb', 'pas']);
+
+function guideRelatedProducts(g) {
+  const list = GUIDE_RELATED_SERIES[g.slug];
+  if (!list || !list.length) return '';
+  const links = list
+    .map(([label, slug]) => {
+      const group = HOUSING_SERIES_SLUGS.has(slug) ? 'bearing-housing-series' : 'pillow-block-bearing-units';
+      return `<a href="/en/products/${group}/${slug}/">${escapeHtml(label)}</a>`;
+    })
+    .join('');
+  return `<div class="guide-related"><p class="eyebrow">Related products</p><nav class="series-links" aria-label="Related products">${links}</nav></div>`;
+}
+
+// Guide paragraphs may carry inline links written as [text](url). The escaping happens first, so the
+// link target can never inject markup; the pattern then runs on the escaped string, whose brackets
+// and parentheses are untouched by escapeHtml.
+function inlineLinks(text) {
+  return escapeHtml(text).replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, '<a href="$2">$1</a>');
+}
+
 function guideArticleContent(g) {
-  const body = g.sections.map(s => `<section class="guide-section"><h2>${escapeHtml(s.h)}</h2>${(s.p || []).map(p => `<p>${escapeHtml(p)}</p>`).join('')}${s.list ? `<ul>${s.list.map(li => `<li>${escapeHtml(li)}</li>`).join('')}</ul>` : ''}</section>`).join('');
-  return `<section class="page-intro page-intro--compact"><div class="site-shell"><nav class="product-breadcrumb" aria-label="${escapeHtml(uiLabels('en').breadcrumb)}"><a href="/en/">Home</a><span aria-hidden="true">/</span><a href="/en/guides/">Guides</a><span aria-hidden="true">/</span><span aria-current="page">Guide</span></nav><p class="eyebrow">Guide</p><h1>${escapeHtml(g.title)}</h1><p>${escapeHtml(g.intro)}</p></div></section><section class="section"><div class="site-shell guide-article">${body}<div class="guide-cta"><p>${escapeHtml(g.cta)}</p><a class="btn btn--primary" href="/en/contact-us/">Contact us</a></div></div></section>`;
+  const body = g.sections.map(s => `<section class="guide-section"><h2>${escapeHtml(s.h)}</h2>${(s.p || []).map(p => `<p>${inlineLinks(p)}</p>`).join('')}${s.list ? `<ul>${s.list.map(li => `<li>${inlineLinks(li)}</li>`).join('')}</ul>` : ''}</section>`).join('');
+  return `<section class="page-intro page-intro--compact"><div class="site-shell"><nav class="product-breadcrumb" aria-label="${escapeHtml(uiLabels('en').breadcrumb)}"><a href="/en/">Home</a><span aria-hidden="true">/</span><a href="/en/guides/">Guides</a><span aria-hidden="true">/</span><span aria-current="page">Guide</span></nav><p class="eyebrow">Guide</p><h1>${escapeHtml(g.title)}</h1><p>${escapeHtml(g.intro)}</p></div></section><section class="section"><div class="site-shell guide-article">${body}${guideRelatedProducts(g)}<div class="guide-cta"><p>${escapeHtml(g.cta)}</p><a class="btn btn--primary" href="/en/contact-us/">Contact us</a></div></div></section>`;
 }
 
 // Privacy and Terms are rendered from data/legal-i18n.mjs, which holds the source English text and

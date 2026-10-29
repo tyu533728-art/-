@@ -16,9 +16,9 @@ export const guides = [
           'Bearing housing codes are not random. The first letters describe the housing shape and mounting style:',
         ],
         list: [
-          'UCP — U-series bearing in a P (pillow / pedestal) housing: a solid base with two bolt holes, the classic "plummer block" style.',
-          'UCF — U-series bearing in an F (flanged) housing: a square four-bolt flange that mounts against a vertical face.',
-          'UCFL — U-series bearing in an FL (flanged, two-bolt oval) housing: a compact two-hole flange with a rounded outline.',
+          '[UCP](/en/products/pillow-block-bearing-units/ucp/) — U-series bearing in a P (pillow / pedestal) housing: a solid base with two bolt holes, the classic "plummer block" style.',
+          '[UCF](/en/products/pillow-block-bearing-units/ucf/) — U-series bearing in an F (flanged) housing: a square four-bolt flange that mounts against a vertical face.',
+          '[UCFL](/en/products/pillow-block-bearing-units/ucfl/) — U-series bearing in an FL (flanged, two-bolt oval) housing: a compact two-hole flange with a rounded outline.',
         ],
       },
       {
@@ -71,7 +71,7 @@ export const guides = [
       {
         h: 'The H7 standard',
         p: [
-          'For most pillow block and flanged housings, the bearing seat is machined to an H7 tolerance. H7 defines a small, controlled clearance band so the outer ring fits firmly without being crushed. It is an ISO standard, so the same letter means the same band whether the housing was made in China, Europe or anywhere else.',
+          'For most [pillow block](/en/products/pillow-block-bearing-units/ucp/) and [flanged](/en/products/pillow-block-bearing-units/ucf/) housings, the bearing seat is machined to an H7 tolerance. H7 defines a small, controlled clearance band so the outer ring fits firmly without being crushed. It is an ISO standard, so the same letter means the same band whether the housing was made in China, Europe or anywhere else.',
         ],
       },
       {
