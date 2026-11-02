@@ -892,6 +892,17 @@ function clampMetaDescription(text, max = 158) {
 // Social share image: series pages share their own product photo, everything else the workshop hero.
 const defaultShareImage = Object.freeze({ src: '/assets/bearing-housing.webp', width: 1280, height: 956 });
 
+// GA4. The tag is loaded async so a slow or blocked googletagmanager.com cannot delay the page, and
+// the inline initialiser only queues into dataLayer. assets/site.js sends the generate_lead event when
+// a visitor clicks a WhatsApp, e-mail or telephone link - those three are the site's only lead paths,
+// so they are the number that matters.
+const GA_MEASUREMENT_ID = 'G-KLML6G6P1B';
+
+function analyticsTag() {
+  return `<script async src="https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');</script>`;
+}
+
 function head({ locale, path, title, description, schema = organizationSchema(locale), image = defaultShareImage, noindex = false, enOnly = false }) {
   const canonical = absoluteUrl(publicPath(locale, path));
   const metaDescription = clampMetaDescription(description);
@@ -923,6 +934,7 @@ function head({ locale, path, title, description, schema = organizationSchema(lo
   <link rel="stylesheet" href="/assets/styles.css">
   <noscript><style>.brand-splash { display: none !important; }</style></noscript>
   <script src="/assets/site.js" defer></script>
+  ${analyticsTag()}
   <script type="application/ld+json">${Array.isArray(schema) ? JSON.stringify({ '@context': 'https://schema.org', '@graph': schema }) : JSON.stringify(schema)}</script>
 </head>`;
 }

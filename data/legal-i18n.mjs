@@ -20,7 +20,7 @@ export const LEGAL_I18N = Object.freeze({
       lead: 'How this website handles your personal data.',
       blocks: [
         ['What we collect', [
-          'This website does not use analytics, advertising cookies or tracking scripts. We do not collect personal data automatically.',
+          'We use Google Analytics 4 to understand how visitors reach and use this site. It sets cookies named _ga and _ga_ followed by an identifier, and records the pages you view, how you arrived, your approximate location (country or city level), your device and browser type, and which links you click. Google processes this data and may transfer it outside your country, including to the United States. We read it only in aggregate, to see which pages are useful; it is never used to identify you personally. You can block these cookies in your browser settings or install the Google Analytics opt-out browser add-on.',
           'We only receive information you choose to send us — for example, when you write to our e-mail or WhatsApp to ask about products. We use that information solely to answer your enquiry and to communicate with you about the products and services you asked about.'
         ]],
         ['How we use and keep it', [
@@ -63,7 +63,7 @@ export const LEGAL_I18N = Object.freeze({
       lead: 'Cómo trata este sitio web sus datos personales.',
       blocks: [
         ['Qué recopilamos', [
-          'Este sitio web no utiliza analíticas, cookies publicitarias ni scripts de seguimiento. No recopilamos datos personales de forma automática.',
+          'Utilizamos Google Analytics 4 para entender cómo llegan los visitantes a este sitio y cómo lo usan. Instala cookies llamadas _ga y _ga_ seguidas de un identificador, y registra las páginas que ve, cómo llegó, su ubicación aproximada (país o ciudad), el tipo de dispositivo y navegador, y los enlaces en los que hace clic. Google procesa estos datos y puede transferirlos fuera de su país, incluido Estados Unidos. Solo los leemos de forma agregada, para ver qué páginas son útiles; nunca se usan para identificarle personalmente. Puede bloquear estas cookies en la configuración de su navegador o instalar el complemento de inhabilitación de Google Analytics.',
           'Solo recibimos la información que usted decide enviarnos — por ejemplo, cuando escribe a nuestro correo electrónico o WhatsApp para preguntar por productos. Usamos esa información únicamente para responder a su consulta y comunicarnos con usted sobre los productos y servicios por los que preguntó.'
         ]],
         ['Cómo la usamos y cuánto tiempo la conservamos', [
@@ -106,7 +106,7 @@ export const LEGAL_I18N = Object.freeze({
       lead: 'Wie diese Website mit Ihren personenbezogenen Daten umgeht.',
       blocks: [
         ['Was wir erfassen', [
-          'Diese Website verwendet keine Analyse-, Werbe-Cookies oder Tracking-Skripte. Wir erfassen keine personenbezogenen Daten automatisch.',
+          'Wir verwenden Google Analytics 4, um zu verstehen, wie Besucher auf diese Website gelangen und sie nutzen. Es setzt Cookies namens _ga und _ga_ gefolgt von einer Kennung und zeichnet auf, welche Seiten Sie ansehen, wie Sie hierher kamen, Ihren ungefähren Standort (Land oder Stadt), Geräte- und Browsertyp sowie die angeklickten Links. Google verarbeitet diese Daten und kann sie außerhalb Ihres Landes übermitteln, auch in die Vereinigten Staaten. Wir lesen sie nur zusammengefasst, um zu sehen, welche Seiten nützlich sind; sie werden nie verwendet, um Sie persönlich zu identifizieren. Sie können diese Cookies in Ihren Browsereinstellungen blockieren oder das Google Analytics-Opt-out-Add-on installieren.',
           'Wir erhalten nur Informationen, die Sie uns freiwillig senden — zum Beispiel, wenn Sie uns per E-Mail oder WhatsApp zu Produkten schreiben. Wir nutzen diese Informationen ausschließlich, um Ihre Anfrage zu beantworten und mit Ihnen über die angefragten Produkte und Leistungen zu kommunizieren.'
         ]],
         ['Wie wir sie nutzen und wie lange wir sie behalten', [
@@ -149,7 +149,7 @@ export const LEGAL_I18N = Object.freeze({
       lead: 'Comment ce site traite vos données personnelles.',
       blocks: [
         ['Ce que nous collectons', [
-          'Ce site n\'utilise ni analytique, ni cookies publicitaires, ni scripts de suivi. Nous ne collectons pas de données personnelles automatiquement.',
+          'Nous utilisons Google Analytics 4 pour comprendre comment les visiteurs arrivent sur ce site et l\'utilisent. Il dépose des cookies nommés _ga et _ga_ suivis d\'un identifiant, et enregistre les pages que vous consultez, votre provenance, votre localisation approximative (pays ou ville), le type d\'appareil et de navigateur, et les liens sur lesquels vous cliquez. Google traite ces données et peut les transférer hors de votre pays, y compris aux États-Unis. Nous les lisons uniquement de manière agrégée, pour voir quelles pages sont utiles ; elles ne servent jamais à vous identifier personnellement. Vous pouvez bloquer ces cookies dans les réglages de votre navigateur ou installer le module de désactivation de Google Analytics.',
           'Nous recevons uniquement les informations que vous choisissez de nous envoyer — par exemple lorsque vous écrivez à notre e-mail ou à notre WhatsApp pour poser une question sur nos produits. Nous utilisons ces informations uniquement pour répondre à votre demande et communiquer avec vous au sujet des produits et services concernés.'
         ]],
         ['Utilisation et conservation', [
@@ -192,7 +192,7 @@ export const LEGAL_I18N = Object.freeze({
       lead: 'Como este site trata os seus dados pessoais.',
       blocks: [
         ['O que recolhemos', [
-          'Este site não utiliza analítica, cookies publicitários nem scripts de rastreamento. Não recolhemos dados pessoais automaticamente.',
+          'Utilizamos o Google Analytics 4 para compreender como os visitantes chegam a este site e como o utilizam. Instala cookies chamados _ga e _ga_ seguidos de um identificador, e regista as páginas que vê, como chegou, a sua localização aproximada (país ou cidade), o tipo de dispositivo e navegador, e os links em que clica. O Google processa estes dados e pode transferi-los para fora do seu país, incluindo para os Estados Unidos. Lemo-los apenas de forma agregada, para ver que páginas são úteis; nunca são usados para o identificar pessoalmente. Pode bloquear estes cookies nas definições do navegador ou instalar o complemento de desativação do Google Analytics.',
           'Recebemos apenas as informações que decide enviar-nos — por exemplo, quando escreve para o nosso e-mail ou WhatsApp a perguntar sobre produtos. Utilizamos essas informações apenas para responder ao seu pedido e comunicar consigo sobre os produtos e serviços em causa.'
         ]],
         ['Como as utilizamos e durante quanto tempo as guardamos', [
@@ -235,7 +235,7 @@ export const LEGAL_I18N = Object.freeze({
       lead: 'كيف يتعامل هذا الموقع مع بياناتك الشخصية.',
       blocks: [
         ['ما نجمعه', [
-          'لا يستخدم هذا الموقع أدوات تحليل أو ملفات تعريف إعلانية أو نصوص تتبّع. ولا نجمع البيانات الشخصية تلقائيًا.',
+          'نستخدم Google Analytics 4 لفهم كيفية وصول الزوار إلى هذا الموقع واستخدامهم له. يضع ملفات تعريف ارتباط باسم _ga و _ga_ يتبعها معرّف، ويسجل الصفحات التي تشاهدها وكيف وصلت وموقعك التقريبي (الدولة أو المدينة) ونوع الجهاز والمتصفح والروابط التي تنقر عليها. تعالج Google هذه البيانات وقد تنقلها خارج بلدك، بما في ذلك إلى الولايات المتحدة. نقرأها بشكل مجمّع فقط لمعرفة الصفحات المفيدة؛ ولا تُستخدم أبدًا لتحديد هويتك شخصيًا. يمكنك حظر ملفات تعريف الارتباط هذه في إعدادات المتصفح أو تثبيت إضافة إلغاء الاشتراك في Google Analytics.',
           'لا نتلقى إلا المعلومات التي تختار إرسالها إلينا — مثلًا عندما تراسلنا عبر البريد الإلكتروني أو واتساب للسؤال عن المنتجات. ونستخدم هذه المعلومات فقط للرد على استفسارك والتواصل معك بشأن المنتجات والخدمات التي سألت عنها.'
         ]],
         ['كيف نستخدمها ومدة الاحتفاظ بها', [
@@ -278,7 +278,7 @@ export const LEGAL_I18N = Object.freeze({
       lead: 'Bu web sitesinin kişisel verilerinizi nasıl işlediği.',
       blocks: [
         ['Neleri topluyoruz', [
-          'Bu web sitesi analitik, reklam çerezi veya izleme betiği kullanmaz. Kişisel verileri otomatik olarak toplamayız.',
+          'Bu sitenin ziyaretçilerinin nasıl geldiğini ve siteyi nasıl kullandığını anlamak için Google Analytics 4 kullanıyoruz. _ga ve ardından bir tanımlayıcı gelen _ga_ adlı çerezleri yerleştirir; görüntülediğiniz sayfaları, siteye nasıl geldiğinizi, yaklaşık konumunuzu (ülke veya şehir), cihaz ve tarayıcı türünüzü ve tıkladığınız bağlantıları kaydeder. Google bu verileri işler ve ülkeniz dışına, Amerika Birleşik Devletleri dahil olmak üzere aktarabilir. Bunları yalnızca hangi sayfaların yararlı olduğunu görmek için toplu olarak okuruz; sizi kişisel olarak tanımlamak için asla kullanılmaz. Bu çerezleri tarayıcı ayarlarınızdan engelleyebilir veya Google Analytics devre dışı bırakma eklentisini yükleyebilirsiniz.',
           'Yalnızca bize göndermeyi seçtiğiniz bilgileri alırız — örneğin ürünler hakkında soru sormak için e-posta veya WhatsApp üzerinden yazdığınızda. Bu bilgileri yalnızca talebinizi yanıtlamak ve sorduğunuz ürün ve hizmetler hakkında sizinle iletişim kurmak için kullanırız.'
         ]],
         ['Nasıl kullanıyoruz ve ne kadar saklıyoruz', [
@@ -321,7 +321,7 @@ export const LEGAL_I18N = Object.freeze({
       lead: 'Как этот сайт обрабатывает ваши персональные данные.',
       blocks: [
         ['Какие данные мы собираем', [
-          'Этот сайт не использует аналитику, рекламные cookie и скрипты отслеживания. Мы не собираем персональные данные автоматически.',
+          'Мы используем Google Analytics 4, чтобы понимать, как посетители попадают на этот сайт и как им пользуются. Он устанавливает файлы cookie с именами _ga и _ga_ с последующим идентификатором и записывает просмотренные страницы, источник перехода, приблизительное местоположение (страна или город), тип устройства и браузера, а также ссылки, по которым вы нажимаете. Google обрабатывает эти данные и может передавать их за пределы вашей страны, в том числе в США. Мы читаем их только в обобщённом виде, чтобы видеть, какие страницы полезны; они никогда не используются для вашей личной идентификации. Вы можете заблокировать эти cookie в настройках браузера или установить дополнение для отказа от Google Analytics.',
           'Мы получаем только те сведения, которые вы решите нам отправить, — например, когда пишете нам на e-mail или в WhatsApp с вопросом о продукции. Мы используем эти сведения исключительно для ответа на ваш запрос и связи с вами по интересующим вас товарам и услугам.'
         ]],
         ['Как мы их используем и сколько храним', [
@@ -364,7 +364,7 @@ export const LEGAL_I18N = Object.freeze({
       lead: 'Come questo sito tratta i tuoi dati personali.',
       blocks: [
         ['Cosa raccogliamo', [
-          'Questo sito non utilizza analisi, cookie pubblicitari o script di tracciamento. Non raccogliamo dati personali automaticamente.',
+          'Utilizziamo Google Analytics 4 per capire come i visitatori arrivano a questo sito e come lo usano. Imposta cookie chiamati _ga e _ga_ seguiti da un identificatore e registra le pagine che visualizzi, come sei arrivato, la tua posizione approssimativa (paese o città), il tipo di dispositivo e browser e i link su cui fai clic. Google elabora questi dati e può trasferirli al di fuori del tuo paese, compresi gli Stati Uniti. Li leggiamo solo in forma aggregata, per vedere quali pagine sono utili; non vengono mai usati per identificarti personalmente. Puoi bloccare questi cookie nelle impostazioni del browser o installare il componente aggiuntivo di disattivazione di Google Analytics.',
           'Riceviamo solo le informazioni che scegli di inviarci — per esempio quando scrivi alla nostra e-mail o al nostro WhatsApp per chiedere informazioni sui prodotti. Usiamo queste informazioni unicamente per rispondere alla tua richiesta e comunicare con te in merito ai prodotti e servizi richiesti.'
         ]],
         ['Come le usiamo e per quanto tempo le conserviamo', [
@@ -407,7 +407,7 @@ export const LEGAL_I18N = Object.freeze({
       lead: 'Cách website này xử lý dữ liệu cá nhân của bạn.',
       blocks: [
         ['Chúng tôi thu thập những gì', [
-          'Website này không dùng công cụ phân tích, cookie quảng cáo hay script theo dõi. Chúng tôi không thu thập dữ liệu cá nhân một cách tự động.',
+          'Chúng tôi dùng Google Analytics 4 để hiểu cách khách truy cập đến và sử dụng trang này. Công cụ này đặt cookie tên _ga và _ga_ theo sau là một mã định danh, đồng thời ghi lại các trang bạn xem, cách bạn đến, vị trí gần đúng (quốc gia hoặc thành phố), loại thiết bị và trình duyệt, và những liên kết bạn nhấp. Google xử lý dữ liệu này và có thể chuyển ra ngoài quốc gia của bạn, kể cả sang Hoa Kỳ. Chúng tôi chỉ đọc dữ liệu ở dạng tổng hợp để biết trang nào hữu ích; dữ liệu không bao giờ được dùng để nhận diện cá nhân bạn. Bạn có thể chặn các cookie này trong cài đặt trình duyệt hoặc cài tiện ích từ chối Google Analytics.',
           'Chúng tôi chỉ nhận thông tin mà bạn chọn gửi cho chúng tôi — ví dụ khi bạn viết email hoặc WhatsApp để hỏi về sản phẩm. Chúng tôi chỉ dùng thông tin đó để trả lời yêu cầu của bạn và liên lạc với bạn về sản phẩm, dịch vụ bạn đã hỏi.'
         ]],
         ['Cách chúng tôi sử dụng và lưu giữ', [
@@ -450,7 +450,7 @@ export const LEGAL_I18N = Object.freeze({
       lead: 'Bagaimana situs ini menangani data pribadi Anda.',
       blocks: [
         ['Apa yang kami kumpulkan', [
-          'Situs ini tidak menggunakan analitik, cookie iklan, atau skrip pelacak. Kami tidak mengumpulkan data pribadi secara otomatis.',
+          'Kami menggunakan Google Analytics 4 untuk memahami bagaimana pengunjung mencapai dan menggunakan situs ini. Alat ini menetapkan cookie bernama _ga dan _ga_ diikuti pengenal, serta mencatat halaman yang Anda lihat, cara Anda tiba, perkiraan lokasi (negara atau kota), jenis perangkat dan peramban, dan tautan yang Anda klik. Google memproses data ini dan dapat mentransfernya ke luar negara Anda, termasuk ke Amerika Serikat. Kami membacanya hanya secara agregat untuk melihat halaman mana yang berguna; data tidak pernah digunakan untuk mengidentifikasi Anda secara pribadi. Anda dapat memblokir cookie ini di pengaturan peramban atau memasang add-on penolakan Google Analytics.',
           'Kami hanya menerima informasi yang Anda pilih untuk kirimkan kepada kami — misalnya saat Anda menulis ke e-mail atau WhatsApp kami untuk menanyakan produk. Kami menggunakan informasi itu hanya untuk menjawab pertanyaan Anda dan berkomunikasi dengan Anda tentang produk dan layanan yang Anda tanyakan.'
         ]],
         ['Cara kami menggunakannya dan berapa lama menyimpannya', [
@@ -493,7 +493,7 @@ export const LEGAL_I18N = Object.freeze({
       lead: '本ウェブサイトにおける個人情報の取り扱いについて。',
       blocks: [
         ['収集する情報', [
-          '本ウェブサイトは、アクセス解析、広告Cookie、トラッキングスクリプトを使用していません。個人情報を自動的に収集することはありません。',
+          '当サイトでは、訪問者がどのようにサイトに到達し利用しているかを把握するため、Google Analytics 4 を使用しています。これは _ga および _ga_ に続く識別子を持つ Cookie を設定し、閲覧したページ、流入経路、おおよその位置情報（国または都市レベル）、デバイスとブラウザの種類、クリックしたリンクを記録します。これらのデータは Google によって処理され、米国を含むお客様の国の外に移転される場合があります。当社はどのページが有用かを把握するため、集計された形でのみ参照し、お客様個人を特定する目的では使用しません。ブラウザの設定でこれらの Cookie をブロックするか、Google Analytics オプトアウト アドオンをインストールできます。',
           '当社が受け取るのは、お客様が自ら送信された情報のみです。たとえば、製品についてのお問い合わせをメールやWhatsAppでお送りいただいた場合です。これらの情報は、お問い合わせへの回答およびご質問いただいた製品・サービスに関するご連絡のためにのみ使用します。'
         ]],
         ['利用目的と保存期間', [
@@ -536,7 +536,7 @@ export const LEGAL_I18N = Object.freeze({
       lead: '이 웹사이트가 개인정보를 처리하는 방식입니다.',
       blocks: [
         ['수집하는 정보', [
-          '이 웹사이트는 분석 도구, 광고 쿠키, 추적 스크립트를 사용하지 않습니다. 개인정보를 자동으로 수집하지 않습니다.',
+          '저희는 방문자가 이 사이트에 어떻게 도달하고 어떻게 이용하는지 파악하기 위해 Google Analytics 4를 사용합니다. 이 도구는 _ga 및 _ga_ 뒤에 식별자가 붙은 쿠키를 설정하고, 조회한 페이지, 유입 경로, 대략적인 위치(국가 또는 도시 수준), 기기와 브라우저 유형, 클릭한 링크를 기록합니다. 이 데이터는 Google이 처리하며 미국을 포함한 이용자 국가 밖으로 이전될 수 있습니다. 저희는 어떤 페이지가 유용한지 파악하기 위해 집계된 형태로만 참고하며, 이용자를 개인적으로 식별하는 목적으로는 사용하지 않습니다. 브라우저 설정에서 이 쿠키를 차단하거나 Google Analytics 옵트아웃 부가기능을 설치할 수 있습니다.',
           '저희가 받는 정보는 이용자가 직접 보내주신 정보뿐입니다. 예를 들어 제품 문의를 위해 이메일이나 WhatsApp으로 연락하신 경우입니다. 이 정보는 문의에 답변하고 문의하신 제품과 서비스에 대해 연락드리는 목적으로만 사용합니다.'
         ]],
         ['이용 목적과 보관 기간', [

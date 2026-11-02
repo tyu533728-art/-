@@ -375,3 +375,26 @@
     if (!e.target.closest('.site-search')) results.classList.remove('is-open');
   });
 })();
+
+// Lead tracking. The site offers exactly three ways to reach a buyer: WhatsApp, e-mail and
+// telephone. A click on any of them is the closest thing to a conversion this site has, so it is
+// reported to GA4 as generate_lead - the recommended event name, which lets it be marked as a key
+// event in the GA4 interface without further code. Listening in the capture phase means the event
+// is queued before the browser navigates away to the external app.
+(function () {
+  document.addEventListener('click', function (event) {
+    var link = event.target.closest('a[href]');
+    if (!link) return;
+    var href = link.getAttribute('href') || '';
+    var method = null;
+    if (href.indexOf('wa.me/') !== -1) method = 'whatsapp';
+    else if (href.indexOf('mail.google.com') !== -1 || href.indexOf('mailto:') === 0) method = 'email';
+    else if (href.indexOf('tel:') === 0) method = 'phone';
+    if (!method || typeof window.gtag !== 'function') return;
+    window.gtag('event', 'generate_lead', {
+      method: method,
+      page_location: window.location.href,
+      link_url: href
+    });
+  }, true);
+})();
