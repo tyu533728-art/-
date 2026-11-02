@@ -5,6 +5,7 @@ import { categories, productCatalog, validateProductCatalog } from '../data/prod
 import { LOCALE_CODES } from '../data/product-schema.mjs';
 import { guides } from '../data/guides.mjs';
 import { seriesFaqFor } from '../data/series-faq.mjs';
+import { baseStructureFor } from '../data/base-structure-i18n.mjs';
 import { flangeTypeNotes, seriesBoreRange, unitModelGroups, mountedUnitsForSeries, modelLabelWithBore, verifySeriesBoreMapping } from '../data/mounted-units-spec.mjs';
 import { housingSeriesSpec } from '../data/bearing-housing-spec.mjs';
 import { specText } from '../data/spec-i18n.mjs';
@@ -1713,6 +1714,14 @@ function seriesDimensionsSection(locale, category, series) {
   return `<section class="section section--soft"><div class="site-shell"><div class="section-heading"><p class="eyebrow">${t.eyebrow}</p><h2>${t.heading}</h2></div>${table}</div></section>`;
 }
 
+// The base is a single HT200 casting, and a buyer who has been burned by a thin-wall or welded
+// housing asks about it before anything else. Shown only in the pillow-block category; the housing
+// series already describe their own construction in data/bearing-housing-spec.mjs.
+function baseStructureSection(locale) {
+  const { heading, body } = baseStructureFor(locale);
+  return `<section class="section section--tight"><div class="site-shell"><div class="series-about"><h2>${escapeHtml(heading)}</h2><p>${escapeHtml(body)}</p></div></div></section>`;
+}
+
 function seriesFaqSection(locale, category, series) {
   const { heading, items } = seriesFaqFor(locale, series.displayName ?? series.seriesCode, localizedCategoryTitle(locale, category));
   if (!items.length) return '';
@@ -1744,7 +1753,7 @@ function seriesContent(locale, category, series) {
   const hero = paired || content;
   const fastenerList = category.code === 'fasteners-hardware' ? fastenerProductsSection(series.seriesCode, locale) : '';
   const dimensions = seriesDimensionsSection(locale, category, series);
-  return `<section class="page-intro page-intro--compact"><div class="site-shell">${seriesBreadcrumb(locale, category, series)}<p class="eyebrow">${escapeHtml(localizedCategoryTitle(locale, category))}</p><h1 dir="ltr">${escapeHtml(seriesHeading(locale, series))}</h1><p>${escapeHtml(lead)}</p></div></section>${productIndex(locale)}${hero}${dimensions}${fastenerList}${seriesAboutBlock(locale, category, series)}${seriesFaqSection(locale, category, series)}${seriesSiblings(locale, category, series)}`;
+  return `<section class="page-intro page-intro--compact"><div class="site-shell">${seriesBreadcrumb(locale, category, series)}<p class="eyebrow">${escapeHtml(localizedCategoryTitle(locale, category))}</p><h1 dir="ltr">${escapeHtml(seriesHeading(locale, series))}</h1><p>${escapeHtml(lead)}</p></div></section>${productIndex(locale)}${hero}${dimensions}${fastenerList}${seriesAboutBlock(locale, category, series)}${category.code === 'pillow-block-bearing-units' ? baseStructureSection(locale) : ''}${seriesFaqSection(locale, category, series)}${seriesSiblings(locale, category, series)}`;
 }
 
 function categoryBreadcrumb(locale, category) {
